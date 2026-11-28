@@ -29,6 +29,8 @@
 #endif
 
 #include <iosfwd>
+#include <memory>
+#include <utility>
 
 #include "rs_pen.h"
 
@@ -221,6 +223,12 @@ public:
 
     void setLayerType(LayerType layerType) {m_layerType = layerType;}
 
+    // Identity of the imported table record. The token remains stable across
+    // renames and cannot accidentally refer to another document's record.
+    using ImportedRecordId = std::shared_ptr<const void>;
+    const ImportedRecordId& importedRecordId() const { return m_importedRecordId; }
+    void setImportedRecordId(ImportedRecordId id) { m_importedRecordId = std::move(id); }
+
     /// how the layer is saved while it is hidden; kept when the layer is shown and hidden again
     HiddenAs getHiddenAs() const {return m_hiddenAs;}
     void setHiddenAs(HiddenAs hiddenAs) {m_hiddenAs = hiddenAs;}
@@ -232,6 +240,7 @@ private:
     RS_LayerData m_data;
     LayerType m_layerType = LayerType::NORMAL; // transient field, should be updated by LayerTreeWidget
     HiddenAs m_hiddenAs = HiddenAs::Frozen;
+    ImportedRecordId m_importedRecordId;
 };
 
 #endif

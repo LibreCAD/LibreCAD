@@ -41,7 +41,10 @@
 
 #include "shapefil.h"
 
+#include "drw_base.h"
+#ifndef LIBDXFRW_HAS_LEGACY_CODEPAGE_DECODER
 #include "intern/drw_textcodec.h"
+#endif
 #include "lc_colornumbers.h"
 #include "lc_linetypenames.h"
 #include "rs_color.h"
@@ -231,17 +234,27 @@ int windowsCodePage(const QString& codepage) {
 // character, and a single-byte one byte by byte: a dropped byte stays as
 // ISO-8859-1 has it.
 std::optional<QString> decodeCodePage(const QByteArray& bytes, int codePage) {
+#ifdef LIBDXFRW_HAS_LEGACY_CODEPAGE_DECODER
+    DRW_LegacyCodePageDecoder codec(codePage);
+    if (!codec.supported()) return std::nullopt;
+#else
     const std::string name = "ANSI_" + std::to_string(codePage);
     DRW_TextCodec codec;
     codec.setCodePage(name, false);
     if (codec.getCodePage() != name) return std::nullopt; // no table for it
+#endif
     const bool twoByte = codePage >= 932 && codePage <= 950;
     std::string utf8;
     for (qsizetype start = 0, end = 0; start < bytes.size(); start = end) {
         end = twoByte ? bytes.indexOf('\\', start) + 1 : start + 1;
         if (end == 0) end = bytes.size();
+#ifdef LIBDXFRW_HAS_LEGACY_CODEPAGE_DECODER
+        const std::string part = codec.toUtf8(
+            {bytes.constData() + start, static_cast<std::size_t>(end - start)}).value();
+#else
         const std::string part = codec.toUtf8(
             {bytes.constData() + start, static_cast<std::size_t>(end - start)});
+#endif
         utf8 += part.empty() ? QString(QLatin1Char(bytes[start])).toStdString()
                              : part;
     }

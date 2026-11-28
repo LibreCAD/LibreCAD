@@ -1146,6 +1146,8 @@ set (SHARED_SOURCES
      librecad/src/lib/filters/lc_embeddedtextmodel.h
      librecad/src/lib/filters/lc_hatchdefinitionlines.cpp
      librecad/src/lib/filters/lc_hatchdefinitionlines.h
+     librecad/src/lib/filters/lc_hatchassociation.cpp
+     librecad/src/lib/filters/lc_hatchassociation.h
      librecad/src/lib/filters/lc_hyperbolaspline.cpp
      librecad/src/lib/filters/lc_hyperbolaspline.h
         librecad/src/lib/filters/lc_parabolaspline.cpp
@@ -2299,10 +2301,24 @@ else()
 endif()
 file(TO_CMAKE_PATH "${LC_PLUGIN_INSTALL_DIR}" LC_PLUGIN_INSTALL_DIR)
 
+option(LIBRECAD_USE_SYSTEM_LIBDXFRW
+       "Link a separately installed libdxfrw instead of the bundled source" OFF)
+if (LIBRECAD_USE_SYSTEM_LIBDXFRW)
+    find_package(libdxfrw 3.0 CONFIG REQUIRED)
+    list(REMOVE_ITEM SHARED_INCLUDES
+         libraries/libdxfrw/src libraries/libdxfrw/src/intern)
+    list(REMOVE_ITEM SHARED_SOURCES ${LIBDXFRW_ALL_FILES})
+    set_property(SOURCE librecad/src/lib/filters/rs_filterdxfrw.cpp APPEND
+                 PROPERTY COMPILE_DEFINITIONS LIBRECAD_SYSTEM_LIBDXFRW=1)
+endif()
+
 qt_add_library (librecad_lib STATIC
                 ${MUPARSER_SOURCES}
                 ${SHARED_SOURCES}
 )
+if (LIBRECAD_USE_SYSTEM_LIBDXFRW)
+    target_link_libraries(librecad_lib PUBLIC libdxfrw::libdxfrw)
+endif()
 # MUPARSER_STATIC, LC_VERSION and LC_PRERELEASE are already set for every
 # target by the add_compile_definitions() calls near the top of this file.
 # Repeating them here only gave them room to drift apart, and they did: this
@@ -2340,6 +2356,9 @@ target_include_directories(librecad_filter_compile_check PRIVATE
 target_link_libraries(librecad_filter_compile_check PRIVATE
     Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg Qt6::Network
 )
+if (LIBRECAD_USE_SYSTEM_LIBDXFRW)
+    target_link_libraries(librecad_filter_compile_check PRIVATE libdxfrw::libdxfrw)
+endif()
 target_compile_features(librecad_filter_compile_check PRIVATE cxx_std_17)
 target_compile_definitions(librecad_filter_compile_check PRIVATE
     DWGSUPPORT
@@ -2580,6 +2599,85 @@ install(FILES ${PLUGIN_QM_FILES}
     DESTINATION "${LIBRECAD_DATA_INSTALL_DIR}/qm" COMPONENT Resources)
 
 option (BUILD_TESTS "Build unit tests for LibreCAD" OFF)
+option (LIBRECAD_BUILD_SYSTEM_CODEC_TESTS
+        "Build public-interface filter tests with installed libdxfrw" OFF)
+if (LIBRECAD_BUILD_SYSTEM_CODEC_TESTS AND NOT LIBRECAD_USE_SYSTEM_LIBDXFRW)
+    message(FATAL_ERROR "LIBRECAD_BUILD_SYSTEM_CODEC_TESTS requires LIBRECAD_USE_SYSTEM_LIBDXFRW=ON")
+endif()
+if (LIBRECAD_USE_SYSTEM_LIBDXFRW AND BUILD_TESTS)
+    message(FATAL_ERROR
+        "LibreCAD test targets require bundled libdxfrw internals; "
+        "set BUILD_TESTS=OFF when using LIBRECAD_USE_SYSTEM_LIBDXFRW")
+endif()
+
+if (LIBRECAD_BUILD_SYSTEM_CODEC_TESTS)
+    enable_testing()
+    find_package(Catch2 3 QUIET)
+    if (NOT Catch2_FOUND)
+        if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/externals/Catch2/CMakeLists.txt")
+            add_subdirectory(externals/Catch2 EXCLUDE_FROM_ALL)
+        else()
+            message(FATAL_ERROR "System codec tests require Catch2 v3")
+        endif()
+    endif()
+    add_executable(librecad_system_codec_tests EXCLUDE_FROM_ALL
+        librecad/src/main/lc_release_label.cpp
+        librecad/src/test/lc_testsettingsisolation.cpp
+        librecad/src/test/lc_testtempdirectory.cpp
+        librecad/src/lib/filters/tests/dxf_roundtrip_tests.cpp
+        librecad/src/lib/filters/tests/lc_dxf_reopen_dwg_export_tests.cpp)
+    set_target_properties(librecad_system_codec_tests PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
+    target_include_directories(librecad_system_codec_tests PRIVATE ${SHARED_INCLUDES})
+    target_link_libraries(librecad_system_codec_tests PRIVATE
+        librecad_lib Catch2::Catch2WithMain Qt6::Core Qt6::Gui Qt6::Network
+        Qt6::PrintSupport Qt6::Svg Qt6::Widgets)
+    target_compile_features(librecad_system_codec_tests PRIVATE cxx_std_17)
+    target_compile_definitions(librecad_system_codec_tests PRIVATE
+        BUILD_TESTS=1 DWGSUPPORT _USE_MATH_DEFINES LIBRECAD_SYSTEM_CODEC_TESTS=1
+        LIBRECAD_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
+        LIBRECAD_TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/testdata")
+    if (MSVC)
+        target_compile_options(librecad_system_codec_tests PRIVATE /bigobj)
+    endif()
+    add_test(NAME librecad_system_codec_tests
+        COMMAND librecad_system_codec_tests
+                "[dimstyle],[system-codec],[system-codec-extrusion],[system-codec-cross]" --reporter compact)
+    set_tests_properties(librecad_system_codec_tests PROPERTIES
+        WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+        ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
+
+    # GUI property tests need QApplication; keep them separate from the
+    # headless codec executable, which may have created QCoreApplication.
+    add_executable(librecad_system_named_linetype_tests EXCLUDE_FROM_ALL
+        librecad/src/main/lc_release_label.cpp
+        librecad/src/test/lc_testsettingsisolation.cpp
+        librecad/src/test/lc_testtempdirectory.cpp
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_named_linetype_properties_tests.cpp
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_image_refresh_tests.cpp
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_propertysheetlifetime_tests.cpp
+        librecad/src/ui/components/pen/tests/qg_widgetpen_tests.cpp
+        ${LIBRECAD_RES})
+    set_target_properties(librecad_system_named_linetype_tests PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC ON)
+    target_include_directories(librecad_system_named_linetype_tests PRIVATE
+        ${SHARED_INCLUDES} "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include")
+    target_link_libraries(librecad_system_named_linetype_tests PRIVATE
+        librecad_lib Catch2::Catch2WithMain Qt6::Core Qt6::Gui Qt6::Network
+        Qt6::PrintSupport Qt6::Svg Qt6::Widgets)
+    target_compile_features(librecad_system_named_linetype_tests PRIVATE cxx_std_17)
+    target_compile_definitions(librecad_system_named_linetype_tests PRIVATE
+        BUILD_TESTS=1 DWGSUPPORT _USE_MATH_DEFINES)
+    option(LIBRECAD_REGISTER_SYSTEM_GUI_TESTS
+        "Register system-codec GUI tests after their target is built" OFF)
+    if (LIBRECAD_REGISTER_SYSTEM_GUI_TESTS)
+        add_test(NAME librecad_system_named_linetype_tests
+            COMMAND librecad_system_named_linetype_tests "[named-linetype],[image]" --reporter compact)
+        set_tests_properties(librecad_system_named_linetype_tests PROPERTIES
+            WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
+    endif()
+endif()
 option (LIBRECAD_REGISTER_FULL_TESTS
         "Register the complete LibreCAD test executable with CTest" OFF)
 option (LIBRECAD_REGISTER_INTEGRATION_TESTS
@@ -2810,6 +2908,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/mleader_text_tests.cpp
         librecad/src/lib/filters/tests/mleader_dxf_context_tests.cpp
         librecad/src/lib/filters/tests/dxf_roundtrip_tests.cpp
+        librecad/src/lib/filters/tests/lc_table_projection_tests.cpp
         librecad/src/lib/filters/tests/dxf_line_width_mapping_tests.cpp
         librecad/src/lib/filters/tests/dxf_layer0_declared_tests.cpp
         librecad/src/lib/filters/tests/dxf_unknown_version_tests.cpp
@@ -3217,6 +3316,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dxf_attribute_tests.cpp
         librecad/src/lib/filters/tests/dxf_object_tests.cpp
         librecad/src/lib/filters/tests/dxf_roundtrip_tests.cpp
+        librecad/src/lib/filters/tests/lc_table_projection_tests.cpp
         librecad/src/lib/filters/tests/dxf_string_codec_tests.cpp
         librecad/src/lib/filters/tests/eed_tests.cpp
         librecad/src/lib/filters/tests/entity_metadata_tests.cpp
@@ -3358,6 +3458,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dxf_attribute_tests.cpp
         librecad/src/lib/filters/tests/dxf_object_tests.cpp
         librecad/src/lib/filters/tests/dxf_roundtrip_tests.cpp
+        librecad/src/lib/filters/tests/lc_table_projection_tests.cpp
         librecad/src/lib/filters/tests/dxf_string_codec_tests.cpp
         librecad/src/lib/filters/tests/entity_metadata_tests.cpp
         librecad/src/lib/filters/tests/lc_attribute_export_tests.cpp
@@ -3450,6 +3551,10 @@ if (BUILD_TESTS)
             LIBRECAD_TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/testdata"
         )
     endfunction()
+
+    add_librecad_filter_micro_test(
+        librecad_table_projection_tests
+        librecad/src/lib/filters/tests/lc_table_projection_tests.cpp)
 
     add_librecad_filter_micro_test(
         librecad_text_source_tests
@@ -3575,7 +3680,10 @@ if (BUILD_TESTS)
     add_librecad_filter_micro_test(
         librecad_linetype_ui_tests
         librecad/src/ui/components/comboboxes/tests/qg_linetypebox_tests.cpp)
-    target_sources(librecad_linetype_ui_tests PRIVATE ${LIBRECAD_RES})
+    target_sources(librecad_linetype_ui_tests PRIVATE
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_named_linetype_properties_tests.cpp
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_propertysheetlifetime_tests.cpp
+        ${LIBRECAD_RES})
     set_target_properties(librecad_linetype_ui_tests PROPERTIES AUTORCC ON)
     # Later rungs test widgets whose headers include their uic output.
     target_include_directories(librecad_linetype_ui_tests PRIVATE

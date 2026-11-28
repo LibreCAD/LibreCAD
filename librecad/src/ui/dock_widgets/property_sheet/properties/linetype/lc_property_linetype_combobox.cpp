@@ -23,6 +23,7 @@
 #include "lc_property_linetype_combobox.h"
 
 #include "lc_peninforegistry.h"
+#include "lc_linetypelist.h"
 #include "lc_property_linetype_combobox_view.h"
 
 LC_PropertyLineTypeCombobox::LC_PropertyLineTypeCombobox(LC_PropertyLineTypeComboboxView* view, QWidget* parent, const bool showByLayer,
@@ -60,4 +61,57 @@ void LC_PropertyLineTypeCombobox::onLinetypeChanged(const RS2::LineType& linetyp
         return;
     }
     m_property->setValue(linetype, m_view->changeReasonDueToEdit());
+}
+
+LC_LineTypeIdentity LC_LineTypeIdentity::fromPen(const RS_Pen& pen) {
+    LC_LineTypeIdentity value;
+    value.type = pen.getLineType();
+    value.hasName = pen.hasLineTypeName();
+    if (value.hasName) value.name = pen.getLineTypeName();
+    return value;
+}
+
+void LC_LineTypeIdentity::applyTo(RS_Pen& pen) const {
+    if (hasName) pen.setLineTypeName(name);
+    else pen.setLineType(type);
+}
+
+LC_PropertyNamedLineTypeCombobox::LC_PropertyNamedLineTypeCombobox(
+        LC_PropertyNamedLineTypeComboboxView* view, QWidget* parent)
+    : QG_LineTypeBox(parent), m_view(view),
+      m_property(static_cast<LC_PropertyNamedLineType*>(view->getProperty())) {
+    if (const auto* list = m_property->lineTypeList()) {
+        init(list, true, false, true);
+    } else {
+        // List mode retains an unknown source name as a temporary row even
+        // when no drawing is attached. init() copies the row data.
+        LC_LineTypeList fallback;
+        init(&fallback, true, false, true);
+    }
+    setLineEdit(nullptr);
+    updateByProperty();
+    connect(m_property, &LC_Property::afterPropertyChange, this,
+            [this](LC_PropertyChangeReason reason) {
+                if (!(reason & PropertyChangeReasonValue)) updateByProperty();
+            });
+    connect(this, &QG_LineTypeBox::lineTypeChanged, this, [this](RS2::LineType) {
+        if (m_updating) return;
+        RS_Pen pen;
+        applyLineTypeTo(pen);
+        m_property->setValue(LC_LineTypeIdentity::fromPen(pen), m_view->changeReasonDueToEdit());
+    });
+}
+
+void LC_PropertyNamedLineTypeCombobox::hidePopup() {
+    QG_LineTypeBox::hidePopup();
+    m_view->stopInplaceEditing(true, true);
+}
+
+void LC_PropertyNamedLineTypeCombobox::updateByProperty() {
+    ++m_updating;
+    setEnabled(m_view->getStateProperty()->isEditableByUser());
+    RS_Pen pen;
+    m_property->value().applyTo(pen);
+    setLineTypeOf(pen);
+    --m_updating;
 }

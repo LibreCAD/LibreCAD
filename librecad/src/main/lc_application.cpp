@@ -36,7 +36,7 @@ LC_Application::LC_Application(int &argc, char **argv)
 // This is only used until the event filter is in place in mainwindow
 bool LC_Application::event(QEvent *event)
 {
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     if (QEvent::FileOpen == event->type()) {
         QFileOpenEvent *openEvent = static_cast<QFileOpenEvent *>(event);
         m_files.append( openEvent->file());

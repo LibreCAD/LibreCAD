@@ -602,9 +602,9 @@ QStringList RS_System::getDirectoryList(const QString& subDir) const{
     QStringList dirList;
     const QString subDirectory = QDir::fromNativeSeparators( subDir);
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     dirList.append(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/" + m_appDirName + "/" + subDirectory);
-#endif // Q_OS_MAC
+#endif // Q_OS_MACOS
 
 #if (defined(Q_OS_WIN32) || defined(Q_OS_WIN64))
     dirList.append(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/" + m_appDirName + "/" + subDirectory);
@@ -645,7 +645,7 @@ QStringList RS_System::getDirectoryList(const QString& subDir) const{
         RS_DEBUG->print("%s\n", QString("%1(): line %2: dir=%3\n").arg(__func__).arg(__LINE__).arg(dir).toUtf8().constData());
     }
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     if (!m_appDir.isEmpty() && m_appDir!="/") {
         if (subDirectory == QStringLiteral("plugins")) {
             dirList.append(QDir::cleanPath(m_appDir + "/../PlugIns/LibreCAD"));
@@ -656,7 +656,7 @@ QStringList RS_System::getDirectoryList(const QString& subDir) const{
     }
 #endif
 
-#ifndef Q_OS_MAC
+#ifndef Q_OS_MACOS
     // Add support directory if librecad is run-in-place,
     // not for Apple because it uses resources this is more for unix systems
     dirList.append( m_appDir + "/resources/" + subDirectory);

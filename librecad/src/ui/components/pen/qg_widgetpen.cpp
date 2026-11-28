@@ -30,6 +30,7 @@
 
 #include "rs_debug.h"
 #include "rs_entity.h"
+#include "rs_graphic.h"
 #include "rs_layer.h"
 
 /*
@@ -70,17 +71,25 @@ void QG_WidgetPen::notifyPenChanged() {
 }
 
 void QG_WidgetPen::setPen(const RS_Pen& pen, const bool showByLayer, const bool showUnchanged, const QString& title) {
+    setPenWithLineTypes(pen, showByLayer, showUnchanged, title, nullptr);
+}
+
+void QG_WidgetPen::setPenWithLineTypes(const RS_Pen& pen, const bool showByLayer,
+                                      const bool showUnchanged, const QString& title,
+                                      const LC_LineTypeList* lineTypes) {
     if (!m_initialized) {
         cbColor->init(showByLayer, showUnchanged);
         cbWidth->init(showByLayer, showUnchanged);
-        cbLineType->init(showByLayer, showUnchanged);
+        cbLineType->init(lineTypes, showByLayer, showUnchanged);
         m_initialized = true;
     }
+    else {
+        cbLineType->rebuild(lineTypes);
+    }
     if (!showUnchanged) {
-        m_sourcePen = pen;
         cbColor->setColor(pen.getColor());
         cbWidth->setWidth(pen.getWidth());
-        cbLineType->setLineType(pen.getLineType());
+        cbLineType->setLineTypeOf(pen);
     }
 
     if (!title.isEmpty()) {
@@ -100,7 +109,12 @@ void QG_WidgetPen::setPen(const RS_Entity* entity, const RS_Layer* layer, const 
     entityResolvedPen.setLineTypeFromPen(entityPen);
     entityResolvedPen.setWidth(entityPen.getWidth());
 
-    setPen(entityResolvedPen, layer, title);
+    const RS_Graphic* graphic = entity->getGraphic();
+    setPenWithLineTypes(entityResolvedPen, true, false, title,
+                        graphic ? &graphic->getLineTypeList() : nullptr);
+    if (layer != nullptr) {
+        cbColor->setLayerColor(layer->getPen().getColor());
+    }
 }
 
 void QG_WidgetPen::setPen(const RS_Pen& pen, const RS_Layer* layer, const bool showUnchanged, const QString& title) {
@@ -121,13 +135,7 @@ RS_Pen QG_WidgetPen::getPen() const {
 
     pen.setColor(cbColor->getColor());
     pen.setWidth(cbWidth->getWidth());
-    // The combo lists built-ins only: keep a name it cannot show.
-    if (cbLineType->getLineType() == m_sourcePen.getLineType()) {
-        pen.setLineTypeFromPen(m_sourcePen);
-    }
-    else {
-        pen.setLineType(cbLineType->getLineType());
-    }
+    cbLineType->applyLineTypeTo(pen);
 
     return pen;
 }

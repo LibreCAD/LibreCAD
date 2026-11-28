@@ -35,7 +35,9 @@
 #include <algorithm>
 #include <cmath>
 #include <cstddef>
+#include <cstdint>
 #include <cstdlib>
+#include <cstring>
 #include <filesystem>
 #include <fstream>
 #include <iterator>
@@ -52,15 +54,20 @@
 #include <QCoreApplication>
 
 #include "drw_base.h"
+#include "lc_colornumbers.h"
 #include "lc_dimstyle.h"
 #include "lc_dimarc.h"
 #include "lc_dwgadvancedmetadata.h"
 #include "lc_filtertestsupport.h"
+#include "lc_hatchassociation.h"
 #include "lc_linetype.h"
 #include "lc_linetypenames.h"
 #include "lc_mleader.h"
 #include "lc_containertraverser.h"
+#include "rs_arc.h"
 #include "rs_dimaligned.h"
+#include "rs_circle.h"
+#include "rs_ellipse.h"
 #include "rs_dimension.h"
 #include "rs_insert.h"
 #include "rs_text.h"
@@ -70,6 +77,7 @@
 #include "rs_filterjww.h"
 #include "rs_graphic.h"
 #include "rs_hatch.h"
+#include "rs_image.h"
 #include "rs_entity.h"
 #include "rs_block.h"
 #include "rs_layer.h"
@@ -108,8 +116,13 @@ std::string tmpFile(const char *suffix) {
 }
 
 void writeText(const std::string &path, const std::string &content) {
-  std::ofstream out(path);
+  std::ofstream out(path, std::ios::binary);
   out << content;
+}
+
+void normalizeDxfLineEndings(std::string &text) {
+  for (std::size_t pos = 0; (pos = text.find("\r\n", pos)) != std::string::npos; ++pos)
+    text.erase(pos, 1);
 }
 
 std::string trimDxfToken(std::string value) {
@@ -167,29 +180,58 @@ std::string dstyleDirectionVariant(const std::string &path,
 }
 
 // Returns the group-`code` values of the LTYPE table record named `ltypeName`.
-// libdxfrw writes the name (2) before the pattern groups (3/73/40/49), so the
-// name is matched first and the values are collected until the next record.
+// A record's application groups may precede its name, so buffer values until
+// the next record confirms which linetype they belong to.
 std::vector<std::string> ltypeRecordGroupValues(const std::string &path,
                                                 const std::string &ltypeName,
                                                 const std::string &code) {
   std::ifstream in(path);
   std::string codeLine, valueLine;
   std::vector<std::string> values;
+  std::vector<std::string> pending;
   bool inLtype = false;
   bool nameMatched = false;
+  int appDepth = 0;
+  const auto appendMatched = [&] {
+    if (inLtype && nameMatched)
+      values.insert(values.end(), pending.begin(), pending.end());
+  };
   while (std::getline(in, codeLine) && std::getline(in, valueLine)) {
     const std::string groupCode = trimDxfToken(codeLine);
     const std::string value = trimDxfToken(valueLine);
     if (groupCode == "0") {
+      appendMatched();
+      pending.clear();
       inLtype = value == "LTYPE";
       nameMatched = false;
-    } else if (inLtype && groupCode == "2") {
-      nameMatched = value == ltypeName;
-    } else if (inLtype && nameMatched && groupCode == code) {
-      values.push_back(value);
+      appDepth = 0;
+    } else if (inLtype) {
+      if (groupCode == "2" && appDepth == 0)
+        nameMatched = value == ltypeName;
+      if (groupCode == code)
+        pending.push_back(value);
+      if (groupCode == "102") {
+        if (!value.empty() && value.front() == '{')
+          ++appDepth;
+        else if (value == "}" && appDepth > 0)
+          --appDepth;
+      }
     }
   }
+  appendMatched();
   return values;
+}
+
+TEST_CASE("DXF linetype lookup includes application data before its name",
+          "[system-codec][dxf][linetype]") {
+  const auto path = tmpFile("ltype_lookup_order.dxf");
+  writeText(path, "0\nLTYPE\n102\n{APP\n2\nOTHER\n310\nCAFE\n102\n}\n"
+                  "2\nTARGET\n0\nLTYPE\n2\nOTHER\n310\nDEAD\n0\nEOF\n");
+  CHECK(ltypeRecordGroupValues(path, "TARGET", "310") ==
+        std::vector<std::string>{"CAFE"});
+  CHECK(ltypeRecordGroupValues(path, "OTHER", "310") ==
+        std::vector<std::string>{"DEAD"});
+  std::filesystem::remove(path);
 }
 
 // Counts occurrences of a "0\n<NAME>\n" record marker in a DXF file.
@@ -704,12 +746,5434 @@ std::string singleLineTextAt(RS_Graphic &graphic, double y) {
 
 } // namespace
 
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+TEST_CASE("System codec respects declared UTF-8 in legacy DXF",
+          "[system-codec][dxf][codepage]") {
+  ensureSettings();
+  struct Case { const char *version; const char *codepage; const char *bytes; };
+  for (const Case &item : std::vector<Case>{
+           {"AC1009", "UTF-8", "\xC3\x96"},
+           {"AC1009", "ANSI_1252", "\xD6"},
+           {"AC1009", "", "\xD6"},
+           {"AC1021", "ANSI_1252", "\xC3\x96"}}) {
+    INFO("version=" << item.version << " codepage=" << item.codepage);
+    const auto source = tmpFile("system_declared_utf8_source.dxf");
+    const auto output = tmpFile("system_declared_utf8_output.dxf");
+    std::string content = std::string("0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\n") + item.version + "\n";
+    if (*item.codepage)
+      content += std::string("9\n$DWGCODEPAGE\n3\n") + item.codepage + "\n";
+    const std::string name = std::string(item.bytes) + "LTYPE";
+    content += "0\nENDSEC\n0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLTYPE\n70\n1\n"
+               "0\nLTYPE\n5\n40\n2\n" + name + "\n70\n0\n3\nCustom\n72\n65\n73\n0\n40\n0\n"
+               "0\nENDTAB\n0\nENDSEC\n0\nSECTION\n2\nENTITIES\n"
+               "0\nTEXT\n5\n41\n8\n0\n10\n1\n20\n9\n40\n2.5\n1\n" + item.bytes +
+               "\n0\nENDSEC\n0\nEOF\n";
+    writeText(source, content);
+    RS_Graphic graphic;
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+    CHECK(graphic.findLineType(QStringLiteral("\u00D6LTYPE")) != nullptr);
+    CHECK(singleLineTextAt(graphic, 9.0) == "\xC3\x96");
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    RS_Graphic reread;
+    REQUIRE(filter.fileImport(reread, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK(reread.findLineType(QStringLiteral("\u00D6LTYPE")) != nullptr);
+    CHECK(singleLineTextAt(reread, 9.0) == "\xC3\x96");
+    std::filesystem::remove(source);
+    std::filesystem::remove(output);
+  }
+}
+
+TEST_CASE("System codec preserves canonical linetype metadata after retry",
+          "[system-codec][dxf][linetype][transaction]") {
+  ensureSettings();
+  const auto output = tmpFile("system_canonical_linetype_retry.dxf");
+  const std::string sentinel = "preserve destination\n";
+  writeText(output, sentinel);
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  DRW_LType source;
+  source.name = "Continuous";
+  source.flags = -1;
+  graphic.dwgAdvancedMetadata().addLineTypeName(source);
+  RS_FilterDXFRW filter;
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream retained(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  retained.close();
+  source.flags = 64;
+  graphic.dwgAdvancedMetadata().addLineTypeName(source);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(ltypeRecordGroupValues(output, "Continuous", "70") ==
+        std::vector<std::string>{"64"});
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW12));
+  CHECK(ltypeRecordGroupValues(output, "CONTINUOUS", "70") ==
+        std::vector<std::string>{"64"});
+  writeText(output, sentinel);
+  source.xDictHandle = 0x20;
+  graphic.dwgAdvancedMetadata().addLineTypeName(source);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW12));
+  std::ifstream retainedR12(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(retainedR12), {}) == sentinel);
+  retainedR12.close();
+  source.xDictHandle = 0;
+  graphic.dwgAdvancedMetadata().addLineTypeName(source);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW12));
+  CHECK(ltypeRecordGroupValues(output, "CONTINUOUS", "70") ==
+        std::vector<std::string>{"64"});
+  std::filesystem::remove(output);
+}
+
+TEST_CASE("System codec preserves a layer material link and refuses a missing carrier",
+          "[system-codec][dxf][material][layer][transaction]") {
+  ensureSettings();
+  const auto source = tmpFile("system_layer_material_source.dxf");
+  const auto output = tmpFile("system_layer_material_output.dxf");
+  const auto retry = tmpFile("system_layer_material_retry.dxf");
+  const auto materialHandle = GENERATE(std::uint32_t{0xA1}, std::uint32_t{0x14});
+  const bool withReactors = GENERATE(false, true);
+  const std::string materialText = materialHandle == 0xA1u ? "A1" : "14";
+  std::string input =
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
+            "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n1\n"
+            "0\nLAYER\n5\n30\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+            "2\nRAWTEST\n70\n0\n62\n7\n6\nCONTINUOUS\n347\nA1\n"
+            "0\nENDTAB\n0\nENDSEC\n0\nSECTION\n2\nENTITIES\n"
+            "0\nLINE\n5\nA2\n100\nAcDbEntity\n8\nRAWTEST\n100\nAcDbLine\n"
+            "10\n0\n20\n0\n30\n0\n11\n10\n21\n0\n31\n0\n"
+            "0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n"
+            "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+            "3\nACAD_MATERIAL\n350\nA0\n"
+            "0\nDICTIONARY\n5\nA0\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+            "3\nPlainMat\n350\nA1\n"
+            "0\nMATERIAL\n5\nA1\n330\nA0\n100\nAcDbMaterial\n1\nPlainMat\n"
+            "0\nENDSEC\n0\nEOF\n";
+  if (withReactors) {
+    const auto insertReactors = [&](const std::string &from, const std::string &to) {
+      const auto position = input.find(from);
+      REQUIRE(position != std::string::npos);
+      input.replace(position, from.size(), to);
+    };
+    insertReactors("\n5\nA0\n330\nC\n",
+                   "\n5\nA0\n102\n{ACAD_REACTORS\n330\nC\n102\n}\n330\nC\n");
+    insertReactors("\n5\nA1\n330\nA0\n",
+                   "\n5\nA1\n102\n{ACAD_REACTORS\n330\nA0\n102\n}\n330\nA0\n");
+  }
+  if (materialHandle != 0xA1u) {
+    const std::string from = "\nA1\n";
+    for (std::size_t pos = 0; (pos = input.find(from, pos)) != std::string::npos;) {
+      input.replace(pos, from.size(), "\n14\n");
+      pos += 4;
+    }
+  }
+  writeText(source, input);
+  RS_Graphic graphic;
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  const auto *layer = graphic.dwgAdvancedMetadata().findLayerTableEntryByName("RAWTEST");
+  REQUIRE(layer != nullptr);
+  CHECK(layer->handleMaterialS == materialText);
+  auto &raw = const_cast<std::vector<DRW_RawDxfObject>&>(
+      graphic.dwgAdvancedMetadata().rawDxfObjects());
+  auto found = std::find_if(raw.begin(), raw.end(), [&](const auto &entry) {
+    return entry.name == "MATERIAL" && entry.handle == materialHandle;
+  });
+  REQUIRE(found != raw.end());
+  const DRW_RawDxfObject saved = *found;
+  raw.erase(found);
+  const std::string sentinel = "preserve material destination\n";
+  writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream retained(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  retained.close();
+  raw.push_back(saved);
+  const auto expectRefusal = [&] {
+    writeText(output, sentinel);
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    std::ifstream existing(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(existing), {}) == sentinel);
+  };
+  auto &carrier = raw.back();
+  auto self = std::find_if(carrier.groups.begin(), carrier.groups.end(),
+                           [](const auto &group) { return group.code() == 5; });
+  REQUIRE(self != carrier.groups.end());
+  const DRW_Variant oldSelf = *self;
+  *self = DRW_Variant(5, std::string("A3"));
+  expectRefusal();
+  *self = oldSelf;
+  REQUIRE(carrier.hasRawValues);
+  const auto name = std::find_if(carrier.groups.begin(), carrier.groups.end(),
+                                 [](const auto &group) { return group.code() == 1; });
+  REQUIRE(name != carrier.groups.end());
+  const auto nameIndex = static_cast<std::size_t>(std::distance(carrier.groups.begin(), name));
+  const auto oldRawName = carrier.rawValues.at(nameIndex);
+  carrier.rawValues[nameIndex] = "Different";
+  expectRefusal();
+  carrier.rawValues[nameIndex] = oldRawName;
+  if (withReactors) {
+    auto reactor = std::find_if(carrier.groups.begin(), carrier.groups.end(),
+                                [](const auto &group) { return group.code() == 330; });
+    REQUIRE(reactor != carrier.groups.end());
+    const auto reactorIndex = static_cast<std::size_t>(std::distance(carrier.groups.begin(), reactor));
+    const DRW_Variant oldReactor = *reactor;
+    const auto oldRawReactor = carrier.rawValues.at(reactorIndex);
+    *reactor = DRW_Variant(330, std::string("A3"));
+    carrier.rawValues[reactorIndex] = "A3";
+    expectRefusal();
+    *reactor = oldReactor;
+    carrier.rawValues[reactorIndex] = oldRawReactor;
+  }
+  carrier.m_version = DRW::AC1015;
+  expectRefusal();
+  carrier.m_version = saved.m_version;
+  auto *mutableLayer = const_cast<DRW_Layer *>(layer);
+  mutableLayer->handleMaterialS = "not-a-handle";
+  expectRefusal();
+  mutableLayer->handleMaterialS = materialText;
+  raw.push_back(saved);
+  expectRefusal();
+  raw.pop_back();
+  auto &dictionaries = const_cast<std::vector<LC_DwgAdvancedMetadata::DictionaryRecord>&>(
+      graphic.dwgAdvancedMetadata().dictionaries());
+  auto dictionary = std::find_if(dictionaries.begin(), dictionaries.end(),
+      [](const auto &entry) { return entry.handle == 0xA0u; });
+  REQUIRE(dictionary != dictionaries.end());
+  const auto entries = dictionary->entries;
+  REQUIRE_FALSE(dictionary->entries.empty());
+  dictionary->entries.front().dxfHandleCode = 360;
+  expectRefusal(); // typed edge role disagrees with its raw dictionary
+  dictionary->entries = entries;
+  dictionary->entries.front().name = "plainmat";
+  expectRefusal(); // a spelling-only edit must not replay the stale raw key
+  dictionary->entries = entries;
+  const int cloning = dictionary->cloning;
+  dictionary->cloning = 2;
+  expectRefusal(); // typed cloning semantics disagree with the raw dictionary
+  dictionary->cloning = cloning;
+  const int hardOwner = dictionary->hardOwner;
+  dictionary->hardOwner = 1;
+  expectRefusal(); // typed ownership semantics disagree with the raw dictionary
+  dictionary->hardOwner = hardOwner;
+  dictionary->entries.clear();
+  expectRefusal();
+  dictionary->entries = entries;
+  auto root = std::find_if(dictionaries.begin(), dictionaries.end(),
+      [](const auto &entry) { return entry.handle == 0xCu; });
+  REQUIRE(root != dictionaries.end());
+  const auto rootEntries = root->entries;
+  REQUIRE_FALSE(root->entries.empty());
+  root->entries.front().dxfHandleCode = 360;
+  expectRefusal(); // the generated root entry cannot retain a hard role
+  root->entries = rootEntries;
+  root->entries.clear();
+  expectRefusal();
+  root->entries = rootEntries;
+  auto rawDictionary = std::find_if(raw.begin(), raw.end(), [](const auto &entry) {
+    return entry.name == "DICTIONARY" && entry.handle == 0xA0u;
+  });
+  REQUIRE(rawDictionary != raw.end());
+  auto rawCloning = std::find_if(rawDictionary->groups.begin(), rawDictionary->groups.end(),
+                                 [](const auto &group) { return group.code() == 281; });
+  REQUIRE(rawCloning != rawDictionary->groups.end());
+  REQUIRE(rawDictionary->hasRawValues);
+  const auto rawCloningIndex = static_cast<std::size_t>(
+      std::distance(rawDictionary->groups.begin(), rawCloning));
+  const auto savedRawCloning = rawDictionary->rawValues.at(rawCloningIndex);
+  rawDictionary->rawValues[rawCloningIndex] = "2";
+  expectRefusal(); // physical numeric spelling must agree with typed group data
+  rawDictionary->rawValues[rawCloningIndex] = savedRawCloning;
+  if (withReactors) {
+    auto reactor = std::find_if(rawDictionary->groups.begin(), rawDictionary->groups.end(),
+                                [](const auto &group) { return group.code() == 330; });
+    REQUIRE(reactor != rawDictionary->groups.end());
+    const auto reactorIndex = static_cast<std::size_t>(
+        std::distance(rawDictionary->groups.begin(), reactor));
+    const DRW_Variant oldReactor = *reactor;
+    const auto oldRawReactor = rawDictionary->rawValues.at(reactorIndex);
+    *reactor = DRW_Variant(330, std::string("A3"));
+    rawDictionary->rawValues[reactorIndex] = "A3";
+    expectRefusal();
+    *reactor = oldReactor;
+    rawDictionary->rawValues[reactorIndex] = oldRawReactor;
+  }
+  auto entryHandle = std::find_if(rawDictionary->groups.begin(), rawDictionary->groups.end(),
+      [](const auto &group) { return group.code() == 350; });
+  REQUIRE(entryHandle != rawDictionary->groups.end());
+  const DRW_Variant oldEntryHandle = *entryHandle;
+  *entryHandle = DRW_Variant(350, std::string("A3"));
+  expectRefusal();
+  *entryHandle = oldEntryHandle;
+  REQUIRE(rawDictionary->hasRawValues);
+  const auto dictionaryName = std::find_if(rawDictionary->groups.begin(), rawDictionary->groups.end(),
+      [](const auto &group) { return group.code() == 3; });
+  REQUIRE(dictionaryName != rawDictionary->groups.end());
+  const auto dictionaryNameIndex = static_cast<std::size_t>(
+      std::distance(rawDictionary->groups.begin(), dictionaryName));
+  const auto oldRawDictionaryName = rawDictionary->rawValues.at(dictionaryNameIndex);
+  rawDictionary->rawValues[dictionaryNameIndex] = "Different";
+  expectRefusal();
+  rawDictionary->rawValues[dictionaryNameIndex] = oldRawDictionaryName;
+  // A valid selected material must not mask a missing dictionary sibling.
+  rawDictionary->groups.emplace_back(3, std::string("MissingMat"));
+  rawDictionary->groups.emplace_back(350, std::string("A3"));
+  rawDictionary->rawValues.emplace_back("MissingMat");
+  rawDictionary->rawValues.emplace_back("A3");
+  expectRefusal(); // raw entry absent from the typed dictionary
+  dictionary->entries.push_back({"MissingMat", 0xA3u});
+  expectRefusal(); // both entries exist, but the target does not
+  dictionary->entries.pop_back();
+  rawDictionary->groups.pop_back();
+  rawDictionary->groups.pop_back();
+  rawDictionary->rawValues.pop_back();
+  rawDictionary->rawValues.pop_back();
+  dictionary->entries.push_back({"MissingMat", 0xA3u});
+  expectRefusal(); // typed entry absent from the raw dictionary
+  dictionary->entries.pop_back();
+  writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  std::ifstream crossVersion(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(crossVersion), {}) == sentinel);
+  crossVersion.close();
+#if defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR)
+  struct MutatingFilter : RS_FilterDXFRW {
+    std::function<void()> afterHeader;
+    std::function<void()> afterObjects;
+    std::function<void()> beforeFinalize;
+    void writeHeader(DRW_Header &header) override {
+      RS_FilterDXFRW::writeHeader(header);
+      if (afterHeader) afterHeader();
+    }
+    void writeObjects() override {
+      RS_FilterDXFRW::writeObjects();
+      if (afterObjects) afterObjects();
+    }
+    bool finalizeDxfWrite() override {
+      if (beforeFinalize) beforeFinalize();
+      return RS_FilterDXFRW::finalizeDxfWrite();
+    }
+  } mutating;
+  auto &materials = const_cast<std::vector<LC_DwgAdvancedMetadata::MaterialRecord>&>(
+      graphic.dwgAdvancedMetadata().materials());
+  auto selected = std::find_if(materials.begin(), materials.end(),
+      [&](const auto &entry) { return entry.handle == materialHandle; });
+  REQUIRE(selected != materials.end());
+  const auto oldDescription = selected->description;
+  mutating.afterObjects = [&] { selected->description = "late object edit"; };
+  writeText(output, sentinel);
+  CHECK_FALSE(mutating.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream afterObjectFailure(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(afterObjectFailure), {}) == sentinel);
+  afterObjectFailure.close();
+  selected->description = oldDescription;
+  mutating.afterObjects = {};
+  mutating.beforeFinalize = [&] { selected->description = "late finalize edit"; };
+  CHECK_FALSE(mutating.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream afterFinalizeFailure(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(afterFinalizeFailure), {}) == sentinel);
+  afterFinalizeFailure.close();
+  selected->description = oldDescription;
+  mutating.beforeFinalize = {};
+  REQUIRE(mutating.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+#ifdef LIBDXFRW_HAS_DXF_STAGED_ROOT_ENTRY_INSPECTOR
+  const auto oldRootKey = root->entries.front().name;
+  mutating.afterObjects = [&] { root->entries.front().name = "acad_material"; };
+  writeText(output, sentinel);
+  CHECK_FALSE(mutating.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream afterRootFailure(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(afterRootFailure), {}) == sentinel);
+  afterRootFailure.close();
+  root->entries.front().name = oldRootKey;
+  mutating.afterObjects = {};
+  mutating.beforeFinalize = [&] { root->entries.front().name = "acad_material"; };
+  CHECK_FALSE(mutating.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream afterRootFinalizationFailure(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(afterRootFinalizationFailure), {}) == sentinel);
+  afterRootFinalizationFailure.close();
+  root->entries.front().name = oldRootKey;
+  mutating.beforeFinalize = {};
+  REQUIRE(mutating.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  root->entries.front().name = "acad_material";
+  REQUIRE(mutating.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK_FALSE(recordGroupsWithValue(output, "DICTIONARY", "3", "acad_material").empty());
+  root->entries.front().name = oldRootKey;
+#endif
+#ifdef LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR
+  graphic.addVariable("$CMATERIAL", QString::fromStdString(materialText), 347);
+  REQUIRE(mutating.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  {
+    RS_Graphic currentGraphic;
+    RS_FilterDXFRW reader;
+    REQUIRE(reader.fileImport(currentGraphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    const auto currentVariables = currentGraphic.getVariableDict();
+    const auto current = currentVariables.constFind(QStringLiteral("$CMATERIAL"));
+    const auto writtenMaterials = recordGroupValues(output, "MATERIAL", "5");
+    REQUIRE(current != currentVariables.cend());
+    REQUIRE(writtenMaterials.size() == 1u);
+    CHECK(current->getString().toStdString() == writtenMaterials.front());
+  }
+  graphic.addVariable("$CMATERIAL", QStringLiteral("0"), 347);
+  REQUIRE(mutating.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  graphic.removeVariable("$CMATERIAL");
+  mutating.afterHeader = [&] { graphic.addVariable("$CMATERIAL", QString::fromStdString(materialText), 347); };
+  writeText(output, sentinel);
+  CHECK_FALSE(mutating.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream afterHeaderFailure(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(afterHeaderFailure), {}) == sentinel);
+  afterHeaderFailure.close();
+  graphic.removeVariable("$CMATERIAL");
+  mutating.afterHeader = {};
+  mutating.beforeFinalize = [&] { graphic.addVariable("$CMATERIAL", QString::fromStdString(materialText), 347); };
+  CHECK_FALSE(mutating.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream afterHeaderFinalizationFailure(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(afterHeaderFinalizationFailure), {}) == sentinel);
+  afterHeaderFinalizationFailure.close();
+  graphic.removeVariable("$CMATERIAL");
+  mutating.beforeFinalize = {};
+  REQUIRE(mutating.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+#endif
+#endif
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto material = recordGroupValues(output, "MATERIAL", "5");
+  REQUIRE(material.size() == 1);
+  if (materialHandle == 0x14u)
+    CHECK(material.front() != "14");
+  const auto layerGroups = recordGroupsWithValue(output, "LAYER", "2", "RAWTEST");
+  CHECK(std::count(layerGroups.begin(), layerGroups.end(),
+                   std::make_pair(std::string("347"), material.front())) == 1);
+  RS_Graphic reread;
+  REQUIRE(filter.fileImport(reread, QString::fromStdString(output), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(reread, QString::fromStdString(retry), RS2::FormatDXFRW));
+  const auto retryMaterial = recordGroupValues(retry, "MATERIAL", "5");
+  REQUIRE(retryMaterial.size() == 1);
+  const auto retryLayer = recordGroupsWithValue(retry, "LAYER", "2", "RAWTEST");
+  CHECK(std::count(retryLayer.begin(), retryLayer.end(),
+                   std::make_pair(std::string("347"), retryMaterial.front())) == 1);
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_LAYER_MATERIAL_OUTPUT"))
+    std::filesystem::copy_file(retry, copy, std::filesystem::copy_options::overwrite_existing);
+
+  // Renaming the original must keep its source metadata; a new layer with
+  // the old name must not acquire that metadata by name.
+  auto *original = graphic.findLayer(QStringLiteral("RAWTEST"));
+  REQUIRE(original != nullptr);
+  original->setName(QStringLiteral("RENAMED"));
+  graphic.addLayer(new RS_Layer(QStringLiteral("RAWTEST")));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto renamed = recordGroupsWithValue(output, "LAYER", "2", "RENAMED");
+  const auto renamedMaterials = recordGroupValues(output, "MATERIAL", "5");
+  REQUIRE(renamedMaterials.size() == 1);
+  CHECK(std::count(renamed.begin(), renamed.end(),
+                   std::make_pair(std::string("347"), renamedMaterials.front())) == 1);
+  const auto replacement = recordGroupsWithValue(output, "LAYER", "2", "RAWTEST");
+  REQUIRE_FALSE(replacement.empty());
+  CHECK(std::none_of(replacement.begin(), replacement.end(),
+                     [](const auto &group) { return group.first == "347"; }));
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_RENAMED_LAYER_MATERIAL_OUTPUT"))
+    std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+
+  auto *duplicate = original->clone();
+  duplicate->setName(QStringLiteral("CLONE"));
+  graphic.addLayer(duplicate);
+  REQUIRE_FALSE(duplicate->importedRecordId());
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  duplicate->setImportedRecordId(original->importedRecordId());
+  expectRefusal();
+  duplicate->setImportedRecordId({});
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto clone = recordGroupsWithValue(output, "LAYER", "2", "CLONE");
+  REQUIRE_FALSE(clone.empty());
+  CHECK(std::none_of(clone.begin(), clone.end(),
+                     [](const auto &group) { return group.first == "347"; }));
+
+  // A layer copied from another document must not match this document's
+  // unrelated imported record, even if both source names were equal.
+  RS_Graphic other;
+  REQUIRE(filter.fileImport(other, QString::fromStdString(source), RS2::FormatDXFRW));
+  auto *foreign = original->clone();
+  foreign->setImportedRecordId(original->importedRecordId());
+  foreign->setName(QStringLiteral("FOREIGN"));
+  other.addLayer(foreign);
+  REQUIRE(filter.fileExport(other, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto foreignLayer = recordGroupsWithValue(output, "LAYER", "2", "FOREIGN");
+  REQUIRE_FALSE(foreignLayer.empty());
+  CHECK(std::none_of(foreignLayer.begin(), foreignLayer.end(),
+                     [](const auto &group) { return group.first == "347"; }));
+  std::filesystem::remove(source);
+  std::filesystem::remove(output);
+  std::filesystem::remove(retry);
+}
+
+TEST_CASE("System codec retains all material dictionary targets for a layer",
+          "[system-codec][dxf][material][layer][transaction]") {
+  ensureSettings();
+  const auto source = tmpFile("system_layer_material_siblings_source.dxf");
+  const auto output = tmpFile("system_layer_material_siblings_output.dxf");
+  writeText(source,
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
+      "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n1\n"
+      "0\nLAYER\n5\n30\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+      "2\nRAWTEST\n70\n0\n62\n7\n6\nCONTINUOUS\n347\nA1\n"
+      "0\nENDTAB\n0\nENDSEC\n0\nSECTION\n2\nENTITIES\n0\nENDSEC\n"
+      "0\nSECTION\n2\nOBJECTS\n0\nDICTIONARY\n5\nC\n330\n0\n"
+      "100\nAcDbDictionary\n281\n1\n3\nACAD_MATERIAL\n350\nA0\n"
+      "0\nDICTIONARY\n5\nA0\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+      "3\nPlainMat\n350\nA1\n3\nSiblingMat\n350\nA2\n"
+      "0\nMATERIAL\n5\nA1\n330\nA0\n100\nAcDbMaterial\n1\nPlainMat\n"
+      "0\nMATERIAL\n5\nA2\n330\nA0\n100\nAcDbMaterial\n1\nSiblingMat\n"
+      "0\nENDSEC\n0\nEOF\n");
+  RS_Graphic graphic;
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto materials = recordGroupValues(output, "MATERIAL", "5");
+  REQUIRE(materials.size() == 2);
+  const auto layer = recordGroupsWithValue(output, "LAYER", "2", "RAWTEST");
+  CHECK(std::count(layer.begin(), layer.end(),
+                   std::make_pair(std::string("347"), materials.front())) == 1);
+  auto &raw = const_cast<std::vector<DRW_RawDxfObject>&>(
+      graphic.dwgAdvancedMetadata().rawDxfObjects());
+  const auto sibling = std::find_if(raw.begin(), raw.end(), [](const auto &record) {
+    return record.name == "MATERIAL" && record.handle == 0xA2u;
+  });
+  REQUIRE(sibling != raw.end());
+  const auto savedSibling = *sibling;
+  raw.erase(sibling);
+  const std::string sentinel = "preserve missing sibling destination\n";
+  writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream retained(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  retained.close();
+  raw.push_back(savedSibling);
+  auto &restoredSibling = raw.back();
+  const auto self = std::find_if(restoredSibling.groups.begin(), restoredSibling.groups.end(),
+                                 [](const auto &group) { return group.code() == 5; });
+  REQUIRE(self != restoredSibling.groups.end());
+  const auto selfIndex = static_cast<std::size_t>(
+      std::distance(restoredSibling.groups.begin(), self));
+  REQUIRE(restoredSibling.hasRawValues);
+  restoredSibling.rawValues[selfIndex] = "A3";
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream stillRetained(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(stillRetained), {}) == sentinel);
+  stillRetained.close();
+  restoredSibling.rawValues[selfIndex] = "A2";
+  auto &dictionaries = const_cast<std::vector<LC_DwgAdvancedMetadata::DictionaryRecord>&>(
+      graphic.dwgAdvancedMetadata().dictionaries());
+  const auto dictionary = std::find_if(dictionaries.begin(), dictionaries.end(),
+      [](const auto &record) { return record.handle == 0xA0u; });
+  REQUIRE(dictionary != dictionaries.end());
+  REQUIRE(dictionary->entries.size() == 2);
+  std::swap(dictionary->entries[0], dictionary->entries[1]);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream reordered(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(reordered), {}) == sentinel);
+  reordered.close();
+  std::swap(dictionary->entries[0], dictionary->entries[1]);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  RS_Graphic reread;
+  REQUIRE(filter.fileImport(reread, QString::fromStdString(output), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(reread, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(output, "MATERIAL", "5").size() == 2);
+  std::filesystem::remove(source);
+  std::filesystem::remove(output);
+}
+
+#if defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR)
+#ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
+TEST_CASE("System codec audits a material referenced only by an entity",
+          "[system-codec][dxf][material][transaction]") {
+  ensureSettings();
+  const auto source = tmpFile("system_entity_only_material_source.dxf");
+  const auto output = tmpFile("system_entity_only_material_output.dxf");
+  const std::string sourceHandle = GENERATE(std::string("A1"), std::string("14"));
+  const bool inBlock = GENERATE(false, true);
+  std::string input =
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n";
+  input += inBlock
+      ? "0\nSECTION\n2\nBLOCKS\n0\nBLOCK\n5\nB0\n8\n0\n2\nTESTBLOCK\n70\n0\n10\n0\n20\n0\n30\n0\n"
+      : "0\nSECTION\n2\nENTITIES\n";
+  input += "0\nLINE\n5\nA2\n100\nAcDbEntity\n"
+      "8\n0\n347\nA1\n100\nAcDbLine\n10\n0\n20\n0\n30\n0\n"
+      "11\n10\n21\n0\n31\n0\n";
+  if (inBlock) input += "0\nENDBLK\n5\nB1\n8\n0\n";
+  input += "0\nENDSEC\n"
+      "0\nSECTION\n2\nOBJECTS\n0\nDICTIONARY\n5\nC\n330\n0\n"
+      "100\nAcDbDictionary\n281\n1\n3\nACAD_MATERIAL\n350\nA0\n"
+      "0\nDICTIONARY\n5\nA0\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+      "3\nPlainMat\n350\nA1\n0\nMATERIAL\n5\nA1\n330\nA0\n"
+      "100\nAcDbMaterial\n1\nPlainMat\n0\nENDSEC\n0\nEOF\n";
+  if (sourceHandle != "A1") {
+    const std::string replacement = "\n" + sourceHandle + "\n";
+    for (std::size_t at = 0; (at = input.find("\nA1\n", at)) != std::string::npos;) {
+      input.replace(at, 4u, replacement);
+      at += replacement.size();
+    }
+  }
+  writeText(source, input);
+  RS_Graphic graphic;
+  struct MutatingFilter : RS_FilterDXFRW {
+    std::function<void()> afterObjects;
+    void writeObjects() override {
+      RS_FilterDXFRW::writeObjects();
+      if (afterObjects) afterObjects();
+    }
+  } filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  auto &materials = const_cast<std::vector<LC_DwgAdvancedMetadata::MaterialRecord>&>(
+      graphic.dwgAdvancedMetadata().materials());
+  REQUIRE(materials.size() == 1u);
+  const auto description = materials.front().description;
+  const std::string sentinel = "preserve entity material destination\n";
+  writeText(output, sentinel);
+  filter.afterObjects = [&] { materials.front().description = "late edit"; };
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream retained(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  retained.close();
+  materials.front().description = description;
+  filter.afterObjects = {};
+  auto *block = inBlock ? graphic.findBlock(QStringLiteral("TESTBLOCK")) : nullptr;
+  if (inBlock) REQUIRE(block != nullptr);
+  auto *line = inBlock ? block->firstEntity() : graphic.firstEntity();
+  REQUIRE(line != nullptr);
+  const auto materialHandle = line->materialHandle();
+  REQUIRE(materialHandle != 0u);
+  filter.afterObjects = [&] { line->setMaterialHandle(0u); };
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream changedEntity(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(changedEntity), {}) == sentinel);
+  changedEntity.close();
+  line->setMaterialHandle(materialHandle);
+  filter.afterObjects = {};
+  auto *implicitLayer = graphic.findLayer(QStringLiteral("0"));
+  REQUIRE(implicitLayer != nullptr);
+  filter.afterObjects = [&] { implicitLayer->setName(QStringLiteral("LATE_LAYER")); };
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream renamedLayer(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(renamedLayer), {}) == sentinel);
+  renamedLayer.close();
+  implicitLayer->setName(QStringLiteral("0"));
+  filter.afterObjects = {};
+  line->setMaterialHandle(0xB1u);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  line->setMaterialHandle(materialHandle);
+  const auto entityHandle = line->sourceHandle();
+  line->setSourceHandle(0u);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  line->setSourceHandle(entityHandle);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto materialHandles = recordGroupValues(output, "MATERIAL", "5");
+  REQUIRE(materialHandles.size() == 1u);
+  if (sourceHandle == "14") CHECK(materialHandles.front() != sourceHandle);
+  const auto lines = recordGroupValues(output, "LINE", "347");
+  REQUIRE(lines.size() == 1u);
+  CHECK(lines.front() == materialHandles.front());
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_ENTITY_MATERIAL_OUTPUT"))
+    std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+  std::filesystem::remove(source);
+  std::filesystem::remove(output);
+}
+#endif
+#ifdef LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR
+TEST_CASE("System codec audits a material referenced only by the header",
+          "[system-codec][dxf][material][transaction]") {
+  ensureSettings();
+  const auto source = tmpFile("system_header_only_material_source.dxf");
+  const auto output = tmpFile("system_header_only_material_output.dxf");
+  const bool withLayer = GENERATE(false, true);
+  const std::string sourceHandle = GENERATE(std::string("A1"), std::string("14"));
+  std::string input =
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n"
+      "9\n$CMATERIAL\n347\nA1\n0\nENDSEC\n";
+  if (withLayer) input +=
+      "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n1\n"
+      "0\nLAYER\n5\n30\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+      "2\nRAWTEST\n70\n0\n62\n7\n6\nCONTINUOUS\n"
+      "0\nENDTAB\n0\nENDSEC\n";
+  input += "0\nSECTION\n2\nENTITIES\n0\nENDSEC\n"
+      "0\nSECTION\n2\nOBJECTS\n0\nDICTIONARY\n5\nC\n330\n0\n"
+      "100\nAcDbDictionary\n281\n1\n3\nACAD_MATERIAL\n350\nA0\n"
+      "0\nDICTIONARY\n5\nA0\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+      "3\nPlainMat\n350\nA1\n0\nMATERIAL\n5\nA1\n330\nA0\n"
+      "100\nAcDbMaterial\n1\nPlainMat\n0\nENDSEC\n0\nEOF\n";
+  if (sourceHandle != "A1") {
+    const std::string replacement = "\n" + sourceHandle + "\n";
+    for (std::size_t at = 0; (at = input.find("\nA1\n", at)) != std::string::npos;) {
+      input.replace(at, 4u, replacement);
+      at += replacement.size();
+    }
+  }
+  writeText(source, input);
+  RS_Graphic graphic;
+  struct MutatingFilter : RS_FilterDXFRW {
+    std::function<void()> afterObjects;
+    void writeObjects() override {
+      RS_FilterDXFRW::writeObjects();
+      if (afterObjects) afterObjects();
+    }
+  } filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  auto &materials = const_cast<std::vector<LC_DwgAdvancedMetadata::MaterialRecord>&>(
+      graphic.dwgAdvancedMetadata().materials());
+  REQUIRE(materials.size() == 1u);
+  const auto description = materials.front().description;
+  const std::string sentinel = "preserve header-only material destination\n";
+  writeText(output, sentinel);
+  filter.afterObjects = [&] { materials.front().description = "late edit"; };
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream retained(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  retained.close();
+  materials.front().description = description;
+  filter.afterObjects = {};
+  graphic.addVariable("$CMATERIAL", QStringLiteral("B1"), 347);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream missingTarget(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(missingTarget), {}) == sentinel);
+  missingTarget.close();
+  graphic.addVariable("$CMATERIAL", QString::fromStdString(sourceHandle), 347);
+  filter.afterObjects = [&] { graphic.addVariable("$CMATERIAL", QStringLiteral("0"), 347); };
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream changedHeader(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(changedHeader), {}) == sentinel);
+  changedHeader.close();
+  graphic.addVariable("$CMATERIAL", QString::fromStdString(sourceHandle), 347);
+  filter.afterObjects = {};
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto materialHandles = recordGroupValues(output, "MATERIAL", "5");
+  REQUIRE(materialHandles.size() == 1u);
+  if (sourceHandle == "14") CHECK(materialHandles.front() != sourceHandle);
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_HEADER_MATERIAL_OUTPUT"))
+    std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+  RS_Graphic reread;
+  REQUIRE(filter.fileImport(reread, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto variables = reread.getVariableDict();
+  const auto current = variables.constFind(QStringLiteral("$CMATERIAL"));
+  REQUIRE(current != variables.cend());
+  CHECK(current->getString().toStdString() == materialHandles.front());
+  std::filesystem::remove(source);
+  std::filesystem::remove(output);
+}
+#endif
+TEST_CASE("System codec audits material graphs with more than 64 imported layers",
+          "[system-codec][dxf][material][layer][transaction]") {
+  ensureSettings();
+  const auto source = tmpFile("system_many_layer_material_source.dxf");
+  const auto output = tmpFile("system_many_layer_material_output.dxf");
+  std::string input =
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
+      "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n65\n";
+  for (unsigned i = 0; i < 65; ++i) {
+    std::ostringstream handle;
+    handle << std::hex << (0x100u + i);
+    input += "0\nLAYER\n5\n" + handle.str() +
+             "\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n2\nL" +
+             std::to_string(i) + "\n70\n0\n62\n7\n6\nCONTINUOUS\n";
+    if (i == 0) input += "347\nA1\n";
+  }
+  input += "0\nENDTAB\n0\nENDSEC\n0\nSECTION\n2\nENTITIES\n0\nENDSEC\n"
+           "0\nSECTION\n2\nOBJECTS\n0\nDICTIONARY\n5\nC\n330\n0\n"
+           "100\nAcDbDictionary\n281\n1\n3\nACAD_MATERIAL\n350\nA0\n"
+           "0\nDICTIONARY\n5\nA0\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+           "3\nPlainMat\n350\nA1\n0\nMATERIAL\n5\nA1\n330\nA0\n"
+           "100\nAcDbMaterial\n1\nPlainMat\n0\nENDSEC\n0\nEOF\n";
+  writeText(source, input);
+  RS_Graphic graphic;
+  struct MutatingFilter : RS_FilterDXFRW {
+    std::function<void()> afterObjects;
+    void writeObjects() override {
+      RS_FilterDXFRW::writeObjects();
+      if (afterObjects) afterObjects();
+    }
+  } filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  auto &materials = const_cast<std::vector<LC_DwgAdvancedMetadata::MaterialRecord>&>(
+      graphic.dwgAdvancedMetadata().materials());
+  REQUIRE(materials.size() == 1u);
+  const auto originalDescription = materials.front().description;
+  const std::string sentinel = "preserve destination after late mutation\n";
+  writeText(output, sentinel);
+  filter.afterObjects = [&] { materials.front().description = "late edit"; };
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream retained(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  retained.close();
+  materials.front().description = originalDescription;
+  filter.afterObjects = {};
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto materialHandles = recordGroupValues(output, "MATERIAL", "5");
+  REQUIRE(materialHandles.size() == 1u);
+  const auto linkedLayer = recordGroupsWithValue(output, "LAYER", "2", "L0");
+  CHECK(std::count(linkedLayer.begin(), linkedLayer.end(),
+                   std::make_pair(std::string("347"), materialHandles.front())) == 1);
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_MANY_LAYER_MATERIAL_OUTPUT"))
+    std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+  RS_Graphic reread;
+  REQUIRE(filter.fileImport(reread, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(reread.findLayer(QStringLiteral("L64")) != nullptr);
+  std::filesystem::remove(source);
+  std::filesystem::remove(output);
+}
+#endif
+
+TEST_CASE("System codec preserves an explicit null layer material",
+          "[system-codec][dxf][material][layer]") {
+  ensureSettings();
+  const auto source = tmpFile("system_layer_null_material_source.dxf");
+  const auto output = tmpFile("system_layer_null_material_output.dxf");
+  writeText(source,
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
+            "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n1\n"
+            "0\nLAYER\n5\n30\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+            "2\nRAWNULL\n70\n0\n62\n7\n6\nCONTINUOUS\n347\n0\n"
+            "0\nENDTAB\n0\nENDSEC\n0\nEOF\n");
+  RS_Graphic graphic;
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto groups = recordGroupsWithValue(output, "LAYER", "2", "RAWNULL");
+  CHECK(std::count(groups.begin(), groups.end(),
+                   std::make_pair(std::string("347"), std::string("0"))) == 1);
+  std::filesystem::remove(source);
+  std::filesystem::remove(output);
+}
+
+TEST_CASE("System codec refuses an incomplete raw-only material after metadata storage",
+          "[system-codec][dxf][material][transaction]") {
+  ensureSettings();
+  const auto output = tmpFile("system_raw_material_marker.dxf");
+  const std::string sentinel = "preserve material destination\n";
+  writeText(output, sentinel);
+  const auto source = tmpFile("system_raw_material_marker_source.dxf");
+  writeText(source, "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
+                    "0\nSECTION\n2\nOBJECTS\n0\nMATERIAL\n5\nF040\n330\n72\n"
+                    "100\nAcDbMaterial\n1\nRawOnly\n94\n63\n0\nENDSEC\n0\nEOF\n");
+  struct OptInFilter : RS_FilterDXFRW
+#ifndef LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR
+      , DRW_DxfSparseMaterialRawPolicy
+#endif
+  {
+    bool wantsDxfSparseMaterialRawCapture() const noexcept override { return true; }
+#ifdef LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR
+    bool wantsDxfSparseMaterialRawReplay() const noexcept override { return true; }
+#endif
+  };
+  // Ordinary import retains incomplete materials, while ordinary export
+  // remains guarded against losing their unqualified graph.
+  RS_Graphic legacy;
+  RS_FilterDXFRW legacyFilter;
+#ifdef LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR
+  REQUIRE(legacyFilter.fileImport(legacy, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(legacy.dwgAdvancedMetadata().materials().size() == 1u);
+  CHECK(legacy.dwgAdvancedMetadata().materials().front().requiresRawDxfReplay);
+  CHECK_FALSE(legacyFilter.fileExport(legacy, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+#else
+  CHECK_FALSE(legacyFilter.fileImport(legacy, QString::fromStdString(source), RS2::FormatDXFRW));
+#endif
+  RS_Graphic incomplete;
+  OptInFilter importer;
+  REQUIRE(importer.fileImport(incomplete, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(incomplete.dwgAdvancedMetadata().materials().size() == 1u);
+  CHECK(incomplete.dwgAdvancedMetadata().materials().front().requiresRawDxfReplay);
+  REQUIRE(incomplete.dwgAdvancedMetadata().rawDxfObjects().size() == 1u);
+  RS_FilterDXFRW filter;
+  for (const auto format : {RS2::FormatDXFRW, RS2::FormatDXFRW2010,
+                            RS2::FormatDXFRW2013, RS2::FormatDWG2010}) {
+    CHECK_FALSE(filter.fileExport(incomplete, QString::fromStdString(output), format));
+    std::ifstream retained(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  }
+  // Simulate a missing retained carrier. The incomplete typed record must not
+  // become an apparently successful but lossy fallback.
+  auto &rawObjects = const_cast<std::vector<DRW_RawDxfObject> &>(
+      incomplete.dwgAdvancedMetadata().rawDxfObjects());
+  rawObjects.clear();
+  CHECK_FALSE(filter.fileExport(incomplete, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream retainedAfterRemoval(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(retainedAfterRemoval), {}) == sentinel);
+  retainedAfterRemoval.close();
+
+  RS_Graphic complete;
+  complete.initForNewDocument();
+  DRW_Material material;
+  material.handle = 0xF040u;
+  material.m_name = "RawOnly";
+  complete.dwgAdvancedMetadata().addMaterial(material);
+  CHECK_FALSE(complete.dwgAdvancedMetadata().materials().front().requiresRawDxfReplay);
+  REQUIRE(filter.fileExport(complete, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(recordGroupValues(output, "MATERIAL", "1") == std::vector<std::string>{"RawOnly"});
+  std::filesystem::remove(source);
+  std::filesystem::remove(output);
+}
+
+#if defined(LIBDXFRW_HAS_DXF_VERSIONLESS_RAW_MATERIAL_CAPTURE)
+TEST_CASE("System codec retains versionless sparse material without replay",
+          "[system-codec][dxf][material][transaction]") {
+  ensureSettings();
+  const auto source = tmpFile("system_versionless_sparse_material.dxf");
+  const auto output = tmpFile("system_versionless_sparse_material_out.dxf");
+  writeText(source, "0\nSECTION\n2\nOBJECTS\n0\nMATERIAL\n5\nF040\n330\n72\n"
+                    "100\nAcDbMaterial\n1\nRawOnly\n94\n63\n0\nENDSEC\n0\nEOF\n");
+  const std::string sentinel = "preserve unversioned material destination\n";
+  writeText(output, sentinel);
+  RS_Graphic graphic;
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(graphic.dwgAdvancedMetadata().materials().size() == 1u);
+  CHECK(graphic.dwgAdvancedMetadata().materials().front().requiresRawDxfReplay);
+  CHECK(graphic.dwgAdvancedMetadata().materials().front().rawDxfSourceConflict);
+  REQUIRE(graphic.dwgAdvancedMetadata().rawDxfObjects().size() == 1u);
+  CHECK(graphic.dwgAdvancedMetadata().rawDxfObjects().front().m_version == DRW::UNKNOWNV);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+  std::filesystem::remove(source);
+  std::filesystem::remove(output);
+}
+#endif
+
+#if defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER) && \
+    defined(LIBDXFRW_HAS_DXF_DEFAULT_PLOT_PLACEHOLDER_HANDLE) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS) && \
+    defined(LIBDXFRW_HAS_DXF_PHYSICAL_IDENTITY_SOURCE_HANDLER) && \
+    defined(LIBDXFRW_HAS_DXF_BLOCK_RECORD_SOURCE_SELECTOR)
+TEST_CASE("Opt-in system codec replays an unchanged sparse material graph",
+          "[system-codec][dxf][material][transaction]") {
+  ensureSettings();
+  const auto source = tmpFile("system_sparse_graph_replay_source.dxf");
+  const auto output = tmpFile("system_sparse_graph_replay_output.dxf");
+  const std::string sourceHandle = GENERATE(std::string("A1"), std::string("14"));
+  const bool withSibling = GENERATE(false, true);
+  std::string input =
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n9\n$CMATERIAL\n347\nA1\n0\nENDSEC\n"
+      "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n1\n"
+      "0\nLAYER\n5\n30\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+      "2\nRAWTEST\n70\n0\n62\n7\n6\nCONTINUOUS\n347\nA1\n0\nENDTAB\n0\nENDSEC\n"
+      "0\nSECTION\n2\nENTITIES\n0\nLINE\n5\nA2\n100\nAcDbEntity\n8\nRAWTEST\n347\nA1\n"
+      "100\nAcDbLine\n10\n0\n20\n0\n30\n0\n11\n10\n21\n0\n31\n0\n0\nENDSEC\n"
+      "0\nSECTION\n2\nOBJECTS\n0\nDICTIONARY\n5\nC\n330\n0\n"
+      "100\nAcDbDictionary\n281\n1\n3\nACAD_MATERIAL\n350\nA0\n"
+      "0\nDICTIONARY\n5\nA0\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+      "3\nPlainMat\n350\nA1\n0\nMATERIAL\n5\nA1\n330\nA0\n"
+      "100\nAcDbMaterial\n1\nPlainMat\n94\n63\n0\nENDSEC\n0\nEOF\n";
+  if (withSibling) {
+    const std::string entry = "3\nPlainMat\n350\nA1\n";
+    const auto at = input.find(entry);
+    REQUIRE(at != std::string::npos);
+    input.insert(at + entry.size(), "3\nSibling\n350\nA3\n");
+    const auto end = input.rfind("0\nENDSEC\n0\nEOF\n");
+    REQUIRE(end != std::string::npos);
+    input.insert(end, "0\nMATERIAL\n5\nA3\n330\nA0\n100\nAcDbMaterial\n1\nSibling\n94\n127\n");
+  }
+  if (sourceHandle != "A1") {
+    const std::string replacement = "\n" + sourceHandle + "\n";
+    for (std::size_t at = 0; (at = input.find("\nA1\n", at)) != std::string::npos;) {
+      input.replace(at, 4u, replacement);
+      at += replacement.size();
+    }
+  }
+  writeText(source, input);
+  struct OptInFilter : RS_FilterDXFRW {
+    std::function<void()> afterObjects;
+    bool suppressUnmaterializedLine = false;
+    void addLine(const DRW_Line &line) override {
+      if (!suppressUnmaterializedLine || line.handle != 0xA5u)
+        RS_FilterDXFRW::addLine(line);
+    }
+#ifdef LIBDXFRW_HAS_DXF_PHYSICAL_IDENTITY_SOURCE_HANDLER
+    std::function<void(DRW_DxfIdentitySource &)> mutateIdentity;
+    void addDxfIdentitySource(const DRW_DxfIdentitySource &source) override {
+      auto copy = source;
+      if (mutateIdentity) mutateIdentity(copy);
+      RS_FilterDXFRW::addDxfIdentitySource(copy);
+    }
+#endif
+    bool wantsDxfSparseMaterialRawCapture() const noexcept override { return true; }
+    bool wantsDxfSparseMaterialRawReplay() const noexcept override { return true; }
+    void writeObjects() override {
+      RS_FilterDXFRW::writeObjects();
+      if (afterObjects) afterObjects();
+    }
+  } filter;
+  RS_Graphic graphic;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(graphic.dwgAdvancedMetadata().materials().size() == (withSibling ? 2u : 1u));
+  REQUIRE(graphic.dwgAdvancedMetadata().materials().front().requiresRawDxfReplay);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  {
+    auto withSecondLine = input;
+    const auto end = withSecondLine.find("0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n");
+    REQUIRE(end != std::string::npos);
+    withSecondLine.insert(end, "0\nLINE\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n"
+                               "100\nAcDbLine\n10\n0\n20\n1\n11\n10\n21\n1\n");
+    writeText(source, withSecondLine);
+    OptInFilter deliveryFilter;
+    deliveryFilter.suppressUnmaterializedLine = true;
+    RS_Graphic missing;
+    REQUIRE(deliveryFilter.fileImport(missing, QString::fromStdString(source), RS2::FormatDXFRW));
+    const std::string unchanged = "preserve undelivered line destination\n";
+    writeText(output, unchanged);
+    CHECK_FALSE(deliveryFilter.fileExport(missing, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == unchanged); }
+    deliveryFilter.suppressUnmaterializedLine = false;
+    RS_Graphic delivered;
+    REQUIRE(deliveryFilter.fileImport(delivered, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(deliveryFilter.fileExport(delivered, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK(countRecords(output, "LINE") == 2);
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_DELIVERED_MATERIAL_LINES"))
+      std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+    writeText(source, input);
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+  const std::vector<std::string> expectedFlags = withSibling ? std::vector<std::string>{"63", "127"}
+                                                              : std::vector<std::string>{"63"};
+  CHECK(recordGroupValues(output, "MATERIAL", "94") == expectedFlags);
+  const auto handles = recordGroupValues(output, "MATERIAL", "5");
+  REQUIRE(handles.size() == (withSibling ? 2u : 1u));
+  if (sourceHandle == "14") CHECK(handles.front() != sourceHandle);
+  CHECK(recordGroupValues(output, "LINE", "347") == std::vector<std::string>{handles.front()});
+  const auto layer = recordGroupsWithValue(output, "LAYER", "2", "RAWTEST");
+  CHECK(std::count(layer.begin(), layer.end(), std::make_pair(std::string("347"), handles.front())) == 1);
+  RS_Graphic reread;
+  REQUIRE(filter.fileImport(reread, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto variables = reread.getVariableDict();
+  const auto current = variables.constFind(QStringLiteral("$CMATERIAL"));
+  REQUIRE(current != variables.cend());
+  CHECK(current->getString().toStdString() == handles.front());
+  const auto resaved = tmpFile("system_sparse_graph_resave_output.dxf");
+  const std::string sentinel = "preserve sparse material destination\n";
+  const auto *reopenedLayer = reread.findLayer(QStringLiteral("RAWTEST"));
+  REQUIRE(reopenedLayer);
+  const auto *reopenedEntry = reread.dwgAdvancedMetadata().findLayerTableEntryByIdentity(reopenedLayer->importedRecordId());
+  REQUIRE(reopenedEntry);
+  auto *layerSource = const_cast<DRW_RawDxfObject*>(reread.dwgAdvancedMetadata().dxfMaterialLayerSource(reopenedEntry->handle));
+  REQUIRE(layerSource);
+  const auto plotStyle = std::find_if(layerSource->groups.begin(), layerSource->groups.end(),
+                                     [](const auto &group) { return group.code() == 390; });
+  REQUIRE(plotStyle != layerSource->groups.end());
+  const auto originalPlotStyle = *plotStyle;
+  plotStyle->addString(390, "FE");
+  writeText(resaved, sentinel);
+  CHECK_FALSE(filter.fileExport(reread, QString::fromStdString(resaved), RS2::FormatDXFRW));
+  { std::ifstream retained(resaved, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+  *plotStyle = originalPlotStyle;
+  REQUIRE(filter.fileExport(reread, QString::fromStdString(resaved), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(resaved, "MATERIAL", "94") == expectedFlags);
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_SPARSE_MATERIAL_RESAVED"))
+    std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
+  const auto expectRefusal = [&](RS2::FormatType format) {
+    writeText(output, sentinel);
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), format));
+    std::ifstream retained(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  };
+  {
+    std::string unsafe = input;
+    const auto at = unsafe.find("6\nCONTINUOUS\n347\n");
+    REQUIRE(at != std::string::npos);
+    unsafe.insert(at, "390\nFE\n");
+    const auto unsafeSource = tmpFile("system_sparse_graph_unqualified_plot_style.dxf");
+    writeText(unsafeSource, unsafe);
+    RS_Graphic unsafeGraphic;
+    OptInFilter unsafeFilter;
+    REQUIRE(unsafeFilter.fileImport(unsafeGraphic, QString::fromStdString(unsafeSource), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(unsafeFilter.fileExport(unsafeGraphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    std::filesystem::remove(unsafeSource);
+  }
+#ifdef LIBDXFRW_HAS_DXF_PHYSICAL_IDENTITY_SOURCE_HANDLER
+  {
+    const auto noEntitiesSource = tmpFile("system_sparse_material_no_entities.dxf");
+    auto noEntities = input;
+    const auto begin = noEntities.find("0\nSECTION\n2\nENTITIES\n");
+    REQUIRE(begin != std::string::npos);
+    const auto end = noEntities.find("0\nENDSEC\n", begin);
+    REQUIRE(end != std::string::npos);
+    noEntities.erase(begin, end + std::string("0\nENDSEC\n").size() - begin);
+    writeText(noEntitiesSource, noEntities);
+    RS_Graphic emptyGraphic;
+    OptInFilter emptyFilter;
+    REQUIRE(emptyFilter.fileImport(emptyGraphic, QString::fromStdString(noEntitiesSource), RS2::FormatDXFRW));
+    REQUIRE(emptyFilter.fileExport(emptyGraphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK(recordGroupValues(output, "LINE", "347").empty());
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_SPARSE_NO_ENTITIES_OUTPUT"))
+      std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+    for (int mode = 0; mode != 5; ++mode) {
+      OptInFilter alteredFilter;
+      alteredFilter.mutateIdentity = [mode](DRW_DxfIdentitySource &identity) {
+        const auto found = std::find_if(identity.records.begin(), identity.records.end(),
+            [](const auto &record) { return record.name == "LINE"; });
+        if (mode == 2) identity.status = DRW_DxfIdentitySource::Status::Quota;
+        else if (found != identity.records.end()) {
+          if (mode == 0) identity.records.erase(found);
+          else if (mode == 1) { const auto duplicate = *found; identity.records.push_back(duplicate); }
+          else ++found->endMarker.ordinal;
+        }
+      };
+      RS_Graphic alteredGraphic;
+      REQUIRE(alteredFilter.fileImport(alteredGraphic, QString::fromStdString(source), RS2::FormatDXFRW));
+      writeText(output, sentinel);
+      CHECK_FALSE(alteredFilter.fileExport(alteredGraphic, QString::fromStdString(output), RS2::FormatDXFRW));
+      { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+      alteredFilter.mutateIdentity = {};
+      RS_Graphic corrected;
+      REQUIRE(alteredFilter.fileImport(corrected, QString::fromStdString(source), RS2::FormatDXFRW));
+      REQUIRE(alteredFilter.fileExport(corrected, QString::fromStdString(output), RS2::FormatDXFRW));
+    }
+    std::filesystem::remove(noEntitiesSource);
+  }
+#endif
+  {
+    const auto duplicateSource = tmpFile("system_sparse_material_duplicate_group.dxf");
+    for (int mode = 0; mode != 3; ++mode) {
+      auto altered = input;
+      const std::string reference = "8\nRAWTEST\n347\n" + sourceHandle + "\n";
+      const auto at = altered.find(reference);
+      REQUIRE(at != std::string::npos);
+      if (mode < 2) {
+        altered.insert(at + std::string("8\nRAWTEST\n").size(),
+                       "347\n" + (mode == 0 ? std::string("0") : sourceHandle) + "\n");
+      } else {
+        const auto end = altered.find("0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n", at);
+        REQUIRE(end != std::string::npos);
+        altered.insert(end, "0\nLINE\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n347\n0\n"
+                            "100\nAcDbLine\n10\n0\n20\n0\n11\n1\n21\n1\n");
+      }
+      writeText(duplicateSource, altered);
+      RS_Graphic duplicateGraphic;
+      OptInFilter duplicateFilter;
+      REQUIRE(duplicateFilter.fileImport(duplicateGraphic, QString::fromStdString(duplicateSource), RS2::FormatDXFRW));
+      writeText(output, sentinel);
+      CHECK_FALSE(duplicateFilter.fileExport(duplicateGraphic, QString::fromStdString(output), RS2::FormatDXFRW));
+      { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+      writeText(duplicateSource, input);
+      RS_Graphic corrected;
+      REQUIRE(duplicateFilter.fileImport(corrected, QString::fromStdString(duplicateSource), RS2::FormatDXFRW));
+      REQUIRE(duplicateFilter.fileExport(corrected, QString::fromStdString(output), RS2::FormatDXFRW));
+    }
+    std::filesystem::remove(duplicateSource);
+  }
+  expectRefusal(RS2::FormatDXFRW2010);
+  expectRefusal(RS2::FormatDWG2010);
+  {
+    RS_FilterDXFRW defaultFilter;
+    RS_Graphic ordinary;
+    REQUIRE(defaultFilter.fileImport(ordinary, QString::fromStdString(source), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    REQUIRE(defaultFilter.fileExport(ordinary, QString::fromStdString(output), RS2::FormatDXFRW));
+    const auto ordinaryMaterials = recordGroupValues(output, "MATERIAL", "5");
+    REQUIRE(ordinaryMaterials.size() == (withSibling ? 2u : 1u));
+    CHECK(recordGroupValues(output, "LINE", "347") == std::vector<std::string>{ordinaryMaterials.front()});
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_ORDINARY_SPARSE_OUTPUT"))
+      std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+    RS_Graphic reopenedOrdinary;
+    RS_FilterDXFRW reopenFilter;
+    REQUIRE(reopenFilter.fileImport(reopenedOrdinary, QString::fromStdString(output), RS2::FormatDXFRW));
+    const auto ordinaryResave = tmpFile("system_sparse_ordinary_resave.dxf");
+    REQUIRE(reopenFilter.fileExport(reopenedOrdinary, QString::fromStdString(ordinaryResave), RS2::FormatDXFRW));
+    CHECK(recordGroupValues(ordinaryResave, "LINE", "347").size() == 1u);
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_ORDINARY_SPARSE_RESAVE"))
+      std::filesystem::copy_file(ordinaryResave, copy, std::filesystem::copy_options::overwrite_existing);
+    {
+      std::ifstream saved(output, std::ios::binary);
+      const std::string original((std::istreambuf_iterator<char>(saved)), {});
+      const auto unusual = tmpFile("system_sparse_ordinary_unusual_space.dxf");
+      for (const std::string marker : {"AcDbBlockTableRecord\n", "AcDbBlockBegin\n", "AcDbBlockEnd\n", "AcDbPlotSettings\n"}) {
+        INFO("source marker: " << marker);
+        auto altered = original;
+        const auto at = altered.find(marker); REQUIRE(at != std::string::npos);
+        altered.insert(at + marker.size(), "  4\nCUSTOM\n");
+        writeText(unusual, altered);
+        RS_Graphic unusualGraphic;
+        writeText(ordinaryResave, sentinel);
+        const bool imported = reopenFilter.fileImport(unusualGraphic, QString::fromStdString(unusual), RS2::FormatDXFRW);
+        if (marker != "AcDbBlockEnd\n") REQUIRE(imported);
+        if (imported)
+          CHECK_FALSE(reopenFilter.fileExport(unusualGraphic, QString::fromStdString(ordinaryResave), RS2::FormatDXFRW));
+        { std::ifstream retained(ordinaryResave, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+        RS_Graphic retry;
+        REQUIRE(reopenFilter.fileImport(retry, QString::fromStdString(output), RS2::FormatDXFRW));
+        REQUIRE(reopenFilter.fileExport(retry, QString::fromStdString(ordinaryResave), RS2::FormatDXFRW));
+      }
+      auto noPlotHandle = original;
+      const auto plotAt = noPlotHandle.find("\nPLOTSETTINGS\n"); REQUIRE(plotAt != std::string::npos);
+      const auto handleAt = noPlotHandle.find("  5\n", plotAt); REQUIRE(handleAt != std::string::npos);
+      const auto handleEnd = noPlotHandle.find('\n', handleAt + 4u); REQUIRE(handleEnd != std::string::npos);
+      noPlotHandle.erase(handleAt, handleEnd + 1u - handleAt);
+      writeText(unusual, noPlotHandle);
+      RS_Graphic withoutHandle;
+      writeText(ordinaryResave, sentinel);
+      if (reopenFilter.fileImport(withoutHandle, QString::fromStdString(unusual), RS2::FormatDXFRW))
+        CHECK_FALSE(reopenFilter.fileExport(withoutHandle, QString::fromStdString(ordinaryResave), RS2::FormatDXFRW));
+      { std::ifstream retained(ordinaryResave, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+      std::filesystem::remove(unusual);
+    }
+    std::filesystem::remove(ordinaryResave);
+    RS_FilterDXFRW anotherWriter;
+    REQUIRE(anotherWriter.fileExport(ordinary, QString::fromStdString(output), RS2::FormatDXFRW));
+    auto *activePlot = ordinary.getPlotSettings();
+    REQUIRE(activePlot);
+    activePlot->setMarginsInMm(1.0, 0.0, 0.0, 0.0);
+    writeText(output, sentinel);
+    CHECK_FALSE(anotherWriter.fileExport(ordinary, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    activePlot->setMarginsInMm(0.0, 0.0, 0.0, 0.0);
+    REQUIRE(anotherWriter.fileExport(ordinary, QString::fromStdString(output), RS2::FormatDXFRW));
+    auto *newPoint = new RS_Point(&ordinary, RS_Vector(2.0, 3.0, 1.0));
+    ordinary.addEntity(newPoint);
+    writeText(output, sentinel);
+    CHECK_FALSE(anotherWriter.fileExport(ordinary, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    REQUIRE(ordinary.removeEntity(newPoint));
+    REQUIRE(anotherWriter.fileExport(ordinary, QString::fromStdString(output), RS2::FormatDXFRW));
+    struct OrdinaryLateWriter : RS_FilterDXFRW {
+      std::function<void()> afterObjects;
+      void writeObjects() override {
+        RS_FilterDXFRW::writeObjects();
+        if (afterObjects) afterObjects();
+      }
+    } lateWriter;
+    auto &ordinaryMetadata = const_cast<std::vector<LC_DwgAdvancedMetadata::MaterialRecord>&>(
+        ordinary.dwgAdvancedMetadata().materials());
+    REQUIRE_FALSE(ordinaryMetadata.empty());
+    const auto description = ordinaryMetadata.front().description;
+    bool reachedObjects = false;
+    lateWriter.afterObjects = [&] { reachedObjects = true; ordinaryMetadata.front().description = "late edit"; };
+    writeText(output, sentinel);
+    CHECK_FALSE(lateWriter.fileExport(ordinary, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK(reachedObjects);
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    ordinaryMetadata.front().description = description;
+    lateWriter.afterObjects = {};
+    REQUIRE(lateWriter.fileExport(ordinary, QString::fromStdString(output), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(anotherWriter.fileExport(ordinary, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    const auto unqualifiedSource = tmpFile("system_sparse_ordinary_unqualified.dxf");
+    for (int mode = 0; mode != 4; ++mode) {
+      auto altered = input;
+      if (mode == 0) {
+        const auto at = altered.find("100\nAcDbLine\n"); REQUIRE(at != std::string::npos);
+        altered.insert(at + std::string("100\nAcDbLine\n").size(), "39\n1\n");
+      } else if (mode == 1) {
+        const auto at = altered.find("0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n"); REQUIRE(at != std::string::npos);
+        altered.insert(at, "0\nPOINT\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n"
+                           "100\nAcDbPoint\n10\n0\n20\n0\n30\n1\n");
+      } else if (mode == 2) {
+        const auto at = altered.find("0\nSECTION\n2\nENTITIES\n"); REQUIRE(at != std::string::npos);
+        altered.insert(at, "0\nSECTION\n2\nBLOCKS\n0\nBLOCK\n5\nB0\n8\n0\n2\nB\n70\n0\n"
+                           "10\n0\n20\n0\n30\n0\n0\nENDBLK\n5\nB1\n8\n0\n0\nENDSEC\n");
+      } else if (mode == 3) {
+        const auto at = altered.find("30\n0\n11\n10\n"); REQUIRE(at != std::string::npos);
+        altered.replace(at, std::string("30\n0\n").size(), "30\n1\n");
+      } else {
+        const std::string from = "0\nLINE\n5\nA2\n";
+        const auto at = altered.find(from); REQUIRE(at != std::string::npos);
+        altered.replace(at, from.size(), "0\nLINE\n5\n" + sourceHandle + "\n");
+      }
+      writeText(unqualifiedSource, altered);
+      RS_Graphic unqualified;
+      const bool imported = defaultFilter.fileImport(unqualified, QString::fromStdString(unqualifiedSource), RS2::FormatDXFRW);
+      if (mode != 4) REQUIRE(imported);
+      writeText(output, sentinel);
+      if (imported) CHECK_FALSE(defaultFilter.fileExport(unqualified, QString::fromStdString(output), RS2::FormatDXFRW));
+      { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+      RS_Graphic corrected;
+      REQUIRE(defaultFilter.fileImport(corrected, QString::fromStdString(source), RS2::FormatDXFRW));
+      REQUIRE(defaultFilter.fileExport(corrected, QString::fromStdString(output), RS2::FormatDXFRW));
+    }
+    std::filesystem::remove(unqualifiedSource);
+    struct DifferentLineFilter : RS_FilterDXFRW {
+      bool change = true;
+      bool suppressSecond = false;
+      bool changeColor = false;
+      bool duplicatePhysicalIdentity = false;
+      bool alterPhysicalCoordinate = false;
+      void addDxfEntitiesSource(const DRW_DxfEntitiesSource &source) override {
+        auto copy = source;
+        if (alterPhysicalCoordinate && !copy.records.empty()) {
+          auto &record = copy.records.front();
+          for (std::size_t i = 0; i < record.groups.size(); ++i)
+            if (record.groups[i].code() == 10) { record.rawValues[i] = "999"; break; }
+        }
+        RS_FilterDXFRW::addDxfEntitiesSource(copy);
+      }
+      void addDxfIdentitySource(const DRW_DxfIdentitySource &source) override {
+        auto copy = source;
+        if (duplicatePhysicalIdentity) {
+          const auto candidate = std::find_if(copy.candidates.begin(), copy.candidates.end(),
+              [](const auto &item) { return item.scope == DRW_DxfIdentitySource::Scope::Outer; });
+          if (candidate != copy.candidates.end()) {
+            const auto duplicate = *candidate;
+            copy.candidates.push_back(duplicate);
+          }
+        }
+        RS_FilterDXFRW::addDxfIdentitySource(copy);
+      }
+      void addLine(const DRW_Line &data) override {
+        if (suppressSecond && data.handle == 0xA5u) return;
+        DRW_Line changed = data;
+        if (change) changed.basePoint.x += 1.0;
+        if (changeColor) changed.color = 1;
+        RS_FilterDXFRW::addLine(changed);
+      }
+    } different;
+    RS_Graphic changed;
+    REQUIRE(different.fileImport(changed, QString::fromStdString(source), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(different.fileExport(changed, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    different.change = false;
+    RS_Graphic corrected;
+    REQUIRE(different.fileImport(corrected, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(different.fileExport(corrected, QString::fromStdString(output), RS2::FormatDXFRW));
+    different.changeColor = true;
+    RS_Graphic recolored;
+    REQUIRE(different.fileImport(recolored, QString::fromStdString(source), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(different.fileExport(recolored, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    different.changeColor = false;
+    different.duplicatePhysicalIdentity = true;
+    RS_Graphic collision;
+    REQUIRE(different.fileImport(collision, QString::fromStdString(source), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(different.fileExport(collision, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    different.duplicatePhysicalIdentity = false;
+    RS_Graphic noCollision;
+    REQUIRE(different.fileImport(noCollision, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(different.fileExport(noCollision, QString::fromStdString(output), RS2::FormatDXFRW));
+    different.alterPhysicalCoordinate = true;
+    RS_Graphic changedPhysical;
+    REQUIRE(different.fileImport(changedPhysical, QString::fromStdString(source), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(different.fileExport(changedPhysical, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    different.alterPhysicalCoordinate = false;
+    RS_Graphic validPhysical;
+    REQUIRE(different.fileImport(validPhysical, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(different.fileExport(validPhysical, QString::fromStdString(output), RS2::FormatDXFRW));
+    auto twoLines = input;
+    const auto end = twoLines.find("0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n");
+    REQUIRE(end != std::string::npos);
+    twoLines.insert(end, "0\nLINE\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n"
+                         "100\nAcDbLine\n10\n0\n20\n1\n11\n10\n21\n1\n");
+    writeText(unqualifiedSource, twoLines);
+    different.suppressSecond = true;
+    RS_Graphic missing;
+    REQUIRE(different.fileImport(missing, QString::fromStdString(unqualifiedSource), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(different.fileExport(missing, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    different.suppressSecond = false;
+    RS_Graphic complete;
+    REQUIRE(different.fileImport(complete, QString::fromStdString(unqualifiedSource), RS2::FormatDXFRW));
+    RS_Line *editable = nullptr, *linked = nullptr;
+    for (RS_Entity *entity : complete)
+      if (entity && entity->rtti() == RS2::EntityLine) {
+        if (entity->sourceHandle() == 0xA5u) editable = static_cast<RS_Line *>(entity);
+        if (entity->sourceHandle() == 0xA2u) linked = static_cast<RS_Line *>(entity);
+      }
+    REQUIRE(editable); REQUIRE(linked);
+    editable->setEndpoint(RS_Vector(20.0, 1.0));
+    linked->setEndpoint(RS_Vector(12.0, 0.0));
+    REQUIRE(different.fileExport(complete, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK(countRecords(output, "LINE") == 2);
+    CHECK(recordGroupValues(output, "LINE", "11") == std::vector<std::string>{"12", "20"});
+    RS_Graphic editedReopen;
+    REQUIRE(different.fileImport(editedReopen, QString::fromStdString(output), RS2::FormatDXFRW));
+    REQUIRE(different.fileExport(editedReopen, QString::fromStdString(ordinaryResave), RS2::FormatDXFRW));
+    CHECK(recordGroupValues(ordinaryResave, "LINE", "11") == std::vector<std::string>{"12", "20"});
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_ORDINARY_EDITED_RESAVE"))
+      std::filesystem::copy_file(ordinaryResave, copy, std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::remove(ordinaryResave);
+    std::filesystem::remove(unqualifiedSource);
+  }
+  // A handle's complete byte sequence must be validated, not just the C
+  // string prefix before an embedded NUL. Mutate both retained copies to
+  // model a malformed source consistently, then require preflight refusal.
+  {
+    auto *dictionarySource = const_cast<DRW_RawDxfObject *>(
+        graphic.dwgAdvancedMetadata().dxfMaterialDictionarySource());
+    REQUIRE(dictionarySource);
+    auto &objects = const_cast<std::vector<DRW_RawDxfObject> &>(
+        graphic.dwgAdvancedMetadata().rawDxfObjects());
+    const auto found = std::find_if(objects.begin(), objects.end(), [&](const auto &object) {
+      return object.name == "DICTIONARY" && object.handle == dictionarySource->handle;
+    });
+    REQUIRE(found != objects.end());
+    auto &dictionaryRaw = *found;
+    REQUIRE(dictionarySource->hasRawValues); REQUIRE(dictionaryRaw.hasRawValues);
+    const std::vector<std::pair<int, std::string>> probes = {{5, "A0"}, {330, "C"}, {350, sourceHandle}};
+    for (const auto &probe : probes) {
+      auto sourceGroup = std::find_if(dictionarySource->groups.begin(), dictionarySource->groups.end(),
+          [&](const auto &group) { return group.code() == probe.first && group.c_str() && probe.second == group.c_str(); });
+      auto rawGroup = std::find_if(dictionaryRaw.groups.begin(), dictionaryRaw.groups.end(),
+          [&](const auto &group) { return group.code() == probe.first && group.c_str() && probe.second == group.c_str(); });
+      REQUIRE(sourceGroup != dictionarySource->groups.end()); REQUIRE(rawGroup != dictionaryRaw.groups.end());
+      const auto sourceIndex = static_cast<std::size_t>(sourceGroup - dictionarySource->groups.begin());
+      const auto rawIndex = static_cast<std::size_t>(rawGroup - dictionaryRaw.groups.begin());
+      const auto savedSourceGroup = *sourceGroup, savedRawGroup = *rawGroup;
+      const auto savedSourceValue = dictionarySource->rawValues[sourceIndex], savedRawValue = dictionaryRaw.rawValues[rawIndex];
+      const std::string malformed = probe.second + std::string("\0BAD", 4);
+      for (int mode = 0; mode != 3; ++mode) {
+        if (mode != 1) { sourceGroup->addString(probe.first, malformed); rawGroup->addString(probe.first, malformed); }
+        if (mode != 2) { dictionarySource->rawValues[sourceIndex] = malformed; dictionaryRaw.rawValues[rawIndex] = malformed; }
+        bool reachedObjects = false;
+        filter.afterObjects = [&] { reachedObjects = true; };
+        expectRefusal(RS2::FormatDXFRW);
+        CHECK_FALSE(reachedObjects);
+        *sourceGroup = savedSourceGroup; *rawGroup = savedRawGroup;
+        dictionarySource->rawValues[sourceIndex] = savedSourceValue; dictionaryRaw.rawValues[rawIndex] = savedRawValue;
+        filter.afterObjects = {};
+        REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+      }
+    }
+  }
+  auto &materials = const_cast<std::vector<LC_DwgAdvancedMetadata::MaterialRecord>&>(
+      graphic.dwgAdvancedMetadata().materials());
+  const auto description = materials.front().description;
+  filter.afterObjects = [&] { materials.front().description = "late edit"; };
+  expectRefusal(RS2::FormatDXFRW);
+  materials.front().description = description;
+  filter.afterObjects = {};
+  auto &raw = const_cast<std::vector<DRW_RawDxfObject>&>(graphic.dwgAdvancedMetadata().rawDxfObjects());
+  const auto carrier = std::find_if(raw.begin(), raw.end(), [](const auto &record) { return record.name == "MATERIAL"; });
+  REQUIRE(carrier != raw.end());
+  const auto tail = std::find_if(carrier->groups.begin(), carrier->groups.end(),
+                                 [](const auto &group) { return group.code() == 94; });
+  REQUIRE(tail != carrier->groups.end());
+  const auto savedTail = *tail;
+  tail->addInt(94, 64);
+  expectRefusal(RS2::FormatDXFRW);
+  *tail = savedTail;
+  filter.afterObjects = [&] { tail->addInt(94, 64); };
+  expectRefusal(RS2::FormatDXFRW);
+  *tail = savedTail;
+  filter.afterObjects = {};
+  auto *line = graphic.firstEntity();
+  REQUIRE(line != nullptr);
+  const auto originalReference = line->materialHandle();
+  // Source graph identity must be checked before output, not just compared
+  // with a fresh snapshot taken after a prior edit.
+  line->setMaterialHandle(0u);
+  expectRefusal(RS2::FormatDXFRW);
+  line->setMaterialHandle(originalReference);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  if (withSibling) {
+    line->setMaterialHandle(0xA3u);
+    expectRefusal(RS2::FormatDXFRW);
+    line->setMaterialHandle(originalReference);
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+  line->setFlag(RS2::FlagDeleted);
+  expectRefusal(RS2::FormatDXFRW);
+  line->delFlag(RS2::FlagDeleted);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  auto *duplicate = new RS_Line(&graphic, RS_LineData(RS_Vector(0.0, 1.0), RS_Vector(1.0, 1.0)));
+  duplicate->setSourceHandle(line->sourceHandle());
+  graphic.addEntity(duplicate);
+  bool reachedDuplicateObjects = false;
+  filter.afterObjects = [&] { reachedDuplicateObjects = true; };
+  expectRefusal(RS2::FormatDXFRW);
+  CHECK_FALSE(reachedDuplicateObjects);
+  duplicate->setFlag(RS2::FlagDeleted);
+  filter.afterObjects = {};
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  filter.afterObjects = [&] { line->setMaterialHandle(0u); };
+  expectRefusal(RS2::FormatDXFRW);
+  line->setMaterialHandle(originalReference);
+  filter.afterObjects = {};
+  line->setReactorHandles({0xA0u});
+  expectRefusal(RS2::FormatDXFRW);
+  line->setReactorHandles({});
+  filter.afterObjects = [&] { line->setXDictHandle(0xA0u); };
+  expectRefusal(RS2::FormatDXFRW);
+  line->setXDictHandle(0u);
+  filter.afterObjects = {};
+  const auto originalExtData = line->getDrwExtData();
+  line->setDrwExtData({std::make_shared<DRW_Variant>(1005, std::string("A0"))});
+  expectRefusal(RS2::FormatDXFRW);
+  line->setDrwExtData(originalExtData);
+  const auto savedSource = materials.front().rawDxfSource;
+  materials.front().rawDxfSource.reset();
+  expectRefusal(RS2::FormatDXFRW);
+  materials.front().rawDxfSource = savedSource;
+  if (withSibling) {
+    const auto sibling = std::find_if(raw.begin(), raw.end(), [](const auto &record) {
+      return record.name == "MATERIAL" && record.handle == 0xA3u;
+    });
+    REQUIRE(sibling != raw.end());
+    const auto saved = *sibling;
+    raw.erase(sibling);
+    expectRefusal(RS2::FormatDXFRW);
+    raw.push_back(saved);
+  }
+  DRW_RawDxfObject unrelated;
+  unrelated.name = "XRECORD";
+  unrelated.handle = 0xF200u;
+  unrelated.parentHandle = 0xA0u;
+  unrelated.m_version = DRW::AC1021;
+  raw.push_back(unrelated);
+  expectRefusal(RS2::FormatDXFRW);
+  raw.pop_back();
+  DRW_Material orphan;
+  orphan.handle = 0xF100u;
+  orphan.m_name = "Orphan";
+  graphic.dwgAdvancedMetadata().addMaterial(orphan);
+  expectRefusal(RS2::FormatDXFRW);
+  materials.pop_back();
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_SPARSE_MATERIAL_OUTPUT"))
+    std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+  std::filesystem::remove(source);
+  std::filesystem::remove(output);
+  std::filesystem::remove(resaved);
+}
+
+TEST_CASE("Ordinary sparse material saves simple points", "[system-codec][dxf][material][transaction][point]") {
+  ensureSettings();
+  const auto source = tmpFile("system_sparse_point_source.dxf");
+  const auto output = tmpFile("system_sparse_point_output.dxf");
+  const auto resaved = tmpFile("system_sparse_point_resave.dxf");
+  const std::string input =
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n9\n$CMATERIAL\n347\nA1\n0\nENDSEC\n"
+      "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n1\n"
+      "0\nLAYER\n5\n30\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+      "2\nRAWTEST\n70\n0\n62\n7\n6\nCONTINUOUS\n347\nA1\n0\nENDTAB\n0\nENDSEC\n"
+      "0\nSECTION\n2\nENTITIES\n0\nPOINT\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n62\n2\n347\nA1\n"
+      "100\nAcDbPoint\n10\n2\n20\n3\n30\n0\n"
+      "0\nPOINT\n5\nA6\n100\nAcDbEntity\n8\nRAWTEST\n100\nAcDbPoint\n10\n4\n20\n5\n"
+      "0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n0\nDICTIONARY\n5\nC\n330\n0\n"
+      "100\nAcDbDictionary\n281\n1\n3\nACAD_MATERIAL\n350\nA0\n"
+      "0\nDICTIONARY\n5\nA0\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+      "3\nPlainMat\n350\nA1\n0\nMATERIAL\n5\nA1\n330\nA0\n"
+      "100\nAcDbMaterial\n1\nPlainMat\n94\n63\n0\nENDSEC\n0\nEOF\n";
+  writeText(source, input);
+  RS_FilterDXFRW filter; RS_Graphic graphic;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  RS_Point *point = nullptr;
+  for (RS_Entity *entity : graphic)
+    if (entity && entity->sourceHandle() == 0xA5u && entity->rtti() == RS2::EntityPoint)
+      point = static_cast<RS_Point *>(entity);
+  REQUIRE(point); CHECK(point->materialHandle() == 0xA1u);
+  point->setPos(RS_Vector(6.0, 7.0));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(output, "POINT", "10") == std::vector<std::string>{"6", "4"});
+  CHECK(recordGroupValues(output, "POINT", "20") == std::vector<std::string>{"7", "5"});
+  const auto material = recordGroupValues(output, "MATERIAL", "5"); REQUIRE(material.size() == 1u);
+  CHECK(recordGroupValues(output, "POINT", "347") == std::vector<std::string>{material.front()});
+  RS_Graphic reopened;
+  REQUIRE(filter.fileImport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(reopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(resaved, "POINT", "10") == std::vector<std::string>{"6", "4"});
+  auto *layer = graphic.findLayer(QStringLiteral("RAWTEST")); REQUIRE(layer);
+  auto *added = new RS_Point(&graphic, RS_Vector(8.0, 9.0));
+  added->setLayer(layer); added->setPen(point->getPen(false)); graphic.addEntity(added);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  RS_Graphic additions;
+  REQUIRE(filter.fileImport(additions, QString::fromStdString(output), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(additions, QString::fromStdString(resaved), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(resaved, "POINT", "10") == std::vector<std::string>{"6", "4", "8"});
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_ORDINARY_SPARSE_POINT"))
+    std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
+  REQUIRE(graphic.removeEntity(added));
+  const std::string sentinel = "preserve sparse point destination\n";
+  for (const std::string extra : {"30\n2\n", "39\n1\n", "50\n30\n", "210\n0\n220\n1\n230\n0\n"}) {
+    auto unsupported = input;
+    const auto at = unsupported.find("100\nAcDbPoint\n10\n2\n20\n3\n30\n0\n"); REQUIRE(at != std::string::npos);
+    unsupported.replace(at, std::string("100\nAcDbPoint\n10\n2\n20\n3\n30\n0\n").size(),
+                        "100\nAcDbPoint\n10\n2\n20\n3\n" + extra);
+    writeText(source, unsupported); RS_Graphic rejected; writeText(output, sentinel);
+    if (filter.fileImport(rejected, QString::fromStdString(source), RS2::FormatDXFRW))
+      CHECK_FALSE(filter.fileExport(rejected, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+  struct PointDeliveryProbe : RS_FilterDXFRW {
+    std::uint32_t suppress = 0;
+    bool alterTyped = false, alterPhysical = false;
+    void addPoint(const DRW_Point &data) override {
+      if (data.handle == suppress) return;
+      DRW_Point changed = data;
+      if (alterTyped && data.handle == 0xA5u) changed.basePoint.x += 1.0;
+      RS_FilterDXFRW::addPoint(changed);
+    }
+    void addDxfEntitiesSource(const DRW_DxfEntitiesSource &data) override {
+      auto copy = data;
+      if (alterPhysical) for (auto &record : copy.records)
+        if (record.name == "POINT") for (std::size_t i = 0; i < record.groups.size(); ++i)
+          if (record.groups[i].code() == 10) { record.rawValues[i] = "999"; break; }
+      RS_FilterDXFRW::addDxfEntitiesSource(copy);
+    }
+  } probe;
+  writeText(source, input);
+  for (int mode = 0; mode != 4; ++mode) {
+    probe.suppress = mode == 0 ? 0xA5u : mode == 1 ? 0xA6u : 0;
+    probe.alterTyped = mode == 2; probe.alterPhysical = mode == 3;
+    RS_Graphic rejected;
+    REQUIRE(probe.fileImport(rejected, QString::fromStdString(source), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(probe.fileExport(rejected, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    probe.suppress = 0; probe.alterTyped = probe.alterPhysical = false;
+    RS_Graphic retry;
+    REQUIRE(probe.fileImport(retry, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(probe.fileExport(retry, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+  std::filesystem::remove(source); std::filesystem::remove(output); std::filesystem::remove(resaved);
+}
+
+static std::string sparseMaterialPointSource(const char *version) {
+  return std::string(
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\n") + version + "\n9\n$CMATERIAL\n347\nA1\n0\nENDSEC\n"
+      "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n5\n31\n100\nAcDbSymbolTable\n70\n1\n"
+      "0\nLAYER\n5\n30\n330\n31\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+      "2\nRAWTEST\n70\n0\n62\n7\n6\nCONTINUOUS\n347\nA1\n0\nENDTAB\n0\nENDSEC\n"
+      "0\nSECTION\n2\nENTITIES\n0\nPOINT\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n62\n2\n347\nA1\n"
+      "100\nAcDbPoint\n10\n2\n20\n3\n30\n0\n"
+      "0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n0\nDICTIONARY\n5\nC\n330\n0\n"
+      "100\nAcDbDictionary\n281\n1\n3\nACAD_MATERIAL\n350\nA0\n"
+      "0\nDICTIONARY\n5\nA0\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+      "3\nPlainMat\n350\nA1\n0\nMATERIAL\n5\nA1\n330\nA0\n"
+      "100\nAcDbMaterial\n1\nPlainMat\n94\n63\n0\nENDSEC\n0\nEOF\n";
+}
+
+TEST_CASE("Ordinary sparse material saves planar points across versions",
+          "[system-codec][dxf][material][transaction][point]") {
+  ensureSettings();
+  const auto format = GENERATE(RS2::FormatDXFRW, RS2::FormatDXFRW2010,
+                               RS2::FormatDXFRW2013, RS2::FormatDXFRW2018);
+  const char *version = format == RS2::FormatDXFRW ? "AC1021" :
+                        format == RS2::FormatDXFRW2010 ? "AC1024" :
+                        format == RS2::FormatDXFRW2013 ? "AC1027" : "AC1032";
+  const auto source = tmpFile("material_point_version_source.dxf");
+  const auto output = tmpFile("material_point_version_output.dxf");
+  const auto resaved = tmpFile("material_point_version_resaved.dxf");
+  const std::string input = sparseMaterialPointSource(version);
+  writeText(source, input);
+  RS_FilterDXFRW filter; RS_Graphic graphic;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), format));
+  RS_Point *point = nullptr;
+  for (RS_Entity *entity : graphic)
+    if (entity && entity->sourceHandle() == 0xA5u && entity->rtti() == RS2::EntityPoint)
+      point = static_cast<RS_Point *>(entity);
+  REQUIRE(point); REQUIRE(point->materialHandle() == 0xA1u);
+  point->setPos(RS_Vector(6, 7));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), format));
+  const auto material = recordGroupValues(output, "MATERIAL", "5"); REQUIRE(material.size() == 1u);
+  CHECK(recordGroupValues(output, "POINT", "347") == material);
+  CHECK(recordGroupValues(output, "POINT", "10") == std::vector<std::string>{"6"});
+  CHECK(recordGroupValues(output, "POINT", "20") == std::vector<std::string>{"7"});
+  RS_Graphic reopened;
+  REQUIRE(filter.fileImport(reopened, QString::fromStdString(output), format));
+  REQUIRE(filter.fileExport(reopened, QString::fromStdString(resaved), format));
+  CHECK(recordGroupValues(resaved, "POINT", "347") == recordGroupValues(resaved, "MATERIAL", "5"));
+  const std::string sentinel = "preserve cross-version material destination";
+  writeText(output, sentinel);
+  const auto other = format == RS2::FormatDXFRW ? RS2::FormatDXFRW2010 : RS2::FormatDXFRW;
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), other));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), format));
+  if (format != RS2::FormatDXFRW) {
+    auto *image = new RS_Image(&graphic, RS_ImageData(0, RS_Vector(1, 2), RS_Vector(1, 0),
+        RS_Vector(0, 1), RS_Vector(16, 12), QStringLiteral("unqualified.png"), 50, 50, 0));
+    image->setLayer(point->getLayer(false)); image->setPen(point->getPen(false)); graphic.addEntity(image);
+    writeText(output, sentinel);
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), format));
+    { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+    REQUIRE(graphic.removeEntity(image));
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), format));
+    auto elevated = input;
+    const auto at = elevated.find("100\nAcDbPoint\n10\n2\n20\n3\n30\n0\n");
+    REQUIRE(at != std::string::npos);
+    elevated.replace(at, std::string("100\nAcDbPoint\n10\n2\n20\n3\n30\n0\n").size(),
+                     "100\nAcDbPoint\n10\n2\n20\n3\n30\n1\n");
+    writeText(source, elevated); RS_Graphic rejected;
+    REQUIRE(filter.fileImport(rejected, QString::fromStdString(source), format));
+    writeText(output, sentinel);
+    CHECK_FALSE(filter.fileExport(rejected, QString::fromStdString(output), format));
+    { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+    writeText(source, input);
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), format));
+    struct PointDeliveryProbe : RS_FilterDXFRW {
+      bool alterTyped = false, alterPhysical = false;
+      void addPoint(const DRW_Point &data) override {
+        DRW_Point changed = data;
+        if (alterTyped) changed.basePoint.x += 1.0;
+        RS_FilterDXFRW::addPoint(changed);
+      }
+      void addDxfEntitiesSource(const DRW_DxfEntitiesSource &data) override {
+        auto changed = data;
+        if (alterPhysical) for (auto &record : changed.records)
+          if (record.name == "POINT") for (std::size_t i = 0; i < record.groups.size(); ++i)
+            if (record.groups[i].code() == 10) { record.rawValues[i] = "999"; break; }
+        RS_FilterDXFRW::addDxfEntitiesSource(changed);
+      }
+    } probe;
+    for (int mode = 0; mode != 2; ++mode) {
+      probe.alterTyped = mode == 0; probe.alterPhysical = mode == 1;
+      RS_Graphic mismatched;
+      REQUIRE(probe.fileImport(mismatched, QString::fromStdString(source), format));
+      writeText(output, sentinel);
+      CHECK_FALSE(probe.fileExport(mismatched, QString::fromStdString(output), format));
+      { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+      probe.alterTyped = probe.alterPhysical = false;
+      RS_Graphic retry;
+      REQUIRE(probe.fileImport(retry, QString::fromStdString(source), format));
+      REQUIRE(probe.fileExport(retry, QString::fromStdString(output), format));
+    }
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), format));
+  }
+  if (const char *prefix = std::getenv("LIBRECAD_KEEP_VERSIONED_MATERIAL")) {
+    std::filesystem::copy_file(source, std::string(prefix) + "." + version + ".source.dxf", std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::copy_file(output, std::string(prefix) + "." + version + ".output.dxf", std::filesystem::copy_options::overwrite_existing);
+  }
+  std::filesystem::remove(source); std::filesystem::remove(output); std::filesystem::remove(resaved);
+}
+
+TEST_CASE("Ordinary sparse material saves planar lines across versions",
+          "[system-codec][dxf][material][transaction][line]") {
+  ensureSettings();
+  const auto format = GENERATE(RS2::FormatDXFRW2010, RS2::FormatDXFRW2013, RS2::FormatDXFRW2018);
+  const char *version = format == RS2::FormatDXFRW2010 ? "AC1024" :
+                        format == RS2::FormatDXFRW2013 ? "AC1027" : "AC1032";
+  const auto source = tmpFile("material_line_version_source.dxf");
+  const auto output = tmpFile("material_line_version_output.dxf");
+  const auto resaved = tmpFile("material_line_version_resaved.dxf");
+  auto input = sparseMaterialPointSource(version);
+  const auto at = input.find("0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n"); REQUIRE(at != std::string::npos);
+  input.insert(at, "0\nLINE\n5\nA6\n100\nAcDbEntity\n8\nRAWTEST\n62\n2\n347\nA1\n"
+                   "100\nAcDbLine\n10\n1\n20\n2\n30\n0\n11\n8\n21\n9\n31\n0\n");
+  writeText(source, input);
+  RS_FilterDXFRW filter; RS_Graphic graphic;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), format));
+  RS_Line *line = nullptr;
+  for (RS_Entity *entity : graphic)
+    if (entity && entity->sourceHandle() == 0xA6u && entity->rtti() == RS2::EntityLine)
+      line = static_cast<RS_Line *>(entity);
+  REQUIRE(line); REQUIRE(line->materialHandle() == 0xA1u);
+  line->move(RS_Vector(10, 20));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), format));
+  CHECK(recordGroupValues(output, "LINE", "10") == std::vector<std::string>{"11"});
+  CHECK(recordGroupValues(output, "LINE", "20") == std::vector<std::string>{"22"});
+  CHECK(recordGroupValues(output, "LINE", "11") == std::vector<std::string>{"18"});
+  CHECK(recordGroupValues(output, "LINE", "21") == std::vector<std::string>{"29"});
+  CHECK(recordGroupValues(output, "LINE", "347") == recordGroupValues(output, "MATERIAL", "5"));
+  RS_Graphic reopened; REQUIRE(filter.fileImport(reopened, QString::fromStdString(output), format));
+  REQUIRE(filter.fileExport(reopened, QString::fromStdString(resaved), format));
+  CHECK(recordGroupValues(resaved, "LINE", "347") == recordGroupValues(resaved, "MATERIAL", "5"));
+  struct DeliveryProbe : RS_FilterDXFRW {
+    bool alter = true;
+    void addLine(const DRW_Line &data) override {
+      auto changed = data; if (alter) changed.basePoint.x += 1;
+      RS_FilterDXFRW::addLine(changed);
+    }
+  } probe;
+  RS_Graphic mismatched; REQUIRE(probe.fileImport(mismatched, QString::fromStdString(source), format));
+  const std::string sentinel = "preserve mismatched material line";
+  writeText(output, sentinel); CHECK_FALSE(probe.fileExport(mismatched, QString::fromStdString(output), format));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  probe.alter = false; RS_Graphic retry;
+  REQUIRE(probe.fileImport(retry, QString::fromStdString(source), format));
+  REQUIRE(probe.fileExport(retry, QString::fromStdString(output), format));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), format));
+  if (const char *prefix = std::getenv("LIBRECAD_KEEP_VERSIONED_MATERIAL_LINE")) {
+    std::filesystem::copy_file(source, std::string(prefix) + "." + version + ".source.dxf", std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::copy_file(output, std::string(prefix) + "." + version + ".output.dxf", std::filesystem::copy_options::overwrite_existing);
+  }
+  std::filesystem::remove(source); std::filesystem::remove(output); std::filesystem::remove(resaved);
+}
+
+TEST_CASE("Ordinary sparse material saves mixed planar entities across versions",
+          "[system-codec][dxf][material][transaction][mixed]") {
+  ensureSettings();
+  const auto format = GENERATE(RS2::FormatDXFRW2010, RS2::FormatDXFRW2013, RS2::FormatDXFRW2018);
+  const char *version = format == RS2::FormatDXFRW2010 ? "AC1024" :
+                        format == RS2::FormatDXFRW2013 ? "AC1027" : "AC1032";
+  const auto source = tmpFile("material_mixed_version_source.dxf");
+  const auto output = tmpFile("material_mixed_version_output.dxf");
+  const auto resaved = tmpFile("material_mixed_version_resaved.dxf");
+  auto input = sparseMaterialPointSource(version);
+  const auto at = input.find("0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n"); REQUIRE(at != std::string::npos);
+  input.insert(at,
+      "0\nLINE\n5\nA6\n100\nAcDbEntity\n8\nRAWTEST\n347\nA1\n100\nAcDbLine\n10\n0\n20\n0\n11\n10\n21\n0\n"
+      "0\nCIRCLE\n5\nA7\n100\nAcDbEntity\n8\nRAWTEST\n347\nA1\n100\nAcDbCircle\n10\n2\n20\n3\n40\n4\n"
+      "0\nARC\n5\nA8\n100\nAcDbEntity\n8\nRAWTEST\n347\nA1\n100\nAcDbCircle\n10\n4\n20\n5\n40\n2\n100\nAcDbArc\n50\n30\n51\n120\n"
+      "0\nELLIPSE\n5\nA9\n100\nAcDbEntity\n8\nRAWTEST\n347\nA1\n100\nAcDbEllipse\n10\n1\n20\n2\n30\n0\n11\n4\n21\n3\n31\n0\n40\n0.5\n41\n0.25\n42\n2.5\n"
+      "0\nLWPOLYLINE\n5\nAA\n100\nAcDbEntity\n8\nRAWTEST\n347\nA1\n100\nAcDbPolyline\n90\n3\n70\n0\n10\n1\n20\n2\n10\n4\n20\n6\n10\n8\n20\n3\n");
+  writeText(source, input);
+  RS_FilterDXFRW filter; RS_Graphic graphic;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), format));
+  unsigned count = 0;
+  for (RS_Entity *entity : graphic) {
+    if (!entity || entity->isDeleted()) continue;
+    entity->move(RS_Vector(10, 20)); ++count;
+  }
+  REQUIRE(count == 6u);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), format));
+  const auto material = recordGroupValues(output, "MATERIAL", "5"); REQUIRE(material.size() == 1u);
+  for (const char *name : {"POINT", "LINE", "CIRCLE", "ARC", "ELLIPSE", "LWPOLYLINE"})
+    CHECK(recordGroupValues(output, name, "347") == material);
+  RS_Graphic reopened; REQUIRE(filter.fileImport(reopened, QString::fromStdString(output), format));
+  REQUIRE(filter.fileExport(reopened, QString::fromStdString(resaved), format));
+  for (const char *name : {"POINT", "LINE", "CIRCLE", "ARC", "ELLIPSE", "LWPOLYLINE"})
+    CHECK(recordGroupValues(resaved, name, "347") == recordGroupValues(resaved, "MATERIAL", "5"));
+  struct PhysicalProbe : RS_FilterDXFRW {
+    bool alter = true;
+    void addDxfEntitiesSource(const DRW_DxfEntitiesSource &data) override {
+      auto changed = data;
+      if (alter) for (auto &record : changed.records)
+        if (record.name == "ELLIPSE") for (std::size_t i = 0; i < record.groups.size(); ++i)
+          if (record.groups[i].code() == 11) { record.rawValues[i] = "999"; break; }
+      RS_FilterDXFRW::addDxfEntitiesSource(changed);
+    }
+  } probe;
+  RS_Graphic mismatched; REQUIRE(probe.fileImport(mismatched, QString::fromStdString(source), format));
+  const std::string sentinel = "preserve mismatched mixed material graph";
+  writeText(output, sentinel); CHECK_FALSE(probe.fileExport(mismatched, QString::fromStdString(output), format));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  probe.alter = false; RS_Graphic retry;
+  REQUIRE(probe.fileImport(retry, QString::fromStdString(source), format));
+  REQUIRE(probe.fileExport(retry, QString::fromStdString(output), format));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), format));
+  if (const char *prefix = std::getenv("LIBRECAD_KEEP_VERSIONED_MATERIAL_MIXED")) {
+    std::filesystem::copy_file(source, std::string(prefix) + "." + version + ".source.dxf", std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::copy_file(output, std::string(prefix) + "." + version + ".output.dxf", std::filesystem::copy_options::overwrite_existing);
+  }
+  std::filesystem::remove(source); std::filesystem::remove(output); std::filesystem::remove(resaved);
+}
+
+static std::string sparseMaterialPolylineSource() {
+  return
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n9\n$CMATERIAL\n347\nA1\n0\nENDSEC\n"
+      "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n1\n"
+      "0\nLAYER\n5\n30\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+      "2\nRAWTEST\n70\n0\n62\n7\n6\nCONTINUOUS\n347\nA1\n0\nENDTAB\n0\nENDSEC\n"
+      "0\nSECTION\n2\nENTITIES\n0\nLWPOLYLINE\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n347\nA1\n"
+      "100\nAcDbPolyline\n90\n3\n70\n0\n10\n1\n20\n2\n10\n4\n20\n6\n10\n8\n20\n3\n"
+      "0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n0\nDICTIONARY\n5\nC\n330\n0\n"
+      "100\nAcDbDictionary\n281\n1\n3\nACAD_MATERIAL\n350\nA0\n"
+      "0\nDICTIONARY\n5\nA0\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+      "3\nPlainMat\n350\nA1\n0\nMATERIAL\n5\nA1\n330\nA0\n"
+      "100\nAcDbMaterial\n1\nPlainMat\n94\n63\n0\nENDSEC\n0\nEOF\n";
+}
+
+TEST_CASE("Ordinary sparse material accepts explicit planar defaults", "[system-codec][dxf][material][transaction][point]") {
+  ensureSettings();
+  const std::string kind = GENERATE(std::string("POINT"), std::string("LINE"),
+                                    std::string("CIRCLE"), std::string("ARC"),
+                                    std::string("ELLIPSE"), std::string("LWPOLYLINE"));
+  const bool isPoint = kind == "POINT", isLine = kind == "LINE", isArc = kind == "ARC";
+  const bool isEllipse = kind == "ELLIPSE", isPolyline = kind == "LWPOLYLINE";
+  const auto source = tmpFile("system_sparse_point_defaults_source.dxf");
+  const auto output = tmpFile("system_sparse_point_defaults_output.dxf");
+  const auto resaved = tmpFile("system_sparse_point_defaults_resave.dxf");
+  const std::string prefix =
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n9\n$CMATERIAL\n347\nA1\n0\nENDSEC\n"
+      "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n1\n"
+      "0\nLAYER\n5\n30\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+      "2\nRAWTEST\n70\n0\n62\n7\n6\nCONTINUOUS\n347\nA1\n0\nENDTAB\n0\nENDSEC\n"
+      "0\nSECTION\n2\nENTITIES\n0\n" + kind + "\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n62\n2\n347\nA1\n" +
+      (isPoint ? "100\nAcDbPoint\n10\n2\n20\n3\n30\n0\n" :
+       isLine ? "100\nAcDbLine\n10\n2\n20\n3\n30\n0\n11\n4\n21\n5\n31\n0\n" :
+       isEllipse ? "100\nAcDbEllipse\n10\n2\n20\n3\n30\n0\n11\n4\n21\n0\n31\n0\n40\n0.5\n41\n0\n42\n6.283185307179586\n" :
+       isPolyline ? "100\nAcDbPolyline\n90\n3\n70\n0\n10\n2\n20\n3\n10\n4\n20\n5\n10\n6\n20\n3\n" :
+                "100\nAcDbCircle\n10\n2\n20\n3\n30\n0\n40\n2\n");
+  const std::string arcSubclass = isArc ? "100\nAcDbArc\n50\n30\n51\n120\n" : "";
+  const std::string suffix =
+      "0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n0\nDICTIONARY\n5\nC\n330\n0\n"
+      "100\nAcDbDictionary\n281\n1\n3\nACAD_MATERIAL\n350\nA0\n"
+      "0\nDICTIONARY\n5\nA0\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+      "3\nPlainMat\n350\nA1\n0\nMATERIAL\n5\nA1\n330\nA0\n"
+      "100\nAcDbMaterial\n1\nPlainMat\n94\n63\n0\nENDSEC\n0\nEOF\n";
+  RS_FilterDXFRW filter;
+  std::vector<std::pair<std::string, bool>> defaultCases{{"39\n0\n", false}, {"210\n0\n220\n0\n230\n1\n", false},
+      {"39\n0\n210\n0\n220\n0\n230\n1\n", false}};
+  if (isEllipse) defaultCases = {{"210\n0\n220\n0\n230\n1\n", false}};
+  if (isPoint) { defaultCases.push_back({"50\n0\n", false}); defaultCases.push_back({"39\n0\n50\n0\n210\n0\n220\n0\n230\n1\n", false}); }
+  if (isArc) defaultCases.push_back({"210\n0\n220\n0\n230\n1\n", true});
+  for (const auto &entry : defaultCases) {
+    writeText(source, prefix + (entry.second ? "" : entry.first) + arcSubclass + (entry.second ? entry.first : "") + suffix);
+    RS_Graphic graphic;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+    RS_Entity *selected = nullptr;
+    for (RS_Entity *entity : graphic)
+      if (entity && entity->sourceHandle() == 0xA5u &&
+          entity->rtti() == (isPoint ? RS2::EntityPoint : isLine ? RS2::EntityLine : isArc ? RS2::EntityArc :
+                             isEllipse ? RS2::EntityEllipse : isPolyline ? RS2::EntityPolyline : RS2::EntityCircle)) selected = entity;
+    REQUIRE(selected);
+    selected->move(RS_Vector(4.0, 4.0));
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    const auto xs = recordGroupValues(output, kind, "10"), ys = recordGroupValues(output, kind, "20");
+    REQUIRE(xs.size() == (isPolyline ? 3u : 1u)); REQUIRE(ys.size() == xs.size());
+    CHECK(xs.front() == "6"); CHECK(ys.front() == "7");
+    const auto material = recordGroupValues(output, "MATERIAL", "5"); REQUIRE(material.size() == 1u);
+    CHECK(recordGroupValues(output, kind, "347") == material);
+    RS_Graphic reopened;
+    REQUIRE(filter.fileImport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(reopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
+    const char *key = isPoint ? "LIBRECAD_KEEP_SPARSE_POINT_DEFAULTS" : isLine ? "LIBRECAD_KEEP_SPARSE_LINE_DEFAULTS" :
+        isArc ? "LIBRECAD_KEEP_SPARSE_ARC_DEFAULTS" : isEllipse ? "LIBRECAD_KEEP_SPARSE_ELLIPSE_DEFAULTS" :
+        isPolyline ? "LIBRECAD_KEEP_SPARSE_POLYLINE_DEFAULTS" : "LIBRECAD_KEEP_SPARSE_CIRCLE_DEFAULTS";
+    if (const char *copy = std::getenv(key))
+      std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
+  }
+  const std::string sentinel = "preserve destination on unsupported point\n";
+  struct DefaultPointProbe : RS_FilterDXFRW {
+    bool alterPhysical = false;
+    bool alterTyped = false;
+    void addPoint(const DRW_Point &data) override {
+      DRW_Point changed = data;
+      if (alterTyped && data.handle == 0xA5u) changed.thickness = 1.0;
+      RS_FilterDXFRW::addPoint(changed);
+    }
+    void addLine(const DRW_Line &data) override {
+      DRW_Line changed = data;
+      if (alterTyped && data.handle == 0xA5u) changed.thickness = 1.0;
+      RS_FilterDXFRW::addLine(changed);
+    }
+    void addCircle(const DRW_Circle &data) override {
+      DRW_Circle changed = data;
+      if (alterTyped && data.handle == 0xA5u) changed.thickness = 1.0;
+      RS_FilterDXFRW::addCircle(changed);
+    }
+    void addArc(const DRW_Arc &data) override {
+      DRW_Arc changed = data;
+      if (alterTyped && data.handle == 0xA5u) changed.thickness = 1.0;
+      RS_FilterDXFRW::addArc(changed);
+    }
+    void addEllipse(const DRW_Ellipse &data) override {
+      DRW_Ellipse changed = data;
+      if (alterTyped && data.handle == 0xA5u) changed.extPoint.x = 1.0;
+      RS_FilterDXFRW::addEllipse(changed);
+    }
+    void addLWPolyline(const DRW_LWPolyline &data) override {
+      DRW_LWPolyline changed = data;
+      if (alterTyped && data.handle == 0xA5u) changed.extPoint.x = 1.0;
+      RS_FilterDXFRW::addLWPolyline(changed);
+    }
+    void addDxfEntitiesSource(const DRW_DxfEntitiesSource &data) override {
+      auto copy = data;
+      if (alterPhysical) for (auto &record : copy.records)
+        if (record.name == "POINT" || record.name == "LINE" || record.name == "CIRCLE" || record.name == "ARC" || record.name == "ELLIPSE" || record.name == "LWPOLYLINE") for (std::size_t i = 0; i < record.groups.size(); ++i)
+          if (record.groups[i].code() == 210) record.rawValues[i] = "1";
+      RS_FilterDXFRW::addDxfEntitiesSource(copy);
+    }
+  } probe;
+  for (int mode = 0; mode < 2; ++mode) {
+    writeText(source, prefix + "210\n0\n220\n0\n230\n1\n" + arcSubclass + suffix);
+    probe.alterPhysical = mode == 0; probe.alterTyped = mode == 1;
+    RS_Graphic rejected; REQUIRE(probe.fileImport(rejected, QString::fromStdString(source), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(probe.fileExport(rejected, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    probe.alterPhysical = false; probe.alterTyped = false;
+    RS_Graphic retry; REQUIRE(probe.fileImport(retry, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(probe.fileExport(retry, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+  if (isArc) {
+    for (const auto &input : {prefix + arcSubclass + "39\n0\n" + suffix,
+                              prefix + "210\n0\n" + arcSubclass + "220\n0\n230\n1\n" + suffix}) {
+      writeText(source, input); RS_Graphic rejected; writeText(output, sentinel);
+      if (filter.fileImport(rejected, QString::fromStdString(source), RS2::FormatDXFRW))
+        CHECK_FALSE(filter.fileExport(rejected, QString::fromStdString(output), RS2::FormatDXFRW));
+      std::ifstream retained(output, std::ios::binary);
+      CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+    }
+  }
+  for (const std::string bad : {"39\n1\n", "50\n30\n", "210\n0\n220\n1\n230\n0\n",
+                                "210\n0\n", "39\n0\n39\n0\n", "50\nnan\n"}) {
+    writeText(source, prefix + bad + arcSubclass + suffix); RS_Graphic rejected; writeText(output, sentinel);
+    if (filter.fileImport(rejected, QString::fromStdString(source), RS2::FormatDXFRW))
+      CHECK_FALSE(filter.fileExport(rejected, QString::fromStdString(output), RS2::FormatDXFRW));
+    std::ifstream retained(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  }
+}
+
+TEST_CASE("Ordinary sparse material accepts explicit common defaults", "[system-codec][dxf][material][transaction]") {
+  ensureSettings();
+  const auto source = tmpFile("system_sparse_material_model_space_source.dxf");
+  const auto output = tmpFile("system_sparse_material_model_space_output.dxf");
+  const auto resaved = tmpFile("system_sparse_material_model_space_resaved.dxf");
+  const std::string sentinel = "preserve destination on invalid model space\n";
+  const std::vector<std::pair<std::string, std::string>> entities = {
+      {"POINT", "100\nAcDbPoint\n10\n1\n20\n2\n"},
+      {"LINE", "100\nAcDbLine\n10\n1\n20\n2\n11\n4\n21\n6\n"},
+      {"CIRCLE", "100\nAcDbCircle\n10\n1\n20\n2\n40\n3\n"},
+      {"ARC", "100\nAcDbCircle\n10\n1\n20\n2\n40\n3\n100\nAcDbArc\n50\n30\n51\n120\n"},
+      {"ELLIPSE", "100\nAcDbEllipse\n10\n1\n20\n2\n11\n4\n21\n3\n40\n0.5\n41\n0.25\n42\n2.5\n"},
+      {"LWPOLYLINE", "100\nAcDbPolyline\n90\n3\n70\n0\n10\n1\n20\n2\n10\n4\n20\n6\n10\n8\n20\n3\n"},
+  };
+  struct SpaceProbe : RS_FilterDXFRW {
+    int alter = 0;
+    void addDxfEntitiesSource(const DRW_DxfEntitiesSource &data) override {
+      auto copy = data;
+      if (alter) for (auto &record : copy.records) for (std::size_t i = 0; i < record.groups.size(); ++i)
+        if (record.groups[i].code() == alter) record.rawValues[i] = alter == 48 ? "2" : "1";
+      RS_FilterDXFRW::addDxfEntitiesSource(copy);
+    }
+  } filter;
+  for (const auto &entry : entities) {
+    CAPTURE(entry.first);
+    auto base = sparseMaterialPolylineSource();
+    const auto begin = base.find("0\nLWPOLYLINE\n5\nA5\n"), end = base.find("0\nENDSEC\n", begin);
+    REQUIRE(begin != std::string::npos); REQUIRE(end != std::string::npos);
+    const std::string common = "0\n" + entry.first + "\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n62\n2\n347\nA1\n";
+    base.replace(begin, end - begin, common + "67\n0\n48\n1\n60\n0\n" + entry.second);
+    writeText(source, base); RS_Graphic graphic;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+    RS_Entity *selected = nullptr;
+    for (RS_Entity *entity : graphic) if (entity && entity->sourceHandle() == 0xA5u) selected = entity;
+    REQUIRE(selected); selected->move(RS_Vector(4, 4));
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    const auto xs = recordGroupValues(output, entry.first, "10"), ys = recordGroupValues(output, entry.first, "20");
+    REQUIRE_FALSE(xs.empty()); REQUIRE_FALSE(ys.empty()); CHECK(xs.front() == "5"); CHECK(ys.front() == "6");
+    const auto material = recordGroupValues(output, "MATERIAL", "5"); REQUIRE(material.size() == 1u);
+    CHECK(recordGroupValues(output, entry.first, "347") == material);
+    RS_Graphic reopened; REQUIRE(filter.fileImport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(reopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
+    if (const char *prefix = std::getenv("LIBRECAD_KEEP_SPARSE_MODEL_SPACE"))
+      std::filesystem::copy_file(resaved, std::string(prefix) + entry.first + ".dxf", std::filesystem::copy_options::overwrite_existing);
+    selected->setVisible(false); writeText(output, sentinel);
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    selected->setVisible(true); REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    for (const auto &bad : std::vector<std::pair<std::string, std::string>>{
+             {"67\n0\n", "67\n1\n"}, {"67\n0\n", "67\n2\n"}, {"67\n0\n", "67\n-1\n"},
+             {"67\n0\n", "67\n0\n67\n0\n"}, {"67\n0\n", "67\n0junk\n"},
+             {"48\n1\n", "48\n2\n"}, {"48\n1\n", "48\nnan\n"}, {"48\n1\n", "48\n1\n48\n1\n"},
+             {"60\n0\n", "60\n1\n"}, {"60\n0\n", "60\n2\n"}, {"60\n0\n", "60\n0\n60\n0\n"}}) {
+      auto invalid = base; const auto pos = invalid.find(bad.first, begin); REQUIRE(pos != std::string::npos);
+      invalid.replace(pos, bad.first.size(), bad.second); writeText(source, invalid); writeText(output, sentinel);
+      RS_Graphic rejected;
+      if (filter.fileImport(rejected, QString::fromStdString(source), RS2::FormatDXFRW))
+        CHECK_FALSE(filter.fileExport(rejected, QString::fromStdString(output), RS2::FormatDXFRW));
+      std::ifstream retained(output, std::ios::binary);
+      CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+      REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    }
+    for (const std::string field : {"67\n0\n", "48\n1\n", "60\n0\n"}) {
+      auto misplaced = base; const auto pos = misplaced.find(field, begin); REQUIRE(pos != std::string::npos);
+      misplaced.erase(pos, field.size()); const auto geometry = misplaced.find(entry.second, begin); REQUIRE(geometry != std::string::npos);
+      const auto markerEnd = misplaced.find('\n', misplaced.find('\n', geometry) + 1); REQUIRE(markerEnd != std::string::npos);
+      misplaced.insert(markerEnd + 1, field); writeText(source, misplaced); writeText(output, sentinel);
+      RS_Graphic misplacedGraphic;
+      if (filter.fileImport(misplacedGraphic, QString::fromStdString(source), RS2::FormatDXFRW))
+        CHECK_FALSE(filter.fileExport(misplacedGraphic, QString::fromStdString(output), RS2::FormatDXFRW));
+      { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+      REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    }
+    for (int code : {67, 48, 60}) {
+      writeText(source, base); filter.alter = code; RS_Graphic rejected;
+      REQUIRE(filter.fileImport(rejected, QString::fromStdString(source), RS2::FormatDXFRW)); writeText(output, sentinel);
+      CHECK_FALSE(filter.fileExport(rejected, QString::fromStdString(output), RS2::FormatDXFRW));
+      { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+      filter.alter = 0; RS_Graphic retry;
+      REQUIRE(filter.fileImport(retry, QString::fromStdString(source), RS2::FormatDXFRW));
+      REQUIRE(filter.fileExport(retry, QString::fromStdString(output), RS2::FormatDXFRW));
+    }
+  }
+}
+
+TEST_CASE("Ordinary sparse material preserves exact true colors",
+          "[system-codec][dxf][material][transaction][truecolor]") {
+  ensureSettings();
+  const auto source = tmpFile("system_sparse_truecolor_source.dxf");
+  const auto output = tmpFile("system_sparse_truecolor_output.dxf");
+  const auto resaved = tmpFile("system_sparse_truecolor_resaved.dxf");
+  const std::string sentinel = "preserve true color destination\n";
+  const std::vector<std::pair<std::string, std::string>> entities = {
+      {"POINT", "100\nAcDbPoint\n10\n1\n20\n2\n"},
+      {"LINE", "100\nAcDbLine\n10\n1\n20\n2\n11\n4\n21\n6\n"},
+      {"CIRCLE", "100\nAcDbCircle\n10\n1\n20\n2\n40\n3\n"},
+      {"ARC", "100\nAcDbCircle\n10\n1\n20\n2\n40\n3\n100\nAcDbArc\n50\n30\n51\n120\n"},
+      {"ELLIPSE", "100\nAcDbEllipse\n10\n1\n20\n2\n11\n4\n21\n3\n40\n0.5\n41\n0.25\n42\n2.5\n"},
+      {"LWPOLYLINE", "100\nAcDbPolyline\n90\n3\n70\n0\n10\n1\n20\n2\n10\n4\n20\n6\n10\n8\n20\n3\n"},
+  };
+  for (const auto &entry : entities) for (const RS_Color color : {RS_Color(10, 20, 30), RS_Color(18, 52, 86)}) {
+    CAPTURE(entry.first, color.red(), color.green(), color.blue());
+    int rgb = -1; const int index = LC_ColorNumbers::colorToNumber(color, &rgb);
+    REQUIRE(rgb == ((color.red() << 16) | (color.green() << 8) | color.blue()));
+    auto input = sparseMaterialPolylineSource();
+    const std::string table = "0\nTABLE\n2\nLAYER\n70\n1\n0\nLAYER\n5\n30\n";
+    const auto tablePos = input.find(table); REQUIRE(tablePos != std::string::npos);
+    input.replace(tablePos, table.size(), "0\nTABLE\n2\nLAYER\n5\n2\n330\n0\n"
+                  "100\nAcDbSymbolTable\n70\n1\n0\nLAYER\n5\n30\n330\n2\n");
+    const auto begin = input.find("0\nLWPOLYLINE\n5\nA5\n");
+    const auto end = input.find("0\nENDSEC\n", begin);
+    REQUIRE(begin != std::string::npos); REQUIRE(end != std::string::npos);
+    const auto record = "0\n" + entry.first + "\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n62\n" +
+        std::to_string(index) + "\n420\n" + std::to_string(rgb) + "\n347\nA1\n" + entry.second;
+    input.replace(begin, end - begin, record);
+    writeText(source, input);
+    RS_FilterDXFRW filter; RS_Graphic graphic;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    const auto verify = [&](const std::string &path) {
+      CHECK(recordGroupValues(path, entry.first, "62") == std::vector<std::string>{std::to_string(index)});
+      CHECK(recordGroupValues(path, entry.first, "420") == std::vector<std::string>{std::to_string(rgb)});
+      const auto materials = recordGroupValues(path, "MATERIAL", "5"); REQUIRE(materials.size() == 1u);
+      CHECK(recordGroupValues(path, entry.first, "347") == std::vector<std::string>{materials.front()});
+    };
+    verify(output);
+    RS_Graphic reopened;
+    REQUIRE(filter.fileImport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(reopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
+    verify(resaved);
+    if (const char *prefix = std::getenv("LIBRECAD_KEEP_SPARSE_TRUECOLOR"))
+      std::filesystem::copy_file(resaved, std::string(prefix) + entry.first + "-" + std::to_string(rgb) + ".dxf",
+                                 std::filesystem::copy_options::overwrite_existing);
+    RS_Entity *entity = nullptr;
+    for (RS_Entity *candidate : graphic)
+      if (candidate && candidate->sourceHandle() == 0xA5u) entity = candidate;
+    REQUIRE(entity);
+    const auto savedPen = entity->getPen(false);
+    auto editedPen = savedPen;
+    const RS_Color editedColor(21, 33, 44);
+    int editedRgb = -1; const int editedIndex = LC_ColorNumbers::colorToNumber(editedColor, &editedRgb);
+    REQUIRE(editedRgb == ((21 << 16) | (33 << 8) | 44));
+    editedPen.setColor(editedColor); entity->setPen(editedPen);
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK(recordGroupValues(output, entry.first, "62") == std::vector<std::string>{std::to_string(editedIndex)});
+    CHECK(recordGroupValues(output, entry.first, "420") == std::vector<std::string>{std::to_string(editedRgb)});
+    RS_Graphic editedReopened;
+    REQUIRE(filter.fileImport(editedReopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(editedReopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
+    CHECK(recordGroupValues(resaved, entry.first, "62") == std::vector<std::string>{std::to_string(editedIndex)});
+    CHECK(recordGroupValues(resaved, entry.first, "420") == std::vector<std::string>{std::to_string(editedRgb)});
+    { const auto materials = recordGroupValues(resaved, "MATERIAL", "5"); REQUIRE(materials.size() == 1u);
+      CHECK(recordGroupValues(resaved, entry.first, "347") == std::vector<std::string>{materials.front()}); }
+    if (const char *prefix = std::getenv("LIBRECAD_KEEP_SPARSE_TRUECOLOR_EDITED"))
+      std::filesystem::copy_file(resaved, std::string(prefix) + entry.first + "-" + std::to_string(rgb) + ".dxf",
+                                 std::filesystem::copy_options::overwrite_existing);
+    entity->setPen(savedPen);
+    auto invalid = input;
+    const auto pos = invalid.find("62\n" + std::to_string(index) + "\n420\n"); REQUIRE(pos != std::string::npos);
+    invalid.replace(pos, std::string("62\n" + std::to_string(index) + "\n").size(),
+                    "62\n" + std::to_string(index == 1 ? 2 : 1) + "\n");
+    writeText(source, invalid); writeText(output, sentinel);
+    RS_Graphic rejected;
+    if (filter.fileImport(rejected, QString::fromStdString(source), RS2::FormatDXFRW))
+      CHECK_FALSE(filter.fileExport(rejected, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary);
+      CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    if (entry.first == "POINT" && color.red() == 10) {
+      const auto colorFields = "62\n" + std::to_string(index) + "\n420\n" + std::to_string(rgb) + "\n";
+      for (const std::string &replacement : {std::string("420\n") + std::to_string(rgb) + "\n",
+             colorFields + "420\n" + std::to_string(rgb) + "\n",
+             std::string("62\n1\n420\n16711680\n"),
+             std::string("62\n1\n420\n-1\n"), std::string("62\n1\n420\n16777216\n"),
+             std::string("62\n1\n420\n123junk\n"), colorFields + "430\nNamedColor\n"}) {
+        auto bad = input; const auto where = bad.find(colorFields); REQUIRE(where != std::string::npos);
+        bad.replace(where, colorFields.size(), replacement); writeText(source, bad); writeText(output, sentinel);
+        RS_Graphic refused;
+        if (filter.fileImport(refused, QString::fromStdString(source), RS2::FormatDXFRW))
+          CHECK_FALSE(filter.fileExport(refused, QString::fromStdString(output), RS2::FormatDXFRW));
+        { std::ifstream retained(output, std::ios::binary);
+          CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+        REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+      }
+      struct ColorProbe : RS_FilterDXFRW {
+        bool alterTyped = false, alterPhysical = false;
+        void addPoint(const DRW_Point &value) override {
+          auto changed = value; if (alterTyped) changed.color24 ^= 1;
+          RS_FilterDXFRW::addPoint(changed);
+        }
+        void addDxfEntitiesSource(const DRW_DxfEntitiesSource &value) override {
+          auto changed = value;
+          if (alterPhysical) for (auto &record : changed.records)
+            if (record.name == "POINT") for (std::size_t i = 0; i < record.groups.size(); ++i)
+              if (record.groups[i].code() == 420) record.rawValues[i] = "12345";
+          RS_FilterDXFRW::addDxfEntitiesSource(changed);
+        }
+      } probe;
+      writeText(source, input);
+      for (int mode = 0; mode != 2; ++mode) {
+        probe.alterTyped = mode == 0; probe.alterPhysical = mode == 1;
+        RS_Graphic refused; REQUIRE(probe.fileImport(refused, QString::fromStdString(source), RS2::FormatDXFRW));
+        writeText(output, sentinel);
+        CHECK_FALSE(probe.fileExport(refused, QString::fromStdString(output), RS2::FormatDXFRW));
+        { std::ifstream retained(output, std::ios::binary);
+          CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+        probe.alterTyped = probe.alterPhysical = false;
+        RS_Graphic retry; REQUIRE(probe.fileImport(retry, QString::fromStdString(source), RS2::FormatDXFRW));
+        REQUIRE(probe.fileExport(retry, QString::fromStdString(output), RS2::FormatDXFRW));
+      }
+    }
+  }
+  std::filesystem::remove(source); std::filesystem::remove(output); std::filesystem::remove(resaved);
+}
+
+static std::string sparseMaterialEllipseSource(bool full) {
+    auto input = sparseMaterialPolylineSource();
+    const std::string old = "0\nLWPOLYLINE\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n347\nA1\n"
+        "100\nAcDbPolyline\n90\n3\n70\n0\n10\n1\n20\n2\n10\n4\n20\n6\n10\n8\n20\n3\n";
+    const std::string replacement = "0\nELLIPSE\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n347\nA1\n"
+        "100\nAcDbEllipse\n10\n1\n20\n2\n30\n0\n11\n4\n21\n3\n31\n0\n40\n0.5\n41\n" +
+        std::string(full ? "0\n42\n6.283185307179586\n" : "0.25\n42\n2.5\n");
+    const auto at = input.find(old); REQUIRE(at != std::string::npos);
+    input.replace(at, old.size(), replacement);
+    return input;
+}
+
+TEST_CASE("Ordinary sparse material saves planar ellipses",
+          "[system-codec][dxf][material][transaction][ellipse]") {
+  ensureSettings();
+  const auto source = tmpFile("system_sparse_ellipse_source.dxf");
+  const auto output = tmpFile("system_sparse_ellipse_output.dxf");
+  const auto resaved = tmpFile("system_sparse_ellipse_resaved.dxf");
+  for (const int shape : {0, 1, 2}) {
+    const bool full = shape == 1;
+    auto input = sparseMaterialEllipseSource(full);
+    if (shape == 2) {
+      const auto at = input.find("41\n0.25\n42\n2.5\n"); REQUIRE(at != std::string::npos);
+      input.replace(at, std::string("41\n0.25\n42\n2.5\n").size(), "41\n5\n42\n1\n");
+    }
+    writeText(source, input);
+    RS_FilterDXFRW filter; RS_Graphic graphic;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    RS_Ellipse *ellipse = nullptr;
+    for (RS_Entity *entity : graphic)
+      if (entity && entity->sourceHandle() == 0xA5u && entity->rtti() == RS2::EntityEllipse)
+        ellipse = static_cast<RS_Ellipse *>(entity);
+    REQUIRE(ellipse); ellipse->move(RS_Vector(10, 20));
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    RS_Graphic reread;
+    REQUIRE(filter.fileImport(reread, QString::fromStdString(output), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(reread, QString::fromStdString(resaved), RS2::FormatDXFRW));
+    CHECK(recordGroupValues(resaved, "ELLIPSE", "10") == std::vector<std::string>{"11"});
+    CHECK(recordGroupValues(resaved, "ELLIPSE", "20") == std::vector<std::string>{"22"});
+    CHECK(recordGroupValues(resaved, "ELLIPSE", "11") == std::vector<std::string>{"4"});
+    CHECK(recordGroupValues(resaved, "ELLIPSE", "21") == std::vector<std::string>{"3"});
+    CHECK(std::stod(recordGroupValues(resaved, "ELLIPSE", "40").at(0)) == Catch::Approx(0.5));
+    CHECK(std::stod(recordGroupValues(resaved, "ELLIPSE", "41").at(0)) == Catch::Approx(full ? 0.0 : shape == 2 ? 5.0 : 0.25));
+    CHECK(std::stod(recordGroupValues(resaved, "ELLIPSE", "42").at(0)) == Catch::Approx(full ? 2.0 * M_PI : shape == 2 ? 1.0 : 2.5));
+    const auto material = recordGroupValues(resaved, "MATERIAL", "5"); REQUIRE(material.size() == 1u);
+    CHECK(recordGroupValues(resaved, "ELLIPSE", "347") == material);
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_SPARSE_ELLIPSE"))
+      std::filesystem::copy_file(resaved, std::string(copy) + (full ? "-full.dxf" : shape == 2 ? "-wrapped.dxf" : "-partial.dxf"),
+                                 std::filesystem::copy_options::overwrite_existing);
+  }
+  std::filesystem::remove(source); std::filesystem::remove(output); std::filesystem::remove(resaved);
+}
+
+TEST_CASE("Nearly full material ellipses preserve their interval",
+          "[system-codec][dxf][material][transaction][ellipse][near-full]") {
+  ensureSettings();
+  auto input = sparseMaterialEllipseSource(false);
+  const std::string old = "41\n0.25\n42\n2.5\n";
+  const auto at = input.find(old); REQUIRE(at != std::string::npos);
+  input.replace(at, old.size(), "41\n0.00000000001\n42\n6.283185307169586\n");
+  const auto source = tmpFile("system_sparse_ellipse_near_full_source.dxf");
+  const auto output = tmpFile("system_sparse_ellipse_near_full_output.dxf");
+  const auto resaved = tmpFile("system_sparse_ellipse_near_full_resaved.dxf");
+  writeText(source, input);
+  RS_FilterDXFRW filter; RS_Graphic graphic;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  RS_Ellipse *ellipse = nullptr;
+  for (RS_Entity *entity : graphic)
+    if (entity && entity->sourceHandle() == 0xA5u && entity->rtti() == RS2::EntityEllipse)
+      ellipse = static_cast<RS_Ellipse *>(entity);
+  REQUIRE(ellipse);
+  REQUIRE(ellipse->isEllipticArc());
+  CHECK(ellipse->getAngle1() == 1.0e-11);
+  CHECK(ellipse->getAngle2() == 2.0 * M_PI - 1.0e-11);
+  CHECK(ellipse->getAngleLength() < 2.0 * M_PI);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  RS_Graphic reopened;
+  REQUIRE(filter.fileImport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(reopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
+  CHECK(std::stod(recordGroupValues(resaved, "ELLIPSE", "41").at(0)) == 1.0e-11);
+  CHECK(std::stod(recordGroupValues(resaved, "ELLIPSE", "42").at(0)) == 2.0 * M_PI - 1.0e-11);
+  ellipse->setAngle1(2.0e-11);
+  ellipse->setAngle2(2.0 * M_PI - 2.0e-11);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  RS_Graphic edited;
+  REQUIRE(filter.fileImport(edited, QString::fromStdString(output), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(edited, QString::fromStdString(resaved), RS2::FormatDXFRW));
+  CHECK(std::stod(recordGroupValues(resaved, "ELLIPSE", "41").at(0)) == 2.0e-11);
+  CHECK(std::stod(recordGroupValues(resaved, "ELLIPSE", "42").at(0)) == 2.0 * M_PI - 2.0e-11);
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_NEAR_FULL_ELLIPSE"))
+    std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
+  const std::string nearlyFull = "41\n0.00000000001\n42\n6.283185307169586\n";
+  const auto tinyAt = input.find(nearlyFull); REQUIRE(tinyAt != std::string::npos);
+  input.replace(tinyAt, nearlyFull.size(), "41\n0\n42\n0.00000000001\n");
+  writeText(source, input);
+  RS_Graphic tiny;
+  REQUIRE(filter.fileImport(tiny, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(tiny, QString::fromStdString(output), RS2::FormatDXFRW));
+  RS_Graphic tinyReopened;
+  REQUIRE(filter.fileImport(tinyReopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(tinyReopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
+  CHECK(std::stod(recordGroupValues(resaved, "ELLIPSE", "41").at(0)) == 0.0);
+  CHECK(std::stod(recordGroupValues(resaved, "ELLIPSE", "42").at(0)) == 1.0e-11);
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_TINY_ELLIPSE"))
+    std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
+  std::filesystem::remove(source); std::filesystem::remove(output); std::filesystem::remove(resaved);
+}
+
+TEST_CASE("Ellipse sweep distinguishes tiny gaps and tiny arcs from full turns",
+          "[system-codec][dxf][ellipse][near-full]") {
+  ensureSettings();
+  const RS_Vector center(1, 2), major(4, 3);
+  const RS_Ellipse full(nullptr, {center, major, 0.5, 0.0, 0.0, false});
+  const RS_Ellipse nearFull(nullptr, {center, major, 0.5, 1.0e-11, 2.0 * M_PI - 1.0e-11, false});
+  const RS_Ellipse tiny(nullptr, {center, major, 0.5, 1.0, 1.0 + 1.0e-9, false});
+  const RS_Ellipse tinyAtZero(nullptr, {center, major, 0.5, 0.0, 1.0e-11, false});
+  const RS_Ellipse reversedTiny(nullptr, {center, major, 0.5, 1.0e-11, 0.0, true});
+  const RS_Ellipse wrapped(nullptr, {center, major, 0.5, 5.0, 1.0, false});
+  CHECK(full.getAngleLength() == 2.0 * M_PI);
+  CHECK(nearFull.getAngleLength() < 2.0 * M_PI);
+  CHECK(nearFull.getAngleLength() > 2.0 * M_PI - 1.0e-9);
+  CHECK(tiny.getAngleLength() > 0.0);
+  CHECK(tiny.getAngleLength() < 2.0e-9);
+  CHECK(tinyAtZero.isEllipticArc());
+  CHECK(tinyAtZero.getAngleLength() > 0.0);
+  CHECK(tinyAtZero.getAngleLength() < 2.0e-11);
+  CHECK(tinyAtZero.getLength() > 0.0);
+  CHECK(tinyAtZero.getLength() < 1.0e-9);
+  CHECK(tinyAtZero.getLength() == Catch::Approx(2.5e-11).epsilon(1.0e-4).margin(1.0e-14));
+  CHECK(tinyAtZero.getData().angularLength < 1.0e-6);
+  CHECK(tinyAtZero.getMax().x - tinyAtZero.getMin().x < 1.0e-8);
+  CHECK(tinyAtZero.getMax().y - tinyAtZero.getMin().y < 1.0e-8);
+  const auto nearest = tinyAtZero.getNearestPointOnEntity(center - major, true);
+  CHECK(nearest.distanceTo(tinyAtZero.getStartpoint()) < 1.0e-8);
+  CHECK_FALSE(tinyAtZero.isPointOnEntity(center - major));
+  CHECK(tinyAtZero.isPointOnEntity(tinyAtZero.getStartpoint()));
+  CHECK(tinyAtZero.isPointOnEntity(tinyAtZero.getEndpoint()));
+  CHECK(reversedTiny.getLength() < 1.0e-9);
+  CHECK(reversedTiny.getMax().x - reversedTiny.getMin().x < 1.0e-8);
+  CHECK(reversedTiny.getNearestPointOnEntity(center - major, true).distanceTo(reversedTiny.getStartpoint()) < 1.0e-8);
+  CHECK(wrapped.getAngleLength() == Catch::Approx(2.0 * M_PI - 4.0));
+}
+
+TEST_CASE("Nearly full ellipse round trips without material metadata",
+          "[system-codec][dxf][ellipse][near-full]") {
+  ensureSettings();
+  const auto source = tmpFile("plain_near_full_ellipse_source.dxf");
+  const auto output = tmpFile("plain_near_full_ellipse_output.dxf");
+  writeText(source, "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
+      "0\nSECTION\n2\nENTITIES\n0\nELLIPSE\n5\nA5\n100\nAcDbEntity\n8\n0\n"
+      "100\nAcDbEllipse\n10\n1\n20\n2\n30\n0\n11\n4\n21\n3\n31\n0\n40\n0.5\n"
+      "41\n0.00000000001\n42\n6.283185307169586\n0\nENDSEC\n0\nEOF\n");
+  RS_FilterDXFRW filter; RS_Graphic graphic;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(std::stod(recordGroupValues(output, "ELLIPSE", "41").at(0)) == 1.0e-11);
+  CHECK(std::stod(recordGroupValues(output, "ELLIPSE", "42").at(0)) == 2.0 * M_PI - 1.0e-11);
+  RS_Graphic reopened;
+  REQUIRE(filter.fileImport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto *entity = reopened.firstEntity();
+  REQUIRE(entity); REQUIRE(entity->rtti() == RS2::EntityEllipse);
+  const auto *ellipse = static_cast<const RS_Ellipse *>(entity);
+  CHECK(ellipse->isEllipticArc());
+  CHECK(ellipse->getAngleLength() < 2.0 * M_PI);
+  std::filesystem::remove(source); std::filesystem::remove(output);
+}
+
+TEST_CASE("Sparse material ellipse rejects incomplete or altered delivery and retries",
+          "[system-codec][dxf][material][transaction][ellipse]") {
+  ensureSettings();
+  const auto source = tmpFile("system_sparse_ellipse_reject_source.dxf");
+  const auto output = tmpFile("system_sparse_ellipse_reject_output.dxf");
+  const auto input = sparseMaterialEllipseSource(false);
+  const std::string sentinel = "preserve sparse ellipse destination\n";
+  struct EllipseProbe : RS_FilterDXFRW {
+    int mode = 0;
+    void addEllipse(const DRW_Ellipse &data) override {
+      if (mode == 1) return;
+      DRW_Ellipse changed = data;
+      if (mode == 2) changed.secPoint.x += 1.0;
+      RS_FilterDXFRW::addEllipse(changed);
+    }
+    void addDxfEntitiesSource(const DRW_DxfEntitiesSource &data) override {
+      auto copy = data;
+      if (mode == 3) for (auto &record : copy.records)
+        if (record.name == "ELLIPSE") for (std::size_t i = 0; i < record.groups.size(); ++i)
+          if (record.groups[i].code() == 11) { record.rawValues[i] = "5"; break; }
+      RS_FilterDXFRW::addDxfEntitiesSource(copy);
+    }
+  } filter;
+  writeText(source, input);
+  for (int mode = 1; mode <= 3; ++mode) {
+    filter.mode = mode;
+    RS_Graphic bad;
+    REQUIRE(filter.fileImport(bad, QString::fromStdString(source), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(filter.fileExport(bad, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary);
+      CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    filter.mode = 0;
+    RS_Graphic retry;
+    REQUIRE(filter.fileImport(retry, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(retry, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+  for (const auto &change : std::vector<std::pair<std::string, std::string>>{
+           {"31\n0\n", "31\n1\n"}, {"40\n0.5\n", "40\n2\n"},
+           {"42\n2.5\n", "42\n0.25\n"}, {"40\n0.5\n", "210\n0\n220\n1\n230\n0\n40\n0.5\n"}}) {
+    auto badInput = input;
+    const auto at = badInput.find(change.first); REQUIRE(at != std::string::npos);
+    badInput.replace(at, change.first.size(), change.second);
+    writeText(source, badInput); writeText(output, sentinel);
+    RS_Graphic bad;
+    if (filter.fileImport(bad, QString::fromStdString(source), RS2::FormatDXFRW))
+      CHECK_FALSE(filter.fileExport(bad, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary);
+      CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    writeText(source, input);
+    RS_Graphic retry;
+    REQUIRE(filter.fileImport(retry, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(retry, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+  writeText(source, input);
+  RS_Graphic live;
+  REQUIRE(filter.fileImport(live, QString::fromStdString(source), RS2::FormatDXFRW));
+  RS_Ellipse *ellipse = nullptr;
+  for (RS_Entity *entity : live)
+    if (entity && entity->sourceHandle() == 0xA5u && entity->rtti() == RS2::EntityEllipse)
+      ellipse = static_cast<RS_Ellipse *>(entity);
+  REQUIRE(ellipse);
+  for (const int mode : {0, 1}) {
+    if (mode == 0) ellipse->setRatio(2.0);
+    else ellipse->setReversed(true);
+    writeText(output, sentinel);
+    CHECK_FALSE(filter.fileExport(live, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary);
+      CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    if (mode == 0) ellipse->setRatio(0.5);
+    else ellipse->setReversed(false);
+    REQUIRE(filter.fileExport(live, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+  std::filesystem::remove(source); std::filesystem::remove(output);
+}
+
+TEST_CASE("Ordinary sparse material saves straight lightweight polylines",
+          "[system-codec][dxf][material][transaction][polyline]") {
+  ensureSettings();
+  const auto source = tmpFile("system_sparse_lwpolyline_source.dxf");
+  const auto output = tmpFile("system_sparse_lwpolyline_output.dxf");
+  const std::string input = sparseMaterialPolylineSource();
+  writeText(source, input);
+  RS_FilterDXFRW filter; RS_Graphic graphic;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(countRecords(output, "LWPOLYLINE") == 1);
+  CHECK(recordGroupValues(output, "LWPOLYLINE", "10") == std::vector<std::string>{"1", "4", "8"});
+  CHECK(recordGroupValues(output, "LWPOLYLINE", "20") == std::vector<std::string>{"2", "6", "3"});
+  const auto material = recordGroupValues(output, "MATERIAL", "5"); REQUIRE(material.size() == 1u);
+  CHECK(recordGroupValues(output, "LWPOLYLINE", "347") == std::vector<std::string>{material.front()});
+  RS_Polyline *polyline = nullptr;
+  for (RS_Entity *entity : graphic)
+    if (entity && entity->sourceHandle() == 0xA5u && entity->rtti() == RS2::EntityPolyline)
+      polyline = static_cast<RS_Polyline *>(entity);
+  REQUIRE(polyline);
+  polyline->move(RS_Vector(10, 20));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(output, "LWPOLYLINE", "10") == std::vector<std::string>{"11", "14", "18"});
+  CHECK(recordGroupValues(output, "LWPOLYLINE", "20") == std::vector<std::string>{"22", "26", "23"});
+  RS_Graphic reopened;
+  REQUIRE(filter.fileImport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto resaved = tmpFile("system_sparse_lwpolyline_resaved.dxf");
+  REQUIRE(filter.fileExport(reopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(resaved, "LWPOLYLINE", "10") == std::vector<std::string>{"11", "14", "18"});
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_ORDINARY_SPARSE_LWPOLYLINE"))
+    std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
+
+  auto closedInput = input;
+  const auto closedFlag = closedInput.find("90\n3\n70\n0\n"); REQUIRE(closedFlag != std::string::npos);
+  closedInput.replace(closedFlag, std::string("90\n3\n70\n0\n").size(), "90\n3\n70\n1\n");
+  writeText(source, closedInput);
+  RS_Graphic closed;
+  REQUIRE(filter.fileImport(closed, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(closed, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(output, "LWPOLYLINE", "70") == std::vector<std::string>{"1"});
+  CHECK(recordGroupValues(output, "LWPOLYLINE", "10") == std::vector<std::string>{"1", "4", "8"});
+  RS_Polyline *closedPolyline = nullptr;
+  for (RS_Entity *entity : closed)
+    if (entity && entity->sourceHandle() == 0xA5u && entity->rtti() == RS2::EntityPolyline)
+      closedPolyline = static_cast<RS_Polyline *>(entity);
+  REQUIRE(closedPolyline); REQUIRE(closedPolyline->isClosed()); REQUIRE(closedPolyline->count() == 3u);
+  closedPolyline->move(RS_Vector(10, 20));
+  REQUIRE(filter.fileExport(closed, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(output, "LWPOLYLINE", "10") == std::vector<std::string>{"11", "14", "18"});
+  CHECK(recordGroupValues(output, "LWPOLYLINE", "20") == std::vector<std::string>{"22", "26", "23"});
+  RS_Graphic closedReopened;
+  REQUIRE(filter.fileImport(closedReopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(closedReopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(resaved, "LWPOLYLINE", "70") == std::vector<std::string>{"1"});
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_CLOSED_SPARSE_LWPOLYLINE"))
+    std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
+
+  const std::string sentinel = "preserve sparse polyline destination\n";
+  auto explicitZeros = input;
+  const std::string firstVertex = "20\n2\n10\n4\n";
+  const auto zeroVertex = explicitZeros.find(firstVertex); REQUIRE(zeroVertex != std::string::npos);
+  explicitZeros.replace(zeroVertex, firstVertex.size(), "20\n2\n40\n0\n41\n0\n42\n0\n10\n4\n");
+  const auto zeroHeader = explicitZeros.find("90\n3\n70\n0\n"); REQUIRE(zeroHeader != std::string::npos);
+  explicitZeros.insert(zeroHeader + std::string("90\n3\n70\n0\n").size(), "38\n0\n39\n0\n");
+  writeText(source, explicitZeros);
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_ZERO_SPARSE_LWPOLYLINE"))
+    std::filesystem::copy_file(source, std::string(copy) + ".source.dxf", std::filesystem::copy_options::overwrite_existing);
+  RS_Graphic zeros;
+  REQUIRE(filter.fileImport(zeros, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(zeros, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(output, "LWPOLYLINE", "10") == std::vector<std::string>{"1", "4", "8"});
+  RS_Graphic zerosReopened;
+  REQUIRE(filter.fileImport(zerosReopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(zerosReopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_ZERO_SPARSE_LWPOLYLINE"))
+    std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
+  auto closedZeros = explicitZeros;
+  const auto zeroClosedFlag = closedZeros.find("90\n3\n70\n0\n"); REQUIRE(zeroClosedFlag != std::string::npos);
+  closedZeros.replace(zeroClosedFlag, std::string("90\n3\n70\n0\n").size(), "90\n3\n70\n1\n");
+  writeText(source, closedZeros);
+  RS_Graphic zerosClosed;
+  REQUIRE(filter.fileImport(zerosClosed, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(zerosClosed, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(output, "LWPOLYLINE", "70") == std::vector<std::string>{"1"});
+  RS_Graphic zerosClosedReopened;
+  REQUIRE(filter.fileImport(zerosClosedReopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(zerosClosedReopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
+
+  for (const std::string addition : {"43\n0\n", "42\n0\n"}) {
+    auto conflict = explicitZeros;
+    const auto at = conflict.find(addition == "43\n0\n" ? "38\n0\n" : "42\n0\n");
+    REQUIRE(at != std::string::npos);
+    conflict.insert(at, addition);
+    writeText(source, conflict); writeText(output, sentinel);
+    RS_Graphic rejected;
+    if (filter.fileImport(rejected, QString::fromStdString(source), RS2::FormatDXFRW))
+      CHECK_FALSE(filter.fileExport(rejected, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary);
+      CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    REQUIRE(filter.fileExport(zeros, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+  for (int mode = 0; mode != 5; ++mode) {
+    if (mode == 0) polyline->setPlotStyleHandle(0xFAu);
+    if (mode == 1) polyline->setShadowHandle(0xFAu);
+    if (mode == 2) polyline->setVisualStyleHandles(0xFAu, 0, 0);
+    if (mode == 3) polyline->setXDictHandle(0xFAu);
+    if (mode == 4) polyline->setReactorHandles({0xFAu});
+    writeText(output, sentinel);
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary);
+      CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    polyline->setPlotStyleHandle(0); polyline->setShadowHandle(0);
+    polyline->setVisualStyleHandles(0, 0, 0); polyline->setXDictHandle(0);
+    polyline->setReactorHandles({});
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+  RS_Entity *closingSegment = closedPolyline->entityAt(closedPolyline->count() - 1u); REQUIRE(closingSegment);
+  closingSegment->move(RS_Vector(1, 1));
+  writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(closed, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream retained(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+  closingSegment->move(RS_Vector(-1, -1));
+  REQUIRE(filter.fileExport(closed, QString::fromStdString(output), RS2::FormatDXFRW));
+  for (const std::string last : {"10\n1\n20\n2\n", "10\n1.000001\n20\n2\n"}) {
+    auto badClosed = closedInput;
+    const std::string original = "10\n8\n20\n3\n";
+    const auto at = badClosed.find(original); REQUIRE(at != std::string::npos);
+    badClosed.replace(at, original.size(), last);
+    writeText(source, badClosed); writeText(output, sentinel);
+    RS_Graphic rejected;
+    if (filter.fileImport(rejected, QString::fromStdString(source), RS2::FormatDXFRW))
+      CHECK_FALSE(filter.fileExport(rejected, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary);
+      CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    REQUIRE(filter.fileExport(closed, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+  RS_Entity *segment = polyline->entityAt(0); REQUIRE(segment);
+  segment->setMaterialHandle(0xA1u);
+  writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream retained(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+  segment->setMaterialHandle(0);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  const std::vector<std::pair<std::string, std::string>> unsupported = {
+      {"90\n3\n70\n0\n", "90\n3\n70\n128\n"},
+      {"20\n2\n10\n4\n", "20\n2\n42\n0.000000000001\n10\n4\n"},
+      {"90\n3\n70\n0\n", "90\n3\n70\n0\n38\n2\n"},
+      {"90\n3\n70\n0\n", "90\n3\n70\n0\n43\n1\n"},
+      {"20\n2\n10\n4\n", "20\n2\n40\n1\n10\n4\n"},
+      {"90\n3\n70\n0\n", "90\n4\n70\n0\n"}};
+  for (const auto &change : unsupported) {
+    auto bad = input;
+    const auto at = bad.find(change.first); REQUIRE(at != std::string::npos);
+    bad.replace(at, change.first.size(), change.second);
+    writeText(source, bad); writeText(output, sentinel);
+    RS_Graphic rejected;
+    if (filter.fileImport(rejected, QString::fromStdString(source), RS2::FormatDXFRW))
+      CHECK_FALSE(filter.fileExport(rejected, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary);
+      CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+
+  const std::string originalVertices = "90\n3\n70\n0\n10\n1\n20\n2\n10\n4\n20\n6\n10\n8\n20\n3\n";
+  for (const int flag : {0, 1}) for (const int count : {128, 129}) {
+    std::string geometry = "90\n" + std::to_string(count) + "\n70\n" + std::to_string(flag) + "\n";
+    for (int i = 0; i < count; ++i)
+      geometry += "10\n" + std::to_string(i) + "\n20\n" + std::to_string(i % 7) + "\n";
+    auto bounded = input;
+    const auto at = bounded.find(originalVertices); REQUIRE(at != std::string::npos);
+    bounded.replace(at, originalVertices.size(), geometry);
+    writeText(source, bounded); writeText(output, sentinel);
+    RS_Graphic candidate;
+    REQUIRE(filter.fileImport(candidate, QString::fromStdString(source), RS2::FormatDXFRW));
+    if (count == 128) {
+      REQUIRE(filter.fileExport(candidate, QString::fromStdString(output), RS2::FormatDXFRW));
+      CHECK(recordGroupValues(output, "LWPOLYLINE", "10").size() == 128u);
+      if (flag == 1) {
+        RS_Graphic reread;
+        REQUIRE(filter.fileImport(reread, QString::fromStdString(output), RS2::FormatDXFRW));
+        REQUIRE(filter.fileExport(reread, QString::fromStdString(resaved), RS2::FormatDXFRW));
+        CHECK(recordGroupValues(resaved, "LWPOLYLINE", "70") == std::vector<std::string>{"1"});
+        CHECK(recordGroupValues(resaved, "LWPOLYLINE", "10").size() == 128u);
+        if (const char *copy = std::getenv("LIBRECAD_KEEP_CLOSED_SPARSE_LWPOLYLINE_128"))
+          std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
+      }
+    } else {
+      CHECK_FALSE(filter.fileExport(candidate, QString::fromStdString(output), RS2::FormatDXFRW));
+      { std::ifstream retained(output, std::ios::binary);
+        CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+      REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    }
+  }
+
+  auto two = input;
+  const auto boundary = two.find("0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n");
+  REQUIRE(boundary != std::string::npos);
+  two.insert(boundary, "0\nLWPOLYLINE\n5\nA6\n100\nAcDbEntity\n8\nRAWTEST\n"
+                       "100\nAcDbPolyline\n90\n2\n70\n0\n10\n2\n20\n4\n10\n3\n20\n5\n");
+  struct PolylineDeliveryProbe : RS_FilterDXFRW {
+    std::uint32_t suppress = 0;
+    bool alterTyped = false, alterPhysical = false;
+    void addLWPolyline(const DRW_LWPolyline &data) override {
+      if (data.handle == suppress) return;
+      DRW_LWPolyline changed = data;
+      if (alterTyped && data.handle == 0xA5u && !changed.vertlist.empty()) {
+        changed.vertlist[0] = std::make_shared<DRW_Vertex2D>(*changed.vertlist[0]);
+        changed.vertlist[0]->x += 1.0;
+      }
+      RS_FilterDXFRW::addLWPolyline(changed);
+    }
+    void addDxfEntitiesSource(const DRW_DxfEntitiesSource &data) override {
+      auto copy = data;
+      if (alterPhysical) for (auto &record : copy.records)
+        if (record.name == "LWPOLYLINE") for (std::size_t i = 0; i < record.groups.size(); ++i)
+          if (record.groups[i].code() == 10) { record.rawValues[i] = "999"; break; }
+      RS_FilterDXFRW::addDxfEntitiesSource(copy);
+    }
+  } probe;
+  writeText(source, two);
+  for (int mode = 0; mode != 4; ++mode) {
+    probe.suppress = mode == 0 ? 0xA5u : mode == 1 ? 0xA6u : 0;
+    probe.alterTyped = mode == 2; probe.alterPhysical = mode == 3;
+    RS_Graphic rejected;
+    REQUIRE(probe.fileImport(rejected, QString::fromStdString(source), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(probe.fileExport(rejected, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary);
+      CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    probe.suppress = 0; probe.alterTyped = probe.alterPhysical = false;
+    RS_Graphic retry;
+    REQUIRE(probe.fileImport(retry, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(probe.fileExport(retry, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK(countRecords(output, "LWPOLYLINE") == 2);
+  }
+  std::filesystem::remove(resaved);
+  std::filesystem::remove(source); std::filesystem::remove(output);
+}
+
+TEST_CASE("Ordinary sparse material saves curved lightweight polylines",
+          "[system-codec][dxf][material][transaction][polyline][bulge]") {
+  ensureSettings();
+  const auto source = tmpFile("system_sparse_curved_polyline_source.dxf");
+  const auto output = tmpFile("system_sparse_curved_polyline_output.dxf");
+  const auto resaved = tmpFile("system_sparse_curved_polyline_resaved.dxf");
+  const std::string sentinel = "preserve curved polyline destination\n";
+  for (const bool closed : {false, true}) for (const double bulge : {0.5, -0.5, 1.0, -1.0, 2.0, -2.0}) {
+    CAPTURE(closed, bulge);
+    auto input = sparseMaterialPolylineSource();
+    const auto first = input.find("20\n2\n10\n4\n"); REQUIRE(first != std::string::npos);
+    input.replace(first, std::string("20\n2\n10\n4\n").size(),
+                  "20\n2\n42\n" + std::to_string(bulge) + "\n10\n4\n");
+    const auto last = input.find("20\n3\n0\nENDSEC\n"); REQUIRE(last != std::string::npos);
+    input.replace(last, std::string("20\n3\n0\nENDSEC\n").size(),
+                  "20\n3\n42\n0.25\n0\nENDSEC\n");
+    if (closed) {
+      const auto flag = input.find("90\n3\n70\n0\n"); REQUIRE(flag != std::string::npos);
+      input.replace(flag, std::string("90\n3\n70\n0\n").size(), "90\n3\n70\n1\n");
+    }
+    writeText(source, input); writeText(output, sentinel);
+    RS_FilterDXFRW filter; RS_Graphic graphic;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    const auto verify = [&](const std::string &path) {
+      const auto values = recordGroupValues(path, "LWPOLYLINE", "42");
+      REQUIRE(values.size() == 2u);
+      CHECK(std::stod(values[0]) == Catch::Approx(bulge));
+      CHECK(std::stod(values[1]) == Catch::Approx(0.25));
+      const auto material = recordGroupValues(path, "MATERIAL", "5"); REQUIRE(material.size() == 1u);
+      CHECK(recordGroupValues(path, "LWPOLYLINE", "347") == std::vector<std::string>{material.front()});
+    };
+    verify(output);
+    RS_Polyline *polyline = nullptr;
+    for (RS_Entity *entity : graphic)
+      if (entity && entity->sourceHandle() == 0xA5u && entity->rtti() == RS2::EntityPolyline)
+        polyline = static_cast<RS_Polyline *>(entity);
+    REQUIRE(polyline); polyline->move(RS_Vector(10, 20));
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    verify(output);
+    RS_Graphic reread;
+    REQUIRE(filter.fileImport(reread, QString::fromStdString(output), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(reread, QString::fromStdString(resaved), RS2::FormatDXFRW));
+    verify(resaved);
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_CURVED_SPARSE_LWPOLYLINE")) {
+      const std::string suffix = std::string(closed ? "-closed-" : "-open-") + std::to_string(bulge) + ".dxf";
+      std::filesystem::copy_file(resaved, std::string(copy) + suffix,
+                                 std::filesystem::copy_options::overwrite_existing);
+    }
+  }
+  std::filesystem::remove(source); std::filesystem::remove(output); std::filesystem::remove(resaved);
+}
+
+TEST_CASE("Curved sparse material rejects altered geometry and retries",
+          "[system-codec][dxf][material][transaction][polyline][bulge]") {
+  ensureSettings();
+  auto input = sparseMaterialPolylineSource();
+  const auto first = input.find("20\n2\n10\n4\n"); REQUIRE(first != std::string::npos);
+  input.replace(first, std::string("20\n2\n10\n4\n").size(), "20\n2\n42\n0.5\n10\n4\n");
+  const auto source = tmpFile("system_sparse_curved_polyline_mismatch.dxf");
+  const auto output = tmpFile("system_sparse_curved_polyline_mismatch_out.dxf");
+  const std::string sentinel = "preserve curved mismatch destination\n";
+  struct CurvedProbe : RS_FilterDXFRW {
+    bool alterTyped = false, alterPhysical = false;
+    void addLWPolyline(const DRW_LWPolyline &data) override {
+      DRW_LWPolyline changed = data;
+      if (alterTyped && data.handle == 0xA5u && !changed.vertlist.empty()) {
+        changed.vertlist[0] = std::make_shared<DRW_Vertex2D>(*changed.vertlist[0]);
+        changed.vertlist[0]->bulge = 0.75;
+      }
+      RS_FilterDXFRW::addLWPolyline(changed);
+    }
+    void addDxfEntitiesSource(const DRW_DxfEntitiesSource &data) override {
+      auto copy = data;
+      if (alterPhysical) for (auto &record : copy.records)
+        if (record.name == "LWPOLYLINE") for (std::size_t i = 0; i < record.groups.size(); ++i)
+          if (record.groups[i].code() == 42) { record.rawValues[i] = "0.75"; break; }
+      RS_FilterDXFRW::addDxfEntitiesSource(copy);
+    }
+  } filter;
+  writeText(source, input);
+  for (int mode = 0; mode != 2; ++mode) {
+    filter.alterTyped = mode == 0; filter.alterPhysical = mode == 1;
+    RS_Graphic changed;
+    REQUIRE(filter.fileImport(changed, QString::fromStdString(source), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(filter.fileExport(changed, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary);
+      CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    filter.alterTyped = filter.alterPhysical = false;
+    RS_Graphic retry;
+    REQUIRE(filter.fileImport(retry, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(retry, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+  RS_Graphic live;
+  REQUIRE(filter.fileImport(live, QString::fromStdString(source), RS2::FormatDXFRW));
+  RS_Polyline *polyline = nullptr;
+  for (RS_Entity *entity : live)
+    if (entity && entity->sourceHandle() == 0xA5u && entity->rtti() == RS2::EntityPolyline)
+      polyline = static_cast<RS_Polyline *>(entity);
+  REQUIRE(polyline); REQUIRE(polyline->count() == 2u);
+  auto *arc = polyline->entityAt(0); REQUIRE(arc); REQUIRE(arc->rtti() == RS2::EntityArc);
+  arc->move(RS_Vector(1, 1));
+  writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(live, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream retained(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+  arc->move(RS_Vector(-1, -1));
+  REQUIRE(filter.fileExport(live, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::filesystem::remove(source); std::filesystem::remove(output);
+}
+
+TEST_CASE("Ordinary sparse material saves simple circles arcs and lines",
+          "[system-codec][dxf][material][transaction][circle][arc]") {
+  ensureSettings();
+  const auto source = tmpFile("system_sparse_circle_source.dxf");
+  const auto output = tmpFile("system_sparse_circle_output.dxf");
+  const auto resaved = tmpFile("system_sparse_circle_resave.dxf");
+  const std::string input =
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n9\n$CMATERIAL\n347\nA1\n0\nENDSEC\n"
+      "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n1\n"
+      "0\nLAYER\n5\n30\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+      "2\nRAWTEST\n70\n0\n62\n7\n6\nCONTINUOUS\n347\nA1\n0\nENDTAB\n0\nENDSEC\n"
+      "0\nSECTION\n2\nENTITIES\n0\nLINE\n5\nA2\n100\nAcDbEntity\n8\nRAWTEST\n62\n1\n347\nA1\n"
+      "100\nAcDbLine\n10\n0\n20\n0\n11\n10\n21\n0\n"
+      "0\nCIRCLE\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n62\n2\n347\nA1\n"
+      "100\nAcDbCircle\n10\n2\n20\n3\n30\n0\n40\n4\n"
+      "0\nARC\n5\nA6\n100\nAcDbEntity\n8\nRAWTEST\n62\n3\n347\nA1\n"
+      "100\nAcDbCircle\n10\n4\n20\n5\n40\n2\n100\nAcDbArc\n50\n30\n51\n120\n0\nENDSEC\n"
+      "0\nSECTION\n2\nOBJECTS\n0\nDICTIONARY\n5\nC\n330\n0\n"
+      "100\nAcDbDictionary\n281\n1\n3\nACAD_MATERIAL\n350\nA0\n"
+      "0\nDICTIONARY\n5\nA0\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+      "3\nPlainMat\n350\nA1\n0\nMATERIAL\n5\nA1\n330\nA0\n"
+      "100\nAcDbMaterial\n1\nPlainMat\n94\n63\n0\nENDSEC\n0\nEOF\n";
+  writeText(source, input);
+  RS_FilterDXFRW filter;
+  RS_Graphic graphic;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  RS_Circle *circle = nullptr;
+  RS_Arc *arc = nullptr;
+  for (RS_Entity *entity : graphic) {
+    if (entity && entity->sourceHandle() == 0xA5u && entity->rtti() == RS2::EntityCircle)
+      circle = static_cast<RS_Circle *>(entity);
+    if (entity && entity->sourceHandle() == 0xA6u && entity->rtti() == RS2::EntityArc)
+      arc = static_cast<RS_Arc *>(entity);
+  }
+  REQUIRE(circle); REQUIRE(arc);
+  CHECK(circle->materialHandle() == 0xA1u);
+  CHECK(arc->materialHandle() == 0xA1u);
+  circle->setCenter(RS_Vector(5.0, 6.0));
+  circle->setRadius(7.0);
+  arc->setCenter(RS_Vector(8.0, 9.0));
+  arc->setRadius(3.5);
+  arc->setAngle1(M_PI / 4.0);
+  arc->setAngle2(M_PI);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(output, "CIRCLE", "10") == std::vector<std::string>{"5"});
+  CHECK(recordGroupValues(output, "CIRCLE", "20") == std::vector<std::string>{"6"});
+  CHECK(recordGroupValues(output, "CIRCLE", "40") == std::vector<std::string>{"7"});
+  CHECK(recordGroupValues(output, "ARC", "10") == std::vector<std::string>{"8"});
+  CHECK(recordGroupValues(output, "ARC", "20") == std::vector<std::string>{"9"});
+  CHECK(recordGroupValues(output, "ARC", "40") == std::vector<std::string>{"3.5"});
+  CHECK(recordGroupValues(output, "LINE", "62") == std::vector<std::string>{"1"});
+  CHECK(recordGroupValues(output, "CIRCLE", "62") == std::vector<std::string>{"2"});
+  CHECK(recordGroupValues(output, "ARC", "62") == std::vector<std::string>{"3"});
+  const auto start = recordGroupValues(output, "ARC", "50");
+  const auto end = recordGroupValues(output, "ARC", "51");
+  REQUIRE(start.size() == 1u); REQUIRE(end.size() == 1u);
+  CHECK(std::abs(std::stod(start.front()) - 45.0) < 1e-10);
+  CHECK(std::abs(std::stod(end.front()) - 180.0) < 1e-10);
+  const auto material = recordGroupValues(output, "MATERIAL", "5");
+  REQUIRE(material.size() == 1u);
+  CHECK(recordGroupValues(output, "CIRCLE", "347") == std::vector<std::string>{material.front()});
+  CHECK(recordGroupValues(output, "ARC", "347") == std::vector<std::string>{material.front()});
+  RS_Graphic reopened;
+  REQUIRE(filter.fileImport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(reopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(resaved, "CIRCLE", "40") == std::vector<std::string>{"7"});
+  CHECK(recordGroupValues(resaved, "ARC", "40") == std::vector<std::string>{"3.5"});
+  CHECK(recordGroupValues(resaved, "LINE", "62") == std::vector<std::string>{"1"});
+  CHECK(recordGroupValues(resaved, "CIRCLE", "62") == std::vector<std::string>{"2"});
+  CHECK(recordGroupValues(resaved, "ARC", "62") == std::vector<std::string>{"3"});
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_ORDINARY_SPARSE_CIRCLE"))
+    std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
+  const auto colorSource = tmpFile("system_sparse_circle_colors.dxf");
+  for (int color : {1, 2, 3, 4, 5, 6, 8, 9, 11, 20, 40, 89, 120, 149, 199, 249, 250, 254, 255}) {
+    auto colored = input;
+    const auto at = colored.find("62\n2\n347\nA1\n100\nAcDbCircle\n");
+    REQUIRE(at != std::string::npos);
+    colored.replace(at, std::string("62\n2\n").size(), "62\n" + std::to_string(color) + "\n");
+    writeText(colorSource, colored);
+    RS_Graphic colorGraphic;
+    REQUIRE(filter.fileImport(colorGraphic, QString::fromStdString(colorSource), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(colorGraphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK(recordGroupValues(output, "CIRCLE", "62") == std::vector<std::string>{std::to_string(color)});
+    RS_Graphic colorReopened;
+    REQUIRE(filter.fileImport(colorReopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(colorReopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
+    CHECK(recordGroupValues(resaved, "CIRCLE", "62") == std::vector<std::string>{std::to_string(color)});
+    if (const char *prefix = std::getenv("LIBRECAD_KEEP_ORDINARY_SPARSE_PALETTE"))
+      std::filesystem::copy_file(resaved, std::string(prefix) + std::to_string(color) + ".dxf",
+                                 std::filesystem::copy_options::overwrite_existing);
+  }
+  const std::string colorSentinel = "preserve unsupported color destination\n";
+  for (const std::string extra : {"62\n7\n", "62\n-1\n", "62\n10\n", "62\n50\n", "62\n90\n",
+                                  "62\n130\n", "62\n170\n", "62\n210\n", "62\n2\n62\n2\n",
+                                  "62\n2\n420\n16711680\n"}) {
+    auto unsupported = input;
+    const auto at = unsupported.find("62\n2\n347\nA1\n100\nAcDbCircle\n");
+    REQUIRE(at != std::string::npos);
+    unsupported.replace(at, std::string("62\n2\n").size(), extra);
+    writeText(colorSource, unsupported);
+    RS_Graphic rejected;
+    writeText(output, colorSentinel);
+    if (filter.fileImport(rejected, QString::fromStdString(colorSource), RS2::FormatDXFRW))
+      CHECK_FALSE(filter.fileExport(rejected, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == colorSentinel); }
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+  {
+    // Exercise the complete canonical palette together without hundreds of
+    // individual file conversions. The six aliases and contextual ACI 7 are
+    // tested as refusals above.
+    const std::set<int> excluded{7, 10, 50, 90, 130, 170, 210};
+    std::vector<std::string> expected;
+    std::string circles;
+    for (int color = 1; color <= 255; ++color) {
+      if (excluded.count(color)) continue;
+      expected.push_back(std::to_string(color));
+      circles += "0\nCIRCLE\n5\n" + QString::number(0x100 + color, 16).toUpper().toStdString() +
+          "\n100\nAcDbEntity\n8\nRAWTEST\n62\n" + std::to_string(color) +
+          "\n347\nA1\n100\nAcDbCircle\n10\n" + std::to_string(color) + "\n20\n3\n40\n4\n";
+    }
+    REQUIRE(expected.size() == 248u);
+    auto palette = input;
+    const auto first = palette.find("0\nCIRCLE\n5\nA5\n");
+    const auto last = palette.find("0\nARC\n5\nA6\n", first);
+    REQUIRE(first != std::string::npos); REQUIRE(last != std::string::npos);
+    palette.replace(first, last - first, circles);
+    writeText(colorSource, palette);
+    RS_Graphic paletteGraphic;
+    REQUIRE(filter.fileImport(paletteGraphic, QString::fromStdString(colorSource), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(paletteGraphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK(recordGroupValues(output, "CIRCLE", "62") == expected);
+    RS_Graphic paletteReopened;
+    REQUIRE(filter.fileImport(paletteReopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(paletteReopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
+    CHECK(recordGroupValues(resaved, "CIRCLE", "62") == expected);
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_ORDINARY_SPARSE_FULL_PALETTE"))
+      std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
+  }
+  auto savedPen = circle->getPen(false);
+  auto changedPen = savedPen;
+  changedPen.setColor(RS_Color(0, 255, 255));
+  circle->setPen(changedPen);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(output, "CIRCLE", "62") == std::vector<std::string>{"4"});
+  RS_Graphic changedColor;
+  REQUIRE(filter.fileImport(changedColor, QString::fromStdString(output), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(changedColor, QString::fromStdString(resaved), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(resaved, "CIRCLE", "62") == std::vector<std::string>{"4"});
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_ORDINARY_SPARSE_EDITED_COLOR"))
+    std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
+  RS_Color namedColor(10, 20, 30);
+  namedColor.setColorName(QStringLiteral("unqualified named color"));
+  for (const RS_Color &color : {RS_Color(0, 0, 0), namedColor}) {
+    changedPen.setColor(color);
+    circle->setPen(changedPen);
+    writeText(output, colorSentinel);
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == colorSentinel); }
+  }
+  circle->setPen(savedPen);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::filesystem::remove(colorSource);
+  const auto curveOnlySource = tmpFile("system_sparse_curves_only_source.dxf");
+  for (int mode = 0; mode != 3; ++mode) {
+    auto curveOnly = input;
+    const auto first = curveOnly.find("0\nLINE\n"); REQUIRE(first != std::string::npos);
+    const auto last = curveOnly.find(mode == 1 ? "0\nARC\n" : "0\nCIRCLE\n", first);
+    REQUIRE(last != std::string::npos);
+    curveOnly.erase(first, last - first);
+    if (mode == 2) {
+      const auto arcStart = curveOnly.find("0\nARC\n"); REQUIRE(arcStart != std::string::npos);
+      const auto arcEnd = curveOnly.find("0\nENDSEC\n", arcStart); REQUIRE(arcEnd != std::string::npos);
+      curveOnly.erase(arcStart, arcEnd - arcStart);
+    }
+    writeText(curveOnlySource, curveOnly);
+    RS_Graphic onlyCurves;
+    REQUIRE(filter.fileImport(onlyCurves, QString::fromStdString(curveOnlySource), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(onlyCurves, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK(countRecords(output, "LINE") == 0);
+    CHECK(countRecords(output, "CIRCLE") == (mode == 1 ? 0 : 1));
+    CHECK(countRecords(output, "ARC") == (mode == 2 ? 0 : 1));
+    RS_Graphic rereadCurves;
+    REQUIRE(filter.fileImport(rereadCurves, QString::fromStdString(output), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(rereadCurves, QString::fromStdString(resaved), RS2::FormatDXFRW));
+  }
+  std::filesystem::remove(curveOnlySource);
+  auto *addedCircle = new RS_Circle(&graphic, RS_CircleData(RS_Vector(11.0, 12.0), 2.0));
+  auto *addedArc = new RS_Arc(&graphic, RS_ArcData(RS_Vector(13.0, 14.0), 3.0, 0.0, M_PI / 2.0, false));
+  auto *targetLayer = graphic.findLayer(QStringLiteral("RAWTEST")); REQUIRE(targetLayer);
+  addedCircle->setLayer(targetLayer); addedArc->setLayer(targetLayer);
+  addedCircle->setPen(circle->getPen(false)); addedArc->setPen(arc->getPen(false));
+  graphic.addEntity(addedCircle); graphic.addEntity(addedArc);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(countRecords(output, "CIRCLE") == 2); CHECK(countRecords(output, "ARC") == 2);
+  RS_Graphic additions;
+  REQUIRE(filter.fileImport(additions, QString::fromStdString(output), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(additions, QString::fromStdString(resaved), RS2::FormatDXFRW));
+  CHECK(countRecords(resaved, "CIRCLE") == 2); CHECK(countRecords(resaved, "ARC") == 2);
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_ORDINARY_SPARSE_ADDED"))
+    std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
+  REQUIRE(graphic.removeEntity(addedCircle)); REQUIRE(graphic.removeEntity(addedArc));
+  const std::string sentinel = "preserve circle material destination\n";
+  circle->setRadius(-1.0);
+  writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+  circle->setRadius(7.0);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  arc->setReversed(true);
+  writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+  arc->setReversed(false);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto alteredSource = tmpFile("system_sparse_circle_unqualified.dxf");
+  for (int mode = 0; mode != 4; ++mode) {
+    auto altered = input;
+    if (mode == 0) {
+      const auto at = altered.find("100\nAcDbCircle\n10\n2\n"); REQUIRE(at != std::string::npos);
+      altered.insert(at + std::string("100\nAcDbCircle\n").size(), "39\n1\n");
+    } else if (mode == 1) {
+      const auto at = altered.find("30\n0\n40\n4\n"); REQUIRE(at != std::string::npos);
+      altered.replace(at, std::string("30\n0\n").size(), "30\n1\n");
+    } else if (mode == 2) {
+      const auto at = altered.find("50\n30\n51\n120\n"); REQUIRE(at != std::string::npos);
+      altered.replace(at, std::string("50\n30\n").size(), "50\n360\n");
+    } else {
+      const auto at = altered.find("0\nCIRCLE\n5\nA5\n"); REQUIRE(at != std::string::npos);
+      altered.replace(at, std::string("0\nCIRCLE\n5\nA5\n").size(), "0\nCIRCLE\n5\nA2\n");
+    }
+    writeText(alteredSource, altered);
+    RS_Graphic unqualified;
+    writeText(output, sentinel);
+    const bool imported = filter.fileImport(unqualified, QString::fromStdString(alteredSource), RS2::FormatDXFRW);
+    if (mode < 3) REQUIRE(imported);
+    if (imported) CHECK_FALSE(filter.fileExport(unqualified, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    RS_Graphic retry;
+    REQUIRE(filter.fileImport(retry, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(retry, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+  struct DeliveryProbe : RS_FilterDXFRW {
+    std::uint32_t suppress = 0;
+    bool alterRadius = false, alterArc = false, alterPhysicalRadius = false;
+    void addCircle(const DRW_Circle &data) override {
+      if (data.handle == suppress) return;
+      DRW_Circle changed = data;
+      if (alterRadius) changed.radious += 1.0;
+      RS_FilterDXFRW::addCircle(changed);
+    }
+    void addArc(const DRW_Arc &data) override {
+      if (data.handle == suppress) return;
+      DRW_Arc changed = data;
+      if (alterArc) changed.staangle += 0.1;
+      RS_FilterDXFRW::addArc(changed);
+    }
+    void addDxfEntitiesSource(const DRW_DxfEntitiesSource &source) override {
+      auto copy = source;
+      if (alterPhysicalRadius) for (auto &record : copy.records)
+        if (record.name == "CIRCLE") for (std::size_t i = 0; i < record.groups.size(); ++i)
+          if (record.groups[i].code() == 40) { record.rawValues[i] = "999"; break; }
+      RS_FilterDXFRW::addDxfEntitiesSource(copy);
+    }
+  } probe;
+  for (int mode = 0; mode != 5; ++mode) {
+    auto altered = input;
+    if (mode < 2) {
+      const auto at = altered.find("0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n"); REQUIRE(at != std::string::npos);
+      altered.insert(at, mode == 0
+          ? "0\nCIRCLE\n5\nA7\n100\nAcDbEntity\n8\nRAWTEST\n100\nAcDbCircle\n10\n1\n20\n1\n40\n1\n"
+          : "0\nARC\n5\nA8\n100\nAcDbEntity\n8\nRAWTEST\n100\nAcDbCircle\n10\n1\n20\n1\n40\n1\n100\nAcDbArc\n50\n300\n51\n20\n");
+      probe.suppress = mode == 0 ? 0xA7u : 0xA8u;
+    } else if (mode == 2) probe.alterRadius = true;
+    else if (mode == 3) probe.alterArc = true;
+    else probe.alterPhysicalRadius = true;
+    writeText(alteredSource, altered);
+    RS_Graphic incomplete;
+    REQUIRE(probe.fileImport(incomplete, QString::fromStdString(alteredSource), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(probe.fileExport(incomplete, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    probe.suppress = 0; probe.alterRadius = probe.alterArc = probe.alterPhysicalRadius = false;
+    RS_Graphic retry;
+    REQUIRE(probe.fileImport(retry, QString::fromStdString(mode < 2 ? alteredSource : source), RS2::FormatDXFRW));
+    REQUIRE(probe.fileExport(retry, QString::fromStdString(output), RS2::FormatDXFRW));
+    if (mode == 0) CHECK(countRecords(output, "CIRCLE") == 2);
+    if (mode == 1) {
+      CHECK(countRecords(output, "ARC") == 2);
+      const auto starts = recordGroupValues(output, "ARC", "50");
+      const auto ends = recordGroupValues(output, "ARC", "51");
+      REQUIRE(starts.size() == 2u); REQUIRE(ends.size() == 2u);
+      CHECK(std::abs(std::stod(starts.back()) - 300.0) < 1e-10);
+      CHECK(std::abs(std::stod(ends.back()) - 20.0) < 1e-10);
+      RS_Graphic wrapped;
+      REQUIRE(probe.fileImport(wrapped, QString::fromStdString(output), RS2::FormatDXFRW));
+      REQUIRE(probe.fileExport(wrapped, QString::fromStdString(resaved), RS2::FormatDXFRW));
+      if (const char *copy = std::getenv("LIBRECAD_KEEP_ORDINARY_SPARSE_WRAP"))
+        std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
+    }
+  }
+  std::filesystem::remove(alteredSource);
+  std::filesystem::remove(source); std::filesystem::remove(output); std::filesystem::remove(resaved);
+}
+
+TEST_CASE("Opt-in sparse material binds block entity source ownership",
+          "[system-codec][dxf][material][transaction]") {
+  ensureSettings();
+  const auto source = tmpFile("system_sparse_material_block_source.dxf");
+  const auto output = tmpFile("system_sparse_material_block_output.dxf");
+  const std::string sentinel = "preserve block material destination\n";
+  writeText(source,
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
+      "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n1\n"
+      "0\nLAYER\n5\n30\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+      "2\n0\n70\n0\n62\n7\n6\nCONTINUOUS\n0\nENDTAB\n0\nENDSEC\n"
+      "0\nSECTION\n2\nBLOCKS\n0\nBLOCK\n5\nB0\n8\n0\n2\nTESTBLOCK\n70\n0\n10\n0\n20\n0\n30\n0\n"
+      "0\nLINE\n5\nA2\n100\nAcDbEntity\n8\n0\n347\nA1\n"
+      "100\nAcDbLine\n10\n0\n20\n0\n30\n0\n11\n10\n21\n0\n31\n0\n"
+      "0\nENDBLK\n5\nB1\n8\n0\n0\nENDSEC\n"
+      "0\nSECTION\n2\nENTITIES\n0\nENDSEC\n"
+      "0\nSECTION\n2\nOBJECTS\n0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+      "3\nACAD_MATERIAL\n350\nA0\n0\nDICTIONARY\n5\nA0\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+      "3\nPlainMat\n350\nA1\n0\nMATERIAL\n5\nA1\n330\nA0\n100\nAcDbMaterial\n1\nPlainMat\n94\n63\n"
+      "0\nENDSEC\n0\nEOF\n");
+  struct OptInFilter : RS_FilterDXFRW {
+    bool suppressUnmaterializedLine = false;
+    void addLine(const DRW_Line &line) override {
+      if (!suppressUnmaterializedLine || line.handle != 0xA5u)
+        RS_FilterDXFRW::addLine(line);
+    }
+#ifdef LIBDXFRW_HAS_DXF_PHYSICAL_IDENTITY_SOURCE_HANDLER
+    std::function<void(DRW_DxfIdentitySource &)> mutateIdentity;
+    void addDxfIdentitySource(const DRW_DxfIdentitySource &source) override {
+      auto copy = source;
+      if (mutateIdentity) mutateIdentity(copy);
+      RS_FilterDXFRW::addDxfIdentitySource(copy);
+    }
+#endif
+    bool wantsDxfSparseMaterialRawCapture() const noexcept override { return true; }
+    bool wantsDxfSparseMaterialRawReplay() const noexcept override { return true; }
+  } filter;
+  RS_Graphic graphic;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  auto *block = graphic.findBlock(QStringLiteral("TESTBLOCK")); REQUIRE(block);
+  auto *line = block->firstEntity(); REQUIRE(line); REQUIRE(line->materialHandle() == 0xA1u);
+  const auto *captured = graphic.dwgAdvancedMetadata().dxfMaterialEntitySources();
+  REQUIRE(captured); REQUIRE(captured->size() == 1u);
+  CHECK(captured->front().source == line->sourceHandle());
+  CHECK(captured->front().lineage == line->lineage());
+  CHECK(captured->front().block); CHECK(captured->front().blockName == "TESTBLOCK");
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+#ifdef LIBDXFRW_HAS_DXF_PHYSICAL_IDENTITY_SOURCE_HANDLER
+  for (const std::string name : {"BLOCK", "LINE", "ENDBLK"}) {
+    OptInFilter alteredFilter;
+    alteredFilter.mutateIdentity = [name](DRW_DxfIdentitySource &identity) {
+      const auto found = std::find_if(identity.records.begin(), identity.records.end(),
+          [&](const auto &record) { return record.name == name; });
+      if (found != identity.records.end()) identity.records.erase(found);
+    };
+    RS_Graphic alteredGraphic;
+    REQUIRE(alteredFilter.fileImport(alteredGraphic, QString::fromStdString(source), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(alteredFilter.fileExport(alteredGraphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    alteredFilter.mutateIdentity = {};
+    RS_Graphic corrected;
+    REQUIRE(alteredFilter.fileImport(corrected, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(alteredFilter.fileExport(corrected, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+#endif
+  {
+    std::ifstream file(source, std::ios::binary);
+    const std::string original((std::istreambuf_iterator<char>(file)), {});
+    auto withSecondLine = original;
+    const auto end = withSecondLine.find("0\nENDBLK\n");
+    REQUIRE(end != std::string::npos);
+    withSecondLine.insert(end, "0\nLINE\n5\nA5\n100\nAcDbEntity\n8\n0\n"
+                               "100\nAcDbLine\n10\n0\n20\n1\n11\n10\n21\n1\n");
+    writeText(source, withSecondLine);
+    OptInFilter deliveryFilter;
+    deliveryFilter.suppressUnmaterializedLine = true;
+    RS_Graphic missing;
+    REQUIRE(deliveryFilter.fileImport(missing, QString::fromStdString(source), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(deliveryFilter.fileExport(missing, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    deliveryFilter.suppressUnmaterializedLine = false;
+    RS_Graphic delivered;
+    REQUIRE(deliveryFilter.fileImport(delivered, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(deliveryFilter.fileExport(delivered, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK(countRecords(output, "LINE") == 2);
+    writeText(source, original);
+  }
+  block->setName(QStringLiteral("CHANGED")); writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+  block->setName(QStringLiteral("TESTBLOCK"));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto originalLineage = line->lineage();
+  line->setLineage(RS_Entity::newLineage()); writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+  line->setLineage(originalLineage);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  line->setMaterialHandle(0u); writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+  line->setMaterialHandle(0xA1u);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  {
+    std::ifstream file(source, std::ios::binary);
+    const std::string original((std::istreambuf_iterator<char>(file)), {});
+    auto altered = original;
+    const auto at = altered.find("8\n0\n347\nA1\n");
+    REQUIRE(at != std::string::npos);
+    altered.insert(at + std::string("8\n0\n").size(), "347\n0\n");
+    writeText(source, altered);
+    RS_Graphic duplicate;
+    REQUIRE(filter.fileImport(duplicate, QString::fromStdString(source), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(filter.fileExport(duplicate, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    writeText(source, original);
+    RS_Graphic corrected;
+    REQUIRE(filter.fileImport(corrected, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(corrected, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+  std::filesystem::remove(source); std::filesystem::remove(output);
+}
+#endif
+
+TEST_CASE("System codec gates ambiguous AC1024 default material",
+          "[system-codec][dxf][material][transaction]") {
+  ensureSettings();
+  const auto source = tmpFile("system_ezdxf_material_source.dxf");
+  const auto output = tmpFile("system_ezdxf_material_output.dxf");
+  // Created locally from the observed default-material group shape. The
+  // second 73 is intentionally left ambiguous and must remain raw-only.
+  writeText(source,
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1024\n0\nENDSEC\n"
+      "0\nSECTION\n2\nOBJECTS\n0\nMATERIAL\n5\n1F\n"
+      "102\n{ACAD_REACTORS\n330\nE\n102\n}\n330\nE\n100\nAcDbMaterial\n"
+      "1\nByBlock\n2\n\n70\n0\n40\n1\n71\n1\n41\n1\n91\n-1023410177\n"
+      "42\n1\n72\n1\n3\n\n73\n1\n74\n1\n75\n1\n44\n0.5\n73\n0\n"
+      "45\n1\n46\n1\n77\n1\n4\n\n78\n1\n79\n1\n170\n1\n48\n1\n"
+      "171\n1\n6\n\n172\n1\n173\n1\n174\n1\n140\n1\n141\n1\n"
+      "175\n1\n7\n\n176\n1\n177\n1\n178\n1\n143\n1\n179\n1\n8\n\n"
+      "270\n1\n271\n1\n272\n1\n145\n1\n146\n1\n273\n1\n9\n\n"
+      "274\n1\n275\n1\n276\n1\n42\n1\n72\n1\n3\n\n73\n1\n74\n1\n75\n1\n"
+      "94\n63\n0\nENDSEC\n0\nEOF\n");
+  struct OptInFilter : RS_FilterDXFRW
+#ifndef LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR
+      , DRW_DxfSparseMaterialRawPolicy
+#endif
+  {
+    bool wantsDxfSparseMaterialRawCapture() const noexcept override { return true; }
+#ifdef LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR
+    bool wantsDxfSparseMaterialRawReplay() const noexcept override { return true; }
+#endif
+  };
+  RS_Graphic legacy;
+  RS_FilterDXFRW legacyFilter;
+#ifdef LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR
+  REQUIRE(legacyFilter.fileImport(legacy, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(legacy.dwgAdvancedMetadata().materials().size() == 1u);
+  CHECK(legacy.dwgAdvancedMetadata().materials().front().requiresRawDxfReplay);
+#else
+  CHECK_FALSE(legacyFilter.fileImport(legacy, QString::fromStdString(source), RS2::FormatDXFRW));
+#endif
+  RS_Graphic graphic;
+  OptInFilter importer;
+  REQUIRE(importer.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(graphic.dwgAdvancedMetadata().materials().size() == 1u);
+  CHECK(graphic.dwgAdvancedMetadata().materials().front().requiresRawDxfReplay);
+  const auto sourceSnapshot = graphic.dwgAdvancedMetadata().materials().front().rawDxfSource;
+  REQUIRE(sourceSnapshot);
+  CHECK_FALSE(graphic.dwgAdvancedMetadata().materials().front().rawDxfSourceConflict);
+  REQUIRE(graphic.dwgAdvancedMetadata().rawDxfObjects().size() == 1u);
+  CHECK(graphic.dwgAdvancedMetadata().rawDxfObjects().front().groups.size() == 61u);
+  REQUIRE(sourceSnapshot->groups.size() == 61u);
+  REQUIRE(sourceSnapshot->hasRawValues);
+  REQUIRE(sourceSnapshot->rawValues.size() == sourceSnapshot->groups.size());
+  auto &mutableRaw = const_cast<std::vector<DRW_RawDxfObject> &>(
+      graphic.dwgAdvancedMetadata().rawDxfObjects());
+  REQUIRE(mutableRaw.front().groups.back().type() == DRW_Variant::INTEGER);
+  const int originalTail = sourceSnapshot->groups.back().i_val();
+  const std::string originalSpelling = sourceSnapshot->rawValues.back();
+  mutableRaw.front().groups.back().addInt(94, originalTail + 1);
+  mutableRaw.front().rawValues.back() = "changed";
+  CHECK(sourceSnapshot->groups.back().i_val() == originalTail);
+  CHECK(sourceSnapshot->rawValues.back() == originalSpelling);
+  const std::string sentinel = "retain AC1024 destination\n";
+  writeText(output, sentinel);
+  RS_FilterDXFRW exporter;
+  CHECK_FALSE(exporter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  std::ifstream retained(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  retained.close();
+  mutableRaw.front().groups.back().addInt(94, originalTail);
+  CHECK_FALSE(exporter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  mutableRaw.front().rawValues.back() = originalSpelling;
+  CHECK_FALSE(exporter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
+  mutableRaw.front().groups.back().addInt(94, originalTail + 1);
+  CHECK_FALSE(exporter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  mutableRaw.front().groups.back().addInt(94, originalTail);
+  auto &material = const_cast<LC_DwgAdvancedMetadata::MaterialRecord &>(
+      graphic.dwgAdvancedMetadata().materials().front());
+  material.name = "changed";
+  CHECK_FALSE(exporter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  material.name = "ByBlock";
+  const auto originalOwner = material.parentHandle;
+  material.parentHandle = originalOwner + 1;
+  CHECK_FALSE(exporter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  material.parentHandle = originalOwner;
+  const auto originalReactors = material.reactorHandles;
+  material.reactorHandles.push_back(0x99u);
+  CHECK_FALSE(exporter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  material.reactorHandles = originalReactors;
+  const auto nameGroup = std::find_if(mutableRaw.front().groups.begin(),
+      mutableRaw.front().groups.end(), [](const auto &group) { return group.code() == 1; });
+  REQUIRE(nameGroup != mutableRaw.front().groups.end());
+  const auto originalNameGroup = *nameGroup;
+  nameGroup->addString(1, std::string("ByBlock\0extra", 13));
+  CHECK_FALSE(exporter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  *nameGroup = originalNameGroup;
+  material.requiresRawDxfReplay = false;
+  CHECK_FALSE(exporter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  material.requiresRawDxfReplay = true;
+  mutableRaw.push_back(mutableRaw.front());
+  CHECK_FALSE(exporter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  mutableRaw.pop_back();
+  // Add a locally authored root and material dictionary to the same source;
+  // the opt-in path should retain both source frames without admitting export.
+  const auto graphSource = tmpFile("system_sparse_material_dictionary_source.dxf");
+  {
+    std::ifstream input(source, std::ios::binary);
+    std::string graph((std::istreambuf_iterator<char>(input)), {});
+    const std::string marker = "0\nSECTION\n2\nOBJECTS\n";
+    const auto at = graph.find(marker);
+    REQUIRE(at != std::string::npos);
+    graph.insert(at + marker.size(),
+        "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+        "3\nACAD_MATERIAL\n350\nE\n"
+        "0\nDICTIONARY\n5\nE\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+        "3\nByBlock\n350\n1F\n");
+    const std::string versionMarker = "1\nAC1024\n";
+    const auto headerAt = graph.find(versionMarker);
+    REQUIRE(headerAt != std::string::npos);
+    graph.insert(headerAt + versionMarker.size(), "9\n$CMATERIAL\n347\n1F\n");
+    graph.insert(graph.find(marker), "0\nSECTION\n2\nENTITIES\n0\nENDSEC\n");
+    writeText(graphSource, graph);
+  }
+  RS_Graphic graphGraphic;
+  OptInFilter graphImporter;
+  REQUIRE(graphImporter.fileImport(graphGraphic, QString::fromStdString(graphSource), RS2::FormatDXFRW));
+  const auto &graphMetadata = graphGraphic.dwgAdvancedMetadata();
+  REQUIRE(graphMetadata.dxfRootDictionarySource());
+  REQUIRE(graphMetadata.dxfMaterialDictionarySource());
+  CHECK(graphMetadata.dxfRootDictionarySource()->handle == 0xCu);
+  CHECK(graphMetadata.dxfMaterialDictionarySource()->handle == 0xEu);
+  REQUIRE(graphMetadata.materials().size() == 1u);
+  CHECK(graphMetadata.materials().front().rawDxfSource);
+#if defined(LIBDXFRW_HAS_DXF_DEFAULT_PLOT_PLACEHOLDER_HANDLE) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR)
+  const auto rawReplay = tmpFile("system_ezdxf_material_graph_replay.dxf");
+  REQUIRE(graphImporter.fileExport(graphGraphic, QString::fromStdString(rawReplay), RS2::FormatDXFRW2010));
+  CHECK(recordGroupValues(rawReplay, "MATERIAL", "94") == std::vector<std::string>{"63"});
+  RS_Graphic replayed;
+  OptInFilter replayFilter;
+  REQUIRE(replayFilter.fileImport(replayed, QString::fromStdString(rawReplay), RS2::FormatDXFRW));
+  REQUIRE(replayFilter.fileExport(replayed, QString::fromStdString(rawReplay), RS2::FormatDXFRW2010));
+  CHECK(recordGroupValues(rawReplay, "MATERIAL", "94") == std::vector<std::string>{"63"});
+  auto &replayedRaw = const_cast<std::vector<DRW_RawDxfObject>&>(replayed.dwgAdvancedMetadata().rawDxfObjects());
+  const auto plot = std::find_if(replayedRaw.begin(), replayedRaw.end(), [](const auto &record) {
+    return record.name == "ACDBDICTIONARYWDFLT";
+  });
+  REQUIRE(plot != replayedRaw.end());
+  const auto cloning = std::find_if(plot->groups.begin(), plot->groups.end(),
+                                    [](const auto &group) { return group.code() == 281; });
+  REQUIRE(cloning != plot->groups.end());
+  const auto originalPlotCloning = *cloning;
+  cloning->addInt(281, 2);
+  writeText(output, sentinel);
+  CHECK_FALSE(replayFilter.fileExport(replayed, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  *cloning = originalPlotCloning;
+  REQUIRE(replayFilter.fileExport(replayed, QString::fromStdString(rawReplay), RS2::FormatDXFRW2010));
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_SPARSE_2010_OUTPUT"))
+    std::filesystem::copy_file(rawReplay, copy, std::filesystem::copy_options::overwrite_existing);
+  std::filesystem::remove(rawReplay);
+  writeText(output, sentinel);
+#endif
+#ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
+  const auto *physicalHeader = graphMetadata.dxfMaterialHeaderPhysicalSource();
+  REQUIRE(physicalHeader);
+  CHECK(physicalHeader->version == DRW::AC1024);
+  CHECK_FALSE(physicalHeader->binary);
+  CHECK(physicalHeader->present);
+  CHECK(physicalHeader->dollarName);
+  CHECK(std::string(physicalHeader->handleLexeme.data(), physicalHeader->handleLength) == "1F");
+  {
+    std::ifstream file(graphSource, std::ios::binary);
+    const std::string original((std::istreambuf_iterator<char>(file)), {});
+    REQUIRE(physicalHeader->variableName.endOffset <= original.size());
+    REQUIRE(physicalHeader->value.endOffset <= original.size());
+    CHECK(original.substr(physicalHeader->variableName.beginOffset,
+                          physicalHeader->variableName.endOffset - physicalHeader->variableName.beginOffset) ==
+          "9\n$CMATERIAL\n");
+    CHECK(original.substr(physicalHeader->value.beginOffset,
+                          physicalHeader->value.endOffset - physicalHeader->value.beginOffset) ==
+          "347\n1F\n");
+  }
+  const auto bareHeaderSource = tmpFile("system_sparse_material_bare_header.dxf");
+  {
+    std::ifstream input(graphSource, std::ios::binary);
+    std::string graph((std::istreambuf_iterator<char>(input)), {});
+    const auto at = graph.find("9\n$CMATERIAL\n347\n1F\n");
+    REQUIRE(at != std::string::npos);
+    graph.erase(at + 2u, 1u);
+    writeText(bareHeaderSource, graph);
+  }
+  RS_Graphic bareHeaderGraphic;
+  OptInFilter bareHeaderImporter;
+  REQUIRE(bareHeaderImporter.fileImport(bareHeaderGraphic, QString::fromStdString(bareHeaderSource), RS2::FormatDXFRW));
+  REQUIRE(bareHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderPhysicalSource());
+  CHECK_FALSE(bareHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderPhysicalSource()->dollarName);
+  CHECK_FALSE(exporter.fileExport(bareHeaderGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
+  writeText(output, sentinel);
+  CHECK_FALSE(bareHeaderImporter.fileExport(bareHeaderGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+  std::filesystem::remove(bareHeaderSource);
+#endif
+  CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
+  graphGraphic.removeVariable("$CMATERIAL");
+  CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  graphGraphic.addVariable("$CMATERIAL", QStringLiteral("1F"), 347);
+  CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
+  graphGraphic.addVariable("$CMATERIAL", QStringLiteral("2F"), 347);
+  CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  graphGraphic.addVariable("$CMATERIAL", QStringLiteral("1F"), 5);
+  CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  graphGraphic.addVariable("$CMATERIAL", QStringLiteral("not-a-handle"), 347);
+  CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  graphGraphic.addVariable("$CMATERIAL", QStringLiteral("0"), 347);
+  CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  graphGraphic.addVariable("$CMATERIAL", QStringLiteral("1F"), 347);
+  auto &graphRaw = const_cast<std::vector<DRW_RawDxfObject> &>(graphMetadata.rawDxfObjects());
+  const auto dictionary = std::find_if(graphRaw.begin(), graphRaw.end(),
+      [](const auto &record) { return record.name == "DICTIONARY" && record.handle == 0xEu; });
+  REQUIRE(dictionary != graphRaw.end());
+  const auto entry = std::find_if(dictionary->groups.begin(), dictionary->groups.end(),
+      [](const auto &group) { return group.code() == 3; });
+  REQUIRE(entry != dictionary->groups.end());
+  entry->addString(3, "changed");
+  const auto &sourceGroups = graphMetadata.dxfMaterialDictionarySource()->groups;
+  const auto originalEntry = std::find_if(sourceGroups.begin(), sourceGroups.end(),
+      [](const auto &group) { return group.code() == 3; });
+  REQUIRE(originalEntry != sourceGroups.end());
+  CHECK(originalEntry->stringEquals("ByBlock"));
+  CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  entry->addString(3, "ByBlock");
+  auto &typedDictionaries = const_cast<std::vector<LC_DwgAdvancedMetadata::DictionaryRecord> &>(
+      graphMetadata.dictionaries());
+  const auto typedMaterialDictionary = std::find_if(typedDictionaries.begin(), typedDictionaries.end(),
+      [](const auto &record) { return record.handle == 0xEu; });
+  REQUIRE(typedMaterialDictionary != typedDictionaries.end());
+  const auto originalCloning = typedMaterialDictionary->cloning;
+  typedMaterialDictionary->cloning = originalCloning + 1;
+  CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  typedMaterialDictionary->cloning = originalCloning;
+  const auto typedRoot = std::find_if(typedDictionaries.begin(), typedDictionaries.end(),
+      [](const auto &record) { return record.handle == 0xCu; });
+  REQUIRE(typedRoot != typedDictionaries.end());
+  REQUIRE(typedRoot->entries.size() == 1u);
+  const auto originalRootRole = typedRoot->entries.front().dxfHandleCode;
+  typedRoot->entries.front().dxfHandleCode = 360;
+  CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  typedRoot->entries.front().dxfHandleCode = originalRootRole;
+  CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
+  graphRaw.push_back(*dictionary);
+  CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  graphRaw.pop_back();
+  CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
+  std::ifstream graphRetained(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(graphRetained), {}) == sentinel);
+  const auto duplicateSource = *graphMetadata.dxfMaterialDictionarySource();
+  graphGraphic.dwgAdvancedMetadata().addDxfMaterialDictionarySource(duplicateSource);
+  CHECK_FALSE(graphMetadata.dxfMaterialDictionarySource());
+  CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  const auto danglingSource = tmpFile("system_sparse_material_dangling_target.dxf");
+  {
+    std::ifstream input(graphSource, std::ios::binary);
+    std::string graph((std::istreambuf_iterator<char>(input)), {});
+    const std::string entryMarker = "3\nByBlock\n350\n1F\n";
+    const auto at = graph.find(entryMarker);
+    REQUIRE(at != std::string::npos);
+    graph.insert(at + entryMarker.size(), "3\nMissing\n350\n2F\n");
+    writeText(danglingSource, graph);
+  }
+  RS_Graphic danglingGraphic;
+  OptInFilter danglingImporter;
+  REQUIRE(danglingImporter.fileImport(danglingGraphic, QString::fromStdString(danglingSource), RS2::FormatDXFRW));
+  REQUIRE(danglingGraphic.dwgAdvancedMetadata().dxfMaterialDictionarySource());
+  CHECK_FALSE(exporter.fileExport(danglingGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  std::filesystem::remove(danglingSource);
+  const auto absentHeaderSource = tmpFile("system_sparse_material_absent_header.dxf");
+  {
+    std::ifstream input(graphSource, std::ios::binary);
+    std::string graph((std::istreambuf_iterator<char>(input)), {});
+    const std::string field = "9\n$CMATERIAL\n347\n1F\n";
+    const auto at = graph.find(field);
+    REQUIRE(at != std::string::npos);
+    graph.erase(at, field.size());
+    writeText(absentHeaderSource, graph);
+  }
+  RS_Graphic absentHeaderGraphic;
+  OptInFilter absentHeaderImporter;
+  REQUIRE(absentHeaderImporter.fileImport(absentHeaderGraphic, QString::fromStdString(absentHeaderSource), RS2::FormatDXFRW));
+  bool headerPresent = true;
+  std::uint32_t headerHandle = 42u;
+  REQUIRE(absentHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderSource(DRW::AC1024, headerPresent, headerHandle));
+  CHECK_FALSE(headerPresent);
+#ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
+  REQUIRE(absentHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderPhysicalSource());
+  CHECK_FALSE(absentHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderPhysicalSource()->present);
+#endif
+  CHECK_FALSE(absentHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderSource(DRW::AC1021, headerPresent, headerHandle));
+  CHECK_FALSE(exporter.fileExport(absentHeaderGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
+  absentHeaderGraphic.addVariable("$CMATERIAL", QStringLiteral("1F"), 347);
+  CHECK_FALSE(exporter.fileExport(absentHeaderGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  absentHeaderGraphic.removeVariable("$CMATERIAL");
+  CHECK_FALSE(exporter.fileExport(absentHeaderGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
+  std::filesystem::remove(absentHeaderSource);
+  const auto nullHeaderSource = tmpFile("system_sparse_material_null_header.dxf");
+  {
+    std::ifstream input(graphSource, std::ios::binary);
+    std::string graph((std::istreambuf_iterator<char>(input)), {});
+    const std::string field = "9\n$CMATERIAL\n347\n1F\n";
+    const auto at = graph.find(field);
+    REQUIRE(at != std::string::npos);
+    graph.replace(at, field.size(), "9\n$CMATERIAL\n347\n0\n");
+    writeText(nullHeaderSource, graph);
+  }
+  RS_Graphic nullHeaderGraphic;
+  OptInFilter nullHeaderImporter;
+  REQUIRE(nullHeaderImporter.fileImport(nullHeaderGraphic, QString::fromStdString(nullHeaderSource), RS2::FormatDXFRW));
+  REQUIRE(nullHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderSource(DRW::AC1024, headerPresent, headerHandle));
+  CHECK(headerPresent);
+  CHECK(headerHandle == 0u);
+#ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
+  REQUIRE(nullHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderPhysicalSource());
+  CHECK(nullHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderPhysicalSource()->handleLexeme[0] == '0');
+#endif
+  CHECK_FALSE(exporter.fileExport(nullHeaderGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
+  nullHeaderGraphic.removeVariable("$CMATERIAL");
+  CHECK_FALSE(exporter.fileExport(nullHeaderGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  std::filesystem::remove(nullHeaderSource);
+  const auto duplicateHeaderSource = tmpFile("system_sparse_material_duplicate_header.dxf");
+  {
+    std::ifstream input(graphSource, std::ios::binary);
+    std::string graph((std::istreambuf_iterator<char>(input)), {});
+    const std::string field = "9\n$CMATERIAL\n347\n1F\n";
+    const auto at = graph.find(field);
+    REQUIRE(at != std::string::npos);
+    graph.insert(at + field.size(), field);
+    writeText(duplicateHeaderSource, graph);
+  }
+  RS_Graphic duplicateHeaderGraphic;
+  OptInFilter duplicateHeaderImporter;
+  REQUIRE(duplicateHeaderImporter.fileImport(duplicateHeaderGraphic, QString::fromStdString(duplicateHeaderSource), RS2::FormatDXFRW));
+  CHECK_FALSE(duplicateHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderSource(DRW::AC1024, headerPresent, headerHandle));
+#ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
+  CHECK_FALSE(duplicateHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderPhysicalSource());
+#endif
+  CHECK_FALSE(exporter.fileExport(duplicateHeaderGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  std::ifstream headerRetained(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(headerRetained), {}) == sentinel);
+  std::filesystem::remove(duplicateHeaderSource);
+#ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
+  const auto repeatedHeaderSource = tmpFile("system_sparse_material_repeated_header.dxf");
+  {
+    std::ifstream input(graphSource, std::ios::binary);
+    std::string graph((std::istreambuf_iterator<char>(input)), {});
+    const std::string marker = "0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n";
+    const auto at = graph.find(marker);
+    REQUIRE(at != std::string::npos);
+    graph.insert(at + std::string("0\nENDSEC\n").size(),
+                 "0\nSECTION\n2\nHEADER\n9\n$CMATERIAL\n347\n1F\n0\nENDSEC\n");
+    writeText(repeatedHeaderSource, graph);
+  }
+  RS_Graphic repeatedHeaderGraphic;
+  OptInFilter repeatedHeaderImporter;
+  REQUIRE(repeatedHeaderImporter.fileImport(repeatedHeaderGraphic, QString::fromStdString(repeatedHeaderSource), RS2::FormatDXFRW));
+  CHECK_FALSE(repeatedHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderPhysicalSource());
+  CHECK_FALSE(repeatedHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderSource(DRW::AC1024, headerPresent, headerHandle));
+  CHECK_FALSE(exporter.fileExport(repeatedHeaderGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  std::filesystem::remove(repeatedHeaderSource);
+#endif
+  const auto layerSource = tmpFile("system_sparse_material_layer_reference.dxf");
+  for (const auto &target : {std::string("2F"), std::string("1F")}) {
+    std::ifstream input(graphSource, std::ios::binary);
+    std::string graph((std::istreambuf_iterator<char>(input)), {});
+    const auto at = graph.find("0\nSECTION\n2\nOBJECTS\n");
+    REQUIRE(at != std::string::npos);
+    graph.insert(at, "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n5\n60\n70\n1\n"
+                     "0\nLAYER\n5\n30\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+                     "2\nRAWTEST\n70\n0\n62\n7\n6\nCONTINUOUS\n347\n" + target +
+                     "\n0\nENDTAB\n0\nENDSEC\n");
+    writeText(layerSource, graph);
+    RS_Graphic layerGraphic;
+    OptInFilter layerImporter;
+    REQUIRE(layerImporter.fileImport(layerGraphic, QString::fromStdString(layerSource), RS2::FormatDXFRW));
+    const auto *layerFrame = layerGraphic.dwgAdvancedMetadata().dxfMaterialLayerSource(0x30u);
+    REQUIRE(layerFrame);
+    CHECK_FALSE(exporter.fileExport(layerGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    CHECK(exporter.exportReport().contains(target == "1F"
+        ? QStringLiteral("raw-only graph requires qualification")
+        : QStringLiteral("raw source missing, changed or unverified")));
+    if (target == "1F") {
+      auto *mutableFrame = const_cast<DRW_RawDxfObject *>(layerFrame);
+      const auto group = std::find_if(mutableFrame->groups.begin(), mutableFrame->groups.end(),
+          [](const auto &value) { return value.code() == 347; });
+      REQUIRE(group != mutableFrame->groups.end());
+      group->addString(347, "2F");
+      CHECK_FALSE(exporter.fileExport(layerGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+      CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+      group->addString(347, "1F");
+      CHECK_FALSE(exporter.fileExport(layerGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+      CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
+      const auto sourceVersion = mutableFrame->m_version;
+      mutableFrame->m_version = DRW::AC1021;
+      CHECK_FALSE(exporter.fileExport(layerGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+      CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+      mutableFrame->m_version = sourceVersion;
+      const auto duplicate = *layerFrame;
+      layerGraphic.dwgAdvancedMetadata().addDxfMaterialLayerSource(duplicate);
+      CHECK_FALSE(layerGraphic.dwgAdvancedMetadata().dxfMaterialLayerSource(0x30u));
+      CHECK_FALSE(exporter.fileExport(layerGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+      CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+    }
+  }
+  // Generate the same locally authored control in Binary DXF without relying
+  // on a private codec writer. Only the group kinds in this fixture are used.
+  const auto binarySource = tmpFile("system_ezdxf_material_source_binary.dxf");
+  {
+    std::ifstream ascii(layerSource, std::ios::binary);
+    std::ofstream binary(binarySource, std::ios::binary | std::ios::trunc);
+    const char magic[] = "AutoCAD Binary DXF\r\n\x1a";
+    binary.write(magic, sizeof(magic));
+    const auto littleEndian = [&](std::uint64_t value, unsigned bytes) {
+      for (unsigned i = 0; i != bytes; ++i)
+        binary.put(static_cast<char>((value >> (i * 8)) & 0xffu));
+    };
+    std::string codeText, value;
+    while (std::getline(ascii, codeText)) {
+      REQUIRE(static_cast<bool>(std::getline(ascii, value)));
+      const int code = std::stoi(codeText);
+      littleEndian(static_cast<std::uint16_t>(code), 2);
+      if (code <= 9 || code == 100 || code == 102 || code == 330 || code == 347 ||
+          (code >= 350 && code <= 369)) {
+        binary.write(value.data(), static_cast<std::streamsize>(value.size()));
+        binary.put('\0');
+      } else if ((code >= 40 && code <= 59) || (code >= 140 && code <= 149)) {
+        // Exercise binary64 values that need full precision in ASCII DXF.
+        const double number = code == 44 ? std::nextafter(1.0, 2.0) : std::stod(value);
+        std::uint64_t bits = 0;
+        static_assert(sizeof(bits) == sizeof(number), "DXF doubles need 64 bits");
+        std::memcpy(&bits, &number, sizeof(bits));
+        littleEndian(bits, 8);
+      } else if (code >= 90 && code <= 99) {
+        littleEndian(static_cast<std::uint32_t>(std::stoll(value)), 4);
+      } else {
+        REQUIRE(((code >= 60 && code <= 79) || (code >= 170 && code <= 179) ||
+                 (code >= 270 && code <= 289)));
+        littleEndian(static_cast<std::uint16_t>(std::stoi(value)), 2);
+      }
+    }
+    REQUIRE(binary.good());
+  }
+  {
+    std::ifstream file(binarySource, std::ios::binary);
+    std::string altered((std::istreambuf_iterator<char>(file)), {});
+    const auto entities = altered.find(std::string("ENTITIES\0", 9));
+    REQUIRE(entities != std::string::npos);
+    const auto end = altered.find(std::string("\0\0ENDSEC\0", 9), entities + 9u);
+    REQUIRE(end != std::string::npos);
+    std::string entity;
+    const auto textGroup = [&](unsigned code, const std::string &value) {
+      entity.push_back(static_cast<char>(code & 255u));
+      entity.push_back(static_cast<char>((code >> 8) & 255u));
+      entity += value; entity.push_back('\0');
+    };
+    textGroup(0, "LINE"); textGroup(5, "A5"); textGroup(100, "AcDbEntity");
+    textGroup(8, "0"); textGroup(347, "0"); textGroup(100, "AcDbLine");
+    const auto doubleGroup = [&](unsigned code, double value) {
+      entity.push_back(static_cast<char>(code & 255u));
+      entity.push_back(static_cast<char>((code >> 8) & 255u));
+      std::uint64_t bits = 0; std::memcpy(&bits, &value, sizeof(bits));
+      for (unsigned i = 0; i != 8; ++i) entity.push_back(static_cast<char>((bits >> (8u * i)) & 255u));
+    };
+    doubleGroup(10, 0.0); doubleGroup(20, 0.0); doubleGroup(30, 0.0);
+    doubleGroup(11, 1.0); doubleGroup(21, 1.0); doubleGroup(31, 0.0);
+    altered.insert(end, entity);
+    const auto invalidBinary = tmpFile("system_sparse_material_binary_zero_entity.dxf");
+    writeText(invalidBinary, altered);
+    RS_Graphic invalidGraphic;
+    OptInFilter invalidImporter;
+    REQUIRE(invalidImporter.fileImport(invalidGraphic, QString::fromStdString(invalidBinary), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(invalidImporter.fileExport(invalidGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    RS_Graphic corrected;
+    REQUIRE(invalidImporter.fileImport(corrected, QString::fromStdString(binarySource), RS2::FormatDXFRW));
+    REQUIRE(invalidImporter.fileExport(corrected, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    std::filesystem::remove(invalidBinary);
+  }
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_SPARSE_BINARY_SOURCE"))
+    std::filesystem::copy_file(binarySource, copy, std::filesystem::copy_options::overwrite_existing);
+#ifdef LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR
+  RS_Graphic ordinaryBinary;
+  RS_FilterDXFRW ordinaryBinaryFilter;
+  REQUIRE(ordinaryBinaryFilter.fileImport(ordinaryBinary, QString::fromStdString(binarySource), RS2::FormatDXFRW));
+  REQUIRE(ordinaryBinary.dwgAdvancedMetadata().materials().size() == 1u);
+  CHECK(ordinaryBinary.dwgAdvancedMetadata().materials().front().requiresRawDxfReplay);
+  writeText(output, sentinel);
+  CHECK_FALSE(ordinaryBinaryFilter.fileExport(ordinaryBinary, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+#endif
+  RS_Graphic binaryGraphic;
+  OptInFilter binaryImporter;
+  REQUIRE(binaryImporter.fileImport(binaryGraphic, QString::fromStdString(binarySource), RS2::FormatDXFRW));
+  REQUIRE(binaryGraphic.dwgAdvancedMetadata().materials().size() == 1u);
+  const auto binarySnapshot = binaryGraphic.dwgAdvancedMetadata().materials().front().rawDxfSource;
+  REQUIRE(binarySnapshot);
+  CHECK_FALSE(binarySnapshot->hasRawValues);
+  CHECK(binarySnapshot->groups.size() == 61u);
+#ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
+  const auto *binaryHeader = binaryGraphic.dwgAdvancedMetadata().dxfMaterialHeaderPhysicalSource();
+  REQUIRE(binaryHeader);
+  CHECK(binaryHeader->binary);
+  CHECK(binaryHeader->present);
+  CHECK(std::string(binaryHeader->handleLexeme.data(), binaryHeader->handleLength) == "1F");
+  {
+    std::ifstream file(binarySource, std::ios::binary);
+    const std::string original((std::istreambuf_iterator<char>(file)), {});
+    REQUIRE(binaryHeader->variableName.endOffset <= original.size());
+    REQUIRE(binaryHeader->value.endOffset <= original.size());
+    CHECK(original.substr(binaryHeader->variableName.beginOffset,
+                          binaryHeader->variableName.endOffset - binaryHeader->variableName.beginOffset) ==
+          std::string("\x09\x00$CMATERIAL\x00", 13));
+    CHECK(original.substr(binaryHeader->value.beginOffset,
+                          binaryHeader->value.endOffset - binaryHeader->value.beginOffset) ==
+          std::string("\x5b\x01" "1F\x00", 5));
+  }
+#endif
+  REQUIRE(binaryGraphic.dwgAdvancedMetadata().dxfRootDictionarySource());
+  REQUIRE(binaryGraphic.dwgAdvancedMetadata().dxfMaterialDictionarySource());
+  CHECK_FALSE(binaryGraphic.dwgAdvancedMetadata().dxfMaterialDictionarySource()->hasRawValues);
+  REQUIRE(binaryGraphic.dwgAdvancedMetadata().dxfMaterialLayerSource(0x30u));
+  CHECK_FALSE(binaryGraphic.dwgAdvancedMetadata().dxfMaterialLayerSource(0x30u)->hasRawValues);
+  const auto binaryReplay = tmpFile("system_sparse_material_binary_to_ascii.dxf");
+  const bool binaryWritten = binaryImporter.fileExport(binaryGraphic, QString::fromStdString(binaryReplay), RS2::FormatDXFRW2010);
+  INFO(binaryImporter.exportReport().toStdString());
+  REQUIRE(binaryWritten);
+  RS_Graphic binaryReopened;
+  OptInFilter binaryReopener;
+  REQUIRE(binaryReopener.fileImport(binaryReopened, QString::fromStdString(binaryReplay), RS2::FormatDXFRW));
+  REQUIRE(binaryReopened.dwgAdvancedMetadata().materials().size() == 1u);
+  CHECK(binaryReopened.dwgAdvancedMetadata().materials().front().requiresRawDxfReplay);
+  const auto replaySnapshot = binaryReopened.dwgAdvancedMetadata().materials().front().rawDxfSource;
+  REQUIRE(replaySnapshot);
+  REQUIRE(replaySnapshot->groups.size() == binarySnapshot->groups.size());
+  for (std::size_t i = 0; i < binarySnapshot->groups.size(); ++i) {
+    const auto &before = binarySnapshot->groups[i];
+    const auto &after = replaySnapshot->groups[i];
+    REQUIRE(before.code() == after.code());
+    REQUIRE(before.type() == after.type());
+    // Identity and ownership are checked through the staged reference graph.
+    if (before.code() == 5 || before.code() == 330) continue;
+    if (before.type() == DRW_Variant::STRING) {
+      REQUIRE(before.content.s);
+      REQUIRE(after.content.s);
+      CHECK(*before.content.s == *after.content.s);
+    } else if (before.type() == DRW_Variant::INTEGER) {
+      CHECK(before.i_val() == after.i_val());
+    } else if (before.type() == DRW_Variant::INTEGER64) {
+      CHECK(before.i64_val() == after.i64_val());
+    } else if (before.type() == DRW_Variant::DOUBLE) {
+      const double a = before.d_val(), b = after.d_val();
+      CHECK(std::memcmp(&a, &b, sizeof(a)) == 0);
+    } else {
+      FAIL("unexpected material group type");
+    }
+  }
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_SPARSE_BINARY_REPLAY"))
+    std::filesystem::copy_file(binaryReplay, copy, std::filesystem::copy_options::overwrite_existing);
+  writeText(output, sentinel);
+  auto &binaryRaw = const_cast<std::vector<DRW_RawDxfObject> &>(
+      binaryGraphic.dwgAdvancedMetadata().rawDxfObjects());
+  const auto binaryMaterial = std::find_if(binaryRaw.begin(), binaryRaw.end(),
+      [](const auto &record) { return record.name == "MATERIAL" && record.handle == 0x1Fu; });
+  REQUIRE(binaryMaterial != binaryRaw.end());
+  binaryMaterial->groups.back().addInt(94, originalTail + 1);
+  CHECK_FALSE(binaryImporter.fileExport(binaryGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(binaryImporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  binaryMaterial->groups.back().addInt(94, originalTail);
+  const auto binaryDictionary = std::find_if(binaryRaw.begin(), binaryRaw.end(),
+      [](const auto &record) { return record.name == "DICTIONARY" && record.handle == 0xEu; });
+  REQUIRE(binaryDictionary != binaryRaw.end());
+  const auto binaryEntry = std::find_if(binaryDictionary->groups.begin(), binaryDictionary->groups.end(),
+      [](const auto &group) { return group.code() == 3; });
+  REQUIRE(binaryEntry != binaryDictionary->groups.end());
+  binaryEntry->addString(3, "changed");
+  CHECK_FALSE(binaryImporter.fileExport(binaryGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(binaryImporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  binaryEntry->addString(3, "ByBlock");
+  // Binary input has no raw lexeme array. A mutated typed string must still
+  // be checked in full before the staged writer sees it.
+  auto *binarySourceDictionary = const_cast<DRW_RawDxfObject *>(
+      binaryGraphic.dwgAdvancedMetadata().dxfMaterialDictionarySource());
+  REQUIRE(binarySourceDictionary); CHECK_FALSE(binarySourceDictionary->hasRawValues);
+  const std::vector<std::pair<int, std::string>> binaryProbes = {
+      {100, "AcDbDictionary"}, {3, "ByBlock"}, {350, "1F"}};
+  for (const auto &probe : binaryProbes) {
+    auto sourceGroup = std::find_if(binarySourceDictionary->groups.begin(), binarySourceDictionary->groups.end(),
+        [&](const auto &group) { return group.code() == probe.first && group.c_str() && probe.second == group.c_str(); });
+    auto liveGroup = std::find_if(binaryDictionary->groups.begin(), binaryDictionary->groups.end(),
+        [&](const auto &group) { return group.code() == probe.first && group.c_str() && probe.second == group.c_str(); });
+    REQUIRE(sourceGroup != binarySourceDictionary->groups.end()); REQUIRE(liveGroup != binaryDictionary->groups.end());
+    const auto savedSource = *sourceGroup, savedLive = *liveGroup;
+    const std::string malformed = probe.second + std::string("\0BAD", 4);
+    sourceGroup->addString(probe.first, malformed); liveGroup->addString(probe.first, malformed);
+    CHECK_FALSE(binaryImporter.fileExport(binaryGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    CHECK(binaryImporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    *sourceGroup = savedSource; *liveGroup = savedLive;
+    REQUIRE(binaryImporter.fileExport(binaryGraphic, QString::fromStdString(binaryReplay), RS2::FormatDXFRW2010));
+  }
+  CHECK_FALSE(binaryImporter.fileExport(binaryGraphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+  REQUIRE(binaryImporter.fileExport(binaryGraphic, QString::fromStdString(binaryReplay), RS2::FormatDXFRW2010));
+  std::filesystem::remove(binaryReplay);
+  std::filesystem::remove(binarySource);
+  std::filesystem::remove(layerSource);
+  std::filesystem::remove(graphSource);
+  graphic.dwgAdvancedMetadata().addDxfRawMaterialSource(*sourceSnapshot);
+  CHECK_FALSE(graphic.dwgAdvancedMetadata().materials().front().rawDxfSource);
+  CHECK(graphic.dwgAdvancedMetadata().materials().front().rawDxfSourceConflict);
+  CHECK_FALSE(exporter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  // The optional source-copy profile is bounded independently of normal
+  // import. Trailing whitespace leaves the drawing intact but crosses the
+  // existing 256 KiB file-capture limit.
+  {
+    std::ofstream append(source, std::ios::binary | std::ios::app);
+    append << std::string(256u * 1024u, ' ');
+    REQUIRE(append.good());
+  }
+#ifdef LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR
+  RS_Graphic ordinaryOversized;
+  RS_FilterDXFRW ordinaryOversizedImporter;
+  CHECK_FALSE(ordinaryOversizedImporter.fileImport(ordinaryOversized, QString::fromStdString(source), RS2::FormatDXFRW));
+#endif
+  RS_Graphic oversized;
+  OptInFilter oversizedImporter;
+  REQUIRE(oversizedImporter.fileImport(oversized, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(oversized.dwgAdvancedMetadata().materials().size() == 1u);
+  CHECK(oversized.dwgAdvancedMetadata().materials().front().requiresRawDxfReplay);
+  CHECK_FALSE(oversized.dwgAdvancedMetadata().materials().front().rawDxfSource);
+  CHECK(oversized.dwgAdvancedMetadata().materials().front().rawDxfSourceConflict);
+  CHECK_FALSE(exporter.fileExport(oversized, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  auto &oversizedMaterial = const_cast<LC_DwgAdvancedMetadata::MaterialRecord &>(
+      oversized.dwgAdvancedMetadata().materials().front());
+  oversizedMaterial.requiresRawDxfReplay = false;
+  CHECK_FALSE(exporter.fileExport(oversized, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  std::ifstream afterRefusals(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(afterRefusals), {}) == sentinel);
+  afterRefusals.close();
+  RS_Graphic clean;
+  clean.initForNewDocument();
+  REQUIRE(exporter.fileExport(clean, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK_FALSE(exporter.exportReport().contains(QStringLiteral("MATERIAL raw")));
+  std::filesystem::remove(source);
+  std::filesystem::remove(output);
+}
+
+TEST_CASE("Sparse material source snapshots have a bounded record count",
+          "[system-codec][dxf][material][transaction]") {
+  LC_DwgAdvancedMetadata metadata;
+  for (std::uint32_t handle = 1; handle <= 4; ++handle) {
+    DRW_Material material;
+    material.handle = handle;
+    metadata.addMaterial(material);
+    auto &records = const_cast<std::vector<LC_DwgAdvancedMetadata::MaterialRecord> &>(
+        metadata.materials());
+    records.back().requiresRawDxfReplay = true;
+    DRW_RawDxfObject source;
+    source.name = "MATERIAL";
+    source.handle = handle;
+    source.m_version = DRW::AC1024;
+    metadata.addDxfRawMaterialSource(source);
+    CHECK(static_cast<bool>(records.back().rawDxfSource) == (handle <= 3));
+    CHECK(records.back().rawDxfSourceConflict == (handle > 3));
+  }
+  metadata.clear();
+  for (unsigned index = 0; index != 2; ++index) {
+    DRW_Material material;
+    material.handle = 42;
+    metadata.addMaterial(material);
+    auto &records = const_cast<std::vector<LC_DwgAdvancedMetadata::MaterialRecord> &>(
+        metadata.materials());
+    records.back().requiresRawDxfReplay = true;
+    DRW_RawDxfObject source;
+    source.name = "MATERIAL";
+    source.handle = 42;
+    source.m_version = DRW::AC1024;
+    metadata.addDxfRawMaterialSource(source);
+  }
+  REQUIRE(metadata.materials().size() == 2u);
+  for (const auto &record : metadata.materials()) {
+    CHECK_FALSE(record.rawDxfSource);
+    CHECK(record.rawDxfSourceConflict);
+  }
+  for (unsigned scenario = 0; scenario != 5; ++scenario) {
+    metadata.clear();
+    DRW_Material material;
+    material.handle = scenario == 3 ? 0 : scenario == 4 ? DRW::NoHandle : 9;
+    metadata.addMaterial(material);
+    auto &record = const_cast<LC_DwgAdvancedMetadata::MaterialRecord &>(metadata.materials().back());
+    record.requiresRawDxfReplay = true;
+    DRW_RawDxfObject source;
+    source.name = "MATERIAL";
+    source.handle = material.handle;
+    source.m_version = scenario == 0 ? DRW::UNKNOWNV : DRW::AC1024;
+    if (scenario == 1)
+      for (unsigned i = 0; i != 65; ++i)
+        source.groups.emplace_back(70, static_cast<int>(i));
+    if (scenario == 2) {
+      source.hasRawValues = true;
+      source.groups.emplace_back(70, 0);
+    }
+    metadata.addDxfRawMaterialSource(source);
+    CHECK_FALSE(record.rawDxfSource);
+    CHECK(record.rawDxfSourceConflict);
+  }
+}
+
+TEST_CASE("Raster source frames are bounded and selected by handle",
+          "[system-codec][dxf][image][transaction]") {
+  LC_DwgAdvancedMetadata metadata;
+  DRW_RawDxfObject image;
+  image.name = "IMAGE";
+  image.m_version = DRW::AC1021;
+  image.handle = 0x31;
+  metadata.addDxfImageSource(image);
+  REQUIRE(metadata.dxfImageSource());
+  CHECK(metadata.dxfImageSource(0x31)->handle == 0x31);
+  image.handle = 0x32;
+  metadata.addDxfImageSource(image);
+  CHECK_FALSE(metadata.dxfImageSource()); // no ambiguous singleton fallback
+  REQUIRE(metadata.dxfImageSource(0x32));
+  CHECK(metadata.dxfImageSource(0x31)->handle == 0x31);
+  CHECK_FALSE(metadata.dxfImageSource(0x33));
+  DRW_RawDxfObject definition;
+  definition.name = "IMAGEDEF";
+  definition.m_version = DRW::AC1021;
+  definition.handle = 0x41;
+  metadata.addDxfImageDefSource(definition);
+  definition.handle = 0x42;
+  metadata.addDxfImageDefSource(definition);
+  REQUIRE(metadata.dxfImageDefSource(0x41));
+  REQUIRE(metadata.dxfImageDefSource(0x42));
+  CHECK_FALSE(metadata.dxfImageDefSource());
+  DRW_RawDxfObject root;
+  root.name = "DICTIONARY";
+  root.handle = 0xC;
+  metadata.addDxfRootDictionarySource(root);
+  metadata.addDxfImageDefSource(definition); // duplicate identity poisons capture
+  CHECK_FALSE(metadata.dxfImageDefSource(0x41));
+  CHECK_FALSE(metadata.dxfImageSource(0x31));
+  CHECK(metadata.dxfRootDictionarySource()); // unrelated dictionary provenance survives
+  metadata.clear();
+  image.handle = 1;
+  for (std::uint32_t handle = 1; handle <= 256; ++handle) {
+    image.handle = handle;
+    metadata.addDxfImageSource(image);
+    REQUIRE(metadata.dxfImageSource(handle));
+  }
+  image.handle = 257;
+  metadata.addDxfImageSource(image);
+  CHECK_FALSE(metadata.dxfImageSource(1));
+  metadata.clear();
+  image.handle = 0;
+  metadata.addDxfImageSource(image);
+  image.handle = 1;
+  metadata.addDxfImageSource(image);
+  CHECK_FALSE(metadata.dxfImageSource(1));
+  for (unsigned scenario = 0; scenario != 4; ++scenario) {
+    metadata.clear();
+    image = DRW_RawDxfObject{};
+    image.name = scenario == 0 ? "IMAGEDEF" : "IMAGE";
+    image.handle = 1;
+    image.m_version = scenario == 1 ? DRW::UNKNOWNV : DRW::AC1021;
+    if (scenario == 2) {
+      image.hasRawValues = true;
+      image.groups.emplace_back(70, 0);
+    }
+    if (scenario == 3)
+      image.groups.emplace_back(1, std::string(64u * 1024u, 'x'));
+    metadata.addDxfImageSource(image);
+    CHECK_FALSE(metadata.dxfImageSource(1));
+  }
+  metadata.clear();
+  image = DRW_RawDxfObject{};
+  image.name = "IMAGE";
+  image.handle = 1;
+  image.m_version = DRW::AC1021;
+  metadata.addDxfImageSource(image);
+  REQUIRE(metadata.dxfImageSource(1)); // corrected retry after a capture failure
+
+  // Exercise the parser callback for more than one physical IMAGE frame.
+  ensureSettings();
+  const auto input = tmpFile("multi_image_source_capture.dxf");
+  const auto imageFrame = [](const char *handle) {
+    return std::string("0\nIMAGE\n5\n") + handle +
+        "\n8\n0\n100\nAcDbRasterImage\n90\n0\n"
+        "10\n1\n20\n2\n30\n3\n11\n1\n21\n0\n31\n0\n"
+        "12\n0\n22\n1\n32\n0\n13\n16\n23\n12\n340\n1\n"
+        "70\n3\n280\n1\n281\n50\n282\n50\n283\n0\n"
+        "71\n1\n91\n2\n14\n-0.5\n24\n-0.5\n14\n15.5\n24\n11.5\n";
+  };
+  writeText(input, "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
+                   "0\nSECTION\n2\nENTITIES\n" + imageFrame("31") + imageFrame("32") +
+                   "0\nENDSEC\n0\nEOF\n");
+  RS_Graphic graphic;
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(input), RS2::FormatDXFRW));
+  const auto &captured = graphic.dwgAdvancedMetadata();
+  REQUIRE(captured.dxfImageSource(0x31));
+  REQUIRE(captured.dxfImageSource(0x32));
+  CHECK_FALSE(captured.dxfImageSource());
+  std::filesystem::remove(input);
+
+  const auto definitionsInput = tmpFile("multi_image_definition_capture.dxf");
+  const auto definitionFrame = [](const char *handle, const char *name) {
+    return std::string("0\nIMAGEDEF\n5\n") + handle +
+        "\n330\nE\n100\nAcDbRasterImageDef\n90\n0\n1\n" + name +
+        "\n10\n16\n20\n12\n11\n1\n21\n1\n280\n1\n281\n0\n";
+  };
+  writeText(definitionsInput,
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+      "3\nACAD_IMAGE_DICT\n350\nE\n"
+      "0\nDICTIONARY\n5\nE\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+      "3\nfirst\n350\n41\n3\nsecond\n350\n42\n" +
+      definitionFrame("41", "first.png") + definitionFrame("42", "second.png") +
+      "0\nENDSEC\n0\nEOF\n");
+  RS_Graphic definitionsGraphic;
+  RS_FilterDXFRW definitionsFilter;
+  REQUIRE(definitionsFilter.fileImport(definitionsGraphic, QString::fromStdString(definitionsInput),
+                                       RS2::FormatDXFRW));
+  const auto &definitionSources = definitionsGraphic.dwgAdvancedMetadata();
+  REQUIRE(definitionSources.dxfImageDefSource(0x41));
+  REQUIRE(definitionSources.dxfImageDefSource(0x42));
+  CHECK_FALSE(definitionSources.dxfImageDefSource());
+  std::filesystem::remove(definitionsInput);
+}
+
+TEST_CASE("System codec preserves bounded multi-image definition graphs",
+          "[system-codec][dxf][image][transaction]") {
+  ensureSettings();
+  const auto format = GENERATE(RS2::FormatDXFRW2000, RS2::FormatDXFRW2004,
+                               RS2::FormatDXFRW, RS2::FormatDXFRW2010,
+                               RS2::FormatDXFRW2013, RS2::FormatDXFRW2018);
+  CAPTURE(format);
+  const int shape = GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+  const bool withMaterial = GENERATE(false, true);
+  // A small mixed graph exercises the composed IMAGE/MATERIAL inspectors
+  // without running the full size/version matrix during focused development.
+  if (std::getenv("LIBRECAD_FAST_MIXED_IMAGE_MATERIAL") &&
+      (format != RS2::FormatDXFRW2010 || shape != 1 || !withMaterial))
+    return;
+  const bool legacyMaterial = withMaterial &&
+      (format == RS2::FormatDXFRW2000 || format == RS2::FormatDXFRW2004);
+  const unsigned imageCount = shape < 2 ? 2u : shape < 5 ? 3u : shape == 5 ? 4u : shape == 6 ? 32u : shape == 7 ? 64u : shape == 8 ? 256u : 384u;
+  const unsigned definitionCount = shape == 0 || shape == 4 ? 1u :
+                                   shape == 3 || shape >= 5 ? 3u : 2u;
+  const bool sharedDefinition = definitionCount == 1u;
+  const auto source = tmpFile("two_images_one_definition_source.dxf");
+  const auto output = tmpFile("two_images_one_definition_output.dxf");
+  RS_Graphic original;
+  original.initForNewDocument();
+  for (unsigned i = 0; i < imageCount; ++i) {
+    const double x = 1.0 + 29.0 * i;
+    const auto path = i == 0 || shape == 4 || (i == 1 && shape == 0) || (i == 2 && shape == 2)
+        ? QStringLiteral("two-image.png")
+        : i == 1 ? QStringLiteral("second-image.png") : QStringLiteral("third-image.png");
+    auto *image = new RS_Image(&original, RS_ImageData(0, RS_Vector(x, 2), RS_Vector(1, 0),
+        RS_Vector(0, 1), RS_Vector(16, 12), path,
+        50, 50, 0));
+    original.addEntity(image);
+  }
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileExport(original, QString::fromStdString(source), format));
+  REQUIRE(countRecords(source, "IMAGE") == static_cast<int>(imageCount));
+  REQUIRE(countRecords(source, "IMAGEDEF") == static_cast<int>(definitionCount));
+  REQUIRE(countRecords(source, "IMAGEDEF_REACTOR") == static_cast<int>(imageCount));
+  // Give the locally generated source nonzero WCS Z coordinates in all
+  // IMAGE frames so the admitted profile also exercises the 3D sidecar.
+  {
+    std::ifstream input(source, std::ios::binary);
+    std::string code, value, rewritten;
+    bool image = false, sectionStart = false, root = false;
+    std::string section;
+    unsigned changed = 0;
+    while (std::getline(input, code) && std::getline(input, value)) {
+      const int group = std::stoi(code);
+      if (withMaterial && group == 0 && root) {
+        rewritten += "3\nACAD_MATERIAL\n350\nF700\n";
+        root = false;
+      }
+      if (group == 0 && value == "SECTION") sectionStart = true;
+      else if (sectionStart && group == 2) { section = value; sectionStart = false; }
+      if (withMaterial && group == 0 && value == "ENDSEC" && section == "ENTITIES")
+        rewritten += "0\nLINE\n5\nF701\n100\nAcDbEntity\n8\n0\n347\nF702\n"
+                     "100\nAcDbLine\n10\n0\n20\n0\n30\n0\n11\n1\n21\n0\n31\n0\n";
+      if (withMaterial && group == 0 && value == "ENDSEC" && section == "OBJECTS")
+        rewritten += "0\nDICTIONARY\n5\nF700\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+                     "3\nPlainMat\n350\nF702\n0\nMATERIAL\n5\nF702\n330\nF700\n"
+                     "100\nAcDbMaterial\n1\nPlainMat\n";
+      if (withMaterial && section == "OBJECTS" && group == 5 && value == "C") root = true;
+      if (group == 0) image = value == "IMAGE";
+      if (image && (group == 30 || group == 31 || group == 32)) {
+        value = group == 30 ? "3" : group == 31 ? "4" : "5";
+        ++changed;
+      }
+      rewritten += code + "\n" + value + "\n";
+    }
+    REQUIRE(changed == 3u * imageCount);
+    writeText(source, rewritten);
+  }
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_TWO_IMAGE_SOURCE")) {
+    const std::string path = std::string(copy) + ".shape" + std::to_string(shape) +
+                             (withMaterial ? ".material" : "") +
+                             (format == RS2::FormatDXFRW ? "" : ".v" + std::to_string(static_cast<int>(format))) + ".dxf";
+    std::filesystem::copy_file(source, path, std::filesystem::copy_options::overwrite_existing);
+  }
+  RS_Graphic reopened;
+  REQUIRE(filter.fileImport(reopened, QString::fromStdString(source), format));
+  if (legacyMaterial) {
+    const std::string sentinel = "preserve legacy material destination";
+    writeText(output, sentinel);
+    CHECK_FALSE(filter.fileExport(reopened, QString::fromStdString(output), format));
+    { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+    REQUIRE(filter.fileExport(original, QString::fromStdString(output), format));
+    CHECK(countRecords(output, "IMAGE") == static_cast<int>(imageCount));
+    std::filesystem::remove(source);
+    std::filesystem::remove(output);
+    return;
+  }
+  const auto &metadata = reopened.dwgAdvancedMetadata();
+  REQUIRE(metadata.rasterImages().size() == imageCount);
+  REQUIRE(metadata.imageDefinitions().size() == definitionCount);
+  REQUIRE(metadata.imageDefinitionReactors().size() == imageCount);
+  for (const auto &image : metadata.rasterImages()) REQUIRE(metadata.dxfImageSource(image.handle));
+  for (const auto &definition : metadata.imageDefinitions())
+    REQUIRE(metadata.dxfImageDefSource(definition.handle));
+  const std::string sentinel = "preserve two-image destination";
+  auto &reactors = const_cast<std::vector<LC_DwgAdvancedMetadata::ImageDefinitionReactorRecord>&>(
+      metadata.imageDefinitionReactors());
+  const auto parent = reactors.front().parentHandle;
+  ++reactors.front().parentHandle;
+  writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(reopened, QString::fromStdString(output), format));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  reactors.front().parentHandle = parent;
+  auto &rawObjects = const_cast<std::vector<DRW_RawDxfObject>&>(metadata.rawDxfObjects());
+  auto plot = std::find_if(rawObjects.begin(), rawObjects.end(),
+      [](const auto &record) { return record.name == "ACDBDICTIONARYWDFLT"; });
+  REQUIRE(plot != rawObjects.end());
+  plot->groups.emplace_back(70, 7);
+  if (plot->hasRawValues) plot->rawValues.push_back("7");
+  writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(reopened, QString::fromStdString(output), format));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  plot->groups.pop_back();
+  if (plot->hasRawValues) plot->rawValues.pop_back();
+  REQUIRE(filter.fileExport(reopened, QString::fromStdString(output), format));
+  if (withMaterial) {
+    const auto material = recordGroupValues(output, "MATERIAL", "5");
+    const auto lineMaterial = recordGroupValues(output, "LINE", "347");
+    REQUIRE(material.size() == 1u);
+    CHECK(lineMaterial == material);
+  }
+  CHECK(countRecords(output, "IMAGE") == static_cast<int>(imageCount));
+  CHECK(countRecords(output, "IMAGEDEF") == static_cast<int>(definitionCount));
+  CHECK(countRecords(output, "IMAGEDEF_REACTOR") == static_cast<int>(imageCount));
+  for (const char *code : {"90", "10", "20", "30", "11", "21", "31", "12", "22", "32", "13", "23",
+                           "70", "280", "281", "282", "283", "71", "91", "14", "24"})
+    CHECK(recordGroupValues(output, "IMAGE", code) == recordGroupValues(source, "IMAGE", code));
+  for (const char *code : {"90", "1", "10", "20", "11", "21", "280", "281"})
+    CHECK(recordGroupValues(output, "IMAGEDEF", code) == recordGroupValues(source, "IMAGEDEF", code));
+  RS_Graphic readback;
+  REQUIRE(filter.fileImport(readback, QString::fromStdString(output), format));
+  const auto &result = readback.dwgAdvancedMetadata();
+  REQUIRE(result.rasterImages().size() == imageCount);
+  REQUIRE(result.imageDefinitions().size() == definitionCount);
+  REQUIRE(result.imageDefinitionReactors().size() == imageCount);
+  std::set<std::uint32_t> resultDefinitions, resultReactors;
+  for (const auto &image : result.rasterImages()) {
+    resultDefinitions.insert(image.definitionHandle);
+    resultReactors.insert(image.reactorHandle);
+  }
+  CHECK(resultDefinitions.size() == definitionCount);
+  CHECK(resultReactors.size() == imageCount);
+  {
+    struct MutatingFilter : RS_FilterDXFRW {
+      std::function<void()> beforeFinalize;
+      bool finalizeDxfWrite() override {
+        if (beforeFinalize) beforeFinalize();
+        return RS_FilterDXFRW::finalizeDxfWrite();
+      }
+    } late;
+    RS_Image *image = nullptr, *other = nullptr;
+    for (RS_Entity *entity : lc::LC_ContainerTraverser{reopened, RS2::ResolveNone}.entities())
+      if (entity->rtti() == RS2::EntityImage) {
+        if (!image) image = static_cast<RS_Image *>(entity);
+        else if (!other) other = static_cast<RS_Image *>(entity);
+      }
+    REQUIRE(image);
+    REQUIRE(other);
+    if (withMaterial) {
+      auto &materials = const_cast<std::vector<LC_DwgAdvancedMetadata::MaterialRecord>&>(metadata.materials());
+      REQUIRE(materials.size() == 1u);
+      const auto description = materials.front().description;
+      late.beforeFinalize = [&] { materials.front().description = "late mixed-graph edit"; };
+      writeText(output, sentinel);
+      CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), format));
+      { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+      materials.front().description = description;
+      late.beforeFinalize = {};
+      REQUIRE(late.fileExport(reopened, QString::fromStdString(output), format));
+    }
+    const auto firstPath = image->getFile(), secondPath = other->getFile();
+    image->setFile(QStringLiteral("unsupported^path.png"));
+    other->setFile(QStringLiteral("unsupported^path.png"));
+    writeText(output, sentinel);
+    CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), format));
+    { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+    image->setFile(firstPath);
+    other->setFile(secondPath);
+    const auto position = image->getInsertionPoint();
+    late.beforeFinalize = [&] { image->setInsertionPoint(position + RS_Vector(1, 0)); };
+    writeText(output, sentinel);
+    CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), format));
+    { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+    image->setInsertionPoint(position);
+    REQUIRE(image->hasDrwExtData());
+    const auto originalSidecar = image->getDrwExtData();
+    REQUIRE(originalSidecar.size() == 4u);
+    REQUIRE(originalSidecar[1]);
+    REQUIRE(originalSidecar[1]->coord());
+    const auto savedPoint = *originalSidecar[1]->coord();
+    late.beforeFinalize = [&] {
+      auto changed = originalSidecar;
+      changed[1] = std::make_shared<DRW_Variant>(1010, DRW_Coord(savedPoint.x, savedPoint.y, savedPoint.z + 1));
+      image->setDrwExtData(std::move(changed));
+    };
+    writeText(output, sentinel);
+    CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), format));
+    { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+    image->setDrwExtData(originalSidecar);
+    const auto originalPen = image->getPen(false);
+    auto changedPen = originalPen;
+    changedPen.setWidth(RS2::Width20);
+    late.beforeFinalize = [&] { image->setPen(changedPen); };
+    writeText(output, sentinel);
+    CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), format));
+    { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+    image->setPen(originalPen);
+    // Mutate both typed and captured source brightness together after staged
+    // output, so recomputing only typed/raw agreement would miss the edit.
+    auto &rasters = const_cast<std::vector<LC_DwgAdvancedMetadata::RasterImageRecord>&>(metadata.rasterImages());
+    auto raster = std::find_if(rasters.begin(), rasters.end(), [&](const auto &record) {
+      return record.handle == image->sourceHandle();
+    });
+    REQUIRE(raster != rasters.end());
+    auto *sourceImage = const_cast<DRW_RawDxfObject *>(metadata.dxfImageSource(raster->handle));
+    REQUIRE(sourceImage);
+    auto brightnessGroup = std::find_if(sourceImage->groups.begin(), sourceImage->groups.end(),
+        [](const auto &group) { return group.code() == 281; });
+    REQUIRE(brightnessGroup != sourceImage->groups.end());
+    const auto brightnessIndex = static_cast<std::size_t>(brightnessGroup - sourceImage->groups.begin());
+    REQUIRE((!sourceImage->hasRawValues || brightnessIndex < sourceImage->rawValues.size()));
+    const int originalBrightness = raster->brightness;
+    const std::string originalRaw = sourceImage->hasRawValues ? sourceImage->rawValues[brightnessIndex] : std::string{};
+    late.beforeFinalize = [&] {
+      raster->brightness = originalBrightness + 1;
+      brightnessGroup->addInt(281, raster->brightness);
+      if (sourceImage->hasRawValues) sourceImage->rawValues[brightnessIndex] = std::to_string(raster->brightness);
+    };
+    writeText(output, sentinel);
+    CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), format));
+    { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+    raster->brightness = originalBrightness;
+    brightnessGroup->addInt(281, originalBrightness);
+    if (sourceImage->hasRawValues) sourceImage->rawValues[brightnessIndex] = originalRaw;
+    if (!sharedDefinition) {
+      auto &definitions = const_cast<std::vector<LC_DwgAdvancedMetadata::ImageDefinitionRecord>&>(metadata.imageDefinitions());
+      auto &definition = definitions.back();
+      auto *sourceDefinition = const_cast<DRW_RawDxfObject *>(metadata.dxfImageDefSource(definition.handle));
+      REQUIRE(sourceDefinition);
+      auto pathGroup = std::find_if(sourceDefinition->groups.begin(), sourceDefinition->groups.end(),
+          [](const auto &group) { return group.code() == 1; });
+      REQUIRE(pathGroup != sourceDefinition->groups.end());
+      const auto index = static_cast<std::size_t>(pathGroup - sourceDefinition->groups.begin());
+      REQUIRE((!sourceDefinition->hasRawValues || index < sourceDefinition->rawValues.size()));
+      const auto originalPath = definition.path;
+      const auto rawPath = sourceDefinition->hasRawValues ? sourceDefinition->rawValues[index] : std::string{};
+      late.beforeFinalize = [&] {
+        definition.path = "changed-source.png";
+        pathGroup->addString(1, definition.path);
+        if (sourceDefinition->hasRawValues) sourceDefinition->rawValues[index] = definition.path;
+      };
+      writeText(output, sentinel);
+      CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), format));
+      { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+      definition.path = originalPath;
+      pathGroup->addString(1, originalPath);
+      if (sourceDefinition->hasRawValues) sourceDefinition->rawValues[index] = rawPath;
+    }
+    late.beforeFinalize = {};
+    REQUIRE(late.fileExport(reopened, QString::fromStdString(output), format));
+  }
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_TWO_IMAGE_OUTPUT")) {
+    const std::string path = std::string(copy) + ".shape" + std::to_string(shape) +
+                             (withMaterial ? ".material" : "") +
+                             (format == RS2::FormatDXFRW ? "" : ".v" + std::to_string(static_cast<int>(format))) + ".dxf";
+    std::filesystem::copy_file(output, path, std::filesystem::copy_options::overwrite_existing);
+  }
+  std::filesystem::remove(source);
+  std::filesystem::remove(output);
+}
+
+TEST_CASE("System codec preserves modern multi-image clip modes",
+          "[system-codec][dxf][image][transaction]") {
+  ensureSettings();
+  const auto format = GENERATE(RS2::FormatDXFRW2010, RS2::FormatDXFRW2013,
+                               RS2::FormatDXFRW2018);
+  const bool polygon = GENERATE(false, true);
+  const unsigned imageCount = GENERATE(1u, 3u);
+  if (imageCount == 1u && !polygon) return;
+  CAPTURE(format, polygon, imageCount);
+  const auto source = tmpFile("modern_images_source.dxf");
+  const auto output = tmpFile("modern_images_output.dxf");
+  RS_Graphic original;
+  original.initForNewDocument();
+  for (unsigned i = 0; i < imageCount; ++i)
+    original.addEntity(new RS_Image(&original, RS_ImageData(0, RS_Vector(29.0 * i, 2),
+        RS_Vector(1, 0), RS_Vector(0, 1), RS_Vector(16, 12),
+        i < 2 ? QStringLiteral("shared.png") : QStringLiteral("other.png"), 50, 50, 0)));
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileExport(original, QString::fromStdString(source), format));
+  {
+    std::ifstream input(source, std::ios::binary);
+    std::string code, value, rewritten;
+    bool image = false;
+    unsigned changed = 0, vertices = 0;
+    while (std::getline(input, code) && std::getline(input, value)) {
+      const int group = std::stoi(code);
+      if (group == 0) image = value == "IMAGE";
+      if (image && group == 70 && changed == 0) value = "7";
+      if (image && group == 280 && changed == 0) value = "1";
+      if (image && group == 71 && changed == 0 && polygon) value = "2";
+      if (image && group == 91 && changed == 0 && polygon) value = "3";
+      if (image && (group == 14 || group == 24) && changed == 0) {
+        const char *coordinates[] = {"2", "3", "10", "9"};
+        REQUIRE(vertices < 4u);
+        value = coordinates[vertices++];
+      }
+      if (image && group == 290 && changed == 0) {
+        if (polygon) rewritten += "14\n8\n24\n10\n";
+        value = "1"; ++changed;
+      }
+      rewritten += code + "\n" + value + "\n";
+    }
+    REQUIRE(changed == 1u);
+    REQUIRE(vertices == 4u);
+    writeText(source, rewritten);
+  }
+  RS_Graphic reopened;
+  REQUIRE(filter.fileImport(reopened, QString::fromStdString(source), format));
+  const auto &metadata = reopened.dwgAdvancedMetadata();
+  REQUIRE(metadata.rasterImages().size() == imageCount);
+  REQUIRE(metadata.imageDefinitions().size() == (imageCount == 1u ? 1u : 2u));
+  REQUIRE(metadata.imageDefinitionReactors().size() == imageCount);
+  CHECK(metadata.rasterImages().front().displayProps == 7);
+  CHECK(metadata.rasterImages().front().clip == 1);
+  CHECK(metadata.rasterImages().front().clipMode);
+  CHECK(metadata.rasterImages().front().clipBoundaryType == (polygon ? 2 : 1));
+  REQUIRE(metadata.rasterImages().front().clipPath.size() == (polygon ? 3u : 2u));
+  const std::string sentinel = "preserve modern image destination";
+  writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  auto &rasters = const_cast<std::vector<LC_DwgAdvancedMetadata::RasterImageRecord>&>(metadata.rasterImages());
+  auto *sourceImage = const_cast<DRW_RawDxfObject *>(metadata.dxfImageSource(rasters.front().handle));
+  REQUIRE(sourceImage);
+  auto mode = std::find_if(sourceImage->groups.begin(), sourceImage->groups.end(),
+      [](const auto &group) { return group.code() == 290; });
+  REQUIRE(mode != sourceImage->groups.end());
+  const auto index = static_cast<std::size_t>(mode - sourceImage->groups.begin());
+  REQUIRE((!sourceImage->hasRawValues || index < sourceImage->rawValues.size()));
+  struct MutatingFilter : RS_FilterDXFRW {
+    std::function<void()> beforeFinalize;
+    bool finalizeDxfWrite() override {
+      if (beforeFinalize) beforeFinalize();
+      return RS_FilterDXFRW::finalizeDxfWrite();
+    }
+  } late;
+  const auto originalRaw = sourceImage->hasRawValues ? sourceImage->rawValues[index] : std::string{};
+  late.beforeFinalize = [&] {
+    rasters.front().clipMode = false;
+    mode->addInt(290, 0);
+    if (sourceImage->hasRawValues) sourceImage->rawValues[index] = "0";
+  };
+  writeText(output, sentinel);
+  CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), format));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  rasters.front().clipMode = true;
+  mode->addInt(290, 1);
+  if (sourceImage->hasRawValues) sourceImage->rawValues[index] = originalRaw;
+  if (polygon) {
+    auto point = std::find_if(sourceImage->groups.rbegin(), sourceImage->groups.rend(),
+        [](const auto &group) { return group.code() == 14; });
+    REQUIRE(point != sourceImage->groups.rend());
+    const auto pointIndex = static_cast<std::size_t>(std::prev(point.base()) - sourceImage->groups.begin());
+    REQUIRE((!sourceImage->hasRawValues || pointIndex < sourceImage->rawValues.size()));
+    const double originalX = rasters.front().clipPath.back().x;
+    const auto rawPoint = sourceImage->hasRawValues ? sourceImage->rawValues[pointIndex] : std::string{};
+    late.beforeFinalize = [&] {
+      rasters.front().clipPath.back().x = originalX + 1;
+      point->addDouble(14, originalX + 1);
+      if (sourceImage->hasRawValues) sourceImage->rawValues[pointIndex] = std::to_string(originalX + 1);
+    };
+    writeText(output, sentinel);
+    CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), format));
+    { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+    rasters.front().clipPath.back().x = originalX;
+    point->addDouble(14, originalX);
+    if (sourceImage->hasRawValues) sourceImage->rawValues[pointIndex] = rawPoint;
+  }
+  late.beforeFinalize = {};
+  REQUIRE(late.fileExport(reopened, QString::fromStdString(output), format));
+  for (const char *code : {"70", "280", "290", "71", "91", "14", "24"})
+    CHECK(recordGroupValues(output, "IMAGE", code) == recordGroupValues(source, "IMAGE", code));
+  RS_Graphic readback;
+  REQUIRE(filter.fileImport(readback, QString::fromStdString(output), format));
+  REQUIRE(readback.dwgAdvancedMetadata().rasterImages().size() == imageCount);
+  CHECK(readback.dwgAdvancedMetadata().rasterImages().front().clipMode);
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_MODERN_IMAGE")) {
+    const auto prefix = std::string(copy) + "." + std::to_string(static_cast<int>(format)) +
+                        (polygon ? ".polygon" : ".rectangle") + "." + std::to_string(imageCount);
+    std::filesystem::copy_file(source, prefix + ".source.dxf", std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::copy_file(output, prefix + ".output.dxf", std::filesystem::copy_options::overwrite_existing);
+  }
+  std::filesystem::remove(source);
+  std::filesystem::remove(output);
+}
+
+TEST_CASE("System codec preserves larger polygon image boundaries", "[system-codec][dxf][image][transaction]") {
+  ensureSettings();
+  const auto source = tmpFile("large_polygon_image_source.dxf"), output = tmpFile("large_polygon_image_output.dxf");
+  const unsigned imageCount = GENERATE(1u, 2u, 384u, 512u);
+  CAPTURE(imageCount);
+  RS_Graphic original; original.initForNewDocument();
+  for (unsigned i = 0; i < imageCount; ++i)
+    original.addEntity(new RS_Image(&original, RS_ImageData(0, RS_Vector(29.0 * i, 2),
+        RS_Vector(1, 0), RS_Vector(0, 1), RS_Vector(16, 12), QStringLiteral("polygon.png"), 50, 50, 0)));
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileExport(original, QString::fromStdString(source), RS2::FormatDXFRW2010));
+  std::ifstream originalSource(source, std::ios::binary);
+  const std::string baseline(std::istreambuf_iterator<char>(originalSource), {});
+  const auto makeSource = [&](unsigned count) {
+    std::istringstream input(baseline);
+    std::string code, value, rewritten;
+    bool image = false, inserted = false;
+    unsigned imageOrdinal = 0;
+    while (std::getline(input, code) && std::getline(input, value)) {
+      const int group = std::stoi(code);
+      if (group == 0) { image = value == "IMAGE" && imageOrdinal++ == 0u; }
+      if (image && group == 70) value = "7";
+      if (image && group == 280) value = "1";
+      if (image && group == 71) value = "2";
+      if (image && group == 91) value = std::to_string(count);
+      if (image && (group == 14 || group == 24)) {
+        if (!inserted) {
+          for (unsigned i = 0; i < count; ++i) {
+            const double angle = 2.0 * M_PI * i / count;
+            rewritten += "14\n" + std::to_string(8.0 + 4.0 * std::cos(angle)) +
+                         "\n24\n" + std::to_string(6.0 + 4.0 * std::sin(angle)) + "\n";
+          }
+          inserted = true;
+        }
+        continue;
+      }
+      rewritten += code + "\n" + value + "\n";
+    }
+    REQUIRE(inserted); return rewritten;
+  };
+  const std::string sentinel = "preserve large polygon destination\n";
+  for (const unsigned count : {18u, 256u, 257u}) {
+    CAPTURE(count);
+    writeText(source, makeSource(count)); writeText(output, sentinel);
+    RS_Graphic graphic;
+    const bool imported = filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW2010);
+    if (count > 256u) {
+      if (imported) CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+      { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+      writeText(source, makeSource(256)); RS_Graphic corrected;
+      REQUIRE(filter.fileImport(corrected, QString::fromStdString(source), RS2::FormatDXFRW2010));
+      REQUIRE(filter.fileExport(corrected, QString::fromStdString(output), RS2::FormatDXFRW2010));
+      continue;
+    }
+    REQUIRE(imported);
+    auto &metadata = graphic.dwgAdvancedMetadata();
+    auto &rasters = const_cast<std::vector<LC_DwgAdvancedMetadata::RasterImageRecord>&>(metadata.rasterImages());
+    REQUIRE(rasters.size() == imageCount); REQUIRE(rasters.front().clipPath.size() == count);
+    auto *liveImage = dynamic_cast<RS_Image *>(graphic.firstEntity());
+    REQUIRE(liveImage); REQUIRE(liveImage->clipData().present);
+    CHECK(liveImage->clipData().clipping == 1);
+    CHECK(liveImage->clipData().boundaryType == 2);
+    REQUIRE(liveImage->clipData().vertices.size() == count);
+    for (unsigned i = 0; i < count; ++i) {
+      CHECK(liveImage->clipData().vertices[i].x == rasters.front().clipPath[i].x);
+      CHECK(liveImage->clipData().vertices[i].y == rasters.front().clipPath[i].y);
+    }
+    auto *raw = const_cast<DRW_RawDxfObject *>(metadata.dxfImageSource(rasters.front().handle)); REQUIRE(raw);
+    if (imageCount == 1u) {
+      auto changedClip = liveImage->clipData();
+      changedClip.vertices.back().x += 1.0;
+      liveImage->setClipData(changedClip);
+      CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+      { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+      changedClip.vertices.back().x -= 1.0;
+      liveImage->setClipData(changedClip);
+      auto &reactors = const_cast<std::vector<LC_DwgAdvancedMetadata::ImageDefinitionReactorRecord>&>(metadata.imageDefinitionReactors());
+      auto reactor = std::find_if(reactors.begin(), reactors.end(), [&](const auto &value) {
+        return value.handle == rasters.front().reactorHandle;
+      });
+      REQUIRE(reactor != reactors.end());
+      const auto originalOwner = reactor->parentHandle;
+      reactor->parentHandle = 0;
+      CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+      { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+      reactor->parentHandle = originalOwner;
+      CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2018));
+      { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    }
+    auto point = std::find_if(raw->groups.rbegin(), raw->groups.rend(), [](const auto &group) { return group.code() == 14; });
+    REQUIRE(point != raw->groups.rend());
+    const auto index = static_cast<std::size_t>(std::prev(point.base()) - raw->groups.begin());
+    const auto oldX = rasters.front().clipPath.back().x;
+    const auto oldRaw = raw->hasRawValues ? raw->rawValues.at(index) : std::string{};
+    struct LatePolygonFilter : RS_FilterDXFRW {
+      std::function<void()> beforeFinalize;
+      bool finalizeDxfWrite() override { if (beforeFinalize) beforeFinalize(); return RS_FilterDXFRW::finalizeDxfWrite(); }
+    } late;
+    late.beforeFinalize = [&] {
+      rasters.front().clipPath.back().x = oldX + 1.0; point->addDouble(14, oldX + 1.0);
+      if (raw->hasRawValues) raw->rawValues[index] = std::to_string(oldX + 1.0);
+    };
+    CHECK_FALSE(late.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    rasters.front().clipPath.back().x = oldX; point->addDouble(14, oldX);
+    if (raw->hasRawValues) raw->rawValues[index] = oldRaw;
+    late.beforeFinalize = {};
+    REQUIRE(late.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    RS_Graphic reread; REQUIRE(filter.fileImport(reread, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    const auto &replayed = reread.dwgAdvancedMetadata().rasterImages();
+    REQUIRE(replayed.size() == imageCount); REQUIRE(replayed.front().clipPath.size() == count);
+    for (unsigned i = 0; i < count; ++i) {
+      CHECK(replayed.front().clipPath[i].x == rasters.front().clipPath[i].x);
+      CHECK(replayed.front().clipPath[i].y == rasters.front().clipPath[i].y);
+    }
+    if (const char *prefix = std::getenv("LIBRECAD_KEEP_LARGE_IMAGE_POLYGON")) {
+      std::filesystem::copy_file(source, std::string(prefix) + std::to_string(imageCount) + "-" + std::to_string(count) + "-source.dxf", std::filesystem::copy_options::overwrite_existing);
+      std::filesystem::copy_file(output, std::string(prefix) + std::to_string(imageCount) + "-" + std::to_string(count) + "-output.dxf", std::filesystem::copy_options::overwrite_existing);
+    }
+  }
+}
+
+TEST_CASE("System codec preserves legacy polygonal image boundaries",
+          "[system-codec][dxf][image][transaction]") {
+  ensureSettings();
+  const auto format = GENERATE(RS2::FormatDXFRW2000, RS2::FormatDXFRW2004,
+                               RS2::FormatDXFRW);
+  const unsigned imageCount = GENERATE(1u, 2u);
+  CAPTURE(format, imageCount);
+  const auto source = tmpFile("legacy_polygon_images_source.dxf");
+  const auto output = tmpFile("legacy_polygon_images_output.dxf");
+  RS_Graphic original;
+  original.initForNewDocument();
+  for (unsigned i = 0; i < imageCount; ++i)
+    original.addEntity(new RS_Image(&original, RS_ImageData(0, RS_Vector(29.0 * i, 2),
+        RS_Vector(1, 0), RS_Vector(0, 1), RS_Vector(16, 12),
+        QStringLiteral("legacy-polygon.png"), 50, 50, 0)));
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileExport(original, QString::fromStdString(source), format));
+  {
+    std::ifstream input(source, std::ios::binary);
+    std::string code, value, rewritten;
+    bool image = false, changed = false;
+    unsigned vertices = 0;
+    while (std::getline(input, code) && std::getline(input, value)) {
+      const int group = std::stoi(code);
+      if (group == 0) image = value == "IMAGE";
+      if (image && !changed) {
+        if (group == 70) value = "7";
+        if (group == 280) value = "1";
+        if (group == 71) value = "2";
+        if (group == 91) value = "3";
+        if (group == 14 || group == 24) {
+          const char *coordinates[] = {"2", "3", "10", "9"};
+          REQUIRE(vertices < 4u);
+          value = coordinates[vertices++];
+        }
+      }
+      rewritten += code + "\n" + value + "\n";
+      if (image && !changed && vertices == 4u) {
+        rewritten += "14\n8\n24\n10\n";
+        changed = true;
+      }
+    }
+    REQUIRE(changed);
+    writeText(source, rewritten);
+  }
+  RS_Graphic reopened;
+  REQUIRE(filter.fileImport(reopened, QString::fromStdString(source), format));
+  const auto &metadata = reopened.dwgAdvancedMetadata();
+  REQUIRE(metadata.rasterImages().size() == imageCount);
+  REQUIRE(metadata.rasterImages().front().clipPath.size() == 3u);
+  CHECK(metadata.rasterImages().front().clipBoundaryType == 2);
+  CHECK(metadata.rasterImages().front().clip == 1);
+  auto &rasters = const_cast<std::vector<LC_DwgAdvancedMetadata::RasterImageRecord>&>(metadata.rasterImages());
+  auto *sourceImage = const_cast<DRW_RawDxfObject *>(metadata.dxfImageSource(rasters.front().handle));
+  REQUIRE(sourceImage);
+  auto point = std::find_if(sourceImage->groups.rbegin(), sourceImage->groups.rend(),
+      [](const auto &group) { return group.code() == 14; });
+  REQUIRE(point != sourceImage->groups.rend());
+  const auto index = static_cast<std::size_t>(std::prev(point.base()) - sourceImage->groups.begin());
+  REQUIRE((!sourceImage->hasRawValues || index < sourceImage->rawValues.size()));
+  const double originalX = rasters.front().clipPath.back().x;
+  const auto rawPoint = sourceImage->hasRawValues ? sourceImage->rawValues[index] : std::string{};
+  struct MutatingFilter : RS_FilterDXFRW {
+    std::function<void()> beforeFinalize;
+    bool finalizeDxfWrite() override {
+      if (beforeFinalize) beforeFinalize();
+      return RS_FilterDXFRW::finalizeDxfWrite();
+    }
+  } late;
+  const std::string sentinel = "preserve legacy polygon destination";
+  writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW2018));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  late.beforeFinalize = [&] {
+    rasters.front().clipPath.back().x = originalX + 1;
+    point->addDouble(14, originalX + 1);
+    if (sourceImage->hasRawValues) sourceImage->rawValues[index] = std::to_string(originalX + 1);
+  };
+  writeText(output, sentinel);
+  CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), format));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  rasters.front().clipPath.back().x = originalX;
+  point->addDouble(14, originalX);
+  if (sourceImage->hasRawValues) sourceImage->rawValues[index] = rawPoint;
+  late.beforeFinalize = {};
+  REQUIRE(late.fileExport(reopened, QString::fromStdString(output), format));
+  for (const char *group : {"70", "280", "71", "91", "14", "24"})
+    CHECK(recordGroupValues(output, "IMAGE", group) == recordGroupValues(source, "IMAGE", group));
+  RS_Graphic readback;
+  REQUIRE(filter.fileImport(readback, QString::fromStdString(output), format));
+  REQUIRE(readback.dwgAdvancedMetadata().rasterImages().size() == imageCount);
+  CHECK(readback.dwgAdvancedMetadata().rasterImages().front().clipPath.size() == 3u);
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_LEGACY_POLYGON")) {
+    const auto prefix = std::string(copy) + "." + std::to_string(static_cast<int>(format)) + "." + std::to_string(imageCount);
+    std::filesystem::copy_file(source, prefix + ".source.dxf", std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::copy_file(output, prefix + ".output.dxf", std::filesystem::copy_options::overwrite_existing);
+  }
+  std::filesystem::remove(source);
+  std::filesystem::remove(output);
+}
+
+TEST_CASE("System codec round trips 33 image graphs", "[system-codec][dxf][image][transaction]") {
+  ensureSettings();
+  const auto source = tmpFile("thirty_three_image_source.dxf");
+  const auto output = tmpFile("thirty_three_image_output.dxf");
+  RS_Graphic original; original.initForNewDocument();
+  for (unsigned i = 0; i < 33u; ++i) {
+    const auto path = QStringLiteral("bounded-image-%1.png").arg(i % 4u);
+    original.addEntity(new RS_Image(&original, RS_ImageData(0, RS_Vector(29.0 * i, 2),
+        RS_Vector(1, 0), RS_Vector(0, 1), RS_Vector(16, 12), path, 50, 50, 0)));
+  }
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileExport(original, QString::fromStdString(source), RS2::FormatDXFRW));
+  RS_Graphic reopened;
+  REQUIRE(filter.fileImport(reopened, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(reopened.dwgAdvancedMetadata().rasterImages().size() == 33u);
+  REQUIRE(filter.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(countRecords(output, "IMAGE") == 33);
+  CHECK(countRecords(output, "IMAGEDEF") == 4);
+  CHECK(countRecords(output, "IMAGEDEF_REACTOR") == 33);
+  RS_Graphic reread;
+  REQUIRE(filter.fileImport(reread, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(reread.dwgAdvancedMetadata().rasterImages().size() == 33u);
+  std::filesystem::remove(source); std::filesystem::remove(output);
+}
+
+TEST_CASE("Raster source capture applies a shared logical budget", "[system-codec][dxf][image][budget]") {
+  LC_DwgAdvancedMetadata metadata;
+  DRW_RawDxfObject source;
+  source.m_version = DRW::AC1027; source.hasRawValues = true;
+  source.groups.emplace_back(1, std::string(30000u, 'a'));
+  source.rawValues.emplace_back(30000u, 'b');
+  unsigned completePairs = 0; bool rejected = false;
+  for (unsigned i = 0; i < 64u; ++i) {
+    source.name = "IMAGE"; source.handle = 100u + i;
+    metadata.addDxfImageSource(source);
+    if (!metadata.dxfImageSource(source.handle)) { rejected = true; break; }
+    source.name = "IMAGEDEF"; source.handle = 1000u + i;
+    metadata.addDxfImageDefSource(source);
+    if (!metadata.dxfImageDefSource(source.handle)) { rejected = true; break; }
+    ++completePairs;
+  }
+  CHECK(rejected); CHECK(completePairs > 40u); CHECK(completePairs < 64u);
+  CHECK(metadata.dxfImageSource(100u) == nullptr);
+  CHECK(metadata.dxfImageDefSource(1000u) == nullptr);
+  metadata.clear();
+  source.groups.clear(); source.rawValues.clear();
+  source.groups.emplace_back(1, std::string("small")); source.rawValues.emplace_back("small");
+  for (unsigned i = 0; i < LC_DwgAdvancedMetadata::MaxDxfRasterSourcesPerKind; ++i) {
+    source.name = "IMAGE"; source.handle = 100u + i; metadata.addDxfImageSource(source);
+    source.name = "IMAGEDEF"; source.handle = 1000u + i; metadata.addDxfImageDefSource(source);
+    REQUIRE(metadata.dxfImageSource(100u + i)); REQUIRE(metadata.dxfImageDefSource(1000u + i));
+  }
+  source.name = "IMAGE"; source.handle = 100u + LC_DwgAdvancedMetadata::MaxDxfRasterSourcesPerKind; metadata.addDxfImageSource(source);
+  CHECK(metadata.dxfImageSource(100u) == nullptr);
+  CHECK(metadata.dxfImageDefSource(1000u) == nullptr);
+  metadata.clear();
+  source.handle = 100u; metadata.addDxfImageSource(source);
+  CHECK(metadata.dxfImageSource(100u) != nullptr);
+  metadata.clear();
+  source.name = "IMAGEDEF"; source.handle = 1000u;
+  source.groups.assign(LC_DwgAdvancedMetadata::MaxDxfImageDefSourceGroups, DRW_Variant(90, 0));
+  source.rawValues.assign(LC_DwgAdvancedMetadata::MaxDxfImageDefSourceGroups, "0");
+  metadata.addDxfImageDefSource(source); REQUIRE(metadata.dxfImageDefSource(1000u));
+  source.handle = 1001u; source.groups.emplace_back(90, 0); source.rawValues.emplace_back("0");
+  metadata.addDxfImageDefSource(source); CHECK_FALSE(metadata.dxfImageDefSource(1000u));
+  metadata.clear(); source.name = "IMAGE"; source.handle = 100u;
+  source.groups.assign(LC_DwgAdvancedMetadata::MaxDxfImageSourceGroups, DRW_Variant(90, 0));
+  source.rawValues.assign(LC_DwgAdvancedMetadata::MaxDxfImageSourceGroups, "0");
+  metadata.addDxfImageSource(source); REQUIRE(metadata.dxfImageSource(100u));
+  source.handle = 101u; source.groups.emplace_back(90, 0); source.rawValues.emplace_back("0");
+  metadata.addDxfImageSource(source); CHECK_FALSE(metadata.dxfImageSource(100u));
+}
+
+TEST_CASE("System codec audits 512-image source graphs", "[system-codec][dxf][image][transaction]") {
+  ensureSettings();
+  const auto format = GENERATE(RS2::FormatDXFRW, RS2::FormatDXFRW2010);
+  const unsigned imageCount = GENERATE(385u, 512u, 513u);
+  const unsigned definitionCount = GENERATE(1u, 4u);
+  CAPTURE(format, imageCount, definitionCount);
+  const auto source = tmpFile("image_512_source.dxf");
+  const auto output = tmpFile("image_512_output.dxf");
+  RS_Graphic original; original.initForNewDocument();
+  for (unsigned i = 0; i < imageCount; ++i)
+    original.addEntity(new RS_Image(&original, RS_ImageData(0, RS_Vector(29.0 * i, 2),
+        RS_Vector(1, 0), RS_Vector(0, 1), RS_Vector(16, 12),
+        QStringLiteral("bounded-%1.png").arg(i % definitionCount), 50, 50, 0)));
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileExport(original, QString::fromStdString(source), format));
+  if (const char *prefix = std::getenv("LIBRECAD_KEEP_512_IMAGE_PREFIX"))
+    std::filesystem::copy_file(source, std::string(prefix) + "." + std::to_string(imageCount) + ".d" +
+        std::to_string(definitionCount) + ".v" + std::to_string(static_cast<int>(format)) + ".source.dxf",
+        std::filesystem::copy_options::overwrite_existing);
+  RS_Graphic graphic;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), format));
+  const auto &metadata = graphic.dwgAdvancedMetadata();
+  REQUIRE(metadata.rasterImages().size() == imageCount);
+  REQUIRE(metadata.imageDefinitions().size() == definitionCount);
+  REQUIRE(metadata.imageDefinitionReactors().size() == imageCount);
+  const std::string sentinel = "preserve 512-image destination";
+  writeText(output, sentinel);
+  if (imageCount > LC_DwgAdvancedMetadata::MaxDxfRasterSourcesPerKind) {
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), format));
+    { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+    RS_Entity *last = nullptr;
+    for (RS_Entity *entity : original)
+      if (entity && entity->rtti() == RS2::EntityImage) last = entity;
+    REQUIRE(last); REQUIRE(original.removeEntity(last));
+    REQUIRE(filter.fileExport(original, QString::fromStdString(source), format));
+    RS_Graphic corrected; REQUIRE(filter.fileImport(corrected, QString::fromStdString(source), format));
+    REQUIRE(filter.fileExport(corrected, QString::fromStdString(output), format));
+    CHECK(countRecords(output, "IMAGE") == static_cast<int>(imageCount - 1u));
+  } else {
+    auto &reactors = const_cast<std::vector<LC_DwgAdvancedMetadata::ImageDefinitionReactorRecord>&>(
+        metadata.imageDefinitionReactors());
+    const auto owner = reactors.back().parentHandle;
+    ++reactors.back().parentHandle;
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), format));
+    { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+    reactors.back().parentHandle = owner;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), format));
+    CHECK(countRecords(output, "IMAGE") == static_cast<int>(imageCount));
+    CHECK(countRecords(output, "IMAGEDEF") == static_cast<int>(definitionCount));
+    CHECK(countRecords(output, "IMAGEDEF_REACTOR") == static_cast<int>(imageCount));
+    RS_Graphic reread;
+    REQUIRE(filter.fileImport(reread, QString::fromStdString(output), format));
+    CHECK(reread.dwgAdvancedMetadata().rasterImages().size() == imageCount);
+    CHECK(reread.dwgAdvancedMetadata().imageDefinitions().size() == definitionCount);
+    CHECK(reread.dwgAdvancedMetadata().imageDefinitionReactors().size() == imageCount);
+    if (imageCount == 512u) {
+      struct MutatingFilter : RS_FilterDXFRW {
+        std::function<void()> beforeFinalize;
+        bool finalizeDxfWrite() override {
+          if (beforeFinalize) beforeFinalize();
+          return RS_FilterDXFRW::finalizeDxfWrite();
+        }
+      } late;
+      RS_Image *lastImage = nullptr;
+      for (RS_Entity *entity : lc::LC_ContainerTraverser{graphic, RS2::ResolveNone}.entities())
+        if (entity->rtti() == RS2::EntityImage) lastImage = static_cast<RS_Image *>(entity);
+      REQUIRE(lastImage);
+      const auto position = lastImage->getInsertionPoint();
+      late.beforeFinalize = [&] { lastImage->setInsertionPoint(position + RS_Vector(1, 0)); };
+      writeText(output, sentinel);
+      CHECK_FALSE(late.fileExport(graphic, QString::fromStdString(output), format));
+      { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+      lastImage->setInsertionPoint(position);
+      late.beforeFinalize = {};
+      REQUIRE(late.fileExport(graphic, QString::fromStdString(output), format));
+    }
+    if (const char *prefix = std::getenv("LIBRECAD_KEEP_512_IMAGE_PREFIX"))
+      std::filesystem::copy_file(output, std::string(prefix) + "." + std::to_string(imageCount) + ".d" +
+          std::to_string(definitionCount) + ".v" + std::to_string(static_cast<int>(format)) + ".output.dxf",
+          std::filesystem::copy_options::overwrite_existing);
+  }
+  std::filesystem::remove(source); std::filesystem::remove(output);
+}
+
+TEST_CASE("System codec retains 512 distinct image definitions across versions", "[system-codec][dxf][image][transaction]") {
+  ensureSettings();
+  const auto source = tmpFile("image_distinct_versions_source.dxf");
+  const auto output = tmpFile("image_distinct_versions_output.dxf");
+  const auto format = GENERATE(RS2::FormatDXFRW, RS2::FormatDXFRW2010,
+                               RS2::FormatDXFRW2013, RS2::FormatDXFRW2018);
+  const std::string sentinel = "preserve distinct-image destination";
+  RS_FilterDXFRW filter;
+
+  RS_Graphic distinct; distinct.initForNewDocument();
+  for (unsigned i = 0; i < 512u; ++i)
+    distinct.addEntity(new RS_Image(&distinct, RS_ImageData(0, RS_Vector(29.0 * i, 2),
+        RS_Vector(1, 0), RS_Vector(0, 1), RS_Vector(16, 12),
+        QStringLiteral("distinct-image-%1.png").arg(i), 50, 50, 0)));
+  REQUIRE(filter.fileExport(distinct, QString::fromStdString(source), format));
+  REQUIRE(std::filesystem::file_size(source) > 256u * 1024u);
+  RS_Graphic distinctRead;
+  REQUIRE(filter.fileImport(distinctRead, QString::fromStdString(source), format));
+  const auto &distinctMetadata = distinctRead.dwgAdvancedMetadata();
+  REQUIRE(distinctMetadata.rasterImages().size() == 512u);
+  REQUIRE(distinctMetadata.imageDefinitions().size() == 512u);
+  REQUIRE(distinctMetadata.imageDefinitionReactors().size() == 512u);
+  for (const auto &definition : distinctMetadata.imageDefinitions())
+    REQUIRE(distinctMetadata.dxfImageDefSource(definition.handle));
+  class LateDistinctImageProbe : public RS_FilterDXFRW {
+  public:
+    std::function<void()> beforeFinalize;
+    bool finalizeDxfWrite() override {
+      if (beforeFinalize) beforeFinalize();
+      return RS_FilterDXFRW::finalizeDxfWrite();
+    }
+  } late;
+  RS_Image *lastImage = nullptr;
+  for (RS_Entity *entity : distinctRead)
+    if (entity && entity->rtti() == RS2::EntityImage) lastImage = static_cast<RS_Image *>(entity);
+  REQUIRE(lastImage);
+  const auto oldPosition = lastImage->getInsertionPoint();
+  late.beforeFinalize = [&] { lastImage->setInsertionPoint(oldPosition + RS_Vector(1, 0)); };
+  writeText(output, sentinel);
+  CHECK_FALSE(late.fileExport(distinctRead, QString::fromStdString(output), format));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  lastImage->setInsertionPoint(oldPosition);
+  late.beforeFinalize = {};
+  REQUIRE(late.fileExport(distinctRead, QString::fromStdString(output), format));
+  CHECK(countRecords(output, "IMAGE") == 512);
+  CHECK(countRecords(output, "IMAGEDEF") == 512);
+  CHECK(countRecords(output, "IMAGEDEF_REACTOR") == 512);
+  RS_Graphic distinctReopened;
+  REQUIRE(filter.fileImport(distinctReopened, QString::fromStdString(output), format));
+  CHECK(distinctReopened.dwgAdvancedMetadata().rasterImages().size() == 512u);
+  CHECK(distinctReopened.dwgAdvancedMetadata().imageDefinitions().size() == 512u);
+  CHECK(distinctReopened.dwgAdvancedMetadata().imageDefinitionReactors().size() == 512u);
+  if (const char *prefix = std::getenv("LIBRECAD_KEEP_512_DISTINCT")) {
+    std::filesystem::copy_file(source, std::string(prefix) + ".v" + std::to_string(static_cast<int>(format)) + ".source.dxf",
+                               std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::copy_file(output, std::string(prefix) + ".v" + std::to_string(static_cast<int>(format)) + ".output.dxf",
+                               std::filesystem::copy_options::overwrite_existing);
+  }
+  REQUIRE(filter.fileExport(distinctReopened, QString::fromStdString(output), format));
+
+  std::filesystem::remove(source); std::filesystem::remove(output);
+}
+
+TEST_CASE("System codec retains the image source file-size guard", "[system-codec][dxf][image][transaction]") {
+  ensureSettings();
+  const auto source = tmpFile("image_file_guard_source.dxf");
+  const auto output = tmpFile("image_file_guard_output.dxf");
+  const auto format = RS2::FormatDXFRW2010;
+  const std::string sentinel = "preserve source-size destination";
+  RS_FilterDXFRW filter;
+
+  RS_Graphic original; original.initForNewDocument();
+  for (unsigned i = 0; i < 512u; ++i)
+    original.addEntity(new RS_Image(&original, RS_ImageData(0, RS_Vector(29.0 * i, 2),
+        RS_Vector(1, 0), RS_Vector(0, 1), RS_Vector(16, 12),
+        QStringLiteral("shared-image-%1.png").arg(i % 256u), 50, 50, 0)));
+  REQUIRE(filter.fileExport(original, QString::fromStdString(source), format));
+  auto bytes = std::filesystem::file_size(source);
+  REQUIRE(bytes < 512u * 1024u);
+  // Whitespace after EOF changes only the size gate, not the image graph.
+  if (bytes <= 256u * 1024u) {
+    std::ofstream append(source, std::ios::binary | std::ios::app);
+    append << std::string(256u * 1024u + 1u - bytes, ' ');
+    REQUIRE(append.good());
+  }
+  bytes = std::filesystem::file_size(source);
+  REQUIRE(bytes > 256u * 1024u);
+  std::ifstream input(source, std::ios::binary);
+  const std::string originalBytes(std::istreambuf_iterator<char>(input), {});
+  input.close();
+  REQUIRE(originalBytes.size() == bytes);
+  if (const char *prefix = std::getenv("LIBRECAD_KEEP_LARGE_IMAGE_PREFIX"))
+    std::filesystem::copy_file(source, std::string(prefix) + ".source.dxf",
+                               std::filesystem::copy_options::overwrite_existing);
+  RS_Graphic large;
+  REQUIRE(filter.fileImport(large, QString::fromStdString(source), format));
+  REQUIRE(large.dwgAdvancedMetadata().rasterImages().size() == 512u);
+  REQUIRE(filter.fileExport(large, QString::fromStdString(output), format));
+  CHECK(countRecords(output, "IMAGE") == 512);
+  CHECK(countRecords(output, "IMAGEDEF") == 256);
+  CHECK(countRecords(output, "IMAGEDEF_REACTOR") == 512);
+  RS_Graphic reread;
+  REQUIRE(filter.fileImport(reread, QString::fromStdString(output), format));
+  CHECK(reread.dwgAdvancedMetadata().rasterImages().size() == 512u);
+  CHECK(reread.dwgAdvancedMetadata().imageDefinitions().size() == 256u);
+  CHECK(reread.dwgAdvancedMetadata().imageDefinitionReactors().size() == 512u);
+  if (const char *prefix = std::getenv("LIBRECAD_KEEP_LARGE_IMAGE_PREFIX"))
+    std::filesystem::copy_file(output, std::string(prefix) + ".output.dxf",
+                               std::filesystem::copy_options::overwrite_existing);
+
+  writeText(source, originalBytes + std::string(512u * 1024u - bytes, ' '));
+  REQUIRE(std::filesystem::file_size(source) == 512u * 1024u);
+  RS_Graphic boundary;
+  REQUIRE(filter.fileImport(boundary, QString::fromStdString(source), format));
+  REQUIRE(filter.fileExport(boundary, QString::fromStdString(output), format));
+  { std::ofstream append(source, std::ios::binary | std::ios::app); append.put(' '); }
+  REQUIRE(std::filesystem::file_size(source) == 512u * 1024u + 1u);
+  RS_Graphic oversized;
+  REQUIRE(filter.fileImport(oversized, QString::fromStdString(source), format));
+  writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(oversized, QString::fromStdString(output), format));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  writeText(source, originalBytes);
+  RS_Graphic corrected;
+  REQUIRE(filter.fileImport(corrected, QString::fromStdString(source), format));
+  REQUIRE(filter.fileExport(corrected, QString::fromStdString(output), format));
+  CHECK(countRecords(output, "IMAGE") == 512);
+  CHECK(countRecords(output, "IMAGEDEF") == 256);
+  CHECK(countRecords(output, "IMAGEDEF_REACTOR") == 512);
+
+  // A larger raster file must not opt an accompanying MATERIAL into capture.
+  std::istringstream materialInput(originalBytes);
+  std::string code, value, materialBytes, section;
+  bool sectionStart = false, root = false;
+  while (std::getline(materialInput, code) && std::getline(materialInput, value)) {
+    const int group = std::stoi(code);
+    if (group == 0 && root) {
+      materialBytes += "3\nACAD_MATERIAL\n350\nF700\n";
+      root = false;
+    }
+    if (group == 0 && value == "SECTION") sectionStart = true;
+    else if (sectionStart && group == 2) { section = value; sectionStart = false; }
+    if (group == 0 && value == "ENDSEC" && section == "ENTITIES")
+      materialBytes += "0\nLINE\n5\nF701\n100\nAcDbEntity\n8\n0\n347\nF702\n"
+                       "100\nAcDbLine\n10\n0\n20\n0\n30\n0\n11\n1\n21\n0\n31\n0\n";
+    if (group == 0 && value == "ENDSEC" && section == "OBJECTS")
+      materialBytes += "0\nDICTIONARY\n5\nF700\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+                       "3\nPlainMat\n350\nF702\n0\nMATERIAL\n5\nF702\n330\nF700\n"
+                       "100\nAcDbMaterial\n1\nPlainMat\n";
+    if (section == "OBJECTS" && group == 5 && value == "C") root = true;
+    materialBytes += code + "\n" + value + "\n";
+  }
+  REQUIRE(materialBytes.size() > 256u * 1024u);
+  REQUIRE(materialBytes.size() <= 512u * 1024u);
+  writeText(source, materialBytes);
+  writeText(output, sentinel);
+  RS_Graphic mixed;
+  REQUIRE(filter.fileImport(mixed, QString::fromStdString(source), format));
+  REQUIRE(mixed.dwgAdvancedMetadata().materials().size() == 1u);
+  CHECK_FALSE(filter.fileExport(mixed, QString::fromStdString(output), format));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  writeText(source, originalBytes);
+  RS_Graphic retry;
+  REQUIRE(filter.fileImport(retry, QString::fromStdString(source), format));
+  REQUIRE(filter.fileExport(retry, QString::fromStdString(output), format));
+  CHECK(countRecords(output, "IMAGE") == 512);
+  std::filesystem::remove(source); std::filesystem::remove(output);
+}
+
+TEST_CASE("System codec audits larger bounded image graphs",
+          "[system-codec][dxf][image][transaction]") {
+  ensureSettings();
+  const auto format = GENERATE(RS2::FormatDXFRW2000, RS2::FormatDXFRW2004,
+                               RS2::FormatDXFRW, RS2::FormatDXFRW2010,
+                               RS2::FormatDXFRW2013, RS2::FormatDXFRW2018);
+  CAPTURE(format);
+  const unsigned shape = GENERATE(0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u, 11u, 12u, 13u, 14u, 15u, 16u, 17u, 18u, 19u);
+  const unsigned imageCount = shape == 0u ? 4u : shape == 1u ? 8u : shape == 5u ? 33u :
+                              shape == 6u || shape == 7u || shape == 9u ? 64u : shape == 8u ? 257u :
+                              shape == 10u ? 65u : shape == 13u ? 129u : shape == 16u ? 513u :
+                              shape >= 17u ? 384u :
+                              shape >= 14u ? 256u : shape >= 11u ? 128u : 32u;
+  const unsigned definitionCount = shape == 0u || shape == 2u || shape == 9u || shape == 11u || shape == 14u ? 1u :
+                                   shape == 4u ? 32u : shape == 7u ? 64u : shape == 12u ? 128u :
+                                   shape == 15u ? 256u : shape == 18u ? 1u : shape == 19u ? 384u : 4u;
+  const auto source = tmpFile("many_image_source.dxf");
+  const auto output = tmpFile("many_image_output.dxf");
+  RS_Graphic original;
+  original.initForNewDocument();
+  for (unsigned i = 0; i < imageCount; ++i) {
+    const auto path = QStringLiteral("many-image-%1.png").arg(i % definitionCount);
+    original.addEntity(new RS_Image(&original, RS_ImageData(0, RS_Vector(29.0 * i, 2),
+        RS_Vector(1, 0), RS_Vector(0, 1), RS_Vector(16, 12), path, 50, 50, 0)));
+  }
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileExport(original, QString::fromStdString(source), format));
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_MANY_IMAGE_SOURCE"))
+    std::filesystem::copy_file(source, std::string(copy) + "." + std::to_string(imageCount) + ".d" +
+                                 std::to_string(definitionCount) +
+                                 (format == RS2::FormatDXFRW ? "" : ".v" + std::to_string(static_cast<int>(format))) + ".dxf",
+                               std::filesystem::copy_options::overwrite_existing);
+  REQUIRE(countRecords(source, "IMAGE") == static_cast<int>(imageCount));
+  RS_Graphic reopened;
+  REQUIRE(filter.fileImport(reopened, QString::fromStdString(source), format));
+  const auto &metadata = reopened.dwgAdvancedMetadata();
+  REQUIRE(metadata.rasterImages().size() == imageCount);
+  REQUIRE(metadata.imageDefinitions().size() == definitionCount);
+  REQUIRE(metadata.imageDefinitionReactors().size() == imageCount);
+  const std::string sentinel = "preserve many-image destination";
+  writeText(output, sentinel);
+  if (imageCount > LC_DwgAdvancedMetadata::MaxDxfRasterSourcesPerKind) {
+    CHECK_FALSE(filter.fileExport(reopened, QString::fromStdString(output), format));
+    { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+    RS_Entity *last = nullptr;
+    for (RS_Entity *entity : original)
+      if (entity && entity->rtti() == RS2::EntityImage) last = entity;
+    REQUIRE(last); REQUIRE(original.removeEntity(last));
+    REQUIRE(filter.fileExport(original, QString::fromStdString(source), format));
+    RS_Graphic corrected; REQUIRE(filter.fileImport(corrected, QString::fromStdString(source), format));
+    REQUIRE(filter.fileExport(corrected, QString::fromStdString(output), format));
+    CHECK(countRecords(output, "IMAGE") == static_cast<int>(LC_DwgAdvancedMetadata::MaxDxfRasterSourcesPerKind));
+  } else {
+    auto &reactors = const_cast<std::vector<LC_DwgAdvancedMetadata::ImageDefinitionReactorRecord>&>(
+        metadata.imageDefinitionReactors());
+    const auto owner = reactors.back().parentHandle;
+    ++reactors.back().parentHandle;
+    CHECK_FALSE(filter.fileExport(reopened, QString::fromStdString(output), format));
+    { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+    reactors.back().parentHandle = owner;
+    REQUIRE(filter.fileExport(reopened, QString::fromStdString(output), format));
+    CHECK(countRecords(output, "IMAGE") == static_cast<int>(imageCount));
+    CHECK(countRecords(output, "IMAGEDEF") == static_cast<int>(definitionCount));
+    CHECK(countRecords(output, "IMAGEDEF_REACTOR") == static_cast<int>(imageCount));
+    RS_Graphic reread;
+    REQUIRE(filter.fileImport(reread, QString::fromStdString(output), format));
+    CHECK(reread.dwgAdvancedMetadata().rasterImages().size() == imageCount);
+    CHECK(reread.dwgAdvancedMetadata().imageDefinitions().size() == definitionCount);
+    struct MutatingFilter : RS_FilterDXFRW {
+      std::function<void()> beforeFinalize;
+      bool finalizeDxfWrite() override {
+        if (beforeFinalize) beforeFinalize();
+        return RS_FilterDXFRW::finalizeDxfWrite();
+      }
+    } late;
+    RS_Image *lastImage = nullptr;
+    for (RS_Entity *entity : lc::LC_ContainerTraverser{reopened, RS2::ResolveNone}.entities())
+      if (entity->rtti() == RS2::EntityImage) lastImage = static_cast<RS_Image *>(entity);
+    REQUIRE(lastImage);
+    const auto originalPosition = lastImage->getInsertionPoint();
+    late.beforeFinalize = [&] { lastImage->setInsertionPoint(originalPosition + RS_Vector(1, 0)); };
+    writeText(output, sentinel);
+    CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), format));
+    { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+    lastImage->setInsertionPoint(originalPosition);
+    late.beforeFinalize = {};
+    REQUIRE(late.fileExport(reopened, QString::fromStdString(output), format));
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_MANY_IMAGE_OUTPUT"))
+      std::filesystem::copy_file(output, std::string(copy) + "." + std::to_string(imageCount) + ".d" +
+                                     std::to_string(definitionCount) +
+                                 (format == RS2::FormatDXFRW ? "" : ".v" + std::to_string(static_cast<int>(format))) + ".dxf",
+                                 std::filesystem::copy_options::overwrite_existing);
+  }
+  std::filesystem::remove(source);
+  std::filesystem::remove(output);
+}
+
+TEST_CASE("System codec preserves larger image graphs across model and block spaces", "[system-codec][dxf][image][transaction]") {
+  ensureSettings();
+  const auto format = GENERATE(RS2::FormatDXFRW, RS2::FormatDXFRW2018);
+  const unsigned imageCount = GENERATE(64u, 256u, 384u, 512u);
+  CAPTURE(format, imageCount);
+  const auto source = tmpFile("sixty_four_mixed_images_source.dxf");
+  const auto output = tmpFile("sixty_four_mixed_images_output.dxf");
+  RS_Graphic original; original.initForNewDocument();
+  auto *block = new RS_Block(&original, RS_BlockData(QStringLiteral("MANY_RASTERS"), RS_Vector(0, 0), false));
+  for (unsigned i = 0; i < imageCount; ++i) {
+    RS_EntityContainer *owner = i < imageCount / 2u ? static_cast<RS_EntityContainer *>(&original) : block;
+    owner->addEntity(new RS_Image(owner, RS_ImageData(0, RS_Vector(29.0 * i, 2), RS_Vector(1, 0),
+        RS_Vector(0, 1), RS_Vector(16, 12), QStringLiteral("mixed-%1.png").arg(i % 2u), 50, 50, 0)));
+  }
+  REQUIRE(original.addBlock(block));
+  original.addEntity(new RS_Insert(&original, RS_InsertData(QStringLiteral("MANY_RASTERS"),
+      RS_Vector(20, 0), RS_Vector(1, 1), 0.0, 1, 1, RS_Vector(0, 0))));
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileExport(original, QString::fromStdString(source), format));
+  RS_Graphic reopened;
+  REQUIRE(filter.fileImport(reopened, QString::fromStdString(source), format));
+  REQUIRE(reopened.dwgAdvancedMetadata().rasterImages().size() == imageCount);
+  REQUIRE(filter.fileExport(reopened, QString::fromStdString(output), format));
+  CHECK(countRecords(output, "IMAGE") == static_cast<int>(imageCount)); CHECK(countRecords(output, "IMAGEDEF") == 2);
+  CHECK(countRecords(output, "IMAGEDEF_REACTOR") == static_cast<int>(imageCount));
+  RS_Block *savedBlock = nullptr;
+  for (unsigned i = 0; i < reopened.countBlocks(); ++i)
+    if (reopened.blockAt(i) && reopened.blockAt(i)->getName() == "MANY_RASTERS") savedBlock = reopened.blockAt(i);
+  REQUIRE(savedBlock);
+  RS_Image *blockImage = nullptr;
+  for (RS_Entity *entity : lc::LC_ContainerTraverser{*savedBlock, RS2::ResolveNone}.entities())
+    if (entity->rtti() == RS2::EntityImage) { blockImage = static_cast<RS_Image *>(entity); break; }
+  REQUIRE(blockImage);
+  struct LateImageFilter : RS_FilterDXFRW {
+    std::function<void()> beforeFinalize;
+    bool finalizeDxfWrite() override { if (beforeFinalize) beforeFinalize(); return RS_FilterDXFRW::finalizeDxfWrite(); }
+  } late;
+  const auto oldPosition = blockImage->getInsertionPoint();
+  late.beforeFinalize = [&] { blockImage->setInsertionPoint(oldPosition + RS_Vector(1, 0)); };
+  const std::string sentinel = "preserve mixed-image block destination";
+  writeText(output, sentinel); CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), format));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  blockImage->setInsertionPoint(oldPosition); late.beforeFinalize = {};
+  REQUIRE(late.fileExport(reopened, QString::fromStdString(output), format));
+  RS_Graphic reread; REQUIRE(filter.fileImport(reread, QString::fromStdString(output), format));
+  CHECK(reread.dwgAdvancedMetadata().rasterImages().size() == imageCount);
+  if (const char *prefix = std::getenv("LIBRECAD_KEEP_LARGE_BLOCK_IMAGES")) {
+    const auto suffix = format == RS2::FormatDXFRW ? std::string{} : ".v" + std::to_string(static_cast<int>(format));
+    std::filesystem::copy_file(source, std::string(prefix) + "." + std::to_string(imageCount) + ".source" + suffix + ".dxf", std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::copy_file(output, std::string(prefix) + "." + std::to_string(imageCount) + ".output" + suffix + ".dxf", std::filesystem::copy_options::overwrite_existing);
+  }
+  std::filesystem::remove(source); std::filesystem::remove(output);
+}
+
+TEST_CASE("System codec verifies shared IMAGE graphs across model and block spaces",
+          "[system-codec][dxf][image][transaction]") {
+  ensureSettings();
+  const auto format = GENERATE(RS2::FormatDXFRW2000, RS2::FormatDXFRW2004,
+                               RS2::FormatDXFRW, RS2::FormatDXFRW2010,
+                               RS2::FormatDXFRW2013, RS2::FormatDXFRW2018);
+  CAPTURE(format);
+  const auto source = tmpFile("mixed_block_image_source.dxf");
+  const auto output = tmpFile("mixed_block_image_output.dxf");
+  RS_Graphic original;
+  original.initForNewDocument();
+  auto addImage = [](RS_EntityContainer &owner, double x, const QString &path) {
+    owner.addEntity(new RS_Image(&owner, RS_ImageData(0, RS_Vector(x, 2),
+        RS_Vector(1, 0), RS_Vector(0, 1), RS_Vector(16, 12), path, 50, 50, 0)));
+  };
+  addImage(original, 1, QStringLiteral("shared-image.png"));
+  auto *block = new RS_Block(&original, RS_BlockData(QStringLiteral("RASTER_BLOCK"), RS_Vector(0, 0), false));
+  addImage(*block, 2, QStringLiteral("shared-image.png"));
+  addImage(*block, 3, QStringLiteral("block-image.png"));
+  REQUIRE(original.addBlock(block));
+  auto *otherBlock = new RS_Block(&original, RS_BlockData(QStringLiteral("OTHER_RASTER"), RS_Vector(0, 0), false));
+  addImage(*otherBlock, 4, QStringLiteral("shared-image.png"));
+  REQUIRE(original.addBlock(otherBlock));
+  original.addEntity(new RS_Insert(&original, RS_InsertData(QStringLiteral("RASTER_BLOCK"),
+      RS_Vector(10, 0), RS_Vector(1, 1), 0.0, 1, 1, RS_Vector(0, 0))));
+  original.addEntity(new RS_Insert(&original, RS_InsertData(QStringLiteral("OTHER_RASTER"),
+      RS_Vector(20, 0), RS_Vector(1, 1), 0.0, 1, 1, RS_Vector(0, 0))));
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileExport(original, QString::fromStdString(source), format));
+  REQUIRE(countRecords(source, "IMAGE") == 4);
+  RS_Graphic reopened;
+  REQUIRE(filter.fileImport(reopened, QString::fromStdString(source), format));
+  REQUIRE(reopened.dwgAdvancedMetadata().rasterImages().size() == 4u);
+  REQUIRE(reopened.dwgAdvancedMetadata().imageDefinitions().size() == 2u);
+  RS_Block *sourceBlock = nullptr, *secondBlock = nullptr;
+  for (unsigned i = 0; i < reopened.countBlocks(); ++i) {
+    auto *candidate = reopened.blockAt(i);
+    if (!candidate) continue;
+    if (candidate->getName() == QStringLiteral("RASTER_BLOCK")) sourceBlock = candidate;
+    if (candidate->getName() == QStringLiteral("OTHER_RASTER")) secondBlock = candidate;
+  }
+  REQUIRE(sourceBlock);
+  REQUIRE(secondBlock);
+  REQUIRE(sourceBlock->sourceHandle() != 0u);
+  RS_Image *blockImage = nullptr;
+  for (RS_Entity *entity : lc::LC_ContainerTraverser{*sourceBlock, RS2::ResolveNone}.entities())
+    if (entity->rtti() == RS2::EntityImage) blockImage = static_cast<RS_Image *>(entity);
+  REQUIRE(blockImage);
+  const std::string sentinel = "preserve mixed block-image destination";
+  writeText(output, sentinel);
+  const auto blockHandle = sourceBlock->sourceHandle();
+  sourceBlock->setSourceHandle(blockHandle + 1u);
+  CHECK_FALSE(filter.fileExport(reopened, QString::fromStdString(output), format));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  sourceBlock->setSourceHandle(blockHandle);
+  const auto secondHandle = secondBlock->sourceHandle();
+  REQUIRE(secondHandle != blockHandle);
+  secondBlock->setSourceHandle(blockHandle);
+  CHECK_FALSE(filter.fileExport(reopened, QString::fromStdString(output), format));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  secondBlock->setSourceHandle(secondHandle);
+  REQUIRE(filter.fileExport(reopened, QString::fromStdString(output), format));
+  CHECK(countRecords(output, "IMAGE") == 4);
+  CHECK(countRecords(output, "IMAGEDEF") == 2);
+  CHECK(countRecords(output, "IMAGEDEF_REACTOR") == 4);
+  struct MutatingFilter : RS_FilterDXFRW {
+    std::function<void()> beforeFinalize;
+    bool finalizeDxfWrite() override {
+      if (beforeFinalize) beforeFinalize();
+      return RS_FilterDXFRW::finalizeDxfWrite();
+    }
+  } late;
+  const auto position = blockImage->getInsertionPoint();
+  late.beforeFinalize = [&] { blockImage->setInsertionPoint(position + RS_Vector(1, 0)); };
+  writeText(output, sentinel);
+  CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), format));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  blockImage->setInsertionPoint(position);
+  late.beforeFinalize = {};
+  REQUIRE(late.fileExport(reopened, QString::fromStdString(output), format));
+  RS_Graphic reread;
+  REQUIRE(filter.fileImport(reread, QString::fromStdString(output), format));
+  CHECK(reread.dwgAdvancedMetadata().rasterImages().size() == 4u);
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_BLOCK_IMAGE_SOURCE"))
+    std::filesystem::copy_file(source, std::string(copy) + (format == RS2::FormatDXFRW ? "" : ".v" + std::to_string(static_cast<int>(format))),
+                               std::filesystem::copy_options::overwrite_existing);
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_BLOCK_IMAGE_OUTPUT"))
+    std::filesystem::copy_file(output, std::string(copy) + (format == RS2::FormatDXFRW ? "" : ".v" + std::to_string(static_cast<int>(format))),
+                               std::filesystem::copy_options::overwrite_existing);
+  std::filesystem::remove(source);
+  std::filesystem::remove(output);
+}
+
+TEST_CASE("System codec verifies an IMAGE inside a named block",
+          "[system-codec][dxf][image][transaction]") {
+  ensureSettings();
+  const bool polygon = GENERATE(false, true);
+  CAPTURE(polygon);
+  const auto input = tmpFile("block_image_source.dxf");
+  const auto generated = tmpFile("block_image_generated.dxf");
+  const auto output = tmpFile("block_image_verified.dxf");
+  writeText(input,
+      "0\nSECTION\n2\nBLOCKS\n0\nBLOCK\n2\nRASTER_BLOCK\n70\n0\n"
+      "10\n0\n20\n0\n30\n0\n3\nRASTER_BLOCK\n1\n\n"
+      "0\nIMAGE\n8\n0\n100\nAcDbRasterImage\n90\n0\n"
+      "10\n1\n20\n2\n30\n3\n11\n1\n21\n0\n31\n0\n"
+      "12\n0\n22\n1\n32\n0\n13\n16\n23\n12\n340\n1\n"
+      "70\n3\n280\n1\n281\n50\n282\n50\n283\n0\n"
+      "71\n1\n91\n2\n14\n-0.5\n24\n-0.5\n14\n15.5\n24\n11.5\n"
+      "0\nENDBLK\n0\nENDSEC\n0\nSECTION\n2\nENTITIES\n"
+      "0\nINSERT\n8\n0\n2\nRASTER_BLOCK\n10\n0\n20\n0\n30\n0\n"
+      "0\nENDSEC\n0\nEOF\n");
+  RS_Graphic initial;
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileImport(initial, QString::fromStdString(input), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(initial, QString::fromStdString(generated), RS2::FormatDXFRW));
+  if (polygon) {
+    std::ifstream stream(generated, std::ios::binary);
+    std::string code, value, rewritten;
+    bool image = false, inserted = false;
+    while (std::getline(stream, code) && std::getline(stream, value)) {
+      const int group = std::stoi(code);
+      if (group == 0) image = value == "IMAGE";
+      if (image && group == 70) value = "7";
+      if (image && group == 71) value = "2";
+      if (image && group == 91) value = "3";
+      if (image && (group == 14 || group == 24)) {
+        if (!inserted) { rewritten += "14\n1\n24\n1\n14\n10\n24\n1\n14\n4\n24\n9\n"; inserted = true; }
+        continue;
+      }
+      rewritten += code + "\n" + value + "\n";
+    }
+    REQUIRE(inserted); writeText(generated, rewritten);
+  }
+  RS_Graphic reopened;
+  REQUIRE(filter.fileImport(reopened, QString::fromStdString(generated), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(countRecords(output, "IMAGE") == 1);
+  const auto block = recordGroupsWithValue(output, "BLOCK_RECORD", "2", "RASTER_BLOCK");
+  const auto image = recordGroupsWithValue(output, "IMAGE", "8", "0");
+  const auto value = [](const auto &groups, const std::string &code) {
+    const auto found = std::find_if(groups.begin(), groups.end(),
+        [&](const auto &group) { return group.first == code; });
+    return found == groups.end() ? std::string{} : found->second;
+  };
+  REQUIRE_FALSE(value(block, "5").empty());
+  CHECK(value(image, "330") == value(block, "5"));
+  if (polygon) {
+    for (const char *group : {"71", "91", "14", "24"})
+      CHECK(recordGroupValues(output, "IMAGE", group) == recordGroupValues(generated, "IMAGE", group));
+    RS_Graphic reread; REQUIRE(filter.fileImport(reread, QString::fromStdString(output), RS2::FormatDXFRW));
+    REQUIRE(reread.dwgAdvancedMetadata().rasterImages().size() == 1u);
+    CHECK(reread.dwgAdvancedMetadata().rasterImages().front().clipPath.size() == 3u);
+    if (const char *prefix = std::getenv("LIBRECAD_KEEP_SINGLE_BLOCK_POLYGON")) {
+      std::filesystem::copy_file(generated, std::string(prefix) + "-source.dxf", std::filesystem::copy_options::overwrite_existing);
+      std::filesystem::copy_file(output, std::string(prefix) + "-output.dxf", std::filesystem::copy_options::overwrite_existing);
+    }
+  }
+  std::filesystem::remove(input);
+  std::filesystem::remove(generated);
+  std::filesystem::remove(output);
+}
+
+TEST_CASE("System codec preserves single-line controls and literal carets",
+          "[system-codec][dxf][text]") {
+  ensureSettings();
+  for (const auto &header : {
+           std::string{},
+           std::string{"0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"},
+           std::string{"0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC9999\n0\nENDSEC\n"},
+           std::string{"0\nSECTION\n2\nHEADER\n9\n$DWGCODEPAGE\n3\nANSI_1252\n0\nENDSEC\n"}}) {
+    for (const auto &[wire, native] : std::vector<std::pair<std::string, std::string>>{
+             {"A^IB", "A\tB"}, {"A^JB", "A\nB"}, {"A^MB", "A\rB"},
+             {"A^ B", "A^B"}, {"A^ IB", "A^IB"}}) {
+      INFO("header=" << header << " wire=" << wire);
+      const std::string src = tmpFile("system_codec_text_source.dxf");
+      const std::string out = tmpFile("system_codec_text_output.dxf");
+      auto content = singleLineTextDxf(wire);
+      if (!header.empty()) {
+        const auto begin = content.find("0\nBLOCK\n8\n");
+        const auto end = content.find("0\nENDBLK\n8\n");
+        REQUIRE(begin != std::string::npos);
+        REQUIRE(end != std::string::npos);
+        content.replace(end, 11, "0\nENDBLK\n5\n21\n8\n");
+        content.replace(begin, 10, "0\nBLOCK\n5\n20\n8\n");
+      }
+      writeText(src, header + content);
+      RS_Graphic graphic;
+      RS_FilterDXFRW filter;
+      REQUIRE(filter.fileImport(graphic, QString::fromStdString(src), RS2::FormatDXFRW));
+      CHECK(singleLineTextAt(graphic, 4.0) == native);
+      CHECK(singleLineTextAt(graphic, 9.0) == native);
+      REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+      CHECK(recordGroupValues(out, "ATTRIB", "1") == std::vector<std::string>{wire});
+      CHECK(recordGroupValues(out, "TEXT", "1") == std::vector<std::string>{wire});
+      RS_Graphic reread;
+      REQUIRE(filter.fileImport(reread, QString::fromStdString(out), RS2::FormatDXFRW));
+      CHECK(singleLineTextAt(reread, 4.0) == native);
+      CHECK(singleLineTextAt(reread, 9.0) == native);
+      std::filesystem::remove(src);
+      std::filesystem::remove(out);
+    }
+  }
+}
+
+TEST_CASE("System codec treats binary DXF carets as literal bytes",
+          "[system-codec][dxf][text][binary]") {
+  ensureSettings();
+  const std::string src = tmpFile("system_codec_binary_text.dxf");
+  {
+    std::ofstream out(src, std::ios::binary);
+    const char magic[] = "AutoCAD Binary DXF\r\n\x1a";
+    out.write(magic, sizeof(magic));
+    const auto code = [&](unsigned n) {
+      out.put(static_cast<char>(n & 0xff));
+      out.put(static_cast<char>((n >> 8) & 0xff));
+    };
+    const auto text = [&](unsigned n, const std::string &value) {
+      code(n);
+      out.write(value.data(), static_cast<std::streamsize>(value.size()));
+      out.put('\0');
+    };
+    const auto real = [&](unsigned n, double value) {
+      std::uint64_t bits = 0;
+      static_assert(sizeof(bits) == sizeof(value), "binary DXF requires binary64 doubles");
+      std::memcpy(&bits, &value, sizeof(bits));
+      code(n);
+      for (unsigned i = 0; i < 8; ++i)
+        out.put(static_cast<char>((bits >> (8 * i)) & 0xff));
+    };
+    text(0, "SECTION"); text(2, "HEADER"); text(9, "$ACADVER");
+    text(1, "AC1021"); text(0, "ENDSEC"); text(0, "SECTION");
+    text(2, "ENTITIES");
+    for (const auto &[handle, y, value] :
+         std::vector<std::tuple<std::string, double, std::string>>{
+             {"20", 9.0, "A^IB"}, {"21", 4.0, "A\tB"}}) {
+      text(0, "TEXT"); text(5, handle); text(8, "0");
+      real(10, 1.0); real(20, y); real(40, 2.5); text(1, value);
+    }
+    text(0, "ENDSEC"); text(0, "EOF");
+    REQUIRE(out.good());
+  }
+  RS_Graphic graphic;
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(src), RS2::FormatDXFRW));
+  CHECK(singleLineTextAt(graphic, 9.0) == "A^IB");
+  CHECK(singleLineTextAt(graphic, 4.0) == "A\tB");
+  std::filesystem::remove(src);
+}
+
+
+#endif
+
 // A single-line value (TEXT, ATTRIB) has no MTEXT markup: its backslashes are
 // ordinary characters, as in the path of a title block. Reading "\P" as a
 // line break left a line feed in the attribute, and the DXF writer refuses a
 // record that holds one.
 TEST_CASE("Single-line text and attribute values keep their backslashes",
-          "[dxf][dwg][roundtrip][filter][attrib][text]") {
+          "[system-codec][dxf][dwg][roundtrip][filter][attrib][text]") {
   ensureSettings();
 
   struct Case {
@@ -983,7 +6447,7 @@ TEST_CASE("DXF application groups reject excessive pairs before publishing",
 }
 
 TEST_CASE("DXF filter normalizes reflected LWPOLYLINE extrusion once",
-          "[dxf][roundtrip][filter][extrusion]") {
+          "[dxf][roundtrip][filter][extrusion][system-codec-extrusion]") {
   ensureSettings();
   const std::string src = tmpFile("lwpolyline_reflected_src.dxf");
   const std::string out = tmpFile("lwpolyline_reflected_out.dxf");
@@ -1015,10 +6479,11 @@ TEST_CASE("DXF filter normalizes reflected LWPOLYLINE extrusion once",
   REQUIRE(firstX.size() == 2);
   REQUIRE(firstElevation.size() == 1);
   REQUIRE(firstBulges.size() == 2);
-  CHECK(std::stod(firstX[0]) == -1.0);
+  CHECK(std::stod(firstX[0]) == Catch::Approx(-1.0));
   CHECK(std::stod(firstElevation[0]) == -7.0);
   CHECK(std::stod(firstBulges[0]) < -0.499);
   CHECK(std::stod(firstBulges[0]) > -0.501);
+  CHECK(std::stod(firstBulges[1]) == Catch::Approx(0.5));
   CHECK(recordGroupValues(out, "LWPOLYLINE", "210").empty());
 
   RS_Graphic graphic2;
@@ -1026,6 +6491,7 @@ TEST_CASE("DXF filter normalizes reflected LWPOLYLINE extrusion once",
     RS_FilterDXFRW filter;
     REQUIRE(filter.fileImport(graphic2, QString::fromStdString(out),
                               RS2::FormatDXFRW));
+
     REQUIRE(filter.fileExport(graphic2, QString::fromStdString(out2),
                               RS2::FormatDXFRW));
   }
@@ -1033,7 +6499,7 @@ TEST_CASE("DXF filter normalizes reflected LWPOLYLINE extrusion once",
   const auto secondElevation = recordGroupValues(out2, "LWPOLYLINE", "38");
   REQUIRE(secondX.size() == 2);
   REQUIRE(secondElevation.size() == 1);
-  CHECK(std::stod(secondX[0]) == -1.0);
+  CHECK(std::stod(secondX[0]) == Catch::Approx(-1.0));
   CHECK(std::stod(secondElevation[0]) == -7.0);
   CHECK(recordGroupValues(out2, "LWPOLYLINE", "210").empty());
 
@@ -1043,7 +6509,7 @@ TEST_CASE("DXF filter normalizes reflected LWPOLYLINE extrusion once",
 }
 
 TEST_CASE("DXF filter normalizes reflected legacy POLYLINE extrusion once",
-          "[dxf][roundtrip][filter][extrusion]") {
+          "[dxf][roundtrip][filter][extrusion][system-codec-extrusion]") {
   ensureSettings();
   const std::string src = tmpFile("polyline_reflected_src.dxf");
   const std::string out = tmpFile("polyline_reflected_out.dxf");
@@ -1084,10 +6550,11 @@ TEST_CASE("DXF filter normalizes reflected legacy POLYLINE extrusion once",
   REQUIRE(firstBulges.size() == 2);
   REQUIRE(firstStartWidths.size() == 2);
   REQUIRE(firstEndWidths.size() == 2);
-  CHECK(std::stod(firstX[0]) == -1.0);
+  CHECK(std::stod(firstX[0]) == Catch::Approx(-1.0));
   CHECK(std::stod(firstElevation[0]) == -7.0);
   CHECK(std::stod(firstThickness[0]) == -0.25);
   CHECK(std::abs(std::stod(firstBulges[0]) + 0.5) < 1.0e-12);
+  CHECK(std::stod(firstBulges[1]) == Catch::Approx(0.5));
   CHECK(std::stod(firstStartWidths[0]) == 0.1);
   CHECK(std::stod(firstEndWidths[0]) == 0.2);
   CHECK(recordGroupValues(out, "LWPOLYLINE", "210").empty());
@@ -1100,9 +6567,13 @@ TEST_CASE("DXF filter normalizes reflected legacy POLYLINE extrusion once",
     REQUIRE(filter.fileExport(graphic2, QString::fromStdString(out2),
                               RS2::FormatDXFRW));
   }
-  for (const char *code : {"10", "20", "38", "39", "40", "41", "42"})
-    CHECK(recordGroupValues(out2, "LWPOLYLINE", code)
-          == recordGroupValues(out, "LWPOLYLINE", code));
+  for (const char *code : {"10", "20", "38", "39", "40", "41", "42"}) {
+    const auto actual = recordGroupValues(out2, "LWPOLYLINE", code);
+    const auto expected = recordGroupValues(out, "LWPOLYLINE", code);
+    REQUIRE(actual.size() == expected.size());
+    for (std::size_t i = 0; i < actual.size(); ++i)
+      CHECK(std::stod(actual[i]) == Catch::Approx(std::stod(expected[i])));
+  }
   CHECK(recordGroupValues(out2, "LWPOLYLINE", "210").empty());
 
   std::filesystem::remove(src);
@@ -1111,7 +6582,7 @@ TEST_CASE("DXF filter normalizes reflected legacy POLYLINE extrusion once",
 }
 
 TEST_CASE("DXF filter preserves reflected planar curve conventions once",
-          "[dxf][roundtrip][filter][extrusion]") {
+          "[dxf][roundtrip][filter][extrusion][system-codec-extrusion]") {
   ensureSettings();
   const std::string src = tmpFile("planar_curves_reflected_src.dxf");
   const std::string out = tmpFile("planar_curves_reflected_out.dxf");
@@ -1148,8 +6619,17 @@ TEST_CASE("DXF filter preserves reflected planar curve conventions once",
   // remains on the normalized WCS path used by its existing implementation.
   CHECK(firstGroupValueAsDouble(out, "CIRCLE", "10") == 10.0);
   CHECK(firstGroupValueAsDouble(out, "ARC", "10") == 20.0);
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  // ELLIPSE center and major axis are WCS. A -Z plane reverses the parameter
+  // interval when represented with the default +Z normal.
+  CHECK(firstGroupValueAsDouble(out, "ELLIPSE", "10") == 30.0);
+  CHECK(firstGroupValueAsDouble(out, "ELLIPSE", "11") == 5.0);
+  CHECK(firstGroupValueAsDouble(out, "ELLIPSE", "41") == Catch::Approx(2. * M_PI - 1.75));
+  CHECK(firstGroupValueAsDouble(out, "ELLIPSE", "42") == Catch::Approx(2. * M_PI - 0.25));
+#else
   CHECK(firstGroupValueAsDouble(out, "ELLIPSE", "10") == -30.0);
   CHECK(firstGroupValueAsDouble(out, "ELLIPSE", "11") == -5.0);
+#endif
   for (const char *record : {"CIRCLE", "ARC"}) {
     CHECK(recordGroupValues(out, record, "210") ==
           std::vector<std::string>{"0"});
@@ -1190,7 +6670,7 @@ TEST_CASE("DXF filter preserves reflected planar curve conventions once",
 }
 
 TEST_CASE("DXF filter preserves WCS POINT and LINE extrusion fields",
-          "[dxf][roundtrip][filter][extrusion]") {
+          "[dxf][roundtrip][filter][extrusion][system-codec]") {
   ensureSettings();
   const std::string src = tmpFile("wcs_point_line_extrusion_src.dxf");
   const std::string out = tmpFile("wcs_point_line_extrusion_out.dxf");
@@ -1237,7 +6717,8 @@ TEST_CASE("DXF filter preserves WCS POINT and LINE extrusion fields",
     for (const auto &[code, expected] : values) {
       const auto actual = recordGroupValues(out, record, code);
       REQUIRE(actual.size() == 1);
-      CHECK(std::stod(actual.front()) == std::stod(expected));
+      CHECK(std::stod(actual.front()) ==
+            Catch::Approx(std::stod(expected)).epsilon(1e-12).margin(1e-12));
     }
   }
 
@@ -1636,6 +7117,89 @@ TEST_CASE("DXF filter preserves raw HATCH OCS elevation and extrusion",
   std::filesystem::remove(dwgOut);
 }
 
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+TEST_CASE("DXF dictionary metadata retains each source handle role",
+          "[dxf][filter][dictionary][system-codec-dictionary-roles]") {
+  ensureSettings();
+  const std::string src = tmpFile("dictionary_edge_roles.dxf");
+  writeText(src,
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1015\n0\nENDSEC\n"
+            "0\nSECTION\n2\nENTITIES\n0\nENDSEC\n"
+            "0\nSECTION\n2\nOBJECTS\n"
+            "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n"
+            "280\n0\n281\n1\n3\nSOFT\n350\nA0\n"
+            "3\nHARD\n360\nA1\n"
+            "0\nXRECORD\n5\nA0\n330\nC\n100\nAcDbXrecord\n280\n1\n1\nsoft\n"
+            "0\nXRECORD\n5\nA1\n330\nC\n100\nAcDbXrecord\n280\n1\n1\nhard\n"
+            "0\nENDSEC\n0\nEOF\n");
+  RS_Graphic graphic;
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(src), RS2::FormatDXFRW));
+  const auto &dictionaries = graphic.dwgAdvancedMetadata().dictionaries();
+  const auto root = std::find_if(dictionaries.begin(), dictionaries.end(),
+                                 [](const auto &d) { return d.handle == 0xCu; });
+  REQUIRE(root != dictionaries.end());
+  REQUIRE(root->entries.size() == 2);
+  CHECK(root->entries[0].name == "SOFT");
+  CHECK(root->entries[0].handle == 0xA0u);
+  CHECK(root->entries[0].dxfHandleCode == 350u);
+  CHECK(root->entries[1].name == "HARD");
+  CHECK(root->entries[1].handle == 0xA1u);
+  CHECK(root->entries[1].dxfHandleCode == 360u);
+  std::filesystem::remove(src);
+}
+
+TEST_CASE("DXF typed dictionary retains handle roles and retries invalid roles",
+          "[dxf][filter][dictionary][system-codec-dictionary-roles]") {
+  ensureSettings();
+  const std::string out = tmpFile("dictionary_typed_edge_roles.dxf");
+  RS_Graphic graphic;
+  auto &metadata = graphic.dwgAdvancedMetadata();
+  DRW_Dictionary root;
+  root.handle = 0xCu;
+  root.m_entries.push_back({"CUSTOM", 0xA5u});
+  metadata.addDictionary(root);
+  DRW_Dictionary dictionary;
+  dictionary.handle = 0xA5u;
+  dictionary.parentHandle = 0xCu;
+  dictionary.m_entries.push_back({"SOFT", 0xA0u,
+      DRW_Dictionary::Entry::DxfHandleCode::SoftOwner});
+  dictionary.m_entries.push_back({"HARD", 0xA1u,
+      DRW_Dictionary::Entry::DxfHandleCode::HardOwner});
+  metadata.addDictionary(dictionary);
+  for (const auto handle : {0xA0u, 0xA1u}) {
+    DRW_Scale scale;
+    scale.handle = handle;
+    scale.parentHandle = 0xA5u;
+    scale.name = handle == 0xA0u ? "soft-scale" : "hard-scale";
+    metadata.addScale(scale);
+  }
+  auto &records = const_cast<std::vector<LC_DwgAdvancedMetadata::DictionaryRecord>&>(
+      metadata.dictionaries());
+  REQUIRE(records.size() == 2);
+  records[1].entries[0].dxfHandleCode = 351;
+  const std::string sentinel = "existing destination";
+  writeText(out, sentinel);
+  RS_FilterDXFRW filter;
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  std::ifstream existing(out, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(existing), {}) == sentinel);
+  existing.close();
+  records[1].entries[0].dxfHandleCode = 350;
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  const auto groups = recordGroupsWithValue(out, "DICTIONARY", "5", "A5");
+  const auto soft = std::find(groups.begin(), groups.end(), std::make_pair(std::string("3"), std::string("SOFT")));
+  const auto hard = std::find(groups.begin(), groups.end(), std::make_pair(std::string("3"), std::string("HARD")));
+  REQUIRE(soft != groups.end());
+  REQUIRE(hard != groups.end());
+  REQUIRE(std::next(soft) != groups.end());
+  REQUIRE(std::next(hard) != groups.end());
+  CHECK(*std::next(soft) == std::make_pair(std::string("350"), std::string("A0")));
+  CHECK(*std::next(hard) == std::make_pair(std::string("360"), std::string("A1")));
+  std::filesystem::remove(out);
+}
+#endif
+
 TEST_CASE("DXF filter preserves IMAGE WCS frame Z coordinates",
           "[dxf][roundtrip][filter][extrusion]") {
   ensureSettings();
@@ -1679,6 +7243,66 @@ TEST_CASE("DXF filter preserves IMAGE WCS frame Z coordinates",
   const auto xdataApps = recordGroupValues(out, "IMAGE", "1001");
   CHECK(std::find(xdataApps.begin(), xdataApps.end(), "LibreCAD_IMAGE_FRAME")
         == xdataApps.end());
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  {
+    const std::string unknown = tmpFile("image_wcs_unknown_definition.dxf");
+    std::ifstream input(out, std::ios::binary);
+    std::string bytes(std::istreambuf_iterator<char>(input), {});
+    const std::string marker = "\n100\nAcDbRasterImageDef\n";
+    const auto position = bytes.find(marker);
+    REQUIRE(position != std::string::npos);
+    bytes.insert(position + marker.size(), "70\n7\n");
+    writeText(unknown, bytes);
+    RS_Graphic rejected;
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(rejected, QString::fromStdString(unknown), RS2::FormatDXFRW));
+    const std::string sentinel = "preserve destination for unknown IMAGEDEF";
+    writeText(out2, sentinel);
+    CHECK_FALSE(filter.fileExport(rejected, QString::fromStdString(out2), RS2::FormatDXFRW));
+    std::ifstream existing(out2, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(existing), {}) == sentinel);
+    existing.close();
+    std::filesystem::remove(unknown);
+  }
+  {
+    const std::string unknown = tmpFile("image_wcs_unknown_entity_field.dxf");
+    std::ifstream input(out, std::ios::binary);
+    std::string bytes(std::istreambuf_iterator<char>(input), {});
+    const std::string marker = "\n100\nAcDbRasterImage\n";
+    const auto position = bytes.find(marker);
+    REQUIRE(position != std::string::npos);
+    bytes.insert(position + marker.size(), "39\n7\n");
+    writeText(unknown, bytes);
+    RS_Graphic rejected;
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(rejected, QString::fromStdString(unknown), RS2::FormatDXFRW));
+    const std::string sentinel = "preserve destination for unknown IMAGE field";
+    writeText(out2, sentinel);
+    CHECK_FALSE(filter.fileExport(rejected, QString::fromStdString(out2), RS2::FormatDXFRW));
+    std::ifstream existing(out2, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(existing), {}) == sentinel);
+    existing.close();
+    std::filesystem::remove(unknown);
+  }
+  {
+    const std::string large = tmpFile("image_wcs_large_source.dxf");
+    std::ifstream input(out, std::ios::binary);
+    std::string bytes(std::istreambuf_iterator<char>(input), {});
+    bytes.append(256u * 1024u, ' '); // trailing input after EOF is ignored
+    writeText(large, bytes);
+    RS_Graphic imported;
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(imported, QString::fromStdString(large), RS2::FormatDXFRW));
+    CHECK(imported.dwgAdvancedMetadata().dxfRootDictionarySource() == nullptr);
+    const std::string sentinel = "preserve destination for uncaptured IMAGEDEF";
+    writeText(out2, sentinel);
+    CHECK_FALSE(filter.fileExport(imported, QString::fromStdString(out2), RS2::FormatDXFRW));
+    std::ifstream existing(out2, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(existing), {}) == sentinel);
+    existing.close();
+    std::filesystem::remove(large);
+  }
+#endif
   for (const auto &[code, expected] :
        std::initializer_list<std::pair<const char *, const char *>>{
            {"10", "1"}, {"20", "2"}, {"30", "3"},
@@ -1694,12 +7318,162 @@ TEST_CASE("DXF filter preserves IMAGE WCS frame Z coordinates",
     RS_FilterDXFRW filter;
     REQUIRE(filter.fileImport(graphic2, QString::fromStdString(out),
                               RS2::FormatDXFRW));
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+    auto &metadata = graphic2.dwgAdvancedMetadata();
+    auto &definitions = const_cast<std::vector<LC_DwgAdvancedMetadata::ImageDefinitionRecord>&>(
+        metadata.imageDefinitions());
+    auto &reactors = const_cast<std::vector<LC_DwgAdvancedMetadata::ImageDefinitionReactorRecord>&>(
+        metadata.imageDefinitionReactors());
+    auto &dictionaries = const_cast<std::vector<LC_DwgAdvancedMetadata::DictionaryRecord>&>(
+        metadata.dictionaries());
+    REQUIRE(definitions.size() == 1);
+    REQUIRE(reactors.size() == 1);
+    const auto dictionary = std::find_if(dictionaries.begin(), dictionaries.end(),
+        [&](const auto &record) { return record.handle == definitions.front().parentHandle; });
+    REQUIRE(dictionary != dictionaries.end());
+    REQUIRE(dictionary->entries.size() == 1);
+    const std::string sentinel = "preserve existing image destination";
+    const auto expectRefusal = [&] {
+      writeText(out2, sentinel);
+      CHECK_FALSE(filter.fileExport(graphic2, QString::fromStdString(out2), RS2::FormatDXFRW));
+      std::ifstream existing(out2, std::ios::binary);
+      CHECK(std::string(std::istreambuf_iterator<char>(existing), {}) == sentinel);
+    };
+    auto *rootSource = const_cast<DRW_RawDxfObject *>(metadata.dxfRootDictionarySource());
+    REQUIRE(rootSource != nullptr);
+    REQUIRE(metadata.dxfFixedGroupDictionarySource() != nullptr);
+    rootSource->groups.emplace_back(70, std::int32_t{7});
+    if (rootSource->hasRawValues)
+      rootSource->rawValues.push_back("7");
+    expectRefusal(); // unmodeled root data must not disappear on regeneration
+    rootSource->groups.pop_back();
+    if (rootSource->hasRawValues)
+      rootSource->rawValues.pop_back();
+    auto *definitionSource = const_cast<DRW_RawDxfObject *>(metadata.dxfImageDefSource());
+    REQUIRE(definitionSource != nullptr);
+    definitionSource->groups.emplace_back(70, std::int32_t{7});
+    if (definitionSource->hasRawValues)
+      definitionSource->rawValues.push_back("7");
+    expectRefusal(); // unknown source IMAGEDEF fields must not be discarded
+    definitionSource->groups.pop_back();
+    if (definitionSource->hasRawValues)
+      definitionSource->rawValues.pop_back();
+    const auto originalParent = reactors.front().parentHandle;
+    reactors.front().parentHandle = originalParent + 1;
+    expectRefusal();
+    reactors.front().parentHandle = originalParent;
+    auto &rawObjects = const_cast<std::vector<DRW_RawDxfObject>&>(metadata.rawDxfObjects());
+    auto rawReactor = std::find_if(rawObjects.begin(), rawObjects.end(),
+        [&](const auto &record) { return record.handle == reactors.front().handle; });
+    REQUIRE(rawReactor != rawObjects.end());
+    auto classVersion = std::find_if(rawReactor->groups.begin(), rawReactor->groups.end(),
+                                    [](const auto &group) { return group.code() == 90; });
+    REQUIRE(classVersion != rawReactor->groups.end());
+    REQUIRE(rawReactor->hasRawValues);
+    const auto versionIndex = static_cast<std::size_t>(std::distance(rawReactor->groups.begin(), classVersion));
+    const auto originalVersionGroup = *classVersion;
+    const auto originalVersionRaw = rawReactor->rawValues.at(versionIndex);
+    const auto originalVersion = reactors.front().classVersion;
+    reactors.front().classVersion = 3;
+    *classVersion = DRW_Variant(90, std::int32_t{3});
+    rawReactor->rawValues[versionIndex] = "3";
+    expectRefusal(); // the shared writer cannot preserve this source version
+    reactors.front().classVersion = originalVersion;
+    *classVersion = originalVersionGroup;
+    rawReactor->rawValues[versionIndex] = originalVersionRaw;
+    auto owner = std::find_if(rawReactor->groups.begin(), rawReactor->groups.end(),
+                              [](const auto &group) { return group.code() == 330; });
+    REQUIRE(owner != rawReactor->groups.end());
+    REQUIRE(rawReactor->hasRawValues);
+    const auto ownerIndex = static_cast<std::size_t>(std::distance(rawReactor->groups.begin(), owner));
+    const auto originalOwner = *owner;
+    const auto originalRawOwner = rawReactor->rawValues.at(ownerIndex);
+    *owner = DRW_Variant(330, std::string("FFFF"));
+    rawReactor->rawValues[ownerIndex] = "FFFF";
+    expectRefusal();
+    *owner = originalOwner;
+    rawReactor->rawValues[ownerIndex] = originalRawOwner;
+    const auto originalRole = dictionary->entries.front().dxfHandleCode;
+    dictionary->entries.front().dxfHandleCode = originalRole == 350 ? 360 : 350;
+    expectRefusal();
+    dictionary->entries.front().dxfHandleCode = originalRole;
+    definitions.push_back(definitions.front());
+    expectRefusal();
+    definitions.pop_back();
+#endif
     REQUIRE(filter.fileExport(graphic2, QString::fromStdString(out2),
                               RS2::FormatDXFRW));
   }
+#if defined(LIBRECAD_SYSTEM_CODEC_TESTS) && defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_REFERENCE_INSPECTOR)
+  {
+    struct MutatingImageFilter : RS_FilterDXFRW {
+      std::function<void()> afterObjects, beforeFinalize;
+      void writeObjects() override {
+        RS_FilterDXFRW::writeObjects();
+        if (afterObjects) afterObjects();
+      }
+      bool finalizeDxfWrite() override {
+        if (beforeFinalize) beforeFinalize();
+        return RS_FilterDXFRW::finalizeDxfWrite();
+      }
+    } filter;
+    auto &reactors = const_cast<std::vector<LC_DwgAdvancedMetadata::ImageDefinitionReactorRecord>&>(
+        graphic2.dwgAdvancedMetadata().imageDefinitionReactors());
+    REQUIRE(reactors.size() == 1u);
+    const auto originalParent = reactors.front().parentHandle;
+    const std::string sentinel = "preserve late IMAGE graph failure";
+    const auto rejectMutation = [&] {
+      writeText(out2, sentinel);
+      CHECK_FALSE(filter.fileExport(graphic2, QString::fromStdString(out2), RS2::FormatDXFRW));
+      std::ifstream input(out2, std::ios::binary);
+      CHECK(std::string(std::istreambuf_iterator<char>(input), {}) == sentinel);
+      reactors.front().parentHandle = originalParent;
+    };
+    filter.afterObjects = [&] { ++reactors.front().parentHandle; };
+    rejectMutation();
+    filter.afterObjects = {};
+    filter.beforeFinalize = [&] { ++reactors.front().parentHandle; };
+    rejectMutation();
+    RS_Image *liveImage = nullptr;
+    for (RS_Entity *entity : lc::LC_ContainerTraverser{graphic2, RS2::ResolveNone}.entities())
+      if (entity->rtti() == RS2::EntityImage) liveImage = static_cast<RS_Image *>(entity);
+    REQUIRE(liveImage);
+    const auto originalPath = liveImage->getFile();
+    filter.beforeFinalize = [&] { liveImage->setFile(QStringLiteral("late-image-change.png")); };
+    rejectMutation();
+    liveImage->setFile(originalPath);
+    filter.beforeFinalize = [&] { liveImage->setFile(originalPath + QChar(0) + QStringLiteral("hidden")); };
+    rejectMutation();
+    liveImage->setFile(originalPath);
+    filter.beforeFinalize = {};
+    REQUIRE(filter.fileExport(graphic2, QString::fromStdString(out2), RS2::FormatDXFRW));
+  }
+#endif
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_IMAGE_ROUNDTRIP"))
+    std::filesystem::copy_file(out2, copy, std::filesystem::copy_options::overwrite_existing);
+#endif
   for (const char *code : {"10", "20", "30", "11", "21", "31", "12", "22", "32"})
     CHECK(recordGroupValues(out2, "IMAGE", code)
           == recordGroupValues(out, "IMAGE", code));
+
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  RS_Image *image = nullptr;
+  for (RS_Entity *entity : lc::LC_ContainerTraverser{graphic2, RS2::ResolveNone}.entities()) {
+    if (entity->rtti() == RS2::EntityImage) {
+      REQUIRE(image == nullptr);
+      image = static_cast<RS_Image *>(entity);
+    }
+  }
+  REQUIRE(image != nullptr);
+  image->setFile(QStringLiteral("renamed-image.png"));
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic2, QString::fromStdString(out2), RS2::FormatDXFRW));
+  }
+  CHECK(recordGroupValues(out2, "IMAGEDEF", "1") ==
+        std::vector<std::string>{"renamed-image.png"});
+#endif
 
 #ifdef DWGSUPPORT
   {
@@ -1728,7 +7502,7 @@ TEST_CASE("DXF filter preserves IMAGE WCS frame Z coordinates",
 }
 
 TEST_CASE("DXF filter preserves raw TEXT OCS fields",
-          "[dxf][roundtrip][filter][extrusion]") {
+          "[dxf][roundtrip][filter][extrusion][system-codec-extrusion]") {
   ensureSettings();
   const std::string src = tmpFile("text_ocs_src.dxf");
   const std::string out = tmpFile("text_ocs_out.dxf");
@@ -1896,7 +7670,7 @@ TEST_CASE("DXF imports expand INSERTs after complete and partial reads",
 }
 
 TEST_CASE("DXF filter preserves reflected MINSERT source fields with a block definition",
-          "[dxf][roundtrip][filter][extrusion][insert]") {
+          "[dxf][roundtrip][filter][extrusion][insert][system-codec-extrusion]") {
   ensureSettings();
   const std::string src = tmpFile("minsert_source_fields_src.dxf");
   const std::string out = tmpFile("minsert_source_fields_out.dxf");
@@ -1943,7 +7717,7 @@ TEST_CASE("DXF filter preserves reflected MINSERT source fields with a block def
     if (std::string(code) == "2")
       CHECK(actual.front() == expected);
     else
-      CHECK(std::stod(actual.front()) == std::stod(expected));
+      CHECK(std::stod(actual.front()) == Catch::Approx(std::stod(expected)));
   }
 
   RS_Graphic graphic2;
@@ -2077,7 +7851,7 @@ TEST_CASE("DXF filter preserves fixture-backed EED binary items",
 }
 
 TEST_CASE("DXF filter registers CLASS records for reconstructed underlays",
-          "[dxf][roundtrip][filter][classes][underlay]") {
+          "[system-codec][dxf][roundtrip][filter][classes][underlay]") {
   ensureSettings();
   lc::test::QuietLog quiet;
   lc::test::OutputDirectory directory("underlay_classes");
@@ -2119,6 +7893,48 @@ TEST_CASE("DXF filter registers CLASS records for reconstructed underlays",
   graphic.getEntityList().back()->setFlag(RS2::FlagDeleted);
 
   const auto output = directory.file("output.dxf");
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  // The installed writer refuses versions that cannot represent the profile.
+  // Preserve the original destination, then retry the same filter with a
+  // version that supports all three underlay kinds.
+  const bool supported = format == RS2::FormatDXFRW2010 ||
+                         format == RS2::FormatDXFRW2013 ||
+                         format == RS2::FormatDXFRW2018 ||
+                         (format == RS2::FormatDXFRW && kind == "DWF");
+  if (!supported) {
+    const std::string sentinel = "preserve existing destination\n";
+    writeText(output.string(), sentinel);
+    RS_FilterDXFRW filter;
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output.string()), format));
+    std::ifstream saved(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(saved), {}) == sentinel);
+    saved.close();
+    // The original source itself can claim an older DXF version while
+    // carrying a newer underlay. Reimport a corrected profile before retry.
+    std::string corrected = source;
+    const std::string oldVersion = "9\n$ACADVER\n1\n" + acadVersion;
+    const auto versionAt = corrected.find(oldVersion + "\n");
+    REQUIRE(versionAt != std::string::npos);
+    corrected.replace(versionAt, oldVersion.size(), "9\n$ACADVER\n1\nAC1024");
+    if (sourceClass && acadVersion < "AC1018") {
+      const auto classAt = corrected.find("280\n1\n281\n1\n");
+      REQUIRE(classAt != std::string::npos);
+      corrected.insert(classAt, "91\n7\n");
+    }
+    const auto correctedInput = directory.file("corrected.dxf");
+    writeText(correctedInput.string(), corrected);
+    RS_Graphic correctedGraphic;
+    REQUIRE(filter.fileImport(correctedGraphic,
+                              QString::fromStdString(correctedInput.string()),
+                              RS2::FormatDXFRW));
+    REQUIRE(correctedGraphic.getEntityList().size() == 3);
+    correctedGraphic.getEntityList().back()->setFlag(RS2::FlagDeleted);
+    REQUIRE(filter.fileExport(correctedGraphic, QString::fromStdString(output.string()),
+                              RS2::FormatDXFRW2010));
+    CHECK(countRecords(output.string(), recordName) == 2);
+    return;
+  }
+#endif
   REQUIRE(lc::test::exportDrawing(graphic, output, format));
   if (format == RS2::FormatDXFRW12) {
     CHECK_FALSE(containsLine(output.string(), "CLASSES"));
@@ -2150,7 +7966,7 @@ TEST_CASE("DXF filter registers CLASS records for reconstructed underlays",
 }
 
 TEST_CASE("DXF filter preserves fixture-backed CLASS and raw entity",
-          "[dxf][roundtrip][filter][classes][raw]") {
+          "[system-codec][dxf][roundtrip][filter][classes][raw]") {
   ensureSettings();
   const std::string src = std::string(LIBRECAD_TEST_DIR)
                           + "/dxf/classes_raw_entity_r2007.dxf";
@@ -2199,19 +8015,23 @@ TEST_CASE("DXF filter preserves fixture-backed CLASS and raw entity",
   }
   checkMetadata(graphic, 7);
   CHECK(countRecords(out, "WEIRDENT") == 1);
-  CHECK(classRecordNames(out) == std::set<std::string>{"WEIRDENT"});
-  CHECK(recordGroupValues(out, "CLASS", "2")
-        == std::vector<std::string>{"AcDbWeirdEntity"});
-  CHECK(recordGroupValues(out, "CLASS", "3")
-        == std::vector<std::string>{"CUSTOM_APP"});
-  CHECK(recordGroupValues(out, "CLASS", "90")
-        == std::vector<std::string>{"4095"});
-  CHECK(recordGroupValues(out, "CLASS", "91")
-        == std::vector<std::string>{"1"});
-  CHECK(recordGroupValues(out, "CLASS", "280")
-        == std::vector<std::string>{"1"});
-  CHECK(recordGroupValues(out, "CLASS", "281")
-        == std::vector<std::string>{"1"});
+  const auto checkClass = [](const std::string &path) {
+    const auto classes = lc::test::dxfRecords(path, "CLASS");
+    int matches = 0;
+    for (const auto &entry : classes) {
+      if (entry.own(1) != std::vector<std::string>{"WEIRDENT"})
+        continue;
+      ++matches;
+      CHECK(entry.own(2) == std::vector<std::string>{"AcDbWeirdEntity"});
+      CHECK(entry.own(3) == std::vector<std::string>{"CUSTOM_APP"});
+      CHECK(entry.own(90) == std::vector<std::string>{"4095"});
+      CHECK(entry.own(91) == std::vector<std::string>{"1"});
+      CHECK(entry.own(280) == std::vector<std::string>{"1"});
+      CHECK(entry.own(281) == std::vector<std::string>{"1"});
+    }
+    CHECK(matches == 1);
+  };
+  checkClass(out);
 
   RS_Graphic graphic2;
   {
@@ -2223,26 +8043,65 @@ TEST_CASE("DXF filter preserves fixture-backed CLASS and raw entity",
   }
   checkMetadata(graphic2, 1);
   CHECK(countRecords(out2, "WEIRDENT") == 1);
-  CHECK(classRecordNames(out2) == std::set<std::string>{"WEIRDENT"});
-  CHECK(recordGroupValues(out2, "CLASS", "91")
-        == std::vector<std::string>{"1"});
+  checkClass(out2);
 
   std::filesystem::remove(out);
   std::filesystem::remove(out2);
 }
 
-TEST_CASE("DXF filter preserves fixture-backed raw control groups and remaps 481",
+TEST_CASE("DXF filter preserves fixture-derived raw control groups and remaps 481",
           "[dxf][roundtrip][filter][application-groups][handles]") {
   ensureSettings();
-  const std::string src = std::string(LIBRECAD_TEST_DIR)
-                          + "/dxf/raw_control_groups_r2007.dxf";
+  const std::string fixture = std::string(LIBRECAD_TEST_DIR)
+                              + "/dxf/raw_control_groups_r2007.dxf";
+  const std::string src = tmpFile("raw_control_groups_neutral.dxf");
   const std::string out = tmpFile("raw_control_groups_out.dxf");
   const std::string out2 = tmpFile("raw_control_groups_out2.dxf");
   std::filesystem::remove(out);
   std::filesystem::remove(out2);
-  if (!std::filesystem::is_regular_file(src)) {
+  if (!std::filesystem::is_regular_file(fixture)) {
     SKIP("raw_control_groups_r2007.dxf fixture absent; skipping");
   }
+
+#ifdef LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR
+  // The original fixture contains incomplete MATERIAL objects. Preserve the
+  // guard for that graph independently of the generic handle-remapping test.
+  {
+    RS_Graphic materialGraphic;
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(materialGraphic, QString::fromStdString(fixture),
+                              RS2::FormatDXFRW));
+    writeText(out, "preserve destination\n");
+    CHECK_FALSE(filter.fileExport(materialGraphic, QString::fromStdString(out),
+                                  RS2::FormatDXFRW));
+    std::ifstream retained(out, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {})
+          == "preserve destination\n");
+  }
+#endif
+  // Reuse the fixture's exact control groups with neutral raw object types;
+  // this test exercises handle transport, not MATERIAL graph semantics.
+  std::ifstream input(fixture, std::ios::binary);
+  std::string contents((std::istreambuf_iterator<char>(input)), {});
+  input.close();
+  // Git may check out the fixture with CRLF on Windows. Preserve any isolated
+  // carriage returns while making the record boundaries platform-independent.
+  std::string lineEndingControl = "0\r\nMATERIAL\r\ntext\rvalue\n";
+  normalizeDxfLineEndings(lineEndingControl);
+  CHECK(lineEndingControl == "0\nMATERIAL\ntext\rvalue\n");
+  normalizeDxfLineEndings(contents);
+  const auto replaceAll = [&](const std::string& from, const std::string& to) {
+    std::size_t count = 0;
+    for (std::size_t pos = 0; (pos = contents.find(from, pos)) != std::string::npos;
+         pos += to.size()) {
+      contents.replace(pos, from.size(), to);
+      ++count;
+    }
+    return count;
+  };
+  REQUIRE(replaceAll("\nMATERIAL\n", "\nTEST_RAW_OBJECT\n") == 2);
+  REQUIRE(replaceAll("\nAcDbMaterial\n", "\nTestRawObject\n") == 2);
+  writeText(src, contents);
 
   const auto values = [](const DxfRecordGroups& groups, const char* code) {
     std::vector<std::string> result;
@@ -2307,7 +8166,7 @@ TEST_CASE("DXF filter preserves fixture-backed raw control groups and remaps 481
   const auto raw = std::find_if(
       graphic.dwgAdvancedMetadata().rawDxfObjects().cbegin(),
       graphic.dwgAdvancedMetadata().rawDxfObjects().cend(),
-      [](const auto& entry) { return entry.name == "MATERIAL" && entry.handle == 0x90u; });
+      [](const auto& entry) { return entry.name == "TEST_RAW_OBJECT" && entry.handle == 0x90u; });
   REQUIRE(raw != graphic.dwgAdvancedMetadata().rawDxfObjects().cend());
   CHECK(raw->parentHandle == 0xCu);
   CHECK(rawValues(raw->groups, 481) == std::vector<std::string>{"14"});
@@ -2317,9 +8176,9 @@ TEST_CASE("DXF filter preserves fixture-backed raw control groups and remaps 481
                                     "{ACAD_XDICTIONARY", "}"});
 
   const DxfRecordGroups sourceOut =
-      recordGroupsWithValue(out, "MATERIAL", "1", "SOURCE");
+      recordGroupsWithValue(out, "TEST_RAW_OBJECT", "1", "SOURCE");
   const DxfRecordGroups targetOut =
-      recordGroupsWithValue(out, "MATERIAL", "1", "TARGET");
+      recordGroupsWithValue(out, "TEST_RAW_OBJECT", "1", "TARGET");
   verifySourceRecord(sourceOut, targetOut);
   const std::vector<std::string> handles = collectHandles(out);
   std::set<std::string> uniqueHandles;
@@ -2336,9 +8195,10 @@ TEST_CASE("DXF filter preserves fixture-backed raw control groups and remaps 481
     REQUIRE(filter.fileExport(graphic2, QString::fromStdString(out2),
                               RS2::FormatDXFRW));
   }
-  verifySourceRecord(recordGroupsWithValue(out2, "MATERIAL", "1", "SOURCE"),
-                     recordGroupsWithValue(out2, "MATERIAL", "1", "TARGET"));
+  verifySourceRecord(recordGroupsWithValue(out2, "TEST_RAW_OBJECT", "1", "SOURCE"),
+                     recordGroupsWithValue(out2, "TEST_RAW_OBJECT", "1", "TARGET"));
 
+  std::filesystem::remove(src);
   std::filesystem::remove(out);
   std::filesystem::remove(out2);
 }
@@ -3409,7 +9269,7 @@ TEST_CASE("DXF export reserves handle space so preserved raw handles do not "
       "0\nWEIRDENT\n8\n0\n5\n33\n62\n3\n10\n1.0\n20\n2.0\n"
       "0\nENDSEC\n"
       "0\nSECTION\n2\nOBJECTS\n"
-      "0\nMATERIAL\n5\n34\n330\nC\n100\nAcDbMaterial\n1\nMyMaterial\n94\n7\n"
+      "0\nTEST_RAW_OBJECT\n5\n34\n330\nC\n100\nTestRawObject\n1\nRawObject\n94\n7\n"
       "0\nENDSEC\n0\nEOF\n";
   writeText(src, dxf);
 
@@ -3868,7 +9728,7 @@ TEST_CASE("DXF raw ENTITY remap updates typed GROUP members",
 }
 
 TEST_CASE("DXF export keeps a GROUP's handle for its members' reactors",
-          "[dxf][roundtrip][filter][handles][groups]") {
+          "[dxf][roundtrip][filter][handles][groups][system-codec]") {
   ensureSettings();
   const std::string src = tmpFile("group-reactors-src.dxf");
   const std::string out = tmpFile("group-reactors-out.dxf");
@@ -3907,32 +9767,997 @@ TEST_CASE("DXF export keeps a GROUP's handle for its members' reactors",
                               RS2::FormatDXFRW));
   }
 
-  CHECK(recordGroupValues(out, "GROUP", "5") == std::vector<std::string>{"90"});
+  const auto group = recordGroupValues(out, "GROUP", "5");
+  REQUIRE(group.size() == 1);
+  const auto dictionary = recordGroupsWithValue(out, "DICTIONARY", "3", "PAIR");
+  const auto name = std::find(dictionary.begin(), dictionary.end(),
+                              std::make_pair(std::string("3"), std::string("PAIR")));
+  REQUIRE(name != dictionary.end());
+  REQUIRE(std::next(name) != dictionary.end());
+  CHECK(*std::next(name) == std::make_pair(std::string("350"), group.front()));
   CHECK(recordGroupValues(out, "GROUP", "340")
         == recordGroupValues(out, "LINE", "5"));
   CHECK(recordReactors(out, "LINE")
-        == std::vector<std::vector<std::string>>{{"90"}, {"90"}});
+        == std::vector<std::vector<std::string>>{{group.front()}, {group.front()}});
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);
 }
 
-TEST_CASE("DXF export points an entity's reactors at the entities they name",
-          "[dxf][roundtrip][filter][handles]") {
+#if defined(LIBRECAD_SYSTEM_CODEC_TESTS) && defined(LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS)
+TEST_CASE("ODA compact-material hatch drawing imports without claiming replay",
+          "[.external][hatch-oda-peer]") {
+  ensureSettings();
+  const char *path = std::getenv("LIBRECAD_HATCH_ODA_PEER");
+  REQUIRE(path);
+  RS_Graphic graphic;
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromLocal8Bit(path), RS2::FormatDXFRW));
+  const RS_Hatch *hatch = nullptr;
+  const RS_Polyline *boundary = nullptr;
+  for (const RS_Entity *entity : graphic) {
+    if (entity && entity->rtti() == RS2::EntityHatch)
+      hatch = static_cast<const RS_Hatch *>(entity);
+    if (entity && entity->rtti() == RS2::EntityPolyline)
+      boundary = static_cast<const RS_Polyline *>(entity);
+  }
+  REQUIRE(hatch);
+  REQUIRE(boundary);
+  CHECK(hatch->sourceAssociative());
+  CHECK(LC_HatchAssociation::matchesClosedStraightBoundary(*hatch, *boundary));
+  CHECK(graphic.dwgAdvancedMetadata().materials().size() == 3u);
+  CHECK(hatch->physicalSourceRoles().hatch == 0u); // source exceeds the bounded capture
+}
+
+TEST_CASE("DXF physical hatch source roles reject conflicting records",
+          "[dxf][roundtrip][filter][system-codec][hatch-source-roles]") {
+  ensureSettings();
+  const auto src = tmpFile("physical-hatch-source-roles.dxf");
+  const std::string input =
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1024\n0\nENDSEC\n"
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nLWPOLYLINE\n5\nB0\n102\n{ACAD_REACTORS\n330\nB1\n102\n}\n330\nA0\n"
+      "100\nAcDbEntity\n8\n0\n100\nAcDbPolyline\n90\n4\n70\n1\n"
+      "10\n0\n20\n0\n10\n10\n20\n0\n10\n10\n20\n10\n10\n0\n20\n10\n"
+      "0\nHATCH\n5\nB1\n330\nA0\n100\nAcDbEntity\n8\n0\n100\nAcDbHatch\n"
+      "10\n0\n20\n0\n30\n0\n210\n0\n220\n0\n230\n1\n2\nSOLID\n70\n1\n71\n1\n"
+      "91\n1\n92\n3\n72\n0\n73\n1\n93\n4\n"
+      "10\n0\n20\n0\n10\n10\n20\n0\n10\n10\n20\n10\n10\n0\n20\n10\n"
+      "97\n1\n330\nB0\n75\n0\n76\n1\n98\n0\n"
+      "0\nENDSEC\n0\nEOF\n";
+  class SourceProbe : public RS_FilterDXFRW {
+  public:
+    int fault = 0;
+    std::string mutationPath;
+    void addDxfEntitiesSource(const DRW_DxfEntitiesSource &source) override {
+      auto altered = source;
+      if (fault == 1 && !altered.records.empty()) {
+        for (std::size_t i = 0; i < altered.records.front().groups.size(); ++i)
+          if (altered.records.front().groups[i].code() == 330) {
+            altered.records.front().rawValues[i] = "FFFF";
+            break;
+          }
+      }
+      if (fault == 2 && !altered.records.empty() && !altered.records.front().spans.empty())
+        altered.records.front().spans.front().beginOffset = altered.records.front().marker.beginOffset;
+      if (fault == 4) altered.scopeId = 0;
+      if (fault == 5 && !altered.records.empty() && !altered.records.front().spans.empty())
+        ++altered.records.front().spans.front().ordinal;
+      if (fault == 6) {
+        std::ofstream changed(mutationPath, std::ios::binary | std::ios::app);
+        changed.put('\n');
+      }
+      if (fault == 7 && !altered.records.empty()) {
+        for (std::size_t i = 0; i < altered.records.front().groups.size(); ++i)
+          if (altered.records.front().groups[i].code() == 8) {
+            altered.records.front().groups[i] = DRW_Variant(8, std::string("X"));
+            altered.records.front().rawValues[i] = "X";
+            break;
+          }
+      }
+      if (fault == 8 && !altered.records.empty()) {
+        for (auto &group : altered.records.front().groups)
+          if (group.code() == 10 && group.type() == DRW_Variant::DOUBLE) {
+            group = DRW_Variant(10, group.d_val() + 1.0);
+            break;
+          }
+      }
+      if (fault == 9) {
+        for (auto &record : altered.records)
+          if (record.name == "HATCH")
+            for (auto &group : record.groups)
+              if (group.code() == 73) { group = DRW_Variant(73, 0); break; }
+      }
+      if (fault == 10) {
+        for (auto &record : altered.records)
+          if (record.name == "HATCH")
+            for (auto &group : record.groups)
+              if (group.code() == 11 && group.type() == DRW_Variant::DOUBLE) {
+                group = DRW_Variant(11, group.d_val() + 1.0);
+                break;
+              }
+      }
+      RS_FilterDXFRW::addDxfEntitiesSource(altered);
+      if (fault == 3) RS_FilterDXFRW::addDxfEntitiesSource(altered);
+    }
+  };
+  class ReplayProbe : public SourceProbe {
+  public:
+    std::function<void()> beforeFinalize;
+    bool finalizeDxfWrite() override {
+      if (beforeFinalize) beforeFinalize();
+      return RS_FilterDXFRW::finalizeDxfWrite();
+    }
+  };
+  const auto readRoles = [&](const std::string &text, int fault) {
+    writeText(src, text);
+    RS_Graphic graphic;
+    SourceProbe filter;
+    filter.fault = fault;
+    filter.mutationPath = src;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src), RS2::FormatDXFRW));
+    for (const RS_Entity *entity : graphic)
+      if (entity && entity->rtti() == RS2::EntityHatch)
+        return static_cast<const RS_Hatch *>(entity)->physicalSourceRoles();
+    FAIL("HATCH was not imported");
+    return RS_Hatch::PhysicalSourceRoles{};
+  };
+  const auto roles = readRoles(input, 0);
+  CHECK(roles.hatch == 0xB1u);
+  CHECK(roles.boundary == 0xB0u);
+  CHECK(roles.owner == 0xA0u);
+  CHECK_FALSE(roles.modelSpace);
+  CHECK_FALSE(roles.sourceHandleIsolation);
+  CHECK(roles.sourceGeometry.size() == 4u);
+  const std::vector<LC_HatchAssociation::Edge> expectedGeometry{
+      {{0, 0, 0, 10}}, {{0, 0, 10, 0}}, {{0, 10, 10, 10}}, {{10, 0, 10, 10}}};
+  CHECK(roles.sourceGeometry == expectedGeometry);
+  const auto changedTypedGeometry = readRoles(input, 8);
+  CHECK(changedTypedGeometry.hatch == 0xB1u);
+  CHECK(changedTypedGeometry.sourceGeometry.empty());
+  CHECK(readRoles(input, 1).hatch == 0u);
+  CHECK(readRoles(input, 2).hatch == 0u);
+  CHECK(readRoles(input, 3).hatch == 0u);
+  CHECK(readRoles(input, 4).hatch == 0u);
+  CHECK(readRoles(input, 5).hatch == 0u);
+  CHECK(readRoles(input, 6).hatch == 0u);
+  CHECK(readRoles(input, 7).hatch == 0u);
+  auto duplicateOwner = input;
+  const auto position = duplicateOwner.find("330\nA0\n100\nAcDbEntity");
+  REQUIRE(position != std::string::npos);
+  duplicateOwner.insert(position, "330\nA0\n");
+  CHECK(readRoles(duplicateOwner, 0).hatch == 0u);
+  auto extraReactor = input;
+  const auto reactorPosition = extraReactor.find("330\nB1\n102\n}\n");
+  REQUIRE(reactorPosition != std::string::npos);
+  extraReactor.insert(reactorPosition, "330\n0\n");
+  CHECK(readRoles(extraReactor, 0).hatch == 0u);
+  auto nondefaultColor = input;
+  const auto subclass = nondefaultColor.find("100\nAcDbHatch\n");
+  REQUIRE(subclass != std::string::npos);
+  nondefaultColor.insert(subclass, "62\n7\n");
+  CHECK(readRoles(nondefaultColor, 0).hatch == 0u);
+  auto changedBoundaryGeometry = input;
+  const auto vertex = changedBoundaryGeometry.find("10\n10\n20\n0\n");
+  REQUIRE(vertex != std::string::npos);
+  changedBoundaryGeometry.replace(vertex, std::string("10\n10\n20\n0\n").size(), "10\n11\n20\n0\n");
+  const auto unmatched = readRoles(changedBoundaryGeometry, 0);
+  CHECK(unmatched.hatch == 0xB1u);
+  CHECK(unmatched.sourceGeometry.empty());
+  CHECK(readRoles(input, 9).sourceGeometry.empty());
+  const std::string spaceSections =
+      "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nBLOCK_RECORD\n5\nD0\n70\n1\n"
+      "0\nBLOCK_RECORD\n5\nA0\n330\nD0\n100\nAcDbSymbolTableRecord\n"
+      "100\nAcDbBlockTableRecord\n2\n*Model_Space\n70\n0\n280\n1\n281\n0\n"
+      "0\nENDTAB\n0\nENDSEC\n0\nSECTION\n2\nBLOCKS\n"
+      "0\nBLOCK\n5\nD1\n330\nA0\n100\nAcDbEntity\n8\n0\n100\nAcDbBlockBegin\n"
+      "2\n*Model_Space\n70\n0\n10\n0\n20\n0\n30\n0\n3\n*Model_Space\n1\n\n"
+      "0\nENDBLK\n5\nD2\n330\nA0\n100\nAcDbEntity\n8\n0\n100\nAcDbBlockEnd\n"
+      "0\nENDSEC\n";
+  auto structured = input;
+  const auto entitiesPosition = structured.find("0\nSECTION\n2\nENTITIES\n");
+  REQUIRE(entitiesPosition != std::string::npos);
+  structured.insert(entitiesPosition, spaceSections);
+  const auto structuredRoles = readRoles(structured, 0);
+  CHECK(structuredRoles.modelSpace);
+  auto linePath = structured;
+  const std::string polyPath = "92\n3\n72\n0\n73\n1\n93\n4\n"
+      "10\n0\n20\n0\n10\n10\n20\n0\n10\n10\n20\n10\n10\n0\n20\n10\n";
+  const std::string linePathBody = "92\n1\n93\n4\n"
+      "72\n1\n10\n0\n20\n0\n11\n10\n21\n0\n"
+      "72\n1\n10\n10\n20\n0\n11\n10\n21\n10\n"
+      "72\n1\n10\n10\n20\n10\n11\n0\n21\n10\n"
+      "72\n1\n10\n0\n20\n10\n11\n0\n21\n0\n";
+  const auto polyPathPosition = linePath.find(polyPath);
+  REQUIRE(polyPathPosition != std::string::npos);
+  linePath.replace(polyPathPosition, polyPath.size(), linePathBody);
+  CHECK(readRoles(linePath, 0).sourceGeometry == expectedGeometry);
+  CHECK(readRoles(linePath, 10).sourceGeometry.empty());
+  const auto sizedSource = [&](std::size_t bytes) {
+    REQUIRE(bytes >= structured.size() + 5u);
+    return std::string("999\n") + std::string(bytes - structured.size() - 5u, 'A') + "\n" + structured;
+  };
+  CHECK(readRoles(sizedSource(64u * 1024u), 0).hatch == 0xB1u);
+  CHECK(readRoles(sizedSource(64u * 1024u + 1u), 0).hatch == 0u);
+#ifdef LIBDXFRW_HAS_DXF_CANONICAL_HEADER_VARIABLE_QUERY
+  CHECK(structuredRoles.sourceHandleIsolation);
+  for (const int snap : {2, 3}) {
+    auto legacySnap = structured;
+    const auto headerEnd = legacySnap.find("0\nENDSEC\n");
+    REQUIRE(headerEnd != std::string::npos);
+    legacySnap.insert(headerEnd, "9\n$SNAPISOPAIR\n70\n" + std::to_string(snap) + "\n");
+    const auto snapRoles = readRoles(legacySnap, 0);
+    CHECK(snapRoles.modelSpace);
+    CHECK(snapRoles.sourceHandleIsolation == (snap == 2));
+  }
+  for (const int element : {0, 2}) {
+    auto patterned = structured;
+    const auto endTable = patterned.find("0\nENDTAB\n0\nENDSEC\n");
+    REQUIRE(endTable != std::string::npos);
+    const auto insert = endTable + std::string("0\nENDTAB\n").size();
+    patterned.insert(insert, "0\nTABLE\n2\nLTYPE\n5\nD4\n70\n1\n"
+                     "0\nLTYPE\n5\nD5\n330\nD4\n100\nAcDbSymbolTableRecord\n"
+                     "100\nAcDbLinetypeTableRecord\n2\nDASH\n70\n0\n3\nDash\n"
+                     "72\n65\n73\n1\n40\n1\n49\n1\n74\n" + std::to_string(element) +
+                     "\n0\nENDTAB\n");
+    const auto patternRoles = readRoles(patterned, 0);
+    CHECK(patternRoles.modelSpace);
+    CHECK(patternRoles.sourceHandleIsolation == (element == 0));
+  }
+  for (const bool extraHandle : {false, true}) {
+    auto styled = structured;
+    const auto endTable = styled.find("0\nENDTAB\n0\nENDSEC\n");
+    REQUIRE(endTable != std::string::npos);
+    const auto insert = endTable + std::string("0\nENDTAB\n").size();
+    std::string dimTable = "0\nTABLE\n2\nDIMSTYLE\n5\nD6\n70\n1\n"
+        "0\nDIMSTYLE\n105\nD7\n330\nD6\n100\nAcDbSymbolTableRecord\n"
+        "100\nAcDbDimStyleTableRecord\n2\nSTANDARD\n70\n0\n"
+        "1001\nACAD_DSTYLE_DIMTALN\n1070\n392\n1070\n0\n";
+    if (extraHandle) dimTable += "1005\nB0\n";
+    dimTable += "0\nENDTAB\n";
+    styled.insert(insert, dimTable);
+    const auto styleRoles = readRoles(styled, 0);
+    CHECK(styleRoles.modelSpace);
+    CHECK(styleRoles.sourceHandleIsolation == !extraHandle);
+  }
+#else
+  CHECK_FALSE(structuredRoles.sourceHandleIsolation);
+#endif
+  for (const int code : {5, 330, 340, 481, 1005}) {
+    auto externalReference = structured;
+    const auto headerEnd = externalReference.find("0\nENDSEC\n");
+    REQUIRE(headerEnd != std::string::npos);
+    externalReference.insert(headerEnd, "9\n$DIMBLK\n" + std::to_string(code) + "\nB0\n");
+    const auto externallyReferenced = readRoles(externalReference, 0);
+    CHECK(externallyReferenced.modelSpace);
+    CHECK_FALSE(externallyReferenced.sourceHandleIsolation);
+  }
+  for (const int code : {310, 1000}) {
+    auto opaqueSource = structured;
+    const auto headerEnd = opaqueSource.find("0\nENDSEC\n");
+    REQUIRE(headerEnd != std::string::npos);
+    opaqueSource.insert(headerEnd, "9\n$DIMBLK\n" + std::to_string(code) + "\nABCD\n");
+    const auto opaqueRoles = readRoles(opaqueSource, 0);
+    CHECK(opaqueRoles.modelSpace);
+    CHECK_FALSE(opaqueRoles.sourceHandleIsolation);
+  }
+  auto unknownHeader = structured;
+  const auto unknownHeaderEnd = unknownHeader.find("0\nENDSEC\n");
+  REQUIRE(unknownHeaderEnd != std::string::npos);
+  unknownHeader.insert(unknownHeaderEnd, "9\n$VENDOR_DATA\n1\nopaque\n");
+  const auto unknownHeaderRoles = readRoles(unknownHeader, 0);
+  CHECK(unknownHeaderRoles.modelSpace);
+  CHECK_FALSE(unknownHeaderRoles.sourceHandleIsolation);
+  auto customProperty = structured;
+  const auto propertyEnd = customProperty.find("0\nENDSEC\n");
+  REQUIRE(propertyEnd != std::string::npos);
+  customProperty.insert(propertyEnd, "9\n$CUSTOMPROPERTYTAG\n1\nKEY\n9\n$CUSTOMPROPERTY\n1\nVALUE\n");
+  const auto propertyRoles = readRoles(customProperty, 0);
+  CHECK(propertyRoles.modelSpace);
+  CHECK_FALSE(propertyRoles.sourceHandleIsolation);
+  auto aliasProperty = structured;
+  const auto aliasPropertyEnd = aliasProperty.find("0\nENDSEC\n");
+  REQUIRE(aliasPropertyEnd != std::string::npos);
+  aliasProperty.insert(aliasPropertyEnd, "9\nCUSTOMPROPERTY\n1\nVALUE\n");
+  const auto aliasPropertyRoles = readRoles(aliasProperty, 0);
+  CHECK(aliasPropertyRoles.modelSpace);
+  CHECK_FALSE(aliasPropertyRoles.sourceHandleIsolation);
+  auto unknownHeaderField = structured;
+  const auto unknownFieldEnd = unknownHeaderField.find("0\nENDSEC\n");
+  REQUIRE(unknownFieldEnd != std::string::npos);
+  unknownHeaderField.insert(unknownFieldEnd, "9\n$DIMBLK\n300\nopaque\n");
+  const auto unknownFieldRoles = readRoles(unknownHeaderField, 0);
+  CHECK(unknownFieldRoles.modelSpace);
+  CHECK_FALSE(unknownFieldRoles.sourceHandleIsolation);
+  auto unknownClass = structured;
+  const auto headerEndForClass = unknownClass.find("0\nENDSEC\n");
+  REQUIRE(headerEndForClass != std::string::npos);
+  const auto afterHeader = headerEndForClass + std::string("0\nENDSEC\n").size();
+  unknownClass.insert(afterHeader,
+      "0\nSECTION\n2\nCLASSES\n0\nCLASS\n1\nACME_UNKNOWN\n2\nAcmeUnknown\n"
+      "3\nAcme\n90\n0\n91\n0\n280\n0\n281\n0\n0\nENDSEC\n");
+  const auto unknownRoles = readRoles(unknownClass, 0);
+  CHECK(unknownRoles.modelSpace);
+  CHECK_FALSE(unknownRoles.sourceHandleIsolation);
+  auto wrongSpace = structured;
+  const auto modelName = wrongSpace.find("2\n*Model_Space\n70\n0\n280\n1");
+  REQUIRE(modelName != std::string::npos);
+  wrongSpace.replace(modelName, std::string("2\n*Model_Space").size(), "2\n*Model_SpacX");
+  CHECK_FALSE(readRoles(wrongSpace, 0).modelSpace);
+  auto wrongBlockOwner = structured;
+  const auto blockOwner = wrongBlockOwner.find("0\nBLOCK\n5\nD1\n330\nA0\n");
+  REQUIRE(blockOwner != std::string::npos);
+  wrongBlockOwner.replace(blockOwner, std::string("0\nBLOCK\n5\nD1\n330\nA0\n").size(),
+                          "0\nBLOCK\n5\nD1\n330\nA2\n");
+  CHECK_FALSE(readRoles(wrongBlockOwner, 0).modelSpace);
+  auto duplicateVersion = structured;
+  const auto version = duplicateVersion.find("9\n$ACADVER\n1\nAC1024\n");
+  REQUIRE(version != std::string::npos);
+  duplicateVersion.insert(version, "9\n$ACADVER\n1\nAC1024\n");
+  CHECK_FALSE(readRoles(duplicateVersion, 0).modelSpace);
+  auto nonemptyBlock = structured;
+  const auto endBlock = nonemptyBlock.find("0\nENDBLK\n5\nD2\n");
+  REQUIRE(endBlock != std::string::npos);
+  nonemptyBlock.insert(endBlock, "0\nPOINT\n5\nD3\n330\nA0\n100\nAcDbEntity\n8\n0\n"
+                               "100\nAcDbPoint\n10\n0\n20\n0\n30\n0\n");
+  CHECK_FALSE(readRoles(nonemptyBlock, 0).modelSpace);
+  auto wrongVersion = structured;
+  wrongVersion.replace(wrongVersion.find("AC1024"), 6u, "AC1015");
+  CHECK_FALSE(readRoles(wrongVersion, 0).modelSpace);
+#if defined(LIBDXFRW_HAS_DXF_STAGED_HATCH_ISOLATION_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_FOREIGN_HANDLE_ISOLATION_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
+  {
+    ReplayProbe replay;
+    writeText(src, structured);
+    RS_Graphic graphic;
+    REQUIRE(replay.fileImport(graphic, QString::fromStdString(src), RS2::FormatDXFRW));
+    RS_Hatch *hatch = nullptr;
+    RS_Polyline *boundary = nullptr;
+    for (RS_Entity *entity : graphic) {
+      if (entity && entity->rtti() == RS2::EntityHatch) hatch = static_cast<RS_Hatch *>(entity);
+      if (entity && entity->rtti() == RS2::EntityPolyline) boundary = static_cast<RS_Polyline *>(entity);
+    }
+    REQUIRE(hatch);
+    REQUIRE(boundary);
+    const auto output = tmpFile("checked-hatch-replay.dxf");
+    const std::string sentinel = "preserve checked hatch destination\n";
+    writeText(output, sentinel);
+    bool moved = false;
+    replay.beforeFinalize = [&] { moved = true; hatch->move(RS_Vector(1, 0)); boundary->move(RS_Vector(1, 0)); };
+    CHECK_FALSE(replay.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    CHECK(moved);
+    std::ifstream retained(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+    retained.close();
+    if (moved) { hatch->move(RS_Vector(-1, 0)); boundary->move(RS_Vector(-1, 0)); }
+    const auto boundaryHandle = boundary->sourceHandle();
+    bool changedIdentity = false;
+    writeText(output, sentinel);
+    replay.beforeFinalize = [&] { changedIdentity = true; boundary->setSourceHandle(hatch->sourceHandle()); };
+    CHECK_FALSE(replay.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    CHECK(changedIdentity);
+    std::ifstream retainedIdentity(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retainedIdentity), {}) == sentinel);
+    retainedIdentity.close();
+    boundary->setSourceHandle(boundaryHandle);
+    replay.beforeFinalize = {};
+    REQUIRE(replay.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    RS_Graphic reopened;
+    SourceProbe reread;
+    REQUIRE(reread.fileImport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    const RS_Hatch *readHatch = nullptr;
+    const RS_Polyline *readBoundary = nullptr;
+    for (const RS_Entity *entity : reopened) {
+      if (entity && entity->rtti() == RS2::EntityHatch) readHatch = static_cast<const RS_Hatch *>(entity);
+      if (entity && entity->rtti() == RS2::EntityPolyline) readBoundary = static_cast<const RS_Polyline *>(entity);
+    }
+    REQUIRE(readHatch);
+    REQUIRE(readBoundary);
+    CHECK(readHatch->sourceAssociative());
+    CHECK(readHatch->sourceLoopBoundaries() == std::vector<std::vector<quint32>>{{readBoundary->sourceHandle()}});
+    CHECK(readBoundary->reactorHandles() == std::vector<quint32>{readHatch->sourceHandle()});
+    CHECK(LC_HatchAssociation::matchesClosedStraightBoundary(*readHatch, *readBoundary));
+    CHECK(readHatch->physicalSourceRoles().modelSpace);
+    CHECK(readHatch->physicalSourceRoles().sourceHandleIsolation);
+    CHECK(readHatch->physicalSourceRoles().sourceGeometry.size() == 4u);
+    const auto secondOutput = tmpFile("checked-hatch-repeat.dxf");
+    REQUIRE(reread.fileExport(reopened, QString::fromStdString(secondOutput), RS2::FormatDXFRW2010));
+    RS_Graphic repeated;
+    REQUIRE(reread.fileImport(repeated, QString::fromStdString(secondOutput), RS2::FormatDXFRW));
+    const RS_Hatch *repeatHatch = nullptr;
+    const RS_Polyline *repeatBoundary = nullptr;
+    for (const RS_Entity *entity : repeated) {
+      if (entity && entity->rtti() == RS2::EntityHatch) repeatHatch = static_cast<const RS_Hatch *>(entity);
+      if (entity && entity->rtti() == RS2::EntityPolyline) repeatBoundary = static_cast<const RS_Polyline *>(entity);
+    }
+    REQUIRE(repeatHatch);
+    REQUIRE(repeatBoundary);
+    CHECK(repeatHatch->sourceAssociative());
+    CHECK(repeatHatch->sourceLoopBoundaries() == std::vector<std::vector<quint32>>{{repeatBoundary->sourceHandle()}});
+    CHECK(repeatBoundary->reactorHandles() == std::vector<quint32>{repeatHatch->sourceHandle()});
+    CHECK(LC_HatchAssociation::matchesClosedStraightBoundary(*repeatHatch, *repeatBoundary));
+    // Matched edits are planned from the current geometry, while the
+    // independently captured physical-source roles remain immutable.
+    const auto sourceGeometry = hatch->physicalSourceRoles().sourceGeometry;
+    hatch->move(RS_Vector(1, 2));
+    boundary->move(RS_Vector(1, 2));
+    std::vector<LC_HatchAssociation::Edge> editedGeometry;
+    REQUIRE(LC_HatchAssociation::matchesClosedStraightBoundary(*hatch, *boundary, &editedGeometry));
+    REQUIRE(editedGeometry != sourceGeometry);
+    CHECK(hatch->physicalSourceRoles().sourceGeometry == sourceGeometry);
+    writeText(output, sentinel);
+    replay.beforeFinalize = [&] { hatch->move(RS_Vector(1, 0)); boundary->move(RS_Vector(1, 0)); };
+    CHECK_FALSE(replay.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    std::ifstream editedRetained(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(editedRetained), {}) == sentinel);
+    editedRetained.close();
+    hatch->move(RS_Vector(-1, 0));
+    boundary->move(RS_Vector(-1, 0));
+    replay.beforeFinalize = {};
+    REQUIRE(replay.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    RS_Graphic editedReadback;
+    REQUIRE(reread.fileImport(editedReadback, QString::fromStdString(output), RS2::FormatDXFRW));
+    const RS_Hatch *editedHatch = nullptr;
+    const RS_Polyline *editedBoundary = nullptr;
+    for (const RS_Entity *entity : editedReadback) {
+      if (entity && entity->rtti() == RS2::EntityHatch) editedHatch = static_cast<const RS_Hatch *>(entity);
+      if (entity && entity->rtti() == RS2::EntityPolyline) editedBoundary = static_cast<const RS_Polyline *>(entity);
+    }
+    REQUIRE(editedHatch);
+    REQUIRE(editedBoundary);
+    CHECK(editedHatch->sourceAssociative());
+    CHECK(editedHatch->sourceLoopBoundaries() == std::vector<std::vector<quint32>>{{editedBoundary->sourceHandle()}});
+    CHECK(editedBoundary->reactorHandles() == std::vector<quint32>{editedHatch->sourceHandle()});
+    std::vector<LC_HatchAssociation::Edge> readGeometry;
+    CHECK(LC_HatchAssociation::matchesClosedStraightBoundary(*editedHatch, *editedBoundary, &readGeometry));
+    CHECK(readGeometry == editedGeometry);
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_CHECKED_HATCH_EDITED"))
+      std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+    REQUIRE(reread.fileExport(editedReadback, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    RS_Graphic editedRepeat;
+    REQUIRE(reread.fileImport(editedRepeat, QString::fromStdString(output), RS2::FormatDXFRW));
+    bool sawEditedRepeat = false;
+    for (const RS_Entity *entity : editedRepeat)
+      if (entity && entity->rtti() == RS2::EntityHatch) {
+        CHECK(static_cast<const RS_Hatch *>(entity)->sourceAssociative());
+        sawEditedRepeat = true;
+      }
+    CHECK(sawEditedRepeat);
+    hatch->scale(RS_Vector(0, 0), RS_Vector(2, 1));
+    boundary->scale(RS_Vector(0, 0), RS_Vector(2, 1));
+    std::vector<LC_HatchAssociation::Edge> scaledGeometry;
+    REQUIRE(LC_HatchAssociation::matchesClosedStraightBoundary(*hatch, *boundary, &scaledGeometry));
+    REQUIRE(scaledGeometry != editedGeometry);
+    REQUIRE(replay.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    RS_Graphic scaledReadback;
+    REQUIRE(reread.fileImport(scaledReadback, QString::fromStdString(output), RS2::FormatDXFRW));
+    const RS_Hatch *scaledHatch = nullptr;
+    const RS_Polyline *scaledBoundary = nullptr;
+    for (const RS_Entity *entity : scaledReadback) {
+      if (entity && entity->rtti() == RS2::EntityHatch) scaledHatch = static_cast<const RS_Hatch *>(entity);
+      if (entity && entity->rtti() == RS2::EntityPolyline) scaledBoundary = static_cast<const RS_Polyline *>(entity);
+    }
+    REQUIRE(scaledHatch);
+    REQUIRE(scaledBoundary);
+    CHECK(scaledHatch->sourceAssociative());
+    CHECK(scaledHatch->sourceLoopBoundaries() == std::vector<std::vector<quint32>>{{scaledBoundary->sourceHandle()}});
+    CHECK(scaledBoundary->reactorHandles() == std::vector<quint32>{scaledHatch->sourceHandle()});
+    std::vector<LC_HatchAssociation::Edge> scaledReadGeometry;
+    CHECK(LC_HatchAssociation::matchesClosedStraightBoundary(*scaledHatch, *scaledBoundary, &scaledReadGeometry));
+    CHECK(scaledReadGeometry == scaledGeometry);
+    hatch->scale(RS_Vector(0, 0), RS_Vector(0.5, 1));
+    boundary->scale(RS_Vector(0, 0), RS_Vector(0.5, 1));
+    const auto checkEditedFallback = [&] {
+      REQUIRE(replay.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+      RS_Graphic fallback;
+      REQUIRE(reread.fileImport(fallback, QString::fromStdString(output), RS2::FormatDXFRW));
+      bool sawHatch = false;
+      for (const RS_Entity *entity : fallback)
+        if (entity && entity->rtti() == RS2::EntityHatch) {
+          CHECK_FALSE(static_cast<const RS_Hatch *>(entity)->sourceAssociative());
+          sawHatch = true;
+        }
+      CHECK(sawHatch);
+    };
+    boundary->move(RS_Vector(1, 0));
+    checkEditedFallback(); // A changed boundary alone cannot retain the association.
+    boundary->move(RS_Vector(-1, 0));
+    hatch->move(RS_Vector(0.1, 0));
+    boundary->move(RS_Vector(0.1, 0));
+    checkEditedFallback(); // Matching coordinates outside the bounded grid are excluded.
+    hatch->move(RS_Vector(-0.1, 0));
+    boundary->move(RS_Vector(-0.1, 0));
+    hatch->move(RS_Vector(-1, -2));
+    boundary->move(RS_Vector(-1, -2));
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_CHECKED_HATCH_REPEAT"))
+      std::filesystem::copy_file(secondOutput, copy, std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::remove(secondOutput);
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_CHECKED_HATCH_REPLAY")) {
+      REQUIRE(replay.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+      std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+    }
+    REQUIRE(replay.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    RS_Graphic crossVersion;
+    REQUIRE(reread.fileImport(crossVersion, QString::fromStdString(output), RS2::FormatDXFRW));
+    bool sawDeassociated = false;
+    for (const RS_Entity *entity : crossVersion)
+      if (entity && entity->rtti() == RS2::EntityHatch) {
+        CHECK_FALSE(static_cast<const RS_Hatch *>(entity)->sourceAssociative());
+        sawDeassociated = true;
+      }
+    CHECK(sawDeassociated);
+    std::filesystem::remove(output);
+  }
+  {
+    // A newly added, otherwise valid GROUP is outside the isolated replay
+    // profile. Preserve the existing deassociation behavior instead of
+    // failing the whole save when the output inspector sees that GROUP.
+    writeText(src, structured);
+    RS_Graphic graphic;
+    ReplayProbe filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src), RS2::FormatDXFRW));
+    DRW_Group group;
+    group.handle = 0xD0;
+    group.m_description = "unrelated";
+    graphic.dwgAdvancedMetadata().addGroup(group);
+    const auto output = tmpFile("checked-hatch-extra-group.dxf");
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    RS_Graphic reopened;
+    REQUIRE(filter.fileImport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    bool sawHatch = false;
+    for (const RS_Entity *entity : reopened)
+      if (entity && entity->rtti() == RS2::EntityHatch) {
+        CHECK_FALSE(static_cast<const RS_Hatch *>(entity)->sourceAssociative());
+        sawHatch = true;
+      }
+    CHECK(sawHatch);
+    std::filesystem::remove(output);
+  }
+  const auto checkLateMutation = [&](RS_Graphic &graphic, ReplayProbe &filter, const std::string &output) {
+    RS_Hatch *hatch = nullptr;
+    RS_Polyline *boundary = nullptr;
+    for (RS_Entity *entity : graphic) {
+      if (entity && entity->rtti() == RS2::EntityHatch) hatch = static_cast<RS_Hatch *>(entity);
+      if (entity && entity->rtti() == RS2::EntityPolyline) boundary = static_cast<RS_Polyline *>(entity);
+    }
+    REQUIRE(hatch);
+    REQUIRE(boundary);
+    const std::string sentinel = "preserve checked hatch destination\n";
+    writeText(output, sentinel);
+    bool moved = false;
+    filter.beforeFinalize = [&] { moved = true; hatch->move(RS_Vector(1, 0)); boundary->move(RS_Vector(1, 0)); };
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    CHECK(moved);
+    std::ifstream retained(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+    retained.close();
+    if (moved) { hatch->move(RS_Vector(-1, 0)); boundary->move(RS_Vector(-1, 0)); }
+    filter.beforeFinalize = {};
+  };
+  const auto checkSelectedContour = [&](const std::string &source, bool fixedCollision, bool expectedAssociated,
+                                 const char *copyVariable) {
+    writeText(src, source);
+    RS_Graphic original;
+    ReplayProbe filter;
+    REQUIRE(filter.fileImport(original, QString::fromStdString(src), RS2::FormatDXFRW));
+    const auto output = tmpFile("checked-hatch-fallback.dxf");
+    if (fixedCollision) {
+      for (const RS_Entity *entity : original)
+        if (entity && entity->rtti() == RS2::EntityHatch) {
+          const auto &roles = static_cast<const RS_Hatch *>(entity)->physicalSourceRoles();
+          REQUIRE(roles.sourceHandleIsolation);
+          REQUIRE(roles.boundary == 0x14u);
+        }
+      checkLateMutation(original, filter, output);
+      REQUIRE(filter.fileExport(original, QString::fromStdString(output), RS2::FormatDXFRW2010));
+      RS_Graphic result;
+      REQUIRE(filter.fileImport(result, QString::fromStdString(output), RS2::FormatDXFRW));
+      const RS_Hatch *hatch = nullptr;
+      const RS_Polyline *boundary = nullptr;
+      for (const RS_Entity *entity : result) {
+        if (entity && entity->rtti() == RS2::EntityHatch) hatch = static_cast<const RS_Hatch *>(entity);
+        if (entity && entity->rtti() == RS2::EntityPolyline) boundary = static_cast<const RS_Polyline *>(entity);
+      }
+      REQUIRE(hatch);
+      REQUIRE(boundary);
+      CHECK(boundary->sourceHandle() != 0x14u);
+      CHECK(hatch->sourceAssociative());
+      CHECK(hatch->sourceLoopBoundaries() == std::vector<std::vector<quint32>>{{boundary->sourceHandle()}});
+      CHECK(boundary->reactorHandles() == std::vector<quint32>{hatch->sourceHandle()});
+      if (const char *copy = std::getenv("LIBRECAD_KEEP_CHECKED_HATCH_FIXED14"))
+        std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+      std::filesystem::remove(output);
+      return;
+    }
+    if (expectedAssociated) checkLateMutation(original, filter, output);
+    REQUIRE(filter.fileExport(original, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    RS_Graphic result;
+    REQUIRE(filter.fileImport(result, QString::fromStdString(output), RS2::FormatDXFRW));
+    const RS_Hatch *hatch = nullptr;
+    const RS_Polyline *boundary = nullptr;
+    for (const RS_Entity *entity : result) {
+      if (entity && entity->rtti() == RS2::EntityHatch) hatch = static_cast<const RS_Hatch *>(entity);
+      if (entity && entity->rtti() == RS2::EntityPolyline) boundary = static_cast<const RS_Polyline *>(entity);
+    }
+    REQUIRE(hatch);
+    REQUIRE(boundary);
+    CHECK(hatch->sourceAssociative() == expectedAssociated);
+    if (expectedAssociated) {
+      CHECK(hatch->sourceLoopBoundaries() == std::vector<std::vector<quint32>>{{boundary->sourceHandle()}});
+      CHECK(boundary->reactorHandles() == std::vector<quint32>{hatch->sourceHandle()});
+      CHECK(LC_HatchAssociation::matchesClosedStraightBoundary(*hatch, *boundary));
+      CHECK(hatch->physicalSourceRoles().sourceHandleIsolation);
+      if (copyVariable) {
+        if (const char *copy = std::getenv(copyVariable))
+          std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+      }
+      const auto secondOutput = tmpFile("checked-hatch-dyadic-repeat.dxf");
+      REQUIRE(filter.fileExport(result, QString::fromStdString(secondOutput), RS2::FormatDXFRW2010));
+      RS_Graphic repeated;
+      REQUIRE(filter.fileImport(repeated, QString::fromStdString(secondOutput), RS2::FormatDXFRW));
+      const RS_Hatch *secondHatch = nullptr;
+      const RS_Polyline *secondBoundary = nullptr;
+      for (const RS_Entity *entity : repeated) {
+        if (entity && entity->rtti() == RS2::EntityHatch) secondHatch = static_cast<const RS_Hatch *>(entity);
+        if (entity && entity->rtti() == RS2::EntityPolyline) secondBoundary = static_cast<const RS_Polyline *>(entity);
+      }
+      REQUIRE(secondHatch);
+      REQUIRE(secondBoundary);
+      CHECK(secondHatch->sourceAssociative());
+      CHECK(secondHatch->sourceLoopBoundaries() == std::vector<std::vector<quint32>>{{secondBoundary->sourceHandle()}});
+      CHECK(secondBoundary->reactorHandles() == std::vector<quint32>{secondHatch->sourceHandle()});
+      CHECK(LC_HatchAssociation::matchesClosedStraightBoundary(*secondHatch, *secondBoundary));
+      std::filesystem::remove(secondOutput);
+    }
+    std::filesystem::remove(output);
+  };
+  auto fixedHandle = structured;
+  for (std::size_t pos = 0; (pos = fixedHandle.find("B0", pos)) != std::string::npos; pos += 2u)
+    fixedHandle.replace(pos, 2u, "14");
+  checkSelectedContour(fixedHandle, true, true, nullptr);
+  auto duplicateFixedHandle = fixedHandle;
+  const auto blockBeginHandle = duplicateFixedHandle.find("5\nD1\n330\nA0");
+  REQUIRE(blockBeginHandle != std::string::npos);
+  duplicateFixedHandle.replace(blockBeginHandle, std::string("5\nD1\n330\nA0").size(), "5\n14\n330\nA0");
+  CHECK_FALSE(readRoles(duplicateFixedHandle, 0).sourceHandleIsolation);
+  {
+    auto fixedHatch = structured;
+    for (std::size_t pos = 0; (pos = fixedHatch.find("B1", pos)) != std::string::npos; pos += 2u)
+      fixedHatch.replace(pos, 2u, "14");
+    CHECK(readRoles(fixedHatch, 0).sourceHandleIsolation);
+    writeText(src, fixedHatch);
+    ReplayProbe filter;
+    RS_Graphic original;
+    REQUIRE(filter.fileImport(original, QString::fromStdString(src), RS2::FormatDXFRW));
+    const auto output = tmpFile("checked-hatch-fixed-self.dxf");
+    checkLateMutation(original, filter, output);
+    REQUIRE(filter.fileExport(original, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    RS_Graphic result;
+    REQUIRE(filter.fileImport(result, QString::fromStdString(output), RS2::FormatDXFRW));
+    const RS_Hatch *hatch = nullptr;
+    const RS_Polyline *boundary = nullptr;
+    for (const RS_Entity *entity : result) {
+      if (entity && entity->rtti() == RS2::EntityHatch) hatch = static_cast<const RS_Hatch *>(entity);
+      if (entity && entity->rtti() == RS2::EntityPolyline) boundary = static_cast<const RS_Polyline *>(entity);
+    }
+    REQUIRE(hatch);
+    REQUIRE(boundary);
+    CHECK(hatch->sourceHandle() != 0x14u);
+    CHECK(hatch->sourceAssociative());
+    CHECK(hatch->sourceLoopBoundaries() == std::vector<std::vector<quint32>>{{boundary->sourceHandle()}});
+    CHECK(boundary->reactorHandles() == std::vector<quint32>{hatch->sourceHandle()});
+    CHECK(LC_HatchAssociation::matchesClosedStraightBoundary(*hatch, *boundary));
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_CHECKED_HATCH_SELF14"))
+      std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+    auto duplicate = fixedHatch;
+    const auto duplicateAt = duplicate.find("5\nD1\n330\nA0");
+    REQUIRE(duplicateAt != std::string::npos);
+    duplicate.replace(duplicateAt, std::string("5\nD1\n330\nA0").size(), "5\n14\n330\nA0");
+    CHECK_FALSE(readRoles(duplicate, 0).sourceHandleIsolation);
+    writeText(src, duplicate);
+    RS_Graphic ambiguous;
+    REQUIRE(filter.fileImport(ambiguous, QString::fromStdString(src), RS2::FormatDXFRW));
+    const std::string sentinel = "preserve ambiguous fixed-hatch destination\n";
+    writeText(output, sentinel);
+    CHECK_FALSE(filter.fileExport(ambiguous, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    std::ifstream retained(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+    retained.close();
+    REQUIRE(filter.fileExport(original, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    std::filesystem::remove(output);
+  }
+  {
+    auto withLine = structured;
+    const auto entityStart = withLine.find("0\nLWPOLYLINE\n5\nB0\n");
+    REQUIRE(entityStart != std::string::npos);
+    const std::string lineRecord = "0\nLINE\n5\nC0\n330\nA0\n100\nAcDbEntity\n8\n0\n"
+                                   "100\nAcDbLine\n10\n20\n20\n0\n30\n0\n"
+                                   "11\n25\n21\n0\n31\n0\n";
+    withLine.insert(entityStart, lineRecord);
+    CHECK(readRoles(withLine, 0).sourceHandleIsolation);
+    auto elevatedLine = withLine;
+    const auto lineZ = elevatedLine.find("30\n0\n11\n25\n21\n0\n31\n0\n");
+    REQUIRE(lineZ != std::string::npos);
+    elevatedLine.replace(lineZ, std::string("30\n0\n").size(), "30\n3\n");
+    CHECK(readRoles(elevatedLine, 0).hatch == 0u);
+    auto thickLine = withLine;
+    const auto lineEnd = thickLine.find("31\n0\n0\nLWPOLYLINE\n");
+    REQUIRE(lineEnd != std::string::npos);
+    thickLine.insert(lineEnd + std::string("31\n0\n").size(), "39\n2\n");
+    CHECK(readRoles(thickLine, 0).hatch == 0u);
+    auto linkedLine = withLine;
+    const auto lineSubclass = linkedLine.find("100\nAcDbLine\n");
+    REQUIRE(lineSubclass != std::string::npos);
+    linkedLine.insert(lineSubclass, "102\n{ACAD_REACTORS\n330\nB1\n102\n}\n");
+    CHECK_FALSE(readRoles(linkedLine, 0).sourceHandleIsolation);
+    writeText(src, withLine);
+    ReplayProbe filter;
+    RS_Graphic original;
+    REQUIRE(filter.fileImport(original, QString::fromStdString(src), RS2::FormatDXFRW));
+    RS_Hatch *hatch = nullptr;
+    for (RS_Entity *entity : original)
+      if (entity && entity->rtti() == RS2::EntityHatch) hatch = static_cast<RS_Hatch *>(entity);
+    REQUIRE(hatch);
+    auto *added = new RS_Line(&original, RS_LineData(RS_Vector(30, 1), RS_Vector(35, 1)));
+    original.addEntity(added);
+    const auto output = tmpFile("checked-hatch-independent-lines.dxf");
+    const std::string sentinel = "preserve independent-line destination\n";
+    writeText(output, sentinel);
+    filter.beforeFinalize = [&] { added->setReactorHandles({hatch->sourceHandle()}); };
+    CHECK_FALSE(filter.fileExport(original, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    std::ifstream retained(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+    retained.close();
+    added->setReactorHandles({});
+    filter.beforeFinalize = {};
+    REQUIRE(filter.fileExport(original, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    for (int pass = 0; pass < 2; ++pass) {
+      RS_Graphic result;
+      REQUIRE(filter.fileImport(result, QString::fromStdString(output), RS2::FormatDXFRW));
+      const RS_Hatch *resultHatch = nullptr;
+      const RS_Polyline *resultBoundary = nullptr;
+      unsigned lines = 0;
+      for (const RS_Entity *entity : result) {
+        if (entity && entity->rtti() == RS2::EntityHatch) resultHatch = static_cast<const RS_Hatch *>(entity);
+        if (entity && entity->rtti() == RS2::EntityPolyline) resultBoundary = static_cast<const RS_Polyline *>(entity);
+        if (entity && entity->rtti() == RS2::EntityLine) ++lines;
+      }
+      REQUIRE(resultHatch);
+      REQUIRE(resultBoundary);
+      CHECK(lines == 2u);
+      CHECK(resultHatch->sourceAssociative());
+      CHECK(resultHatch->physicalSourceRoles().sourceHandleIsolation);
+      CHECK(resultHatch->sourceLoopBoundaries() == std::vector<std::vector<quint32>>{{resultBoundary->sourceHandle()}});
+      CHECK(resultBoundary->reactorHandles() == std::vector<quint32>{resultHatch->sourceHandle()});
+      REQUIRE(filter.fileExport(result, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    }
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_CHECKED_HATCH_LINES"))
+      std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+    for (unsigned i = 0; i < 30u; ++i)
+      original.addEntity(new RS_Line(&original, RS_LineData(RS_Vector(40, i), RS_Vector(45, i))));
+    REQUIRE(filter.fileExport(original, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    RS_Graphic limit;
+    REQUIRE(filter.fileImport(limit, QString::fromStdString(output), RS2::FormatDXFRW));
+    unsigned limitLines = 0;
+    bool limitAssociated = false;
+    for (const RS_Entity *entity : limit) {
+      if (entity && entity->rtti() == RS2::EntityLine) ++limitLines;
+      if (entity && entity->rtti() == RS2::EntityHatch) {
+        const auto *h = static_cast<const RS_Hatch *>(entity);
+        limitAssociated = h->sourceAssociative() && h->physicalSourceRoles().sourceHandleIsolation;
+      }
+    }
+    CHECK(limitLines == 32u);
+    CHECK(limitAssociated);
+    REQUIRE(filter.fileExport(limit, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    original.addEntity(new RS_Line(&original, RS_LineData(RS_Vector(50, 0), RS_Vector(55, 0))));
+    REQUIRE(filter.fileExport(original, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    RS_Graphic overLimit;
+    REQUIRE(filter.fileImport(overLimit, QString::fromStdString(output), RS2::FormatDXFRW));
+    bool sawOverLimitHatch = false;
+    for (const RS_Entity *entity : overLimit)
+      if (entity && entity->rtti() == RS2::EntityHatch) {
+        CHECK_FALSE(static_cast<const RS_Hatch *>(entity)->sourceAssociative());
+        sawOverLimitHatch = true;
+      }
+    CHECK(sawOverLimitHatch);
+    std::filesystem::remove(output);
+  }
+  auto fractional = structured;
+  const std::string integralVertices = "10\n0\n20\n0\n10\n10\n20\n0\n10\n10\n20\n10\n10\n0\n20\n10\n";
+  const std::string fractionalVertices = "10\n0\n20\n0\n10\n10.5\n20\n0\n10\n10.5\n20\n10\n10\n0\n20\n10\n";
+  unsigned replacements = 0;
+  for (std::size_t pos = 0; (pos = fractional.find(integralVertices, pos)) != std::string::npos;
+       pos += fractionalVertices.size()) {
+    fractional.replace(pos, integralVertices.size(), fractionalVertices);
+    ++replacements;
+  }
+  REQUIRE(replacements == 2u);
+  checkSelectedContour(fractional, false, true, "LIBRECAD_KEEP_CHECKED_HATCH_HALF");
+  auto fine = structured;
+  const std::string fineVertices =
+      "10\n0.00000095367431640625\n20\n0\n10\n0.5\n20\n0\n"
+      "10\n0.5\n20\n0.5\n10\n0.00000095367431640625\n20\n0.5\n";
+  replacements = 0;
+  for (std::size_t pos = 0; (pos = fine.find(integralVertices, pos)) != std::string::npos;
+       pos += fineVertices.size()) {
+    fine.replace(pos, integralVertices.size(), fineVertices);
+    ++replacements;
+  }
+  REQUIRE(replacements == 2u);
+  checkSelectedContour(fine, false, true, "LIBRECAD_KEEP_CHECKED_HATCH_FINE");
+  auto decimal = fractional;
+  for (std::size_t pos = 0; (pos = decimal.find("10.5", pos)) != std::string::npos; pos += 4u)
+    decimal.replace(pos, 4u, "10.1");
+  checkSelectedContour(decimal, false, false, nullptr);
+#endif
+  writeText(src, input);
+  SourceProbe retry;
+  retry.fault = 1;
+  RS_Graphic rejected;
+  REQUIRE(retry.fileImport(rejected, QString::fromStdString(src), RS2::FormatDXFRW));
+  for (const RS_Entity *entity : rejected)
+    if (entity && entity->rtti() == RS2::EntityHatch)
+      CHECK(static_cast<const RS_Hatch *>(entity)->physicalSourceRoles().hatch == 0u);
+  retry.fault = 0;
+  RS_Graphic corrected;
+  REQUIRE(retry.fileImport(corrected, QString::fromStdString(src), RS2::FormatDXFRW));
+  for (const RS_Entity *entity : corrected)
+    if (entity && entity->rtti() == RS2::EntityHatch)
+      CHECK(static_cast<const RS_Hatch *>(entity)->physicalSourceRoles().hatch == 0xB1u);
+  const auto endSection = input.rfind("0\nENDSEC\n0\nEOF\n");
+  REQUIRE(endSection != std::string::npos);
+  writeText(src, input.substr(0, endSection));
+  RS_Graphic partial;
+  SourceProbe partialFilter;
+  CHECK_FALSE(partialFilter.fileImport(partial, QString::fromStdString(src), RS2::FormatDXFRW));
+  for (const RS_Entity *entity : partial)
+    if (entity && entity->rtti() == RS2::EntityHatch)
+      CHECK(static_cast<const RS_Hatch *>(entity)->physicalSourceRoles().hatch == 0u);
+  writeText(src, input);
+  RS_Graphic afterFailure;
+  REQUIRE(partialFilter.fileImport(afterFailure, QString::fromStdString(src), RS2::FormatDXFRW));
+  for (const RS_Entity *entity : afterFailure)
+    if (entity && entity->rtti() == RS2::EntityHatch)
+      CHECK(static_cast<const RS_Hatch *>(entity)->physicalSourceRoles().hatch == 0xB1u);
+  if (const char *local = std::getenv("LIBRECAD_HATCH_MODEL_SOURCE")) {
+    RS_Graphic full;
+    SourceProbe fullFilter;
+    REQUIRE(fullFilter.fileImport(full, QString::fromLocal8Bit(local), RS2::FormatDXFRW));
+    RS_Hatch *selectedHatch = nullptr;
+    RS_Polyline *selectedBoundary = nullptr;
+    for (RS_Entity *entity : full)
+      if (entity && entity->rtti() == RS2::EntityHatch) {
+        selectedHatch = static_cast<RS_Hatch *>(entity);
+        const auto roles = selectedHatch->physicalSourceRoles();
+        CHECK(roles.hatch == 0xA1u);
+        CHECK(roles.boundary == 0xB1u);
+        CHECK(roles.owner == 0x1Fu);
+        CHECK(roles.modelSpace);
+#ifdef LIBDXFRW_HAS_DXF_CANONICAL_HEADER_VARIABLE_QUERY
+        CHECK(roles.sourceHandleIsolation);
+#else
+        CHECK_FALSE(roles.sourceHandleIsolation);
+#endif
+        CHECK(roles.sourceGeometry.size() == 4u);
+      } else if (entity && entity->rtti() == RS2::EntityPolyline)
+        selectedBoundary = static_cast<RS_Polyline *>(entity);
+    REQUIRE(selectedHatch);
+    REQUIRE(selectedBoundary);
+#if defined(LIBDXFRW_HAS_DXF_STAGED_HATCH_ISOLATION_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_FOREIGN_HANDLE_ISOLATION_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
+    const auto fullOutput = tmpFile("checked-hatch-full-source.dxf");
+    REQUIRE(fullFilter.fileExport(full, QString::fromStdString(fullOutput), RS2::FormatDXFRW2010));
+    RS_Graphic fullReopened;
+    SourceProbe fullReader;
+    REQUIRE(fullReader.fileImport(fullReopened, QString::fromStdString(fullOutput), RS2::FormatDXFRW));
+    bool fullAssociated = false;
+    for (const RS_Entity *entity : fullReopened)
+      if (entity && entity->rtti() == RS2::EntityHatch)
+        fullAssociated = static_cast<const RS_Hatch *>(entity)->sourceAssociative();
+    CHECK(fullAssociated);
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_CHECKED_HATCH_FULL"))
+      std::filesystem::copy_file(fullOutput, copy, std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::remove(fullOutput);
+#endif
+    const auto original = selectedHatch->physicalSourceRoles().sourceGeometry;
+    std::vector<LC_HatchAssociation::Edge> live;
+    REQUIRE(LC_HatchAssociation::matchesClosedStraightBoundary(*selectedHatch, *selectedBoundary, &live));
+    CHECK(live == original);
+    selectedHatch->move(RS_Vector(1, 0));
+    selectedBoundary->move(RS_Vector(1, 0));
+    REQUIRE(LC_HatchAssociation::matchesClosedStraightBoundary(*selectedHatch, *selectedBoundary, &live));
+    CHECK(live != original);
+    CHECK(selectedHatch->physicalSourceRoles().sourceGeometry == original);
+  }
+  std::filesystem::remove(src);
+}
+#endif
+
+TEST_CASE("DXF import retains hatch source boundary identities per loop",
+          "[dxf][roundtrip][filter][handles][hatch-assoc]") {
+  ensureSettings();
+  const auto src = tmpFile("hatch-source-loop-identities.dxf");
+  writeText(src,
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nLWPOLYLINE\n5\nB0\n102\n{ACAD_REACTORS\n330\nB1\n102\n}\n330\nA0\n"
+            "100\nAcDbEntity\n8\n0\n100\nAcDbPolyline\n90\n4\n70\n1\n"
+            "10\n0\n20\n0\n10\n10\n20\n0\n10\n10\n20\n10\n10\n0\n20\n10\n"
+            "0\nHATCH\n5\nB1\n330\nA0\n100\nAcDbEntity\n8\n0\n100\nAcDbHatch\n"
+            "10\n0\n20\n0\n30\n0\n210\n0\n220\n0\n230\n1\n2\nSOLID\n70\n1\n71\n1\n"
+            "91\n2\n92\n3\n72\n0\n73\n1\n93\n4\n"
+            "10\n0\n20\n0\n10\n10\n20\n0\n10\n10\n20\n10\n10\n0\n20\n10\n"
+            "97\n1\n330\nB0\n"
+            "92\n2\n72\n0\n73\n1\n93\n4\n"
+            "10\n2\n20\n2\n10\n4\n20\n2\n10\n4\n20\n4\n10\n2\n20\n4\n"
+            "97\n2\n330\nB2\n330\nB3\n75\n0\n76\n1\n98\n0\n"
+            "0\nENDSEC\n0\nEOF\n");
+  RS_Graphic graphic;
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(src), RS2::FormatDXFRW));
+  RS_Hatch *hatch = nullptr;
+  for (auto *entity : graphic)
+    if (entity && entity->rtti() == RS2::EntityHatch)
+      hatch = static_cast<RS_Hatch *>(entity);
+  REQUIRE(hatch);
+  const std::vector<std::vector<quint32>> expected{{0xB0u}, {0xB2u, 0xB3u}};
+  CHECK(hatch->sourceLoopBoundaries() == expected);
+  std::uint32_t sourceOwner = 0u;
+  REQUIRE(graphic.dwgAdvancedMetadata().dxfEntitySourceOwner(0xB1u, sourceOwner));
+  CHECK(sourceOwner == 0xA0u);
+  REQUIRE(graphic.dwgAdvancedMetadata().dxfEntitySourceOwner(0xB0u, sourceOwner));
+  CHECK(sourceOwner == 0xA0u);
+  std::unique_ptr<RS_Entity> copy(hatch->clone());
+  REQUIRE(copy);
+  auto *copiedHatch = static_cast<RS_Hatch *>(copy.get());
+  CHECK(copiedHatch->sourceLoopBoundaries() == expected);
+  CHECK(copiedHatch->sourceHandle() == hatch->sourceHandle());
+  copiedHatch->setSourceLoopBoundaries({{0xB4u}});
+  CHECK(hatch->sourceLoopBoundaries() == expected);
+  graphic.dwgAdvancedMetadata().addDxfEntitySourceOwner(0xB1u, 0xA0u);
+  sourceOwner = 0x55u;
+  CHECK_FALSE(graphic.dwgAdvancedMetadata().dxfEntitySourceOwner(0xB1u, sourceOwner));
+  CHECK(sourceOwner == 0x55u);
+  CHECK_FALSE(graphic.dwgAdvancedMetadata().dxfEntitySourceOwner(0xB2u, sourceOwner));
+  LC_DwgAdvancedMetadata bounded;
+  for (std::uint32_t id = 1; id <= 65536u; ++id)
+    bounded.addDxfEntitySourceOwner(id, 0xA0u);
+  REQUIRE(bounded.dxfEntitySourceOwner(1u, sourceOwner));
+  bounded.addDxfEntitySourceOwner(65537u, 0xA0u);
+  CHECK_FALSE(bounded.dxfEntitySourceOwner(1u, sourceOwner));
+  bounded.clear();
+  bounded.addDxfEntitySourceOwner(1u, 0xA0u);
+  CHECK(bounded.dxfEntitySourceOwner(1u, sourceOwner));
+  std::filesystem::remove(src);
+}
+
+TEST_CASE("DXF export reports hatch deassociation and retains unrelated reactors",
+          "[dxf][roundtrip][filter][handles][system-codec][hatch-assoc]") {
   ensureSettings();
   const std::string src = tmpFile("entity-reactors-src.dxf");
   const std::string out = tmpFile("entity-reactors-out.dxf");
   std::filesystem::remove(src);
   std::filesystem::remove(out);
 
-  // An associative HATCH is a reactor of its boundary; both entities are
-  // written under fresh handles, the HATCH after the polyline.
+  // The hatch names its boundary, which has both the hatch reactor and an
+  // unrelated reactor. Reconstructed loops cannot preserve the association.
   writeText(src,
             "0\nSECTION\n2\nENTITIES\n"
-            "0\nLWPOLYLINE\n5\nB0\n102\n{ACAD_REACTORS\n330\nB1\n102\n}\n"
+            "0\nLWPOLYLINE\n5\nB0\n102\n{ACAD_REACTORS\n330\nB1\n330\nB3\n330\nB2\n102\n}\n"
             "100\nAcDbEntity\n8\n0\n100\nAcDbPolyline\n90\n4\n70\n1\n"
             "10\n0\n20\n0\n10\n10\n20\n0\n10\n10\n20\n10\n10\n0\n20\n10\n"
+            "0\nLINE\n5\nB2\n100\nAcDbEntity\n8\n0\n100\nAcDbLine\n"
+            "10\n0\n20\n20\n30\n0\n11\n10\n21\n20\n31\n0\n"
             "0\nHATCH\n5\nB1\n100\nAcDbEntity\n8\n0\n100\nAcDbHatch\n"
+            "10\n0\n20\n0\n30\n0\n210\n0\n220\n0\n230\n1\n2\nSOLID\n70\n1\n71\n1\n"
+            "91\n1\n92\n3\n72\n0\n73\n1\n93\n4\n"
+            "10\n0\n20\n0\n10\n10\n20\n0\n10\n10\n20\n10\n10\n0\n20\n10\n"
+            "97\n1\n330\nB0\n75\n0\n76\n1\n98\n0\n"
+            "0\nHATCH\n5\nB3\n100\nAcDbEntity\n8\n0\n100\nAcDbHatch\n"
             "10\n0\n20\n0\n30\n0\n210\n0\n220\n0\n230\n1\n2\nSOLID\n70\n1\n71\n1\n"
             "91\n1\n92\n3\n72\n0\n73\n1\n93\n4\n"
             "10\n0\n20\n0\n10\n10\n20\n0\n10\n10\n20\n10\n10\n0\n20\n10\n"
@@ -3945,19 +10770,438 @@ TEST_CASE("DXF export points an entity's reactors at the entities they name",
     REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
                               RS2::FormatDXFRW));
   }
-  {
-    RS_FilterDXFRW filter;
-    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
-                              RS2::FormatDXFRW));
-  }
-
-  const auto hatch = recordGroupValues(out, "HATCH", "5");
-  REQUIRE(hatch.size() == 1);
-  CHECK(hatch.front() != "B1");
+  CHECK(graphic.dwgAdvancedMetadata().hasSourceHatchAssociation(0xB1));
+  CHECK(graphic.dwgAdvancedMetadata().isSourceHatchBoundary(0xB1, 0xB0));
+  CHECK(graphic.dwgAdvancedMetadata().isSourceHatchBoundary(0xB3, 0xB0));
+  RS_FilterDXFRW filter;
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  const std::string sentinel = "preserve destination\n";
+  writeText(out, sentinel);
+  DRW_LType invalid;
+  invalid.name = "Continuous";
+  invalid.flags = -1;
+  graphic.dwgAdvancedMetadata().addLineTypeName(invalid);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  std::ifstream retained(out, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  retained.close();
+  CHECK_FALSE(filter.exportReport().contains(QStringLiteral("associativity")));
+  invalid.flags = 64;
+  graphic.dwgAdvancedMetadata().addLineTypeName(invalid);
+#endif
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(filter.exportReport().contains(QStringLiteral("associativity of 2 hatch")));
+  CHECK(recordGroupValues(out, "HATCH", "71") == std::vector<std::string>{"0", "0"});
+  CHECK(recordGroupValues(out, "HATCH", "97") == std::vector<std::string>{"0", "0"});
+  const auto line = recordGroupValues(out, "LINE", "5");
+  REQUIRE(line.size() == 1);
   CHECK(recordReactors(out, "LWPOLYLINE")
-        == std::vector<std::vector<std::string>>{{hatch.front()}});
+        == std::vector<std::vector<std::string>>{{line.front()}});
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_HATCH_ASSOC_OUTPUT"))
+    std::filesystem::copy_file(out, copy, std::filesystem::copy_options::overwrite_existing);
 
+  const auto r12 = tmpFile("entity-reactors-r12.dxf");
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(r12), RS2::FormatDXFRW12));
+  CHECK(filter.exportReport().contains(QStringLiteral("2 × HATCH")));
+  CHECK(countRecords(r12, "HATCH") == 0);
+  CHECK(danglingReferences(r12).empty());
+  std::filesystem::remove(r12);
+
+#ifdef DWGSUPPORT
+  const std::string dwg = tmpFile("entity-reactors-out.dwg");
+  const std::string dwgOut = tmpFile("entity-reactors-dwg-out.dxf");
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(dwg), RS2::FormatDWG2004));
+  CHECK(filter.exportReport().contains(QStringLiteral("associativity of 2 hatch")));
+  RS_Graphic fromDwg;
+  RS_FilterDXFRW dwgFilter;
+  REQUIRE(dwgFilter.fileImport(fromDwg, QString::fromStdString(dwg), RS2::FormatDWG));
+  REQUIRE(dwgFilter.fileExport(fromDwg, QString::fromStdString(dwgOut), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(dwgOut, "HATCH", "71") == std::vector<std::string>{"0", "0"});
+  CHECK(recordGroupValues(dwgOut, "HATCH", "97") == std::vector<std::string>{"0", "0"});
+  const auto dwgLine = recordGroupValues(dwgOut, "LINE", "5");
+  REQUIRE(dwgLine.size() == 1);
+  CHECK(recordReactors(dwgOut, "LWPOLYLINE")
+        == std::vector<std::vector<std::string>>{{dwgLine.front()}});
+  std::filesystem::remove(dwg);
+  std::filesystem::remove(dwgOut);
+#endif
+
+  RS_Entity *boundary = nullptr;
+  for (RS_Entity *entity : graphic)
+    if (entity && entity->sourceHandle() == 0xB0)
+      boundary = entity;
+  REQUIRE(boundary != nullptr);
+  RS_Entity *sourceHatch = nullptr;
+  for (RS_Entity *entity : graphic)
+    if (entity && entity->sourceHandle() == 0xB1)
+      sourceHatch = entity;
+  REQUIRE(sourceHatch != nullptr);
+  RS_Entity *boundaryCopy = boundary->clone();
+  RS_Entity *hatchCopy = sourceHatch->clone();
+  REQUIRE(boundaryCopy != nullptr); REQUIRE(hatchCopy != nullptr);
+  REQUIRE(boundaryCopy->sourceHandle() == boundary->sourceHandle());
+  REQUIRE(hatchCopy->sourceHandle() == sourceHatch->sourceHandle());
+  boundaryCopy->move(RS_Vector(20.0, 0.0));
+  hatchCopy->move(RS_Vector(20.0, 0.0));
+  graphic.addEntity(boundaryCopy);
+  graphic.addEntity(hatchCopy);
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  writeText(out, sentinel);
+  invalid.flags = -1;
+  graphic.dwgAdvancedMetadata().addLineTypeName(invalid);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  { std::ifstream retained(out, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+  invalid.flags = 64;
+  graphic.dwgAdvancedMetadata().addLineTypeName(invalid);
+#endif
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(filter.exportReport().contains(QStringLiteral("associativity of 3 hatch")));
+  CHECK(countRecords(out, "HATCH") == 3);
+  CHECK(countRecords(out, "LWPOLYLINE") == 2);
+  CHECK(recordGroupValues(out, "HATCH", "71") == std::vector<std::string>{"0", "0", "0"});
+  CHECK(recordGroupValues(out, "HATCH", "97") == std::vector<std::string>{"0", "0", "0"});
+  const auto copyLine = recordGroupValues(out, "LINE", "5");
+  REQUIRE(copyLine.size() == 1u);
+  CHECK(recordReactors(out, "LWPOLYLINE") ==
+        std::vector<std::vector<std::string>>{{copyLine.front()}, {copyLine.front()}});
+  CHECK(danglingReferences(out).empty());
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_HATCH_COPIES_OUTPUT"))
+    std::filesystem::copy_file(out, copy, std::filesystem::copy_options::overwrite_existing);
+#ifdef DWGSUPPORT
+  const auto copiedDwg = tmpFile("entity-reactors-copies.dwg");
+  const auto copiedDxf = tmpFile("entity-reactors-copies-readback.dxf");
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(copiedDwg), RS2::FormatDWG2004));
+  CHECK(filter.exportReport().contains(QStringLiteral("associativity of 3 hatch")));
+  RS_Graphic copiedReadback;
+  RS_FilterDXFRW copiedReader;
+  REQUIRE(copiedReader.fileImport(copiedReadback, QString::fromStdString(copiedDwg), RS2::FormatDWG));
+  REQUIRE(copiedReader.fileExport(copiedReadback, QString::fromStdString(copiedDxf), RS2::FormatDXFRW));
+  CHECK(countRecords(copiedDxf, "HATCH") == 3);
+  CHECK(countRecords(copiedDxf, "LWPOLYLINE") == 2);
+  CHECK(recordGroupValues(copiedDxf, "HATCH", "71") == std::vector<std::string>{"0", "0", "0"});
+  const auto readbackLines = recordGroupValues(copiedDxf, "LINE", "5");
+  REQUIRE(readbackLines.size() == 1u);
+  CHECK(recordReactors(copiedDxf, "LWPOLYLINE") ==
+        std::vector<std::vector<std::string>>{{readbackLines.front()}, {readbackLines.front()}});
+  CHECK(danglingReferences(copiedDxf).empty());
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_HATCH_COPIES_DWG_OUTPUT"))
+    std::filesystem::copy_file(copiedDxf, copy, std::filesystem::copy_options::overwrite_existing);
+  std::filesystem::remove(copiedDwg);
+  std::filesystem::remove(copiedDxf);
+#endif
+  REQUIRE(graphic.removeEntity(boundaryCopy));
+  REQUIRE(graphic.removeEntity(hatchCopy));
+  boundary->move(RS_Vector(5.0, 0.0));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(filter.exportReport().contains(QStringLiteral("associativity of 2 hatch")));
+  CHECK(recordGroupValues(out, "HATCH", "71") == std::vector<std::string>{"0", "0"});
+  const auto movedLine = recordGroupValues(out, "LINE", "5");
+  REQUIRE(movedLine.size() == 1);
+  CHECK(recordReactors(out, "LWPOLYLINE")
+        == std::vector<std::vector<std::string>>{{movedLine.front()}});
+  REQUIRE(graphic.removeEntity(boundary));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(filter.exportReport().contains(QStringLiteral("associativity of 2 hatch")));
+  CHECK(recordGroupValues(out, "HATCH", "71") == std::vector<std::string>{"0", "0"});
+  CHECK(recordGroupValues(out, "HATCH", "97") == std::vector<std::string>{"0", "0"});
+  CHECK(countRecords(out, "LWPOLYLINE") == 0);
+
+  // An associative hatch can be imported even if its source handle is absent.
+  // Its loss report must follow the hatch itself, including copies.
+  std::ifstream sourceStream(src, std::ios::binary);
+  std::string anonymousSource(std::istreambuf_iterator<char>(sourceStream), {});
+  sourceStream.close();
+  const std::string namedHatch = "0\nHATCH\n5\nB1\n";
+  const auto position = anonymousSource.find(namedHatch);
+  REQUIRE(position != std::string::npos);
+  anonymousSource.replace(position, namedHatch.size(), "0\nHATCH\n");
+  const auto noHandleSource = tmpFile("hatch-no-handle-source.dxf");
+  writeText(noHandleSource, anonymousSource);
+  RS_Graphic noHandleGraphic;
+  RS_FilterDXFRW noHandleFilter;
+  REQUIRE(noHandleFilter.fileImport(noHandleGraphic, QString::fromStdString(noHandleSource), RS2::FormatDXFRW));
+  RS_Entity *noHandleHatch = nullptr;
+  for (RS_Entity *entity : noHandleGraphic)
+    if (entity && entity->rtti() == RS2::EntityHatch && entity->sourceHandle() == 0)
+      noHandleHatch = entity;
+  REQUIRE(noHandleHatch);
+  RS_Entity *noHandleBoundary = nullptr;
+  for (RS_Entity *entity : noHandleGraphic)
+    if (entity && entity->sourceHandle() == 0xB0u) noHandleBoundary = entity;
+  REQUIRE(noHandleBoundary);
+  const std::string missingTargetSentinel = "preserve unidentified hatch destination";
+  writeText(out, missingTargetSentinel);
+  CHECK_FALSE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  { std::ifstream kept(out, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(kept), {}) == missingTargetSentinel); }
+  CHECK_FALSE(noHandleFilter.exportReport().contains(QStringLiteral("associativity")));
+  const auto noHandleR12 = tmpFile("hatch-no-handle-r12.dxf");
+  writeText(noHandleR12, missingTargetSentinel);
+  CHECK_FALSE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(noHandleR12), RS2::FormatDXFRW12));
+  { std::ifstream kept(noHandleR12, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(kept), {}) == missingTargetSentinel); }
+#ifdef DWGSUPPORT
+  const auto noHandleDwg = tmpFile("hatch-no-handle.dwg");
+  writeText(noHandleDwg, missingTargetSentinel);
+  CHECK_FALSE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(noHandleDwg), RS2::FormatDWG2004));
+  { std::ifstream kept(noHandleDwg, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(kept), {}) == missingTargetSentinel); }
+#endif
+  // The remaining named hatch reactor is removed by the established path;
+  // B2 names a unique, retained LINE. B1 has no identifiable target.
+  noHandleBoundary->setReactorHandles({0xB3u, 0xB2u});
+  RS_Entity *unrelatedLine = nullptr;
+  for (RS_Entity *entity : noHandleGraphic)
+    if (entity && entity->sourceHandle() == 0xB2u) unrelatedLine = entity;
+  REQUIRE(unrelatedLine);
+  RS_Entity *ambiguousLine = unrelatedLine->clone();
+  REQUIRE(ambiguousLine); noHandleGraphic.addEntity(ambiguousLine);
+  writeText(out, missingTargetSentinel);
+  CHECK_FALSE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  { std::ifstream kept(out, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(kept), {}) == missingTargetSentinel); }
+  REQUIRE(noHandleGraphic.removeEntity(ambiguousLine));
+  DRW_Dictionary collidingDictionary;
+  collidingDictionary.handle = 0xB2u;
+  noHandleGraphic.dwgAdvancedMetadata().addDictionary(collidingDictionary);
+  writeText(out, missingTargetSentinel);
+  CHECK_FALSE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  { std::ifstream kept(out, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(kept), {}) == missingTargetSentinel); }
+  auto &dictionaries = const_cast<std::vector<LC_DwgAdvancedMetadata::DictionaryRecord> &>(
+      noHandleGraphic.dwgAdvancedMetadata().dictionaries());
+  REQUIRE_FALSE(dictionaries.empty());
+  dictionaries.pop_back();
+  DRW_Group unrelatedGroup;
+  unrelatedGroup.handle = 0xC0u;
+  noHandleGraphic.dwgAdvancedMetadata().addGroup(unrelatedGroup);
+  writeText(out, missingTargetSentinel);
+  CHECK_FALSE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  { std::ifstream kept(out, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(kept), {}) == missingTargetSentinel); }
+  auto &groups = const_cast<std::vector<LC_DwgAdvancedMetadata::GroupRecord> &>(
+      noHandleGraphic.dwgAdvancedMetadata().groups());
+  REQUIRE_FALSE(groups.empty());
+  groups.pop_back();
+  // A source boundary is not an admitted target kind for an unidentified
+  // hatch edge; do not guess at self-referential or unsupported graphs.
+  noHandleBoundary->setReactorHandles({0xB3u, 0xB0u});
+  writeText(out, missingTargetSentinel);
+  CHECK_FALSE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  { std::ifstream kept(out, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(kept), {}) == missingTargetSentinel); }
+  auto *targetPoint = new RS_Point(&noHandleGraphic, RS_Vector(2, 30));
+  auto *targetCircle = new RS_Circle(&noHandleGraphic, RS_CircleData(RS_Vector(4, 30), 1));
+  auto *targetArc = new RS_Arc(&noHandleGraphic, RS_ArcData(RS_Vector(7, 30), 1, 0, M_PI / 2, false));
+  const std::vector<std::pair<RS_Entity *, std::string>> extraTargets = {
+      {targetPoint, "POINT"}, {targetCircle, "CIRCLE"}, {targetArc, "ARC"}};
+  quint32 targetHandle = 0xB4u;
+  for (const auto &target : extraTargets) {
+    target.first->setSourceHandle(targetHandle++);
+    noHandleGraphic.addEntity(target.first);
+  }
+  for (const auto &target : extraTargets) {
+    noHandleBoundary->setReactorHandles({0xB3u, target.first->sourceHandle()});
+    REQUIRE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(out), RS2::FormatDXFRW));
+    const auto targetIds = recordGroupValues(out, target.second, "5");
+    REQUIRE(targetIds.size() == 1u);
+    CHECK(recordReactors(out, "LWPOLYLINE") == std::vector<std::vector<std::string>>{{targetIds.front()}});
+    CHECK(danglingReferences(out).empty());
+    if (const char *prefix = std::getenv("LIBRECAD_KEEP_HANDLELESS_PRIMITIVE_PREFIX"))
+      std::filesystem::copy_file(out, std::string(prefix) + "." + target.second + ".dxf",
+                                 std::filesystem::copy_options::overwrite_existing);
+#ifdef DWGSUPPORT
+    const auto primitiveDwg = tmpFile("hatch-no-handle-primitive.dwg");
+    const auto primitiveDxf = tmpFile("hatch-no-handle-primitive-readback.dxf");
+    REQUIRE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(primitiveDwg), RS2::FormatDWG2004));
+    RS_Graphic primitiveGraphic;
+    RS_FilterDXFRW primitiveReader;
+    REQUIRE(primitiveReader.fileImport(primitiveGraphic, QString::fromStdString(primitiveDwg), RS2::FormatDWG));
+    REQUIRE(primitiveReader.fileExport(primitiveGraphic, QString::fromStdString(primitiveDxf), RS2::FormatDXFRW));
+    const auto readbackIds = recordGroupValues(primitiveDxf, target.second, "5");
+    REQUIRE(readbackIds.size() == 1u);
+    CHECK(recordReactors(primitiveDxf, "LWPOLYLINE") == std::vector<std::vector<std::string>>{{readbackIds.front()}});
+    CHECK(danglingReferences(primitiveDxf).empty());
+    if (const char *prefix = std::getenv("LIBRECAD_KEEP_HANDLELESS_PRIMITIVE_PREFIX"))
+      std::filesystem::copy_file(primitiveDxf, std::string(prefix) + "." + target.second + ".dwg-readback.dxf",
+                                 std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::remove(primitiveDwg); std::filesystem::remove(primitiveDxf);
+#endif
+  }
+  for (const auto &target : extraTargets) REQUIRE(noHandleGraphic.removeEntity(target.first));
+  noHandleBoundary->setReactorHandles({0xB3u, 0xB2u});
+  REQUIRE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(noHandleFilter.exportReport().contains(QStringLiteral("associativity of 2 hatch")));
+  REQUIRE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(noHandleR12), RS2::FormatDXFRW12));
+  CHECK(danglingReferences(noHandleR12).empty());
+  std::filesystem::remove(noHandleR12);
+#ifdef DWGSUPPORT
+  REQUIRE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(noHandleDwg), RS2::FormatDWG2004));
+  CHECK(noHandleFilter.exportReport().contains(QStringLiteral("associativity of 2 hatch")));
+  RS_Graphic noHandleDwgGraphic;
+  RS_FilterDXFRW noHandleDwgFilter;
+  REQUIRE(noHandleDwgFilter.fileImport(noHandleDwgGraphic, QString::fromStdString(noHandleDwg), RS2::FormatDWG));
+  const auto noHandleDwgDxf = tmpFile("hatch-no-handle-dwg-readback.dxf");
+  REQUIRE(noHandleDwgFilter.fileExport(noHandleDwgGraphic, QString::fromStdString(noHandleDwgDxf), RS2::FormatDXFRW));
+  CHECK(danglingReferences(noHandleDwgDxf).empty());
+  std::filesystem::remove(noHandleDwgDxf);
+  std::filesystem::remove(noHandleDwg);
+#endif
+  struct LateHatchMutationFilter : RS_FilterDXFRW {
+    std::function<void()> beforeFinal;
+    bool finalizeDxfWrite() override {
+      if (beforeFinal) beforeFinal();
+      return RS_FilterDXFRW::finalizeDxfWrite();
+    }
+    bool finalizeDwgWrite() override {
+      if (beforeFinal) beforeFinal();
+      return RS_FilterDXFRW::finalizeDwgWrite();
+    }
+  } lateHatch;
+  writeText(out, missingTargetSentinel);
+  lateHatch.beforeFinal = [&] { noHandleBoundary->setReactorHandles({0xB1u, 0xB3u, 0xB2u}); };
+  CHECK_FALSE(lateHatch.fileExport(noHandleGraphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  { std::ifstream kept(out, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(kept), {}) == missingTargetSentinel); }
+  noHandleBoundary->setReactorHandles({0xB3u, 0xB2u});
+  lateHatch.beforeFinal = {};
+  REQUIRE(lateHatch.fileExport(noHandleGraphic, QString::fromStdString(out), RS2::FormatDXFRW));
+#ifdef DWGSUPPORT
+  const auto lateDwg = tmpFile("hatch-no-handle-late.dwg");
+  writeText(lateDwg, missingTargetSentinel);
+  lateHatch.beforeFinal = [&] { noHandleBoundary->setReactorHandles({0xB1u, 0xB3u, 0xB2u}); };
+  CHECK_FALSE(lateHatch.fileExport(noHandleGraphic, QString::fromStdString(lateDwg), RS2::FormatDWG2004));
+  { std::ifstream kept(lateDwg, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(kept), {}) == missingTargetSentinel); }
+  noHandleBoundary->setReactorHandles({0xB3u, 0xB2u});
+  lateHatch.beforeFinal = {};
+  REQUIRE(lateHatch.fileExport(noHandleGraphic, QString::fromStdString(lateDwg), RS2::FormatDWG2004));
+  std::filesystem::remove(lateDwg);
+#endif
+  RS_Entity *noHandleCopy = noHandleHatch->clone();
+  REQUIRE(noHandleCopy); noHandleCopy->move(RS_Vector(20.0, 0.0));
+  noHandleGraphic.addEntity(noHandleCopy);
+  REQUIRE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(noHandleFilter.exportReport().contains(QStringLiteral("associativity of 3 hatch")));
+  CHECK(recordGroupValues(out, "HATCH", "71") == std::vector<std::string>{"0", "0", "0"});
+  const auto noHandleLine = recordGroupValues(out, "LINE", "5");
+  REQUIRE(noHandleLine.size() == 1u);
+  CHECK(recordReactors(out, "LWPOLYLINE") == std::vector<std::vector<std::string>>{{noHandleLine.front()}});
+  CHECK(danglingReferences(out).empty());
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_HANDLELESS_HATCH_OUTPUT"))
+    std::filesystem::copy_file(out, copy, std::filesystem::copy_options::overwrite_existing);
+
+  // A pasted hatch carries its own boundary evidence even if the receiving
+  // document has no source metadata for the original drawing.
+  RS_Graphic receiving; receiving.initForNewDocument();
+  RS_Entity *pastedHatch = noHandleHatch->clone();
+  RS_Entity *pastedBoundary = noHandleBoundary->clone();
+  RS_Entity *pastedLine = unrelatedLine->clone();
+  REQUIRE(pastedHatch); REQUIRE(pastedBoundary); REQUIRE(pastedLine);
+  for (RS_Entity *entity : {pastedHatch, pastedBoundary, pastedLine}) {
+    entity->reparent(&receiving); receiving.addEntity(entity);
+  }
+  RS_FilterDXFRW receivingFilter;
+  writeText(out, missingTargetSentinel);
+  CHECK_FALSE(receivingFilter.fileExport(receiving, QString::fromStdString(out), RS2::FormatDXFRW));
+  { std::ifstream kept(out, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(kept), {}) == missingTargetSentinel); }
+  pastedBoundary->setReactorHandles({0xB2u});
+  REQUIRE(receivingFilter.fileExport(receiving, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(receivingFilter.exportReport().contains(QStringLiteral("associativity of 1 hatch")));
+  CHECK(danglingReferences(out).empty());
+  const auto pastedLineIds = recordGroupValues(out, "LINE", "5");
+  REQUIRE(pastedLineIds.size() == 1u);
+  CHECK(recordReactors(out, "LWPOLYLINE") == std::vector<std::vector<std::string>>{{pastedLineIds.front()}});
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_PASTED_HATCH_OUTPUT"))
+    std::filesystem::copy_file(out, copy, std::filesystem::copy_options::overwrite_existing);
+
+  // Deleting both anonymous hatches must not erase the boundary's source
+  // history while an unidentified reverse reference still remains.
+  noHandleBoundary->setReactorHandles({0xB1u, 0xB3u, 0xB2u});
+  REQUIRE(noHandleGraphic.removeEntity(noHandleCopy));
+  REQUIRE(noHandleGraphic.removeEntity(noHandleHatch));
+  writeText(out, missingTargetSentinel);
+  CHECK_FALSE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  { std::ifstream kept(out, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(kept), {}) == missingTargetSentinel); }
+  noHandleBoundary->setReactorHandles({0xB3u, 0xB2u});
+  REQUIRE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(noHandleFilter.exportReport().contains(QStringLiteral("associativity of 1 hatch")));
+
+  const auto assocFlag = anonymousSource.find("71\n1\n91\n");
+  REQUIRE(assocFlag != std::string::npos);
+  anonymousSource.replace(assocFlag, std::string("71\n1\n91\n").size(), "71\n0\n91\n");
+  const auto boundaryLink = anonymousSource.find("97\n1\n330\nB0\n");
+  REQUIRE(boundaryLink != std::string::npos);
+  anonymousSource.replace(boundaryLink, std::string("97\n1\n330\nB0\n").size(), "97\n0\n");
+  writeText(noHandleSource, anonymousSource);
+  RS_Graphic nonAssociative;
+  REQUIRE(noHandleFilter.fileImport(nonAssociative, QString::fromStdString(noHandleSource), RS2::FormatDXFRW));
+  REQUIRE(noHandleFilter.fileExport(nonAssociative, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(noHandleFilter.exportReport().contains(QStringLiteral("associativity of 1 hatch")));
+  std::filesystem::remove(noHandleSource);
   std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF reports an unexportable hatch and removes its boundary reactor",
+          "[dxf][roundtrip][filter][handles][hatch-assoc]") {
+  ensureSettings();
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  auto *hatch = new RS_Hatch(&graphic, RS_HatchData(true, 1.0, 0.0, "SOLID"));
+  hatch->setSourceHandle(0xB1u);
+  graphic.addEntity(hatch);
+  auto *boundary = new RS_Line(&graphic, RS_LineData(RS_Vector(0, 0), RS_Vector(1, 0)));
+  boundary->setSourceHandle(0xB0u);
+  boundary->setReactorHandles({0xB1u, 0xB2u});
+  graphic.addEntity(boundary);
+  auto *unrelated = new RS_Line(&graphic, RS_LineData(RS_Vector(0, 1), RS_Vector(1, 1)));
+  unrelated->setSourceHandle(0xB2u);
+  graphic.addEntity(unrelated);
+  graphic.dwgAdvancedMetadata().addSourceHatchBoundaries(0xB1u, {0xB0u});
+  const auto out = tmpFile("unexportable_hatch_report.dxf");
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(countRecords(out, "HATCH") == 0);
+  CHECK(filter.exportReport().contains(QStringLiteral("1 × HATCH")));
+  const auto lines = recordGroupValues(out, "LINE", "5");
+  REQUIRE(lines.size() == 2u);
+  const auto reactors = recordReactors(out, "LINE");
+  REQUIRE(reactors.size() == 2u);
+  CHECK(reactors[0] == std::vector<std::string>{lines[1]});
+  CHECK(danglingReferences(out).empty());
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_EMPTY_HATCH_OUTPUT"))
+    std::filesystem::copy_file(out, copy, std::filesystem::copy_options::overwrite_existing);
+  auto *emptyPattern = new RS_Hatch(&graphic, RS_HatchData(false, 1.0, 0.0, "ANSI31"));
+  graphic.addEntity(emptyPattern);
+  const auto r12 = tmpFile("unexportable_hatch_report_r12.dxf");
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(r12), RS2::FormatDXFRW12));
+  CHECK(filter.exportReport().contains(QStringLiteral("2 × HATCH")));
+  CHECK(countRecords(r12, "INSERT") == 0);
+  CHECK(danglingReferences(r12).empty());
+  REQUIRE(graphic.removeEntity(emptyPattern));
+  std::filesystem::remove(r12);
+#ifdef DWGSUPPORT
+  const auto dwg = tmpFile("unexportable_hatch_report.dwg");
+  const std::string sentinel = "preserve DWG destination";
+  writeText(dwg, sentinel);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(dwg), RS2::FormatDWG2004));
+  std::ifstream retained(dwg, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  retained.close();
+#endif
+  REQUIRE(graphic.removeEntity(hatch));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK_FALSE(filter.exportReport().contains(QStringLiteral("HATCH")));
+#ifdef DWGSUPPORT
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(dwg), RS2::FormatDWG2004));
+  CHECK_FALSE(filter.exportReport().contains(QStringLiteral("HATCH")));
+  RS_Graphic reopened;
+  RS_FilterDXFRW reader;
+  REQUIRE(reader.fileImport(reopened, QString::fromStdString(dwg), RS2::FormatDWG));
+  const auto readback = tmpFile("unexportable_hatch_readback.dxf");
+  REQUIRE(reader.fileExport(reopened, QString::fromStdString(readback), RS2::FormatDXFRW));
+  CHECK(countRecords(readback, "HATCH") == 0);
+  const auto dwgLines = recordGroupValues(readback, "LINE", "5");
+  const auto dwgReactors = recordReactors(readback, "LINE");
+  REQUIRE(dwgLines.size() == 2u);
+  REQUIRE(dwgReactors.size() == 2u);
+  CHECK(dwgReactors[0] == std::vector<std::string>{dwgLines[1]});
+  CHECK(danglingReferences(readback).empty());
+  std::filesystem::remove(readback);
+  std::filesystem::remove(dwg);
+#endif
   std::filesystem::remove(out);
 }
 
@@ -4543,7 +11787,7 @@ TEST_CASE("DXF references to table records follow them to their written handles"
 }
 
 TEST_CASE("DXF layers name their plot style only where it is written",
-          "[dxf][roundtrip][filter][handles]") {
+          "[system-codec][dxf][roundtrip][filter][handles]") {
   ensureSettings();
   const std::string src = tmpFile("plot-style-src.dxf");
   const std::string out = tmpFile("plot-style-out.dxf");
@@ -4606,9 +11850,38 @@ TEST_CASE("DXF layers name their plot style only where it is written",
           std::vector<std::string>{"4A"});
   CHECK(plotStyleOf("Walls") == std::vector<std::string>{"4A"});
   CHECK(plotStyleOf("0") == std::vector<std::string>{"4A"});
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  CHECK(plotStyleOf("New") == std::vector<std::string>{"4A"});
+#else
   CHECK(plotStyleOf("New").empty());
+#endif
   CHECK(danglingReferences(out).empty());
 
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  // A contradictory default edge must not publish a partial destination;
+  // correcting the drawing must also work through the same filter.
+  std::ifstream sourceFile(src, std::ios::binary);
+  std::string invalid((std::istreambuf_iterator<char>(sourceFile)), {});
+  sourceFile.close();
+  const auto defaultAt = invalid.find("340\n4A\n");
+  REQUIRE(defaultAt != std::string::npos);
+  invalid.replace(defaultAt, std::string("340\n4A\n").size(), "340\n4B\n");
+  const auto badSrc = tmpFile("plot-style-invalid-src.dxf");
+  writeText(badSrc, invalid);
+  RS_Graphic bad;
+  RS_FilterDXFRW retry;
+  REQUIRE(retry.fileImport(bad, QString::fromStdString(badSrc), RS2::FormatDXFRW));
+  const std::string sentinel = "preserve destination\n";
+  writeText(out, sentinel);
+  CHECK_FALSE(retry.fileExport(bad, QString::fromStdString(out), RS2::FormatDXFRW2000));
+  std::ifstream retained(out, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  retained.close();
+  REQUIRE(retry.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW2000));
+  CHECK(plotStyleOf("New") == std::vector<std::string>{"4A"});
+  CHECK(danglingReferences(out).empty());
+  std::filesystem::remove(badSrc);
+#endif
   std::filesystem::remove(src);
   std::filesystem::remove(out);
 }
@@ -4661,7 +11934,7 @@ TEST_CASE("DXF references to the source's root dictionary name the one written",
 }
 
 TEST_CASE("DXF XDATA handles follow the entities they name",
-          "[dxf][roundtrip][filter][handles][xdata]") {
+          "[dxf][roundtrip][filter][handles][xdata][system-codec]") {
   ensureSettings();
   const std::string src = tmpFile("xdata-handle-src.dxf");
   const std::string out = tmpFile("xdata-handle-out.dxf");
@@ -4695,7 +11968,6 @@ TEST_CASE("DXF XDATA handles follow the entities they name",
   REQUIRE(lines.size() == 2);
   const auto named = recordGroupValues(out, "LINE", "1005");
   REQUIRE(named.size() == 1);
-  CHECK(named.front() != "A2");
   CHECK(std::count(lines.begin(), lines.end(), named.front()) == 1);
   CHECK(recordGroupsWithValue(out, "LINE", "1005", named.front()) !=
         recordGroupsWithValue(out, "LINE", "5", named.front()));
@@ -4793,9 +12065,11 @@ TEST_CASE("DXF write planning excludes typed objects below their version gate",
 
   const std::string oldOut = tmpFile("typed_gates_r14.dxf");
   const std::string fieldOut = tmpFile("typed_gates_r2000.dxf");
+  const std::string field2004Out = tmpFile("typed_gates_r2004.dxf");
   const std::string newOut = tmpFile("typed_gates_r2007.dxf");
   std::filesystem::remove(oldOut);
   std::filesystem::remove(fieldOut);
+  std::filesystem::remove(field2004Out);
   std::filesystem::remove(newOut);
   {
     RS_FilterDXFRW filter;
@@ -4822,6 +12096,12 @@ TEST_CASE("DXF write planning excludes typed objects below their version gate",
   }
   CHECK(recordGroupValues(fieldOut, "MLEADERSTYLE", "5").empty());
   CHECK(recordGroupValues(fieldOut, "EVALUATION_GRAPH", "5").empty());
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  CHECK(recordGroupValues(fieldOut, "FIELD", "5").empty());
+  CHECK(recordGroupValues(fieldOut, "FIELDLIST", "5").empty());
+  CHECK(rootDictEntries(fieldOut).count("ACAD_TYPED") == 0);
+  CHECK_FALSE(containsLine(fieldOut, "{ACAD_REACTORS"));
+#else
   CHECK(recordGroupValues(fieldOut, "FIELD", "5") ==
         std::vector<std::string>{"E1"});
   CHECK(recordGroupValues(fieldOut, "FIELDLIST", "5") ==
@@ -4838,6 +12118,19 @@ TEST_CASE("DXF write planning excludes typed objects below their version gate",
         references.end());
   CHECK(std::find(references.begin(), references.end(), "E3") ==
         references.end());
+#endif
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(field2004Out),
+                              RS2::FormatDXFRW2004));
+  }
+  CHECK(recordGroupValues(field2004Out, "FIELD", "5") ==
+        std::vector<std::string>{"E1"});
+  CHECK(recordGroupValues(field2004Out, "FIELDLIST", "5") ==
+        std::vector<std::string>{"E2"});
+  CHECK(rootDictEntries(field2004Out).count("ACAD_TYPED") == 1);
+  CHECK(danglingReferences(field2004Out).empty());
 
   {
     RS_FilterDXFRW filter;
@@ -4851,9 +12144,17 @@ TEST_CASE("DXF write planning excludes typed objects below their version gate",
     CHECK(recordGroupValues(newOut, name, "5") ==
           std::vector<std::string>{handle});
   CHECK(rootDictEntries(newOut).count("ACAD_TYPED") == 1);
+  const auto parentGroups = recordGroupsWithValue(newOut, "DICTIONARY", "5", "70");
+  const auto graphKey = std::find(parentGroups.begin(), parentGroups.end(),
+                                  std::make_pair(std::string("3"), std::string("GRAPH")));
+  REQUIRE(graphKey != parentGroups.end());
+  REQUIRE(std::next(graphKey) != parentGroups.end());
+  CHECK(*std::next(graphKey) == std::make_pair(std::string("350"), std::string("E3")));
+  CHECK(danglingReferences(newOut).empty());
 
   std::filesystem::remove(oldOut);
   std::filesystem::remove(fieldOut);
+  std::filesystem::remove(field2004Out);
   std::filesystem::remove(newOut);
 }
 
@@ -4905,6 +12206,469 @@ TEST_CASE("DXF live identities win over left-out raw carriers with the same hand
   std::filesystem::remove(out);
 }
 
+TEST_CASE("DXF reports typed records omitted by the target version",
+          "[dxf][roundtrip][filter][version]") {
+  ensureSettings();
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  auto &metadata = graphic.dwgAdvancedMetadata();
+  DRW_MLeaderStyle style; style.handle = 0xE0u; metadata.addMLeaderStyle(style);
+  DRW_Field field; field.handle = 0xE1u; metadata.addField(field);
+  DRW_FieldList list; list.handle = 0xE2u; metadata.addFieldList(list);
+  const auto out = tmpFile("typed_gates_report_r14.dxf");
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW14));
+  const auto report = filter.exportReport();
+  CHECK(report.contains(QStringLiteral("1 × MLEADERSTYLE")));
+  CHECK(report.contains(QStringLiteral("1 × FIELD")));
+  CHECK(report.contains(QStringLiteral("1 × FIELDLIST")));
+  CHECK(recordGroupValues(out, "MLEADERSTYLE", "5").empty());
+  CHECK(recordGroupValues(out, "FIELD", "5").empty());
+  CHECK(recordGroupValues(out, "FIELDLIST", "5").empty());
+  CHECK(danglingReferences(out).empty());
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK_FALSE(filter.exportReport().contains(QStringLiteral("MLEADERSTYLE")));
+  CHECK_FALSE(filter.exportReport().contains(QStringLiteral("FIELD")));
+  CHECK(recordGroupValues(out, "MLEADERSTYLE", "5") == std::vector<std::string>{"E0"});
+  CHECK(recordGroupValues(out, "FIELD", "5") == std::vector<std::string>{"E1"});
+  CHECK(recordGroupValues(out, "FIELDLIST", "5") == std::vector<std::string>{"E2"});
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF evaluation graph keeps its parent dictionary when emitted alone",
+          "[dxf][roundtrip][filter][version]") {
+  ensureSettings();
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  auto &metadata = graphic.dwgAdvancedMetadata();
+  DRW_EvaluationGraph graph; graph.handle = 0xE3u; graph.parentHandle = 0x70u;
+  metadata.addEvaluationGraph(graph);
+  DRW_Dictionary parent; parent.handle = 0x70u; parent.parentHandle = 0xCu;
+  parent.name = "ACAD_GRAPH"; parent.m_entries.push_back({"GRAPH", 0xE3u});
+  metadata.addDictionary(parent);
+  const auto out = tmpFile("typed_graph_only.dxf");
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(rootDictEntries(out).count("ACAD_GRAPH") == 1u);
+  const auto groups = recordGroupsWithValue(out, "DICTIONARY", "5", "70");
+  const auto entry = std::find(groups.begin(), groups.end(),
+                               std::make_pair(std::string("3"), std::string("GRAPH")));
+  REQUIRE(entry != groups.end());
+  REQUIRE(std::next(entry) != groups.end());
+  CHECK(*std::next(entry) == std::make_pair(std::string("350"), std::string("E3")));
+  CHECK(recordGroupValues(out, "EVALUATION_GRAPH", "5") == std::vector<std::string>{"E3"});
+  CHECK(danglingReferences(out).empty());
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF omission report distinguishes a different raw object at the same handle",
+          "[dxf][roundtrip][filter][version]") {
+  ensureSettings();
+  for (const std::string rawName : {"MLEADERSTYLE", "mleaderstyle", "FIELD"}) {
+    const bool sameType = rawName != "FIELD";
+    INFO(rawName);
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    auto &metadata = graphic.dwgAdvancedMetadata();
+    DRW_MLeaderStyle style; style.handle = 0xE0u; metadata.addMLeaderStyle(style);
+    DRW_RawDxfObject raw;
+    raw.handle = style.handle;
+    raw.name = rawName;
+    raw.m_version = DRW::AC1021;
+    metadata.addRawDxfObject(raw);
+    const auto out = tmpFile("typed_raw_collision_report_r14.dxf");
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW14));
+    const auto report = filter.exportReport();
+    CHECK(report.contains(QStringLiteral("1 raw record(s)")));
+    CHECK(report.contains(QStringLiteral("1 × MLEADERSTYLE")) == !sameType);
+    CHECK(danglingReferences(out).empty());
+    std::filesystem::remove(out);
+  }
+}
+
+TEST_CASE("DXF typed stand-in does not hide a different omitted raw object",
+          "[dxf][roundtrip][filter][version]") {
+  ensureSettings();
+  for (const std::string type : {"SCALE", "MLINESTYLE"}) {
+    for (const std::string rawName : {"MATCH", "LOWER", "FIELD", "DUPLICATE", "RAWENTITY"}) {
+      INFO(type << ' ' << rawName);
+      RS_Graphic graphic;
+      graphic.initForNewDocument();
+      auto &metadata = graphic.dwgAdvancedMetadata();
+      if (type == "SCALE") {
+        DRW_Scale scale; scale.handle = 0xE0u; scale.name = "test scale";
+        metadata.addScale(scale);
+      } else {
+        DRW_MLineStyle style; style.handle = 0xE0u; style.name = "test style";
+        metadata.addMLineStyle(style);
+      }
+      DRW_RawDxfObject raw;
+      raw.handle = 0xE0u;
+      raw.name = rawName == "FIELD" ? "FIELD" :
+          rawName == "LOWER" ? QString::fromStdString(type).toLower().toStdString() : type;
+      raw.m_version = DRW::AC1015;
+      metadata.addRawDxfObject(raw);
+      if (rawName == "DUPLICATE") {
+        raw.name = "FIELD";
+        metadata.addRawDxfObject(raw);
+      } else if (rawName == "RAWENTITY") {
+        raw.name = "LINE";
+        metadata.addRawDxfEntity(raw);
+      }
+      auto *line = new RS_Line(&graphic, RS_LineData(RS_Vector(0, 0), RS_Vector(1, 0)));
+      line->setReactorHandles({0xE0u});
+      graphic.addEntity(line);
+      const auto out = tmpFile("typed_standin_collision_report_r2007.dxf");
+      RS_FilterDXFRW filter;
+      REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+      CHECK(recordGroupValues(out, type, "5") == std::vector<std::string>{"E0"});
+      const auto report = filter.exportReport();
+      CHECK(report.contains(QStringLiteral("1 raw record(s)")) == (rawName == "FIELD"));
+      CHECK(report.contains(QStringLiteral("2 raw record(s)")) ==
+            (rawName == "DUPLICATE" || rawName == "RAWENTITY"));
+      const auto references = recordGroupValues(out, "LINE", "330");
+      CHECK((std::find(references.begin(), references.end(), "E0") != references.end()) ==
+            (rawName != "FIELD" && rawName != "DUPLICATE" && rawName != "RAWENTITY"));
+      CHECK(danglingReferences(out).empty());
+      std::filesystem::remove(out);
+    }
+  }
+}
+
+TEST_CASE("DXF typed entity stand-ins bind only unambiguous raw identities",
+          "[dxf][roundtrip][filter][version][handles]") {
+  ensureSettings();
+  for (const std::string scenario : {"MATCH", "OTHER", "DUPLICATE", "NONE", "LIVE"}) {
+    INFO(scenario);
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    auto &metadata = graphic.dwgAdvancedMetadata();
+    DRW_NavisworksModel model;
+    model.handle = 0xE0u; model.parentHandle = DRW::DwgModelSpaceBlockRecordHandle;
+    metadata.addNavisworksModel(model);
+    DRW_RawDxfObject raw;
+    raw.handle = 0xE0u;
+    raw.name = scenario == "OTHER" ? "LINE" : "NAVISWORKSMODEL";
+    raw.m_version = DRW::AC1015;
+    if (scenario != "NONE" && scenario != "LIVE")
+      metadata.addRawDxfEntity(raw);
+    if (scenario == "DUPLICATE") {
+      raw.name = "FIELD";
+      metadata.addRawDxfObject(raw);
+    }
+    auto *line = new RS_Line(&graphic, RS_LineData(RS_Vector(0, 0), RS_Vector(1, 0)));
+    if (scenario == "LIVE") line->setSourceHandle(0xE0u);
+    line->setReactorHandles({0xE0u});
+    graphic.addEntity(line);
+    const auto out = tmpFile("typed_entity_standin_collision_r2007.dxf");
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+    const auto emitted = recordGroupValues(out, "NAVISWORKSMODEL", "5");
+    REQUIRE(emitted.size() == 1u);
+    const auto report = filter.exportReport();
+    CHECK(report.contains(QStringLiteral("1 raw record(s)")) == (scenario == "OTHER"));
+    CHECK(report.contains(QStringLiteral("2 raw record(s)")) == (scenario == "DUPLICATE"));
+    const auto references = recordGroupValues(out, "LINE", "330");
+    CHECK((std::find(references.begin(), references.end(), emitted.front()) != references.end()) ==
+          (scenario == "MATCH" || scenario == "NONE"));
+    CHECK(danglingReferences(out).empty());
+    if (scenario == "MATCH")
+      if (const char *copy = std::getenv("LIBRECAD_KEEP_NAVIS_STANDIN_OUTPUT"))
+        std::filesystem::copy_file(out, copy, std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::remove(out);
+  }
+}
+
+TEST_CASE("DXF typed entity handle planning retries after an invalid write",
+          "[dxf][roundtrip][filter][version][handles]") {
+  ensureSettings();
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  auto &metadata = graphic.dwgAdvancedMetadata();
+  DRW_NavisworksModel model;
+  model.handle = 0xE0u; model.parentHandle = DRW::DwgModelSpaceBlockRecordHandle;
+  model.unitFactor = std::numeric_limits<double>::quiet_NaN();
+  metadata.addNavisworksModel(model);
+  DRW_RawDxfObject raw;
+  raw.handle = model.handle; raw.name = "NAVISWORKSMODEL"; raw.m_version = DRW::AC1015;
+  metadata.addRawDxfEntity(raw);
+  auto *line = new RS_Line(&graphic, RS_LineData(RS_Vector(0, 0), RS_Vector(1, 0)));
+  line->setReactorHandles({model.handle});
+  graphic.addEntity(line);
+  const auto out = tmpFile("typed_entity_standin_retry_r2007.dxf");
+  const std::string sentinel = "preserve destination";
+  writeText(out, sentinel);
+  RS_FilterDXFRW filter;
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  std::ifstream existing(out, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(existing), {}) == sentinel);
+  existing.close();
+  auto &records = const_cast<std::vector<LC_DwgAdvancedMetadata::NavisworksModelRecord> &>(
+      metadata.navisworksModels());
+  REQUIRE(records.size() == 1u);
+  records.front().unitFactor = 1.0;
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  const auto emitted = recordGroupValues(out, "NAVISWORKSMODEL", "5");
+  REQUIRE(emitted.size() == 1u);
+  const auto refs = recordGroupValues(out, "LINE", "330");
+  CHECK(std::find(refs.begin(), refs.end(), emitted.front()) != refs.end());
+  CHECK(danglingReferences(out).empty());
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF fixed entity stand-ins retain only unambiguous identities",
+          "[dxf][roundtrip][filter][version][handles]") {
+  ensureSettings();
+  for (const std::string type : {"GEOPOSITIONMARKER", "SECTIONOBJECT"}) {
+    for (const std::string scenario : {"MATCH", "ALIAS", "OTHER", "DUPLICATE", "NONE", "LIVE"}) {
+      INFO(type << ' ' << scenario);
+      RS_Graphic graphic;
+      graphic.initForNewDocument();
+      auto &metadata = graphic.dwgAdvancedMetadata();
+      if (type == "GEOPOSITIONMARKER") {
+        DRW_GeoPositionMarker marker; marker.handle = 0xE0u;
+        marker.parentHandle = DRW::DwgModelSpaceBlockRecordHandle;
+        marker.m_radius = 2.0;
+        metadata.addGeoPositionMarker(marker);
+      } else {
+        DRW_SectionObject section; section.handle = 0xE0u;
+        section.parentHandle = DRW::DwgModelSpaceBlockRecordHandle;
+        section.m_name = "test section"; section.m_vertDir = {0.0, 0.0, 1.0};
+        section.m_verts = {{1.0, 2.0, 0.0}, {3.0, 4.0, 0.0}};
+        metadata.addSectionObject(section);
+      }
+      DRW_RawDxfObject raw;
+      raw.handle = 0xE0u; raw.m_version = DRW::AC1015;
+      raw.name = scenario == "OTHER" ? "LINE" :
+          scenario == "ALIAS" ? (type == "GEOPOSITIONMARKER" ? "POSITIONMARKER" : "SECTION_OBJECT") : type;
+      if (scenario != "NONE" && scenario != "LIVE") metadata.addRawDxfEntity(raw);
+      if (scenario == "DUPLICATE") { raw.name = "FIELD"; metadata.addRawDxfObject(raw); }
+      auto *line = new RS_Line(&graphic, RS_LineData(RS_Vector(0, 0), RS_Vector(1, 0)));
+      if (scenario == "LIVE") line->setSourceHandle(0xE0u);
+      line->setReactorHandles({0xE0u});
+      graphic.addEntity(line);
+      const auto out = tmpFile("fixed_entity_standin_r2013.dxf");
+      RS_FilterDXFRW filter;
+      REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW2013));
+      const auto emitted = recordGroupValues(out, type, "5");
+      REQUIRE(emitted.size() == 1u);
+      const auto report = filter.exportReport();
+      CHECK(report.contains(QStringLiteral("1 raw record(s)")) == (scenario == "OTHER"));
+      CHECK(report.contains(QStringLiteral("2 raw record(s)")) == (scenario == "DUPLICATE"));
+      const auto references = recordGroupValues(out, "LINE", "330");
+      CHECK((std::find(references.begin(), references.end(), emitted.front()) != references.end()) ==
+            (scenario == "MATCH" || scenario == "ALIAS" || scenario == "NONE"));
+      CHECK(danglingReferences(out).empty());
+      if (scenario == "ALIAS")
+        if (const char *prefix = std::getenv("LIBRECAD_KEEP_FIXED_STANDIN_PREFIX"))
+          std::filesystem::copy_file(out, std::string(prefix) + type + ".dxf",
+                                     std::filesystem::copy_options::overwrite_existing);
+      std::filesystem::remove(out);
+    }
+  }
+}
+
+TEST_CASE("DXF same-version fixed entity replay binds or drops its references",
+          "[dxf][roundtrip][filter][version][handles]") {
+  ensureSettings();
+  for (const std::string type : {"GEOPOSITIONMARKER", "SECTIONOBJECT"}) {
+    for (const std::string scenario : {"NORMAL", "ALIAS", "COLLISION"}) {
+      INFO(type << ' ' << scenario);
+      const bool collision = scenario == "COLLISION";
+      const auto src = tmpFile("fixed_entity_same_version_source.dxf");
+      const auto out = tmpFile("fixed_entity_same_version_output.dxf");
+      RS_Graphic seed;
+      seed.initForNewDocument();
+      if (type == "GEOPOSITIONMARKER") {
+        DRW_GeoPositionMarker marker; marker.handle = 0xE0u;
+        marker.parentHandle = DRW::DwgModelSpaceBlockRecordHandle; marker.m_radius = 2.0;
+        seed.dwgAdvancedMetadata().addGeoPositionMarker(marker);
+      } else {
+        DRW_SectionObject section; section.handle = 0xE0u;
+        section.parentHandle = DRW::DwgModelSpaceBlockRecordHandle;
+        section.m_name = "test section"; section.m_vertDir = {0.0, 0.0, 1.0};
+        section.m_verts = {{1.0, 2.0, 0.0}, {3.0, 4.0, 0.0}};
+        seed.dwgAdvancedMetadata().addSectionObject(section);
+      }
+      RS_FilterDXFRW writer;
+      REQUIRE(writer.fileExport(seed, QString::fromStdString(src), RS2::FormatDXFRW2013));
+      RS_Graphic loaded;
+      RS_FilterDXFRW reader;
+      REQUIRE(reader.fileImport(loaded, QString::fromStdString(src), RS2::FormatDXFRW));
+      const auto &metadata = loaded.dwgAdvancedMetadata();
+      REQUIRE((type == "GEOPOSITIONMARKER" ? metadata.geoPositionMarkers().size()
+                                          : metadata.sectionObjects().size()) == 1u);
+      const auto handle = type == "GEOPOSITIONMARKER" ?
+          metadata.geoPositionMarkers().at(0).handle : metadata.sectionObjects().at(0).handle;
+      REQUIRE(handle != 0u);
+      const std::string outputKind = scenario == "ALIAS" ?
+          (type == "GEOPOSITIONMARKER" ? "POSITIONMARKER" : "SECTION_OBJECT") : type;
+      if (scenario == "ALIAS") {
+        auto &raw = const_cast<std::vector<DRW_RawDxfObject> &>(metadata.rawDxfEntities());
+        auto carrier = std::find_if(raw.begin(), raw.end(),
+                                    [handle](const auto &entry) { return entry.handle == handle; });
+        REQUIRE(carrier != raw.end());
+        carrier->name = outputKind;
+      }
+      if (collision) {
+        DRW_RawDxfObject other; other.handle = handle; other.name = "FIELD";
+        other.m_version = DRW::AC1015;
+        loaded.dwgAdvancedMetadata().addRawDxfObject(other);
+      }
+      auto *line = new RS_Line(&loaded, RS_LineData(RS_Vector(0, 0), RS_Vector(1, 0)));
+      line->setReactorHandles({handle}); loaded.addEntity(line);
+      RS_FilterDXFRW exporter;
+      REQUIRE(exporter.fileExport(loaded, QString::fromStdString(out), RS2::FormatDXFRW2013));
+      const auto emitted = recordGroupValues(out, outputKind, "5");
+      REQUIRE(emitted.size() == 1u);
+      if (scenario == "ALIAS") CHECK(recordGroupValues(out, type, "5").empty());
+      const auto refs = recordGroupValues(out, "LINE", "330");
+      CHECK((std::find(refs.begin(), refs.end(), emitted.front()) != refs.end()) == !collision);
+      CHECK(exporter.exportReport().contains(QStringLiteral("1 raw record(s)")) == collision);
+      CHECK(danglingReferences(out).empty());
+      std::filesystem::remove(src); std::filesystem::remove(out);
+    }
+  }
+}
+
+TEST_CASE("DXF fixed entity version gates retain loss reporting and retry",
+          "[dxf][roundtrip][filter][version][handles]") {
+  ensureSettings();
+  for (const std::string type : {"GEOPOSITIONMARKER", "SECTIONOBJECT"}) {
+    INFO(type);
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    auto &metadata = graphic.dwgAdvancedMetadata();
+    if (type == "GEOPOSITIONMARKER") {
+      DRW_GeoPositionMarker marker; marker.handle = 0xE0u;
+      marker.parentHandle = DRW::DwgModelSpaceBlockRecordHandle; marker.m_radius = 2.0;
+      metadata.addGeoPositionMarker(marker);
+    } else {
+      DRW_SectionObject section; section.handle = 0xE0u;
+      section.parentHandle = DRW::DwgModelSpaceBlockRecordHandle;
+      section.m_name = "test section"; section.m_vertDir = {0.0, 0.0, 1.0};
+      section.m_verts = {{1.0, 2.0, 0.0}, {3.0, 4.0, 0.0}};
+      metadata.addSectionObject(section);
+    }
+    DRW_RawDxfObject raw; raw.name = type; raw.handle = 0xE0u; raw.m_version = DRW::AC1032;
+    metadata.addRawDxfEntity(raw);
+    auto *line = new RS_Line(&graphic, RS_LineData(RS_Vector(0, 0), RS_Vector(1, 0)));
+    line->setReactorHandles({0xE0u}); graphic.addEntity(line);
+    const auto out = tmpFile("fixed_entity_version_retry.dxf");
+    const std::string sentinel = "preserve destination";
+    writeText(out, sentinel);
+    RS_FilterDXFRW filter;
+    const auto oldFormat = type == "GEOPOSITIONMARKER" ? RS2::FormatDXFRW2010 : RS2::FormatDXFRW2004;
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(out), oldFormat));
+    std::ifstream existing(out, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(existing), {}) == sentinel);
+    existing.close();
+#else
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), oldFormat));
+#endif
+    CHECK(filter.exportReport().contains(QStringLiteral("1 raw record(s)")));
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW2013));
+    CHECK(filter.exportReport().isEmpty());
+    const auto emitted = recordGroupValues(out, type, "5");
+    REQUIRE(emitted.size() == 1u);
+    const auto refs = recordGroupValues(out, "LINE", "330");
+    CHECK(std::find(refs.begin(), refs.end(), emitted.front()) != refs.end());
+    CHECK(danglingReferences(out).empty());
+    std::filesystem::remove(out);
+  }
+}
+
+TEST_CASE("DXF refuses an unknown point-cloud definition kind and retries",
+          "[dxf][roundtrip][filter][version][handles]") {
+  ensureSettings();
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  auto &metadata = graphic.dwgAdvancedMetadata();
+  DRW_PointCloudDef definition; definition.handle = 0xE0u;
+  definition.m_sourceFilename = "test.rcp";
+  metadata.addPointCloudDef(definition);
+  auto &records = const_cast<std::vector<LC_DwgAdvancedMetadata::PointCloudDefinitionRecord> &>(
+      metadata.pointCloudDefinitions());
+  REQUIRE(records.size() == 1u);
+  records.front().kind = 99;
+  const auto out = tmpFile("unknown_pointcloud_kind_retry.dxf");
+  const std::string sentinel = "preserve destination";
+  writeText(out, sentinel);
+  RS_FilterDXFRW filter;
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(filter.exportReport().contains(QStringLiteral("invalid typed DXF record kind")));
+  std::ifstream existing(out, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(existing), {}) == sentinel);
+  existing.close();
+  records.front().kind = static_cast<int>(DRW_PointCloudDef::Definition);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK_FALSE(filter.exportReport().contains(QStringLiteral("invalid typed DXF record kind")));
+  CHECK(recordGroupValues(out, "POINTCLOUDDEFINITION", "5") == std::vector<std::string>{"E0"});
+  CHECK(danglingReferences(out).empty());
+  std::filesystem::remove(out);
+}
+
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+TEST_CASE("DXF version-gated typed write preserves destination and retries",
+          "[dxf][roundtrip][filter][version]") {
+  ensureSettings();
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  DRW_MLeaderStyle style; style.handle = 0xE0u; style.styleVersion = 1u;
+  auto &metadata = graphic.dwgAdvancedMetadata();
+  metadata.addMLeaderStyle(style);
+  auto &records = const_cast<std::vector<LC_DwgAdvancedMetadata::MLeaderStyleRecord>&>(metadata.mleaderStyles());
+  REQUIRE(records.size() == 1u);
+  const auto out = tmpFile("typed_gates_retry.dxf");
+  const std::string sentinel = "preserve destination\n";
+  writeText(out, sentinel);
+  RS_FilterDXFRW filter;
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  std::ifstream retained(out);
+  CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  retained.close();
+  records.front().styleVersion = 2u;
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(out, "MLEADERSTYLE", "5") == std::vector<std::string>{"E0"});
+  std::filesystem::remove(out);
+}
+#endif
+
+TEST_CASE("DXF omits ambiguous live references despite an omitted raw carrier",
+          "[dxf][roundtrip][filter][handles]") {
+  ensureSettings();
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  for (double y : {0.0, 1.0}) {
+    auto *line = new RS_Line(&graphic, RS_LineData(RS_Vector(0.0, y),
+                                                    RS_Vector(1.0, y)));
+    line->setSourceHandle(0xA0u);
+    graphic.addEntity(line);
+  }
+  auto *referer = new RS_Line(&graphic, RS_LineData(RS_Vector(0.0, 2.0),
+                                                   RS_Vector(1.0, 2.0)));
+  referer->setSourceHandle(0xA1u);
+  referer->setReactorHandles({0xA0u});
+  graphic.addEntity(referer);
+  DRW_RawDxfObject raw;
+  raw.name = "LINE";
+  raw.handle = 0xA0u;
+  raw.m_version = DRW::AC1015;
+  graphic.dwgAdvancedMetadata().addRawDxfEntity(raw);
+  const auto out = tmpFile("ambiguous_live_handle.dxf");
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  const auto handles = recordGroupValues(out, "LINE", "5");
+  REQUIRE(handles.size() == 3);
+  CHECK(std::set<std::string>(handles.begin(), handles.end()).size() == 3);
+  const auto reactors = recordReactors(out, "LINE");
+  REQUIRE(reactors.size() == 3);
+  CHECK(reactors.back().empty());
+  std::filesystem::remove(out);
+}
+
 TEST_CASE("DXF export reports what it left out",
           "[dxf][roundtrip][filter][version]") {
   ensureSettings();
@@ -4924,15 +12688,54 @@ TEST_CASE("DXF export reports what it left out",
   CHECK(io->lastExportReport().isEmpty());
   // R2007 cannot hold the raw ACME_THING and its dictionary read from R2000
   REQUIRE(io->fileExport(graphic, QString::fromStdString(other), RS2::FormatDXFRW));
-  CHECK(io->lastExportReport().startsWith(QStringLiteral("2 object(s)")));
+  CHECK(io->lastExportReport() == QStringLiteral(
+      "2 raw record(s) from another DXF version were not replayed; some may have been regenerated"));
 
   std::filesystem::remove(src);
   std::filesystem::remove(same);
   std::filesystem::remove(other);
 }
 
+TEST_CASE("DXF cross-version report covers skipped raw default records",
+          "[dxf][roundtrip][filter][version]") {
+  ensureSettings();
+  const auto src = tmpFile("report-regenerated-src.dxf");
+  const auto out = tmpFile("report-regenerated-out.dxf");
+  writeText(src,
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1032\n0\nENDSEC\n"
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nLINE\n8\n0\n10\n0\n20\n0\n30\n0\n11\n1\n21\n0\n31\n0\n"
+            "0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n"
+            "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+            "3\nACAD_GROUP\n350\nD\n3\nACAD_PLOTSTYLENAME\n350\nE\n"
+            "0\nDICTIONARY\n5\nD\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+            "0\nACDBDICTIONARYWDFLT\n5\nE\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+            "3\nNormal\n350\nF\n100\nAcDbDictionaryWithDefault\n340\nF\n"
+            "0\nACDBPLACEHOLDER\n5\nF\n330\nE\n"
+            "0\nENDSEC\n0\nEOF\n");
+  RS_Graphic graphic;
+  RS_FilterDXFRW importer;
+  REQUIRE(importer.fileImport(graphic, QString::fromStdString(src), RS2::FormatDXFRW));
+  RS_FilterDXFRW exporter;
+  REQUIRE(exporter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(exporter.exportReport() == QStringLiteral(
+      "2 raw record(s) from another DXF version were not replayed; some may have been regenerated"));
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  CHECK(recordGroupValues(out, "ACDBDICTIONARYWDFLT", "5") == std::vector<std::string>{"E"});
+  CHECK(recordGroupValues(out, "ACDBPLACEHOLDER", "5") == std::vector<std::string>{"F"});
+  CHECK(rootDictEntries(out).count("ACAD_PLOTSTYLENAME") == 1u);
+#else
+  CHECK(recordGroupValues(out, "ACDBDICTIONARYWDFLT", "5").empty());
+  CHECK(recordGroupValues(out, "ACDBPLACEHOLDER", "5").empty());
+  CHECK(rootDictEntries(out).count("ACAD_PLOTSTYLENAME") == 0u);
+#endif
+  CHECK(danglingReferences(out).empty());
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
 TEST_CASE("DXF text keeps control characters and carets as caret codes",
-          "[dxf][roundtrip][filter][text]") {
+          "[system-codec][dxf][roundtrip][filter][text]") {
   ensureSettings();
   const std::string src = tmpFile("caret-src.dxf");
   const std::string out = tmpFile("caret-out.dxf");
@@ -4966,9 +12769,19 @@ TEST_CASE("DXF text keeps control characters and carets as caret codes",
         == std::vector<std::string>{"x^Iy", "c^Md", "p^ q"});
   const auto textLayers = recordGroupValues(out, "TEXT", "8");
   REQUIRE_FALSE(textLayers.empty());
-  CHECK(textLayers.front() == "A^B");
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  const std::string expectedLayer = "A^ B";
+#else
+  const std::string expectedLayer = "A^B";
+#endif
+  CHECK(textLayers.front() == expectedLayer);
   const auto layerNames = recordGroupValues(out, "LAYER", "2");
-  CHECK(std::find(layerNames.cbegin(), layerNames.cend(), "A^B") != layerNames.cend());
+  CHECK(std::find(layerNames.cbegin(), layerNames.cend(), expectedLayer) != layerNames.cend());
+
+  RS_Graphic reread;
+  RS_FilterDXFRW rereader;
+  REQUIRE(rereader.fileImport(reread, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(reread.findLayer(QStringLiteral("A^B")) != nullptr);
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);
@@ -4979,8 +12792,10 @@ TEST_CASE("DXF proxy raw carriers preserve wide self handles",
   ensureSettings();
   const std::string src = tmpFile("proxy-wide-handle-src.dxf");
   const std::string out = tmpFile("proxy-wide-handle-out.dxf");
+  const std::string out2 = tmpFile("proxy-wide-handle-retry.dxf");
   std::filesystem::remove(src);
   std::filesystem::remove(out);
+  std::filesystem::remove(out2);
 
   // DXF code-5 handles use the same 64-bit-width lexeme space as DWG handles.
   // The typed proxy convenience field remains 32-bit, but the raw carrier must
@@ -5011,9 +12826,18 @@ TEST_CASE("DXF proxy raw carriers preserve wide self handles",
 
   CHECK(recordGroupValues(out, "ACAD_PROXY_ENTITY", "5")
         == std::vector<std::string>{"1234567890ABCDEF"});
+  RS_Graphic reread;
+  RS_FilterDXFRW retryFilter;
+  REQUIRE(retryFilter.fileImport(reread, QString::fromStdString(out), RS2::FormatDXFRW));
+  REQUIRE(retryFilter.fileExport(reread, QString::fromStdString(out2), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(out2, "ACAD_PROXY_ENTITY", "5")
+        == std::vector<std::string>{"1234567890ABCDEF"});
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_WIDE_PROXY_OUTPUT"))
+    std::filesystem::copy_file(out, copy, std::filesystem::copy_options::overwrite_existing);
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);
+  std::filesystem::remove(out2);
 }
 
 // Regression for the raw-vs-fixed-structural handle collision (the bug that made
@@ -5034,8 +12858,8 @@ TEST_CASE("DXF export remaps raw objects colliding with fixed structural handles
   std::filesystem::remove(src);
   std::filesystem::remove(out);
 
-  // Root dict C points at a material dict (0x10) and a group dict (0x12); the
-  // material dict owns a MATERIAL (0x21), the group dict owns XRECORDs (0x14,
+  // Root dict C points at a raw-object dict (0x10) and a group dict (0x12); the
+  // raw-object dict owns a raw object (0x21), the group dict owns XRECORDs (0x14,
   // 0x1F). Every one of 0x10/0x12/0x14/0x1F/0x21 is a codec-fixed structural
   // handle, so all must be remapped (and the C entries + 330 owners rewritten).
   const std::string dxf =
@@ -5044,10 +12868,10 @@ TEST_CASE("DXF export remaps raw objects colliding with fixed structural handles
       "0\nENDSEC\n"
       "0\nSECTION\n2\nOBJECTS\n"
       "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
-      "3\nACAD_GROUP\n350\nD\n3\nACAD_MATERIAL\n350\n10\n3\nMYGROUPS\n350\n12\n"
+      "3\nACAD_GROUP\n350\nD\n3\nRAW_OBJECTS\n350\n10\n3\nMYGROUPS\n350\n12\n"
       "0\nDICTIONARY\n5\nD\n330\nC\n100\nAcDbDictionary\n281\n1\n"
       "0\nDICTIONARY\n5\n10\n330\nC\n100\nAcDbDictionary\n281\n1\n3\nMyMat\n350\n21\n"
-      "0\nMATERIAL\n5\n21\n330\n10\n100\nAcDbMaterial\n1\nMyMat\n94\n7\n"
+      "0\nTEST_RAW_OBJECT\n5\n21\n330\n10\n100\nTestRawObject\n1\nMyMat\n94\n7\n"
       "0\nDICTIONARY\n5\n12\n330\nC\n100\nAcDbDictionary\n281\n1\n"
       "3\nREC_A\n350\n14\n3\nREC_B\n350\n1F\n"
       "0\nXRECORD\n5\n14\n330\n12\n100\nAcDbXrecord\n280\n1\n1\nhello\n"
@@ -5081,21 +12905,21 @@ TEST_CASE("DXF export remaps raw objects colliding with fixed structural handles
   for (const char *fixed : {"C", "D", "10", "12", "14", "1F", "21"})
     CHECK(handleSet.count(fixed) == 1);  // emitted exactly once, by the codec
 
-  // (c) referential integrity: the root dict's ACAD_MATERIAL / MYGROUPS targets
+  // (c) referential integrity: the root dict's RAW_OBJECTS / MYGROUPS targets
   // were remapped to fresh handles that ARE emitted (not the old 0x10/0x12).
   const std::map<std::string, std::string> rootEntries = rootDictEntries(out);
-  REQUIRE(rootEntries.count("ACAD_MATERIAL") == 1);
+  REQUIRE(rootEntries.count("RAW_OBJECTS") == 1);
   REQUIRE(rootEntries.count("MYGROUPS") == 1);
-  CHECK(rootEntries.at("ACAD_MATERIAL") != "10");  // remapped off the collision
+  CHECK(rootEntries.at("RAW_OBJECTS") != "10");  // remapped off the collision
   CHECK(rootEntries.at("MYGROUPS") != "12");
-  CHECK(handleSet.count(rootEntries.at("ACAD_MATERIAL")) == 1);  // resolves
+  CHECK(handleSet.count(rootEntries.at("RAW_OBJECTS")) == 1);  // resolves
   CHECK(handleSet.count(rootEntries.at("MYGROUPS")) == 1);
 
   // (d) $HANDSEED is strictly above every body handle.
   CHECK(handseedValue(out) > maxHandle(out));
 
-  // (e) the data survives a full DXF->DXF re-import (MATERIAL + both XRECORDs).
-  CHECK(countRecords(out, "MATERIAL") >= 1);
+  // (e) the raw object and both XRECORDs remain in the exported DXF.
+  CHECK(countRecords(out, "TEST_RAW_OBJECT") >= 1);
   CHECK(countRecords(out, "XRECORD") >= 2);
 
   std::filesystem::remove(src);
@@ -5155,10 +12979,10 @@ TEST_CASE("DXF export rewrites 390/480/481 hard-pointer refs to remapped raw obj
       "0\nDICTIONARY\n5\n12\n330\nC\n100\nAcDbDictionary\n281\n1\n"
       "3\nTGT\n350\n14\n3\nREF\n350\n40\n"
       // target raw object collides with codec LTYPE 0x14 -> remapped to fresh handle
-      "0\nMATERIAL\n5\n14\n330\n12\n100\nAcDbMaterial\n1\nTgtMat\n94\n7\n"
+      "0\nTEST_RAW_OBJECT\n5\n14\n330\n12\n100\nTestRawObject\n1\nTgtMat\n94\n7\n"
       // Referencing raw object (no collision) points at 0x14 via 390, 480, and
       // 481. All three must follow the target's structural-collision remap.
-      "0\nMATERIAL\n5\n40\n330\n12\n100\nAcDbMaterial\n1\nRefMat\n390\n14\n480\n14\n481\n14\n"
+      "0\nTEST_RAW_OBJECT\n5\n40\n330\n12\n100\nTestRawObject\n1\nRefMat\n390\n14\n480\n14\n481\n14\n"
       "0\nENDSEC\n0\nEOF\n";
   writeText(src, dxf);
 
@@ -5175,7 +12999,7 @@ TEST_CASE("DXF export rewrites 390/480/481 hard-pointer refs to remapped raw obj
   }
 
   // Parse the output into ordered (code,value) pairs and pull out the two
-  // MATERIAL records' fields (handle 5, name 1, refs 390/480/481).
+  // raw object records' fields (handle 5, name 1, refs 390/480/481).
   std::ifstream in(out);
   std::string codeLine, valueLine;
   auto trim = [](std::string s) {
@@ -5187,7 +13011,7 @@ TEST_CASE("DXF export rewrites 390/480/481 hard-pointer refs to remapped raw obj
   std::string targetHandle, ref390, ref480, ref481;
   std::string curType, curHandle, curName, cur390, cur480, cur481;
   auto flush = [&]() {
-    if (curType == "MATERIAL") {
+    if (curType == "TEST_RAW_OBJECT") {
       if (curName == "TgtMat")
         targetHandle = curHandle;
       if (curName == "RefMat") {
@@ -5673,6 +13497,27 @@ TEST_CASE("DXF FIELD XDATA survives filter DXF and DWG round trips",
 #ifdef DWGSUPPORT
   {
     RS_FilterDXFRW filter;
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+    // DWG EED group 1070 is signed 16-bit. Preserve the invalid-source
+    // refusal and explicitly correct the two values before retrying.
+    const std::string sentinel = "preserve FIELD EED destination\n";
+    writeText(dwgOut, sentinel);
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(dwgOut),
+                                  RS2::FormatDWG2013));
+    std::ifstream retained(dwgOut, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+    retained.close();
+    auto &fields = const_cast<std::vector<LC_DwgAdvancedMetadata::FieldRecord>&>(
+        graphic.dwgAdvancedMetadata().fields());
+    auto &lists = const_cast<std::vector<LC_DwgAdvancedMetadata::FieldListRecord>&>(
+        graphic.dwgAdvancedMetadata().fieldLists());
+    REQUIRE(fields.size() == 1);
+    REQUIRE(lists.size() == 1);
+    REQUIRE(fields.front().extData.size() == 3);
+    REQUIRE(lists.front().extData.size() == 3);
+    *fields.front().extData[2] = DRW_Variant(1070, -32768);
+    *lists.front().extData[2] = DRW_Variant(1070, -1);
+#endif
     REQUIRE(filter.fileExport(graphic, QString::fromStdString(dwgOut),
                               RS2::FormatDWG2013));
   }
@@ -5695,6 +13540,8 @@ TEST_CASE("DXF FIELD XDATA survives filter DXF and DWG round trips",
   CHECK(std::string(fieldListExtData[0]->c_str()) == "FIELDLIST_EED");
   CHECK(std::string(fieldListExtData[1]->c_str()) == "field list payload");
   CHECK(fieldListExtData[2]->i_val() == -1);
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_FIELD_EED_DWG"))
+    std::filesystem::copy_file(dwgOut, copy, std::filesystem::copy_options::overwrite_existing);
 #endif
 
   std::filesystem::remove(src);
@@ -5792,18 +13639,47 @@ TEST_CASE("DXF layer marker classification does not duplicate malformed data",
 
   {
     RS_FilterDXFRW filter;
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+    // The system codec refuses repeated APPID groups. It must not replace an
+    // existing destination, and the same filter must work after correction.
+    const std::string sentinel = "preserve malformed layer destination\n";
+    writeText(out, sentinel);
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(out),
+                                  RS2::FormatDXFRW));
+    std::ifstream retained(out, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+    retained.close();
+    auto *record = const_cast<DRW_Layer *>(
+        graphic.dwgAdvancedMetadata().findLayerTableEntryByName("BAD_DUPLICATE"));
+    REQUIRE(record != nullptr);
+    REQUIRE(record->extData.size() == 6);
+    delete record->extData.back();
+    record->extData.pop_back();
+    delete record->extData.back();
+    record->extData.pop_back();
+#endif
     REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
                               RS2::FormatDXFRW));
   }
 
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  CHECK(namedRecordGroupValues(out, "LAYER", "BAD_DUPLICATE", "1001")
+        == std::vector<std::string>{"LibreCad", "ACME_APP"});
+#else
   CHECK(namedRecordGroupValues(out, "LAYER", "BAD_DUPLICATE", "1001")
         == std::vector<std::string>{"LibreCad", "ACME_APP", "LibreCad"});
+#endif
   CHECK(namedRecordGroupValues(out, "LAYER", "BAD_TYPE", "1001")
         == std::vector<std::string>{"LibreCad"});
   CHECK(namedRecordGroupValues(out, "LAYER", "VALID", "1001")
         == std::vector<std::string>{"LibreCad"});
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  CHECK(namedRecordGroupValues(out, "LAYER", "BAD_DUPLICATE", "1070")
+        == std::vector<std::string>{"1"});
+#else
   CHECK(namedRecordGroupValues(out, "LAYER", "BAD_DUPLICATE", "1070")
         == std::vector<std::string>{"1", "1"});
+#endif
   CHECK(namedRecordGroupValues(out, "LAYER", "BAD_TYPE", "1070").empty());
   CHECK(namedRecordGroupValues(out, "LAYER", "VALID", "1070")
         == std::vector<std::string>{"1"});
@@ -6367,6 +14243,98 @@ void checkDimensionBlockLineTypes(const std::string &stem,
   std::filesystem::remove(src);
 }
 
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+TEST_CASE("System codec preserves unit settings across legacy DXF refusal and retry",
+          "[system-codec][dxf][units]") {
+  ensureSettings();
+  const std::string src = tmpFile("system_codec_units_source.dxf");
+  writeText(src, dimStyleLineTypeFixture({"DASHED", "HIDDEN", "CENTER"}, kVendorDim));
+  RS_Graphic graphic;
+  RS_FilterDXFRW importer;
+  REQUIRE(importer.fileImport(graphic, QString::fromStdString(src), RS2::FormatDXFRW));
+
+  for (const auto &[suffix, format] :
+       {std::make_pair("r12", RS2::FormatDXFRW12),
+        std::make_pair("r14", RS2::FormatDXFRW14)}) {
+    INFO(suffix);
+    const std::string out = tmpFile((std::string("system_codec_units_") + suffix + ".dxf").c_str());
+    writeText(out, "keep destination");
+    graphic.setUnit(RS2::Millimeter);
+    RS_FilterDXFRW filter;
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(out), format));
+    std::ifstream before(out, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(before), {}) == "keep destination");
+    before.close();
+    graphic.setUnit(RS2::None);
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), format));
+    std::ifstream after(out, std::ios::binary);
+    const std::string contents(std::istreambuf_iterator<char>(after), {});
+    CHECK(contents.find("$INSUNITS") == std::string::npos);
+    after.close();
+    RS_Graphic reopened;
+    RS_FilterDXFRW reader;
+    REQUIRE(reader.fileImport(reopened, QString::fromStdString(out), RS2::FormatDXFRW));
+    CHECK(reopened.getUnit() == RS2::None);
+    std::filesystem::remove(out);
+  }
+
+  const std::string modern = tmpFile("system_codec_units_r2000.dxf");
+  graphic.setUnit(RS2::Millimeter);
+  RS_FilterDXFRW modernWriter;
+  REQUIRE(modernWriter.fileExport(graphic, QString::fromStdString(modern), RS2::FormatDXFRW2000));
+  RS_Graphic reopened;
+  RS_FilterDXFRW modernReader;
+  REQUIRE(modernReader.fileImport(reopened, QString::fromStdString(modern), RS2::FormatDXFRW));
+  CHECK(reopened.getUnit() == RS2::Millimeter);
+  std::filesystem::remove(modern);
+  std::filesystem::remove(src);
+}
+
+TEST_CASE("System codec filter reuse keeps DWG circles in the DWG callback frame",
+          "[system-codec][dxf][dwg][extrusion]") {
+  ensureSettings();
+  const std::string src = tmpFile("system_codec_reuse_circle.dxf");
+  const std::string dwg = tmpFile("system_codec_reuse_circle.dwg");
+  writeText(src, "0\nSECTION\n2\nENTITIES\n0\nCIRCLE\n8\n0\n"
+                 "10\n10\n20\n20\n40\n3\n210\n0\n220\n0\n230\n-1\n"
+                 "0\nENDSEC\n0\nEOF\n");
+  RS_FilterDXFRW reused;
+  RS_Graphic source;
+  REQUIRE(reused.fileImport(source, QString::fromStdString(src), RS2::FormatDXFRW));
+  REQUIRE(reused.fileExport(source, QString::fromStdString(dwg), RS2::FormatDWG2004));
+
+  RS_Graphic reusedResult;
+  REQUIRE(reused.fileImport(reusedResult, QString::fromStdString(dwg), RS2::FormatDWG));
+  RS_Graphic freshResult;
+  RS_FilterDXFRW fresh;
+  REQUIRE(fresh.fileImport(freshResult, QString::fromStdString(dwg), RS2::FormatDWG));
+  REQUIRE(reusedResult.count() == 1);
+  REQUIRE(freshResult.count() == 1);
+  const auto *reusedCircle = dynamic_cast<const RS_Circle *>(reusedResult.entityAt(0));
+  const auto *freshCircle = dynamic_cast<const RS_Circle *>(freshResult.entityAt(0));
+  REQUIRE(reusedCircle != nullptr);
+  REQUIRE(freshCircle != nullptr);
+  CHECK(reusedCircle->getCenter().x == Catch::Approx(freshCircle->getCenter().x));
+  CHECK(reusedCircle->getCenter().y == Catch::Approx(freshCircle->getCenter().y));
+  CHECK(freshCircle->getCenter().x == Catch::Approx(-10.0));
+  CHECK(freshCircle->getCenter().y == Catch::Approx(20.0));
+  const std::string bad = tmpFile("system_codec_reuse_bad.dxf");
+  writeText(bad, "0\nSECTION\n2\nENTITIES\n0\nCIRCLE\n10\n1\n");
+  RS_Graphic rejected;
+  CHECK_FALSE(reused.fileImport(rejected, QString::fromStdString(bad), RS2::FormatDXFRW));
+  RS_Graphic afterFailure;
+  REQUIRE(reused.fileImport(afterFailure, QString::fromStdString(dwg), RS2::FormatDWG));
+  REQUIRE(afterFailure.count() == 1);
+  const auto *afterFailureCircle = dynamic_cast<const RS_Circle *>(afterFailure.entityAt(0));
+  REQUIRE(afterFailureCircle != nullptr);
+  CHECK(afterFailureCircle->getCenter().x == Catch::Approx(freshCircle->getCenter().x));
+  CHECK(afterFailureCircle->getCenter().y == Catch::Approx(freshCircle->getCenter().y));
+  std::filesystem::remove(src);
+  std::filesystem::remove(dwg);
+  std::filesystem::remove(bad);
+}
+#endif
+
 // The DXF text of `path` with LTYPE record `name` moved to handle `to`,
 // and its DSTYLE references with it.
 std::string withLineTypeHandle(const std::string &path, const std::string &name,
@@ -6635,7 +14603,7 @@ TEST_CASE("Dimension updates preserve leaders and ordinary dimension labels",
 }
 
 TEST_CASE("Opening and saving DXF or DWG keeps leader vertices and arrow flags",
-          "[dxf][dwg][roundtrip][filter][dimension][leader][regression]") {
+          "[system-codec][dxf][dwg][roundtrip][filter][dimension][leader][regression]") {
   ensureSettings();
   const lc::test::QuietLog quietLog;
   const auto format = GENERATE(RS2::FormatDXFRW, RS2::FormatDWG,
@@ -6666,6 +14634,21 @@ TEST_CASE("Opening and saving DXF or DWG keeps leader vertices and arrow flags",
   CHECK(lc::test::sameValues({"0", "10", "10"}, leaders.front().own(20)));
   CHECK(lc::test::sameValues({arrow ? "1" : "0"}, leaders.front().own(71)));
   CHECK(lc::test::sameValues({"3"}, leaders.front().own(76)));
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  // The library emits these rows before the adapter's LTYPE callback. Their
+  // source flags must survive the DWG-to-DXF save, including R2007+ flags.
+  for (const char *name : {"ByBlock", "ByLayer", "Continuous"}) {
+    const auto *source =
+        graphic.dwgAdvancedMetadata().findLineTypeTableEntryByName(name);
+    INFO("canonical linetype=" << name);
+    REQUIRE(source != nullptr);
+    if (format == RS2::FormatDWG2007 || format == RS2::FormatDWG2010 ||
+        format == RS2::FormatDWG2013 || format == RS2::FormatDWG2018)
+      CHECK(source->flags == 64);
+    CHECK(ltypeRecordGroupValues(saved.string(), name, "70") ==
+          std::vector<std::string>{std::to_string(source->flags)});
+  }
+#endif
 }
 
 TEST_CASE("DXF DSTYLE linetype references resolve high handles",
@@ -7961,6 +15944,59 @@ TEST_CASE("DXF round-trip of a custom linetype is stable in both DXF versions",
   std::filesystem::remove(src);
 }
 
+TEST_CASE("Legacy DXF writes block inserts without reverse block references",
+          "[dxf][roundtrip][filter][linetype][block][legacy][transaction]") {
+  ensureSettings();
+  const auto version = GENERATE(RS2::FormatDXFRW12, RS2::FormatDXFRW14);
+  const auto source = writeFixture("legacy_insert_refs_source.dxf", kNamedR12Fixture);
+  const auto first = tmpFile("legacy_insert_refs_first.dxf");
+  const auto second = tmpFile("legacy_insert_refs_second.dxf");
+  RS_Graphic graphic;
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  RS_Entity *insert = nullptr;
+  for (RS_Entity *entity : graphic) {
+    if (entity != nullptr && entity->rtti() == RS2::EntityInsert) {
+      insert = entity;
+      break;
+    }
+  }
+  REQUIRE(insert != nullptr);
+  insert->setSourceHandle(0xABCu);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(first), version));
+  RS_Graphic reread;
+  REQUIRE(filter.fileImport(reread, QString::fromStdString(first), RS2::FormatDXFRW));
+  RS_Graphic &retryGraphic = reread;
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  auto *layer = retryGraphic.findLayer(QStringLiteral("L_VENDOR"));
+  REQUIRE(layer != nullptr);
+  layer->setPrint(false);
+  const std::string sentinel = "preserve legacy insert destination\n";
+  writeText(second, sentinel);
+  CHECK_FALSE(filter.fileExport(retryGraphic, QString::fromStdString(second), version));
+  std::ifstream retained(second, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  retained.close();
+  layer->setPrint(true);
+#endif
+  REQUIRE(filter.fileExport(retryGraphic, QString::fromStdString(second), version));
+  CHECK(recordGroupValues(second, "INSERT", "2") == std::vector<std::string>{"B"});
+  CHECK(recordGroupValues(second, "BLOCK_RECORD", "331").empty());
+  const auto y = recordGroupValues(second, "INSERT", "20");
+  REQUIRE(y.size() == 1);
+  CHECK(std::stod(y.front()) == Catch::Approx(160.0));
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_LEGACY_INSERT_OUTPUT"))
+    std::filesystem::copy_file(second, std::string(copy) +
+        (version == RS2::FormatDXFRW12 ? "-r12.dxf" : "-r14.dxf"),
+        std::filesystem::copy_options::overwrite_existing);
+  RS_Graphic rereadAgain;
+  REQUIRE(filter.fileImport(rereadAgain, QString::fromStdString(second), RS2::FormatDXFRW));
+  CHECK(entityOnLayer(rereadAgain, QStringLiteral("L_VENDOR")) != nullptr);
+  std::filesystem::remove(source);
+  std::filesystem::remove(first);
+  std::filesystem::remove(second);
+}
+
 TEST_CASE("DXF unregistered linetype names survive as empty marker records",
           "[dxf][roundtrip][filter][linetype][named]") {
   ensureSettings();
@@ -8172,7 +16208,7 @@ TEST_CASE("DWG round-trip keeps unregistered linetype names",
 // the two to construct.
 TEST_CASE("An open polyline's VERTEX and SEQEND carry its own layer and "
           "linetype in R12",
-          "[dxf][roundtrip][filter][polyline][linetype][named]") {
+          "[dxf][roundtrip][filter][polyline][linetype][named][system-codec]") {
   ensureSettings();
   RS_Graphic graphic;
   graphic.initForNewDocument();
@@ -8204,13 +16240,346 @@ TEST_CASE("An open polyline's VERTEX and SEQEND carry its own layer and "
         std::vector<std::string>{"PLINE_LAYER"});
   CHECK(recordGroupValues(out12, "SEQEND", "6") ==
         std::vector<std::string>{"BYBLOCK"});
+  const auto parentHandles = recordGroupValues(out12, "POLYLINE", "5");
+  const auto vertexHandles = recordGroupValues(out12, "VERTEX", "5");
+  const auto endHandles = recordGroupValues(out12, "SEQEND", "5");
+  REQUIRE(parentHandles.size() == 1);
+  REQUIRE(vertexHandles.size() == 2);
+  REQUIRE(endHandles.size() == 1);
+  CHECK(std::set<std::string>{parentHandles.front(), vertexHandles[0],
+                              vertexHandles[1], endHandles.front()}.size() == 4);
 
   std::filesystem::remove(out12);
 }
 
+static std::vector<double> polylineBulges(const std::string &path, bool legacy) {
+  std::ifstream stream(path);
+  std::string codeLine, valueLine;
+  std::vector<double> bulges;
+  bool inRecord = false;
+  while (std::getline(stream, codeLine) && std::getline(stream, valueLine)) {
+    const auto code = trimDxfToken(codeLine), value = trimDxfToken(valueLine);
+    if (code == "0") {
+      inRecord = value == (legacy ? "VERTEX" : "LWPOLYLINE");
+      if (inRecord && legacy) bulges.push_back(0.0);
+    } else if (inRecord && code == "10" && !legacy) {
+      bulges.push_back(0.0);
+    } else if (inRecord && code == "42") {
+      if (bulges.empty()) return {};
+      bulges.back() = std::stod(value);
+    }
+  }
+  return bulges;
+}
+
+TEST_CASE("An open polyline preserves its terminal bulge through DXF saves",
+          "[dxf][roundtrip][filter][polyline][bulge][system-codec]") {
+  ensureSettings();
+  for (const double terminalBulge : {0.0, -0.25}) {
+    for (const RS2::FormatType format : {RS2::FormatDXFRW12, RS2::FormatDXFRW}) {
+      RS_Graphic graphic;
+      graphic.initForNewDocument();
+      auto *polyline = new RS_Polyline(&graphic);
+      polyline->addVertex(RS_Vector(0, 0), 0.0);
+      polyline->addVertex(RS_Vector(5, 0), 0.5);
+      polyline->addVertex(RS_Vector(10, 5), terminalBulge);
+      graphic.addEntity(polyline);
+      const auto out = tmpFile("polyline_terminal_bulge.dxf");
+      const auto resaved = tmpFile("polyline_terminal_bulge_resaved.dxf");
+      RS_FilterDXFRW filter;
+      REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), format));
+      const auto verify = [&](const std::string &path) {
+        const auto bulges = polylineBulges(path, format == RS2::FormatDXFRW12);
+        REQUIRE(bulges.size() == 3u);
+        CHECK(bulges[0] == Catch::Approx(0.0));
+        CHECK(bulges[1] == Catch::Approx(0.5));
+        CHECK(bulges[2] == Catch::Approx(terminalBulge));
+      };
+      verify(out);
+      RS_Graphic reopened;
+      REQUIRE(filter.fileImport(reopened, QString::fromStdString(out), RS2::FormatDXFRW));
+      REQUIRE(filter.fileExport(reopened, QString::fromStdString(resaved), format));
+      verify(resaved);
+      if (terminalBulge != 0.0) {
+        if (const char *copy = std::getenv("LIBRECAD_KEEP_TERMINAL_BULGE")) {
+          const std::string prefix = std::string(copy) + (format == RS2::FormatDXFRW12 ? "-r12" : "-modern");
+          std::filesystem::copy_file(out, prefix + ".dxf", std::filesystem::copy_options::overwrite_existing);
+          std::filesystem::copy_file(resaved, prefix + "-resaved.dxf", std::filesystem::copy_options::overwrite_existing);
+        }
+      }
+      RS_Polyline *reopenedPolyline = nullptr;
+      for (RS_Entity *entity : reopened)
+        if (entity && entity->rtti() == RS2::EntityPolyline)
+          reopenedPolyline = static_cast<RS_Polyline *>(entity);
+      REQUIRE(reopenedPolyline);
+      reopenedPolyline->setClosed(true, 0.0);
+      const auto *closing = reopenedPolyline->entityAt(reopenedPolyline->count() - 1u);
+      REQUIRE(closing);
+      CHECK(closing->rtti() == (terminalBulge == 0.0 ? RS2::EntityLine : RS2::EntityArc));
+      if (terminalBulge != 0.0)
+        CHECK(static_cast<const RS_Arc *>(closing)->getBulge() == Catch::Approx(terminalBulge));
+      const auto closedCount = reopenedPolyline->count();
+      reopenedPolyline->setClosed(false, 0.0);
+      CHECK(reopenedPolyline->count() + 1u == closedCount);
+      reopenedPolyline->setClosed(true, 0.0);
+      REQUIRE(reopenedPolyline->count() == closedCount);
+      closing = reopenedPolyline->entityAt(reopenedPolyline->count() - 1u);
+      REQUIRE(closing);
+      CHECK(closing->rtti() == (terminalBulge == 0.0 ? RS2::EntityLine : RS2::EntityArc));
+      if (terminalBulge != 0.0)
+        CHECK(static_cast<const RS_Arc *>(closing)->getBulge() == Catch::Approx(terminalBulge));
+      std::filesystem::remove(out);
+      std::filesystem::remove(resaved);
+    }
+  }
+}
+
+TEST_CASE("Open polyline edits update the terminal bulge before DXF export",
+          "[dxf][roundtrip][filter][polyline][bulge][system-codec]") {
+  ensureSettings();
+  for (int edit = 0; edit != 8; ++edit) {
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    auto *polyline = new RS_Polyline(&graphic);
+    polyline->addVertex(RS_Vector(0, 0), 0.0);
+    polyline->addVertex(RS_Vector(5, 0), 0.5);
+    polyline->addVertex(RS_Vector(10, 5), -0.25);
+    graphic.addEntity(polyline);
+    if (edit == 0) polyline->mirror(RS_Vector(0, 0), RS_Vector(0, 1));
+    if (edit == 1) polyline->revertDirection();
+    if (edit == 2) polyline->scale(RS_Vector(0, 0), RS_Vector(-1, 1));
+    if (edit == 3) polyline->removeLastVertex();
+    if (edit == 4) polyline->move(RS_Vector(2, 3));
+    if (edit == 5) polyline->mirror(RS_Vector(0, 0), RS_Vector(0, 0));
+    if (edit == 6) { polyline->mirror(RS_Vector(0, 0), RS_Vector(0, 1));
+                     polyline->mirror(RS_Vector(0, 0), RS_Vector(0, 1)); }
+    if (edit == 7) { polyline->revertDirection(); polyline->revertDirection(); }
+    const double expected = edit == 3 ? 0.5 : edit >= 4 ? -0.25 : 0.25;
+    const auto output = tmpFile("polyline_edited_terminal_bulge.dxf");
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    const auto bulges = polylineBulges(output, countRecords(output, "POLYLINE") != 0);
+    REQUIRE(bulges.size() == (edit == 3 ? 2u : 3u));
+    CHECK(bulges.back() == Catch::Approx(expected));
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_TERMINAL_BULGE_EDITS"))
+      std::filesystem::copy_file(output, std::string(copy) + "-" + std::to_string(edit) + ".dxf",
+                                 std::filesystem::copy_options::overwrite_existing);
+    RS_Graphic reopened;
+    REQUIRE(filter.fileImport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    RS_Polyline *restored = nullptr;
+    for (RS_Entity *entity : reopened)
+      if (entity && entity->rtti() == RS2::EntityPolyline)
+        restored = static_cast<RS_Polyline *>(entity);
+    REQUIRE(restored);
+    restored->setClosed(true, 0.0);
+    const auto *closing = restored->entityAt(restored->count() - 1u);
+    REQUIRE(closing); REQUIRE(closing->rtti() == RS2::EntityArc);
+    CHECK(static_cast<const RS_Arc *>(closing)->getBulge() == Catch::Approx(expected));
+    std::filesystem::remove(output);
+  }
+}
+
+TEST_CASE("Closed polylines retain their closing segment across edits and reopening",
+          "[dxf][roundtrip][filter][polyline][bulge][system-codec]") {
+  ensureSettings();
+  for (int edit = 0; edit != 2; ++edit) {
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    auto *polyline = new RS_Polyline(&graphic);
+    polyline->addVertex(RS_Vector(0, 0), 0.5);
+    polyline->addVertex(RS_Vector(5, 0), 0.0);
+    polyline->addVertex(RS_Vector(10, 5), -0.25);
+    polyline->setClosed(true, 0.0);
+    graphic.addEntity(polyline);
+    REQUIRE(polyline->count() == 3u);
+    if (edit == 0) polyline->revertDirection();
+    else polyline->scale(RS_Vector(0, 0), RS_Vector(-1, 1));
+    const auto *originalClosing = polyline->entityAt(polyline->count() - 1u);
+    REQUIRE(originalClosing);
+    const auto start = originalClosing->getStartpoint(), end = originalClosing->getEndpoint();
+    polyline->setClosed(false, 0.0);
+    REQUIRE(polyline->count() == 2u);
+    polyline->setClosed(true, 0.0);
+    REQUIRE(polyline->count() == 3u);
+    const auto *closing = polyline->entityAt(polyline->count() - 1u);
+    REQUIRE(closing); REQUIRE(closing->rtti() == RS2::EntityArc);
+    CHECK(static_cast<const RS_Arc *>(closing)->getBulge() == Catch::Approx(edit == 0 ? -0.5 : 0.25));
+    CHECK(closing->getStartpoint().distanceTo(start) < 1.0e-8);
+    CHECK(closing->getEndpoint().distanceTo(end) < 1.0e-8);
+    const auto output = tmpFile("polyline_closed_edited.dxf");
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    const auto bulges = polylineBulges(output, countRecords(output, "POLYLINE") != 0);
+    REQUIRE(bulges.size() == 3u);
+    CHECK(bulges.back() == Catch::Approx(edit == 0 ? -0.5 : 0.25));
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_CLOSED_BULGE_EDITS"))
+      std::filesystem::copy_file(output, std::string(copy) + "-" + std::to_string(edit) + ".dxf",
+                                 std::filesystem::copy_options::overwrite_existing);
+    RS_Graphic restored;
+    REQUIRE(filter.fileImport(restored, QString::fromStdString(output), RS2::FormatDXFRW));
+    RS_Polyline *reopened = nullptr;
+    for (RS_Entity *entity : restored)
+      if (entity && entity->rtti() == RS2::EntityPolyline)
+        reopened = static_cast<RS_Polyline *>(entity);
+    REQUIRE(reopened); CHECK(reopened->isClosed()); CHECK(reopened->count() == 3u);
+    if (edit == 1) {
+      // Older LibreCAD sidecars stored only group 1040. A circular case can
+      // still be reconstructed without the new explicit X radius.
+      std::ifstream stream(output);
+      std::string codeLine, valueLine, legacy;
+      unsigned removed = 0;
+      while (std::getline(stream, codeLine) && std::getline(stream, valueLine)) {
+        if (trimDxfToken(codeLine) == "1041") { ++removed; continue; }
+        legacy += codeLine + "\n" + valueLine + "\n";
+      }
+      REQUIRE(removed == 1u);
+      const auto oldOutput = tmpFile("polyline_closed_legacy_sidecar.dxf");
+      writeText(oldOutput, legacy);
+      RS_Graphic oldGraphic;
+      REQUIRE(filter.fileImport(oldGraphic, QString::fromStdString(oldOutput), RS2::FormatDXFRW));
+      RS_Polyline *oldPolyline = nullptr;
+      for (RS_Entity *entity : oldGraphic)
+        if (entity && entity->rtti() == RS2::EntityPolyline)
+          oldPolyline = static_cast<RS_Polyline *>(entity);
+      REQUIRE(oldPolyline); CHECK(oldPolyline->isClosed()); CHECK(oldPolyline->count() == 3u);
+      std::filesystem::remove(oldOutput);
+    }
+    std::filesystem::remove(output);
+  }
+}
+
+TEST_CASE("A scaled polyline retains its elliptic segment on DXF reopen",
+          "[dxf][roundtrip][filter][polyline][bulge][system-codec]") {
+  ensureSettings();
+  for (const auto scale : {RS_Vector(2, 1), RS_Vector(1, 2)}) {
+    for (const double sourceBulge : {0.5, -0.5}) {
+      for (const RS2::FormatType format : {RS2::FormatDXFRW12, RS2::FormatDXFRW}) {
+        CAPTURE(scale.x, scale.y, sourceBulge, format);
+        RS_Graphic graphic;
+        graphic.initForNewDocument();
+        auto *polyline = new RS_Polyline(&graphic);
+        polyline->addVertex(RS_Vector(0, 0), sourceBulge);
+        polyline->addVertex(RS_Vector(6, 0), 0.0);
+        polyline->addVertex(RS_Vector(9, 3), 0.0);
+        graphic.addEntity(polyline);
+        polyline->scale(RS_Vector(0, 0), scale);
+        REQUIRE(polyline->count() == 2u);
+        REQUIRE(polyline->entityAt(0)->rtti() == RS2::EntityEllipse);
+        const auto *original = static_cast<const RS_Ellipse *>(polyline->entityAt(0));
+        const auto output = tmpFile("polyline_scaled_ellipse.dxf");
+        RS_FilterDXFRW filter;
+        REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), format));
+        if (const char *copy = std::getenv("LIBRECAD_KEEP_SCALED_POLYLINE")) {
+          const std::string suffix = std::string(scale.x > scale.y ? "-x" : "-y") +
+              (sourceBulge > 0 ? "-ccw" : "-cw") +
+              (format == RS2::FormatDXFRW12 ? "-r12.dxf" : "-modern.dxf");
+          std::filesystem::copy_file(output, std::string(copy) + suffix,
+                                     std::filesystem::copy_options::overwrite_existing);
+        }
+        RS_Graphic restored;
+        REQUIRE(filter.fileImport(restored, QString::fromStdString(output), RS2::FormatDXFRW));
+        RS_Polyline *reopened = nullptr;
+        for (RS_Entity *entity : restored)
+          if (entity && entity->rtti() == RS2::EntityPolyline)
+            reopened = static_cast<RS_Polyline *>(entity);
+        REQUIRE(reopened); REQUIRE(reopened->count() == 2u);
+        REQUIRE(reopened->entityAt(0)->rtti() == RS2::EntityEllipse);
+        const auto *roundtrip = static_cast<const RS_Ellipse *>(reopened->entityAt(0));
+        CHECK(roundtrip->getCenter().distanceTo(original->getCenter()) < 1.0e-8);
+        CHECK(roundtrip->getStartpoint().distanceTo(original->getStartpoint()) < 1.0e-8);
+        CHECK(roundtrip->getEndpoint().distanceTo(original->getEndpoint()) < 1.0e-8);
+        CHECK(roundtrip->getRatio() == Catch::Approx(original->getRatio()));
+        CHECK(roundtrip->isReversed() == original->isReversed());
+        const auto resaved = tmpFile("polyline_scaled_ellipse_resaved.dxf");
+        REQUIRE(filter.fileExport(restored, QString::fromStdString(resaved), format));
+        RS_Graphic second;
+        REQUIRE(filter.fileImport(second, QString::fromStdString(resaved), RS2::FormatDXFRW));
+        RS_Polyline *secondPolyline = nullptr;
+        for (RS_Entity *entity : second)
+          if (entity && entity->rtti() == RS2::EntityPolyline)
+            secondPolyline = static_cast<RS_Polyline *>(entity);
+        REQUIRE(secondPolyline); REQUIRE(secondPolyline->count() == 2u);
+        REQUIRE(secondPolyline->entityAt(0)->rtti() == RS2::EntityEllipse);
+        const auto *secondEllipse = static_cast<const RS_Ellipse *>(secondPolyline->entityAt(0));
+        CHECK(secondEllipse->getCenter().distanceTo(original->getCenter()) < 1.0e-8);
+        CHECK(secondEllipse->getStartpoint().distanceTo(original->getStartpoint()) < 1.0e-8);
+        CHECK(secondEllipse->getEndpoint().distanceTo(original->getEndpoint()) < 1.0e-8);
+        CHECK(secondEllipse->getRatio() == Catch::Approx(original->getRatio()));
+        CHECK(secondEllipse->isReversed() == original->isReversed());
+        std::filesystem::remove(resaved);
+        std::filesystem::remove(output);
+      }
+    }
+  }
+}
+
+TEST_CASE("A rotated elliptic polyline refuses DXF output without replacing it",
+          "[dxf][roundtrip][filter][polyline][bulge][transaction][system-codec]") {
+  ensureSettings();
+  for (const bool inBlock : {false, true}) {
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    RS_EntityContainer *owner = &graphic;
+    if (inBlock) {
+      auto *block = new RS_Block(&graphic, RS_BlockData("ELLIPSE_BLOCK", RS_Vector(0, 0), false));
+      REQUIRE(graphic.addBlock(block));
+      owner = block;
+    }
+    auto *polyline = new RS_Polyline(owner);
+    polyline->addVertex(RS_Vector(0, 0), 0.5);
+    polyline->addVertex(RS_Vector(6, 0), 0.0);
+    owner->addEntity(polyline);
+    polyline->scale(RS_Vector(0, 0), RS_Vector(2, 1));
+    polyline->rotate(RS_Vector(0, 0), 0.3);
+    const auto output = tmpFile("polyline_rotated_ellipse_refusal.dxf");
+    const std::string sentinel = "preserve rotated ellipse destination\n";
+    writeText(output, sentinel);
+    RS_FilterDXFRW filter;
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary);
+      CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    polyline->rotate(RS_Vector(0, 0), -0.3);
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK(countRecords(output, "POLYLINE") == 1);
+    std::filesystem::remove(output);
+  }
+}
+
+TEST_CASE("A late rotated elliptic polyline refuses and retries DXF output",
+          "[dxf][roundtrip][filter][polyline][bulge][transaction][system-codec]") {
+  ensureSettings();
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  auto *polyline = new RS_Polyline(&graphic);
+  polyline->addVertex(RS_Vector(0, 0), 0.5);
+  polyline->addVertex(RS_Vector(6, 0), 0.0);
+  graphic.addEntity(polyline);
+  polyline->scale(RS_Vector(0, 0), RS_Vector(2, 1));
+  struct LateRotationFilter : RS_FilterDXFRW {
+    RS_Polyline *target = nullptr;
+    bool rotateOnWrite = true;
+    void writeEntities() override {
+      if (rotateOnWrite) target->rotate(RS_Vector(0, 0), 0.3);
+      RS_FilterDXFRW::writeEntities();
+    }
+  } filter;
+  filter.target = polyline;
+  const auto output = tmpFile("polyline_late_rotated_ellipse_refusal.dxf");
+  const std::string sentinel = "preserve late rotated ellipse destination\n";
+  writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream retained(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+  polyline->rotate(RS_Vector(0, 0), -0.3);
+  filter.rotateOnWrite = false;
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(countRecords(output, "POLYLINE") == 1);
+  std::filesystem::remove(output);
+}
+
 TEST_CASE("An open polyline keeps every vertex on DXF re-save; a closed "
           "one is unchanged",
-          "[dxf][roundtrip][filter][polyline]") {
+          "[dxf][roundtrip][filter][polyline][system-codec]") {
   ensureSettings();
 
   RS_Graphic openGraphic;
@@ -8413,7 +16782,7 @@ TEST_CASE("DXF ISO alias keeps its literal name instead of the family name",
 }
 
 TEST_CASE("DXF complex linetype record travels through export opaque",
-          "[dxf][roundtrip][filter][linetype][named]") {
+          "[system-codec][dxf][roundtrip][filter][linetype][named]") {
   ensureSettings();
   const std::string src = writeFixture("named_t8_src.dxf", kNamedR2000Fixture);
   const std::string out = tmpFile("named_t8_out.dxf");
@@ -8555,12 +16924,26 @@ TEST_CASE("QCad-1 reader keeps group 6 and synthesises a marker for it",
   REQUIRE(graphic.firstEntity() != nullptr);
   CHECK(graphic.firstEntity()->getPen(false).getLineTypeName() ==
         QStringLiteral("VENDOR_TAB"));
-  const RS_Layer *layer = graphic.findLayer(QStringLiteral("L_VENDOR"));
+  RS_Layer *layer = graphic.findLayer(QStringLiteral("L_VENDOR"));
   REQUIRE(layer != nullptr);
   CHECK(layer->getPen().getLineTypeName() == QStringLiteral("VENDOR_LAY"));
+  CHECK(layer->getPen().getWidth() == RS2::WidthDefault);
 
   {
     RS_FilterDXFRW filter;
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+    const RS_Pen saved = layer->getPen();
+    RS_Pen invalid = saved;
+    invalid.setWidth(RS2::WidthByLayer);
+    layer->setPen(invalid);
+    const std::string sentinel = "preserve QCad layer destination\n";
+    writeText(out, sentinel);
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+    std::ifstream retained(out, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+    retained.close();
+    layer->setPen(saved);
+#endif
     REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
                               RS2::FormatDXFRW));
   }
@@ -8572,6 +16955,15 @@ TEST_CASE("QCad-1 reader keeps group 6 and synthesises a marker for it",
         std::vector<std::string>{"0"});
   CHECK(namedRecordGroupValues(out, "LAYER", "L_VENDOR", "6") ==
         std::vector<std::string>{"VENDOR_LAY"});
+  CHECK(namedRecordGroupValues(out, "LAYER", "L_VENDOR", "370") ==
+        std::vector<std::string>{"-3"});
+  RS_Graphic reread;
+  RS_FilterDXFRW reader;
+  REQUIRE(reader.fileImport(reread, QString::fromStdString(out), RS2::FormatDXFRW));
+  const auto *reopenedLayer = reread.findLayer(QStringLiteral("L_VENDOR"));
+  REQUIRE(reopenedLayer != nullptr);
+  CHECK(reopenedLayer->getPen().getWidth() == RS2::WidthDefault);
+  CHECK(reopenedLayer->getPen().getLineTypeName() == QStringLiteral("VENDOR_LAY"));
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);
@@ -9072,6 +17464,7 @@ TEST_CASE("Linetype names on hatch pattern lines get a record in R12",
     RS_FilterDXFRW filter;
     REQUIRE(filter.fileExport(graphic, QString::fromStdString(out12),
                               RS2::FormatDXFRW12));
+    CHECK_FALSE(filter.exportReport().contains(QStringLiteral("HATCH")));
   }
   CHECK(countValues(recordGroupValues(out12, "LINE", "6"), "VENDOR_HCH") ==
         1);
@@ -9251,12 +17644,164 @@ const BuiltinLTypeLength kBuiltinLTypeLengths[] = {
 
 } // namespace
 
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+TEST_CASE("R12 DXF reports an omitted ellipse setting and supports retry",
+          "[dxf][roundtrip][filter][system-codec][r12][linetype]") {
+  ensureSettings();
+  const std::string source = writeFixture("legacy_pellipse_source.dxf", kNamedR12Fixture);
+  RS_Graphic graphic;
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  const std::string out = tmpFile("legacy_pellipse_out.dxf");
+  graphic.addVariable("$PELLIPSE", 1, 70);
+  writeText(out, "existing destination\n");
+  REQUIRE_FALSE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW12));
+  CHECK(textWithoutCR(out) == "existing destination\n");
+  graphic.addVariable("$PELLIPSE", 0, 70);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW12));
+  CHECK(filter.exportReport().contains(QStringLiteral("PELLIPSE")));
+  CHECK(graphic.getVariableDict().value("$PELLIPSE").getInt() == 0);
+  CHECK(textWithoutCR(out).find("$PELLIPSE") == std::string::npos);
+  graphic.addVariable("$PELLIPSE", 1, 70);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW14));
+  CHECK_FALSE(filter.exportReport().contains(QStringLiteral("PELLIPSE")));
+  CHECK(textWithoutCR(out).find("$PELLIPSE") != std::string::npos);
+  std::filesystem::remove(out);
+  std::filesystem::remove(source);
+}
+
+TEST_CASE("Legacy DXF reports omitted default angular precision and supports retry",
+          "[dxf][roundtrip][filter][system-codec][r12][linetype]") {
+  ensureSettings();
+  const std::string source = writeFixture("legacy_angular_precision_source.dxf", kNamedR12Fixture);
+  for (const RS2::FormatType format : {RS2::FormatDXFRW12, RS2::FormatDXFRW14}) {
+    RS_Graphic graphic;
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+    const std::string out = tmpFile("legacy_angular_precision_out.dxf");
+    graphic.addVariable("$DIMADEC", 3, 70);
+    writeText(out, "existing destination\n");
+    REQUIRE_FALSE(filter.fileExport(graphic, QString::fromStdString(out), format));
+    CHECK(textWithoutCR(out) == "existing destination\n");
+    CHECK_FALSE(filter.exportReport().contains(QStringLiteral("angular dimension precision")));
+    graphic.addVariable("$DIMADEC", 0, 70);
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), format));
+    CHECK(filter.exportReport().contains(QStringLiteral("angular dimension precision")));
+    CHECK(graphic.getVariableDict().value("$DIMADEC").getInt() == 0);
+    CHECK(textWithoutCR(out).find("$DIMADEC") == std::string::npos);
+    std::filesystem::remove(out);
+  }
+  std::filesystem::remove(source);
+}
+
+TEST_CASE("Legacy DXF reports omitted default paper scale and supports retry",
+          "[dxf][roundtrip][filter][system-codec][r12][linetype]") {
+  ensureSettings();
+  const std::string source = writeFixture("legacy_paper_scale_source.dxf", kNamedR12Fixture);
+  for (const RS2::FormatType format : {RS2::FormatDXFRW12, RS2::FormatDXFRW14}) {
+    RS_Graphic graphic;
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+    const std::string out = tmpFile("legacy_paper_scale_out.dxf");
+    graphic.addVariable("$PSVPSCALE", 2.0, 40);
+    writeText(out, "existing destination\n");
+    REQUIRE_FALSE(filter.fileExport(graphic, QString::fromStdString(out), format));
+    CHECK(textWithoutCR(out) == "existing destination\n");
+    CHECK_FALSE(filter.exportReport().contains(QStringLiteral("paper-space scale")));
+    graphic.addVariable("$PSVPSCALE", 1.0, 40);
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), format));
+    CHECK(filter.exportReport().contains(QStringLiteral("paper-space scale")));
+    CHECK(graphic.getVariableDict().value("$PSVPSCALE").getDouble() == 1.0);
+    CHECK(textWithoutCR(out).find("$PSVPSCALE") == std::string::npos);
+    std::filesystem::remove(out);
+  }
+  std::filesystem::remove(source);
+}
+
+TEST_CASE("Legacy DXF reports omitted generated cap and join settings",
+          "[dxf][roundtrip][filter][system-codec][r12][linetype]") {
+  ensureSettings();
+  const std::string source = writeFixture("legacy_header_styles_source.dxf", kNamedR12Fixture);
+  for (const RS2::FormatType format : {RS2::FormatDXFRW12, RS2::FormatDXFRW14}) {
+    RS_Graphic graphic;
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+    const std::string out = tmpFile("legacy_header_styles_out.dxf");
+    graphic.addVariable("$ENDCAPS", 2, 280);
+    writeText(out, "existing destination\n");
+    REQUIRE_FALSE(filter.fileExport(graphic, QString::fromStdString(out), format));
+    CHECK(textWithoutCR(out) == "existing destination\n");
+    CHECK_FALSE(filter.exportReport().contains(QStringLiteral("line cap or join")));
+    graphic.addVariable("$ENDCAPS", 1, 280);
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), format));
+    CHECK(filter.exportReport().contains(QStringLiteral("2 line cap or join")));
+    CHECK(graphic.getVariableDict().value("$ENDCAPS").getInt() == 1);
+    CHECK(graphic.getVariableDict().value("$JOINSTYLE").getInt() == 1);
+    CHECK(textWithoutCR(out).find("$ENDCAPS") == std::string::npos);
+    CHECK(textWithoutCR(out).find("$JOINSTYLE") == std::string::npos);
+    std::filesystem::remove(out);
+  }
+  std::filesystem::remove(source);
+}
+
+TEST_CASE("Legacy DXF reports omitted layer lineweight and supports retry",
+          "[dxf][roundtrip][filter][system-codec][r12]") {
+  ensureSettings();
+  for (const RS2::FormatType format : {RS2::FormatDXFRW12, RS2::FormatDXFRW14}) {
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    RS_Layer *layer = graphic.findLayer(QStringLiteral("0"));
+    REQUIRE(layer != nullptr);
+    REQUIRE(layer->getPen().getWidth() == RS2::Width07);
+    auto *otherLayer = new RS_Layer(QStringLiteral("CUSTOM"));
+    RS_Pen otherPen = otherLayer->getPen();
+    otherPen.setWidth(RS2::Width20);
+    otherLayer->setPen(otherPen);
+    graphic.addLayer(otherLayer);
+    const std::string out = tmpFile("legacy_layer_width_retry.dxf");
+    writeText(out, "existing destination\n");
+    RS_FilterDXFRW filter;
+
+    // Plot-off is still an unsupported legacy property. Its refusal must not
+    // publish a partial file or poison a corrected retry on the same filter.
+    layer->setPrint(false);
+    REQUIRE_FALSE(filter.fileExport(graphic, QString::fromStdString(out), format));
+    CHECK(textWithoutCR(out) == "existing destination\n");
+    CHECK_FALSE(filter.exportReport().contains(QStringLiteral("lineweight")));
+    layer->setPrint(true);
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), format));
+    CHECK(filter.exportReport().contains(QStringLiteral("lineweight of 2 layer")));
+    CHECK(recordGroupValues(out, "LAYER", "370").empty());
+    CHECK(layer->getPen().getWidth() == RS2::Width07);
+    CHECK(otherLayer->getPen().getWidth() == RS2::Width20);
+
+    RS_Graphic reopened;
+    REQUIRE(filter.fileImport(reopened, QString::fromStdString(out), format));
+    const RS_Layer *reopenedLayer = reopened.findLayer(QStringLiteral("0"));
+    REQUIRE(reopenedLayer != nullptr);
+    CHECK(reopenedLayer->getPen().getWidth() == RS2::WidthDefault);
+    const RS_Layer *reopenedOther = reopened.findLayer(QStringLiteral("CUSTOM"));
+    REQUIRE(reopenedOther != nullptr);
+    CHECK(reopenedOther->getPen().getWidth() == RS2::WidthDefault);
+
+    RS_Pen pen = layer->getPen();
+    pen.setWidth(RS2::WidthDefault);
+    layer->setPen(pen);
+    otherPen.setWidth(RS2::WidthDefault);
+    otherLayer->setPen(otherPen);
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), format));
+    CHECK_FALSE(filter.exportReport().contains(QStringLiteral("lineweight")));
+    std::filesystem::remove(out);
+  }
+}
+#endif
+
 // The goldens are the LTYPE table this export wrote on 86d2c9325, before the
 // head of writeLTypes() was rewritten: the three records libdxfrw writes
 // itself and the 32 the filter adds, handles in allocation order. R2000 and
 // R2007 write the same table and share a golden. They pin names, order,
-// groups 3, 72, 73 and 49; the DXF writer re-sums group 40 on its copy
-// (DRW_LType::update), so the DWG case below pins 40.
+// groups 3, 72, 73 and 49. The bundled path retains the original byte
+// snapshot; the system path also checks the declared group-40 totals exactly.
 TEST_CASE("A new drawing writes the built-in LTYPE table as before",
           "[dxf][roundtrip][filter][linetype][ltype][named]") {
   ensureSettings();
@@ -9289,15 +17834,72 @@ TEST_CASE("A new drawing writes the built-in LTYPE table as before",
     const std::string written = ltypeTableSection(out);
     REQUIRE_FALSE(written.empty());
     INFO(firstDifference(expected, written));
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+    // The installed writer reports the real table count, allocates its own
+    // handles, and emits enough decimal digits to round-trip each double.
+    // Compare every other field with the legacy snapshot semantically.
+    const auto groups = [](const std::string &text) {
+      std::istringstream stream(text);
+      std::vector<std::pair<int, std::string>> result;
+      std::string code, value;
+      while (std::getline(stream, code) && std::getline(stream, value))
+        result.emplace_back(std::stoi(code), value);
+      return result;
+    };
+    const auto actualGroups = groups(written);
+    const auto expectedGroups = groups(expected);
+    REQUIRE(actualGroups.size() == expectedGroups.size());
+    bool inTableHeader = true;
+    std::set<unsigned long long> handles;
+    for (std::size_t i = 0; i < actualGroups.size(); ++i) {
+      const auto &[code, value] = actualGroups[i];
+      const auto &[expectedCode, expectedValue] = expectedGroups[i];
+      INFO("group index " << i);
+      REQUIRE(code == expectedCode);
+      if (code == 0 && value == "LTYPE")
+        inTableHeader = false;
+      if (code == 70 && inTableHeader) {
+        CHECK(std::stoi(value) == 35);
+        CHECK(std::stoi(expectedValue) == 4); // historical stale count
+      } else if (code == 5) {
+        const auto handle = std::stoull(value, nullptr, 16);
+        CHECK(handle != 0);
+        CHECK(handles.insert(handle).second);
+      } else if (code == 40) {
+        const double actual = std::stod(value);
+        const double expectedTotal = std::stod(expectedValue);
+        // The old snapshot sums the dashes; exact declared totals are
+        // checked separately below, so allow only rounding noise here.
+        CHECK(actual == Catch::Approx(expectedTotal).epsilon(1e-12).margin(0.0));
+      } else if (code == 49) {
+        CHECK(std::stod(value) == std::stod(expectedValue));
+      } else {
+        CHECK(value == expectedValue);
+      }
+    }
+    // The old snapshot re-summed these totals; the current writer must keep
+    // each built-in's declared total exactly, including its last bit.
+    for (const BuiltinLTypeLength &row : kBuiltinLTypeLengths) {
+      if (row.size == 0) continue;
+      INFO("LTYPE " << row.name);
+      const auto total = ltypeRecordGroupValues(out, row.name, "40");
+      REQUIRE(total.size() == 1);
+      CHECK(std::stod(total.front()) == row.length);
+    }
+#else
     CHECK(written == expected);
+#endif
+    if (const char *prefix = std::getenv("LIBRECAD_KEEP_BUILTIN_LTYPE_DXF"))
+      std::filesystem::copy_file(out, std::string(prefix) + "-" +
+          std::to_string(static_cast<int>(target.format)) + ".dxf",
+          std::filesystem::copy_options::overwrite_existing);
     std::filesystem::remove(out);
   }
 }
 
 #ifdef DWGSUPPORT
-// DWG carries group 40 as the double it was given (DRW_LType::encodeDwg and
-// parseDwg, no update()), and the import parks the record as read, so the
-// archived length is the literal the head passed.
+// DWG retains the declared pattern-length double through encoder
+// normalization and the subsequent import.
 TEST_CASE("A new drawing's built-in linetype lengths survive a DWG round trip",
           "[dwg][roundtrip][filter][linetype][ltype][named]") {
   ensureSettings();
@@ -9333,6 +17935,10 @@ TEST_CASE("A new drawing's built-in linetype lengths survive a DWG round trip",
       // Exact, not Approx: the same double or a changed file.
       CHECK(record->length == row.length);
     }
+    if (const char *prefix = std::getenv("LIBRECAD_KEEP_BUILTIN_LTYPE_DWG"))
+      std::filesystem::copy_file(dwg, std::string(prefix) + "-" +
+          std::to_string(static_cast<int>(format)) + ".dwg",
+          std::filesystem::copy_options::overwrite_existing);
     std::filesystem::remove(dwg);
   }
 }
@@ -9547,7 +18153,7 @@ TEST_CASE("DXF import fills the line type list from its LTYPE records only",
 }
 
 TEST_CASE("DXF LTYPE twins fill one list entry whichever comes first",
-          "[dxf][roundtrip][filter][linetype][named][table]") {
+          "[system-codec][dxf][roundtrip][filter][linetype][named][table]") {
   ensureSettings();
   const std::string out = tmpFile("table_twins_out.dxf");
   const std::string upper = ltypeRecord("VENDOR_MIXEDCASE", {30.0, -30.0});
@@ -9775,7 +18381,7 @@ std::string foldedReferenceDrawing() {
 // name folds to, where it carried none. An entry without dashes does not
 // hide the family's.
 TEST_CASE("DXF a reference spelt unlike its record takes the entry's dashes",
-          "[dxf][roundtrip][filter][linetype][named][table]") {
+          "[system-codec][dxf][roundtrip][filter][linetype][named][table]") {
   ensureSettings();
   const std::string src = tmpFile("table_folded_ref_src.dxf");
   const std::string out = tmpFile("table_folded_ref_out.dxf");
@@ -10086,7 +18692,7 @@ TEST_CASE("DXF writes a redefined built-in from the table",
 }
 
 TEST_CASE("DXF writes a changed complex line type without its segments",
-          "[dxf][roundtrip][filter][linetype][named][table]") {
+          "[system-codec][dxf][roundtrip][filter][linetype][named][table]") {
   ensureSettings();
   const std::string src = writeFixture("named_t8_src.dxf", kNamedR2000Fixture);
   const std::string out = tmpFile("changed_complex_out.dxf");
@@ -10156,6 +18762,25 @@ TEST_CASE("DXF a record that only names a line type takes the list's dashes",
             "102\n{ACAD_XDICTIONARY\n360\nA2\n102\n}\n"
             "0\nENDTAB\n0\nENDSEC\n"
             "0\nSECTION\n2\nENTITIES\n0\nENDSEC\n0\nEOF\n");
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  // DXF LTYPE alignment is 65. Keep the invalid-value refusal covered, then
+  // exercise pattern reconstruction with a valid alignment value.
+  {
+    RS_Graphic invalidGraphic;
+    RS_FilterDXFRW invalidFilter;
+    CHECK_FALSE(invalidFilter.fileImport(invalidGraphic, QString::fromStdString(src),
+                                         RS2::FormatDXFRW));
+  }
+  {
+    std::ifstream input(src, std::ios::binary);
+    std::string content(std::istreambuf_iterator<char>(input), {});
+    const auto alignment = content.find("\n72\n66\n");
+    REQUIRE(alignment != std::string::npos);
+    content.replace(alignment, std::string("\n72\n66\n").size(), "\n72\n65\n");
+    input.close();
+    writeText(src, content);
+  }
+#endif
   RS_Graphic graphic;
   REQUIRE(importFile(graphic, src));
   LC_LineType *entry = graphic.findLineType(QStringLiteral("SAVED_LTYPE"));
@@ -10178,8 +18803,13 @@ TEST_CASE("DXF a record that only names a line type takes the list's dashes",
   CHECK(std::stod(length.front()) == 4.0);
   CHECK(ltypeRecordGroupValues(out, "SAVED_LTYPE", "3") ==
         std::vector<std::string>{"Saved linetype"});
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  CHECK(ltypeRecordGroupValues(out, "SAVED_LTYPE", "72") ==
+        std::vector<std::string>{"65"});
+#else
   CHECK(ltypeRecordGroupValues(out, "SAVED_LTYPE", "72") ==
         std::vector<std::string>{"66"});
+#endif
   CHECK(recordGroupValues(out, "LTYPE", "310") ==
         std::vector<std::string>{"CAFE"});
   const auto reactors = recordGroupValues(out, "LTYPE", "330");
@@ -10200,7 +18830,7 @@ TEST_CASE("DXF a record that only names a line type takes the list's dashes",
 // Only an insert or a paste gives such a record dashes. One beside a twin
 // that has them, or spelt as a built-in with blanks, is written as it came.
 TEST_CASE("DXF a name-only LTYPE record beside a twin with dashes is written as it came",
-          "[dxf][roundtrip][filter][linetype][named][table]") {
+          "[system-codec][dxf][roundtrip][filter][linetype][named][table]") {
   ensureSettings();
   const std::string out = tmpFile("name_only_twins_out.dxf");
   const std::string nfdName = "O\xCC\x88" "lfarbe";
@@ -10245,7 +18875,7 @@ TEST_CASE("DXF a name-only LTYPE record beside a twin with dashes is written as 
 // whose name is not UTF-8 is still its entry's record: written once, beside
 // a record spelt as the list reads it, which stays as it came.
 TEST_CASE("DXF an LTYPE record whose name is not UTF-8 is written once",
-          "[dxf][roundtrip][filter][linetype][named][table]") {
+          "[system-codec][dxf][roundtrip][filter][linetype][named][table]") {
   ensureSettings();
   const std::string out = tmpFile("not_utf8_out.dxf");
   const std::string asRead = "VENDOR_\xEF\xBF\xBD";

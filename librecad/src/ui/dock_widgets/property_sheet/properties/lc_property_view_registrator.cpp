@@ -78,6 +78,7 @@ void LC_PropertyViewRegistrator::registerViews() {
     anotherView<LC_PropertyQString, LC_PropertyQStringListArrowsComboboxView>(LC_PropertyQStringListArrowsComboboxView::VIEW_NAME);
     defaultView<LC_PropertyRSColor, LC_PropertyRSColorComboBoxView>(LC_PropertyRSColorComboBoxView::VIEW_NAME);
     defaultView<LC_PropertyLineType, LC_PropertyLineTypeComboboxView>(LC_PropertyLineTypeComboboxView::VIEW_NAME);
+    defaultView<LC_PropertyNamedLineType, LC_PropertyNamedLineTypeComboboxView>(LC_PropertyNamedLineTypeComboboxView::VIEW_NAME);
     defaultView<LC_PropertyLineWidth, LC_PropertyLineWidthComboboxView>(LC_PropertyLineWidthComboboxView::VIEW_NAME);
     defaultView<LC_PropertyBool, LC_PropertyBoolCheckBoxView>(LC_PropertyBoolCheckBoxView::VIEW_NAME);
     anotherView<LC_PropertyBool, LC_PropertyBoolComboBoxView>(LC_PropertyBoolComboBoxView::VIEW_NAME);

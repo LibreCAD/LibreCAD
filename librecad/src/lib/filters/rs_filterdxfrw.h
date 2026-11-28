@@ -33,18 +33,19 @@
 #include <cstdint>
 #include <limits>
 #include <map>
+#include <functional>
 #include <memory>
 #include <optional>
 #include <set>
 #include <string>
 #include <vector>
+#include <QByteArray>
 
 #include "drw_interface.h"
 #include "lc_extentitydata.h"
 #include "libdxfrw.h"
 #ifdef DWGSUPPORT
 #include "libdwgr.h"
-#include <functional>
 #endif
 #include "rs_color.h"
 #include "rs_dimension.h"
@@ -1964,8 +1965,35 @@ class RsFilterDxfRwExposureTestAccess;
  *
  * @author Rallaz
  */
+// The codec interface must be public for optional policy cross-casts from a
+// DRW_Interface pointer to discover an explicitly opted-in derived filter.
 class RS_FilterDXFRW : public RS_FilterInterface,
-                       DRW_Interface
+                       public DRW_Interface
+#ifdef LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR
+    , public DRW_DxfSparseMaterialRawPolicy
+#endif
+#ifdef LIBDXFRW_HAS_DXF_DICTIONARY_SOURCE_HANDLERS
+    , public DRW_DxfRootDictionarySourceHandler,
+      public DRW_DxfDictionarySourceHandler
+#endif
+#ifdef LIBDXFRW_HAS_DXF_RASTER_SOURCE_HANDLER
+    , public DRW_DxfRasterSourceHandler
+#endif
+#ifdef LIBDXFRW_HAS_DXF_NAMESPACE_SOURCE_HANDLER
+    , public DRW_DxfNamespaceSourceHandler
+#endif
+#ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
+    , public DRW_DxfHeaderMaterialSourceHandler
+#endif
+#ifdef LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS
+    , public DRW_DxfEntitiesSourceHandler, public DRW_DxfBlockChildrenSourceHandler
+#endif
+#if defined(LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS) && defined(LIBDXFRW_HAS_DXF_BLOCK_RECORD_SOURCE_SELECTOR)
+    , public DRW_DxfBlockRecordSourceHandler, public DRW_DxfBlockSourceHandler
+#endif
+#ifdef LIBDXFRW_HAS_DXF_PHYSICAL_IDENTITY_SOURCE_HANDLER
+    , public DRW_DxfIdentitySourceHandler
+#endif
 #ifdef DWGSUPPORT
     ,
                        private RS_FilterDXFRW_DwgWriteIdentityRegistry
@@ -1977,6 +2005,12 @@ class RS_FilterDXFRW : public RS_FilterInterface,
   friend class DwgWriteFailureTestAccess;
 #endif
 public:
+#ifdef LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR
+  // Capture bounded raw-only materials. A narrow verified profile can replay
+  // automatically; this policy opts into the separately guarded wider path.
+  bool wantsDxfSparseMaterialRawCapture() const noexcept override;
+  virtual bool wantsDxfSparseMaterialRawReplay() const noexcept { return false; }
+#endif
   /// First libdxfrw version to write DXF hatch angles in degrees (0.6.4).
   static constexpr unsigned kFirstDegreeHatchWriter = LIBDXFRW_VERSION(0, 6, 4);
   /// The standalone libdxfrw fork writes "999 dxfrw 2.0.0" with raw hatch
@@ -2189,6 +2223,48 @@ public:
   void addRawDwgSection(const DRW_RawDwgSection &data) override;
   void addDataStorage(const DRW_DataStorageSection &data) override;
   void addRawDxfObject(const DRW_RawDxfObject &data) override;
+#ifdef LIBDXFRW_HAS_DXF_NAMESPACE_SOURCE_HANDLER
+  bool wantsDxfNamespaceSource() const override;
+  void addDxfNamespaceSource(const DRW_TableEntry &entry,
+                             const DRW_RawDxfObject &source) override;
+#endif
+#ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
+  bool wantsDxfHeaderMaterialSource() const override;
+  void addDxfHeaderMaterialSource(const DRW_DxfHeaderMaterialSource &source) override;
+#endif
+#ifdef LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS
+  bool wantsDxfEntitiesSource() const override;
+  bool wantsDxfBlockChildrenSource() const override;
+  void addDxfEntitiesSource(const DRW_DxfEntitiesSource &source) override;
+  void addDxfBlockChildrenSource(const DRW_DxfBlockChildrenSource &source) override;
+#endif
+#if defined(LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS) && defined(LIBDXFRW_HAS_DXF_BLOCK_RECORD_SOURCE_SELECTOR)
+  bool wantsDxfBlockRecordSource() const override;
+  void addDxfBlockRecordSource(const DRW_Block_Record &row, const DRW_RawDxfObject &source) override;
+  bool wantsDxfBlockSource() const override;
+  void addDxfBlockBeginSource(const DRW_Block &block, const DRW_RawDxfObject &source) override;
+  void addDxfBlockEndSource(const DRW_Block &block, const DRW_RawDxfObject &source) override;
+#endif
+#ifdef LIBDXFRW_HAS_DXF_PHYSICAL_IDENTITY_SOURCE_HANDLER
+  bool wantsDxfIdentitySource() const override;
+  void addDxfIdentitySource(const DRW_DxfIdentitySource &source) override;
+#endif
+#ifdef LIBDXFRW_HAS_DXF_DICTIONARY_SOURCE_HANDLERS
+  bool wantsDxfRootDictionarySource() const override;
+  void addDxfRootDictionarySource(const DRW_Dictionary &dictionary,
+                                  const DRW_RawDxfObject &source) override;
+  bool wantsDxfDictionarySource() const override;
+  void addDxfDictionarySource(const DRW_Dictionary &dictionary,
+                              const DRW_RawDxfObject &source) override;
+#endif
+#ifdef LIBDXFRW_HAS_DXF_RASTER_SOURCE_HANDLER
+  bool wantsDxfImageSource() const override;
+  void addDxfImageSource(const DRW_Image &image,
+                         const DRW_RawDxfObject &source) override;
+  bool wantsDxfImageDefSource() const override;
+  void addDxfImageDefSource(const DRW_ImageDef &definition,
+                            const DRW_RawDxfObject &source) override;
+#endif
   void addRawDxfEntity(const DRW_RawDxfObject &data) override;
   void addRawDxfSection(const DRW_RawDxfSection &data) override;
   void addDxfClass(const DRW_Class &data) override;
@@ -2755,6 +2831,24 @@ private:
     std::optional<DwgOpaqueTableOwnerGraphPlanRecord> ownerGraph;
     std::optional<DwgOpaqueTableFailure> preflightFailure;
   };
+  struct DwgEditedPlotSettingsPlanRecord {
+    std::size_t rawIndex;
+    std::uint32_t handle;
+    std::uint32_t parentHandle;
+    int objectType;
+    std::uint32_t bodyBitSize;
+    std::uint32_t objectSize;
+    std::vector<std::uint8_t> rawBytes;
+    double marginLeft;
+    double marginTop;
+    double marginRight;
+    double marginBottom;
+  };
+  struct DwgOwnerlessPlotSettingsPlanRecord {
+    std::size_t rawIndex;
+    LC_DwgAdvancedMetadata::RawObjectRecord raw;
+    DRW_PlotSettings plot;
+  };
   struct DwgExportAdmissionPlan {
     DRW::Version version = DRW::UNKNOWNV;
     bool valid = true;
@@ -2771,6 +2865,8 @@ private:
     std::map<const LC_Wipeout *, std::size_t> wipeoutRecordIndexes;
     std::map<std::size_t, DwgOpaqueTablePlanRecord> opaqueTableRecordIndexes;
     std::map<std::size_t, std::size_t> plotSettingsRecordIndexes;
+    std::map<std::size_t, DwgEditedPlotSettingsPlanRecord> editedPlotSettings;
+    std::map<std::uint32_t, DwgOwnerlessPlotSettingsPlanRecord> ownerlessPlotSettings;
     std::map<std::uint32_t, std::size_t> rawPlotSettingsRecordIndexes;
     std::set<std::uint32_t> rawPlotSettingsHandles;
   };
@@ -3144,6 +3240,11 @@ private:
   std::size_t m_dxfLeftOutRawRecords = 0;
   // What the codec left out of the last export (DXF or DWG leftOut()).
   std::map<std::string, std::size_t> m_writeLeftOut;
+  std::size_t m_legacyLayerLineweightsLeftOut = 0;
+  std::size_t m_legacyHeaderStylesLeftOut = 0;
+  bool m_legacyPaperScaleLeftOut = false;
+  bool m_legacyAngularPrecisionLeftOut = false;
+  std::size_t m_hatchAssociativityLeftOut = 0;
   std::map<std::string, std::size_t> m_shapeLeftOut;
   QString m_shapeExportDirectory;
   std::map<std::uint32_t, QString> m_shapeFileResolvedPaths;
@@ -3300,7 +3401,32 @@ private:
   bool m_oldMText = false;
   // Non-owning active-export observers; local RAII owners clear before delete.
   dxfRW *m_dxfW{nullptr};
+  std::function<bool()> m_dxfFinalCheck;
+  // Non-owning pair admitted for the duration of one checked DXF write.
+  const RS_Hatch *m_dxfAssociationHatch{nullptr};
+  const RS_Polyline *m_dxfAssociationBoundary{nullptr};
   dxfRW *m_dxfR{nullptr};
+#ifdef LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS
+  bool m_dxfAutomaticMaterialCapture{false};
+  bool m_dxfAutomaticHatchCapture{false};
+  QByteArray m_dxfAutomaticHatchBytes;
+  bool m_dxfHatchSourceScopeSeen{false};
+  std::vector<std::array<double, 4>> m_dxfHatchSourceGeometry;
+  std::uint32_t m_dxfHatchSourceHandle{0}, m_dxfHatchSourceBoundary{0}, m_dxfHatchSourceOwner{0};
+  QByteArray m_dxfAutomaticMaterialBytes;
+#endif
+#if defined(LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS) && defined(LIBDXFRW_HAS_DXF_BLOCK_RECORD_SOURCE_SELECTOR)
+  struct AutomaticMaterialSpace {
+    std::string name;
+    std::uint32_t begin{0};
+    bool ended{false}, children{false};
+  };
+  std::map<std::uint32_t, std::string> m_automaticMaterialSpaceRows;
+  std::map<std::uint32_t, AutomaticMaterialSpace> m_automaticMaterialSpaces;
+#endif
+  static QString toNativeSingleLineString(const QString &data, bool decodeCaret);
+  bool singleLineInputNeedsCaretDecoding() const;
+  bool m_dxfHasVersionHeader{false};
 #ifdef DWGSUPPORT
   // Null outside the current fileExport() operation, including failed saves.
   dwgRW *m_dwgW{nullptr};

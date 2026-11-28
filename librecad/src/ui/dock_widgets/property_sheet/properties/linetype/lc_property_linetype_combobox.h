@@ -45,4 +45,15 @@ private:
     unsigned m_updating = 0;
 };
 
+class LC_PropertyNamedLineTypeCombobox : public QG_LineTypeBox {
+public:
+    explicit LC_PropertyNamedLineTypeCombobox(LC_PropertyNamedLineTypeComboboxView* view, QWidget* parent);
+    void hidePopup() override;
+private:
+    void updateByProperty();
+    LC_PropertyNamedLineTypeComboboxView* m_view;
+    LC_PropertyNamedLineType* m_property;
+    unsigned m_updating = 0;
+};
+
 #endif

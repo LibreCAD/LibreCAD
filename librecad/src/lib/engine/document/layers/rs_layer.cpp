@@ -37,7 +37,10 @@ RS_Layer::RS_Layer(const QString& name) : m_data(name, RS_Pen(Qt::black, name ==
 }
 
 RS_Layer* RS_Layer::clone() const {
-    return new RS_Layer(*this);
+    auto* copy = new RS_Layer(*this);
+    // A new layer is not the imported table record, even within the same document.
+    copy->m_importedRecordId.reset();
+    return copy;
 }
 
 namespace {
@@ -50,6 +53,7 @@ RS_Layer& RS_Layer::operator=(const RS_Layer& other) {
     m_data = other.m_data;
     m_layerType = other.m_layerType;
     m_hiddenAs = other.m_hiddenAs;
+    m_importedRecordId = other.m_importedRecordId;
     return *this;
 }
 

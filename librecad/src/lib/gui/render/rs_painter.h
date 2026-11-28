@@ -164,7 +164,7 @@ public:
     void drawLineWCSScaled(const RS_Vector& wcsP1, const RS_Vector& wcsP2, double lineWidthFactor);
     void drawPolylineWCS(const RS_Polyline *polyline);
     void drawHandleWCS(const RS_Vector &wcsPos, const RS_Color &c, QPointF& previousUIPosition, int size = -1);
-    void drawImgWCS(const QImage &img, const RS_Vector &wcsInsertionPoint, const RS_Vector &uVector, const RS_Vector &vVector);
+    void drawImgWCS(const QImage &img, const RS_Vector &wcsInsertionPoint, const RS_Vector &uVector, const RS_Vector &vVector, const QPainterPath *clip = nullptr);
 
     // drawing in screen coordinates
     void drawCircleUI(const RS_Vector& uiCenter, double uiRadius);
@@ -520,7 +520,6 @@ protected:
                  double uiStartAngleDegrees, double angularLength, QPainterPath &path) const;
     void drawLineUI(double x1, double y1, double x2, double y2);
     void drawLineUI(const QPointF& startPoint, const QPointF& endPoint);
-    void drawImgUI(const QImage& img, const RS_Vector& uiInsert, const RS_Vector& uVector, const RS_Vector& vVector, const RS_Vector& factor);
 
     void drawRectUI(const RS_Vector& p1, const RS_Vector& p2);
 

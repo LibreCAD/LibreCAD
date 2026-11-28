@@ -25,18 +25,47 @@
 #include <map>
 #include <memory>
 #include <optional>
+#include <set>
 #include <string>
+#include <tuple>
 #include <utility>
 #include <vector>
 
 #include "drw_classes.h"
 #include "drw_datastorage.h"
 #include "drw_entities.h"
+#include "drw_interface.h"
 #include "drw_objects.h"
 
 class LC_DwgAdvancedMetadata {
 public:
   enum class ReplayState { ReplayAllowed, ReplayInvalidated, ReplayReplaced };
+#ifdef LIBDXFRW_HAS_DXF_RASTER_SOURCE_HANDLER
+  static constexpr std::size_t MaxDxfRasterSourcesPerKind = 512u;
+  // Allow one reactor per retained image plus the previous fixed-field headroom.
+  static constexpr std::size_t MaxDxfImageDefSourceGroups = MaxDxfRasterSourcesPerKind + 128u;
+  // 30 fixed IMAGE groups plus two coordinates for each of 256 clip vertices.
+  static constexpr std::size_t MaxDxfImageSourceGroups = 542u;
+  // 512 images with distinct definitions require more than 4 MiB of
+  // accounted source records. Both maps share this bounded logical budget.
+  static constexpr std::size_t MaxDxfRasterSourceBytes = 6u * 1024u * 1024u;
+#else
+  static constexpr std::size_t MaxDxfRasterSourcesPerKind = 32u;
+  static constexpr std::size_t MaxDxfImageDefSourceGroups = 64u;
+  static constexpr std::size_t MaxDxfImageSourceGroups = 64u;
+#endif
+
+  struct DxfMaterialEntityReference {
+    std::uint32_t source = 0, target = 0;
+    bool block = false;
+    std::string blockName;
+    unsigned long long lineage = 0;
+    bool operator==(const DxfMaterialEntityReference &other) const {
+      return source == other.source && target == other.target &&
+             block == other.block && blockName == other.blockName && lineage == other.lineage;
+    }
+  };
+  enum class DxfMaterialSimpleKind : std::uint8_t { Line, Circle, Arc, Point, LWPolyline, Ellipse };
 
   enum class ReplayBlocker {
     None,
@@ -90,7 +119,11 @@ public:
     AcDbAssocActionBody,
     AcDbEvalExpr,
     AcDbShHistoryNode,
-    AcShActionBody
+    AcShActionBody,
+    AcDbAssocValueDependency,
+    AcDbAssocDependencyBody,
+    AcDbAssoc2dConstraintGroup,
+    AcDbAssocVariable
   };
 
   enum class AssociativePrefixParseStatus {
@@ -1573,6 +1606,13 @@ public:
     std::uint32_t rawDataBitSize = 0;
     DRW::Version rawDataVersion = DRW::UNKNOWNV;
     bool rawDataValid = false;
+    // A partial DXF MATERIAL must never be reconstructed as a complete typed
+    // record when its raw carrier is unavailable or targets another version.
+    bool requiresRawDxfReplay = false;
+    // Optional immutable source copy for a bounded raw-only DXF profile.
+    // Absence or a conflict never authorizes replay.
+    std::shared_ptr<const DRW_RawDxfObject> rawDxfSource;
+    bool rawDxfSourceConflict = false;
     ReplayState replayState = ReplayState::ReplayAllowed;
   };
 
@@ -2183,6 +2223,11 @@ public:
     size_t boundedCountOverflow = 0;
     size_t decodedHandleCount = 0;
     size_t decodedValueCount = 0;
+    // Append new counters to preserve offsets of existing diagnostic fields.
+    size_t assocValueDependency = 0;
+    size_t assocDependencyBody = 0;
+    size_t assoc2dConstraintGroup = 0;
+    size_t assocVariable = 0;
   };
 
   struct TableRecord {
@@ -2692,6 +2737,8 @@ public:
   struct DictionaryEntryRecord {
     std::string name;
     std::uint32_t handle = 0;
+    // Zero means no DXF edge code was captured (for example, DWG input).
+    std::uint16_t dxfHandleCode = 0;
   };
   struct DictionaryRecord {
     std::uint32_t handle = 0;
@@ -3431,6 +3478,8 @@ public:
   void clear() {
     m_sourceDwgVersion = DRW::UNKNOWNV;
     m_rawObjects.clear();
+    m_plotRawSources.clear();
+    m_plotTypedSources.clear();
     m_dwgFramePublications.clear();
     m_dwgDictionaryMemberships.clear();
     m_dwgGroupMemberships.clear();
@@ -3452,10 +3501,32 @@ public:
     m_lineTypeTableEntries.clear();
     m_textStyleTableEntries.clear();
     m_layerTableEntries.clear();
+    m_layerTableIdentities.clear();
     m_dimStyleTableEntries.clear();
     m_appIdTableEntries.clear();
     m_spaceBlockRecords.clear();
     m_rawDxfObjects.clear();
+    m_dxfRootDictionarySource.reset();
+    m_dxfFixedGroupDictionarySource.reset();
+    m_dxfMaterialDictionarySource.reset();
+    m_dxfMaterialDictionarySourceConflict = false;
+    m_dxfMaterialLayerSources.clear();
+    m_dxfMaterialLayerSourceConflict = false;
+    m_dxfMaterialHeaderSourceCaptured = false;
+    m_dxfMaterialHeaderSourceConflict = false;
+    m_dxfMaterialHeaderSource.reset();
+    m_dxfMaterialEntitySources.reset();
+    m_dxfMaterialEntitySourcesConflict = false;
+    m_dxfMaterialEntitySourcesComplete = false;
+    m_dxfMaterialHeaderSourceVersion = DRW::UNKNOWNV;
+#ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
+    m_dxfMaterialHeaderPhysicalSource.reset();
+#endif
+    m_dxfImageDefSources.clear();
+    m_dxfImageSources.clear();
+    m_dxfRasterSourceBytes = 0;
+    m_dxfRasterSourceConflict = false;
+    m_dxfDictionarySourceConflict = false;
     m_rawDxfEntities.clear();
     m_rawDxfSections.clear();
     m_views.clear();
@@ -3477,6 +3548,10 @@ public:
     m_suns.clear();
     m_backgrounds.clear();
     m_materials.clear();
+    m_sourceHatchBoundaries.clear();
+    m_dxfEntitySourceOwners.clear();
+    m_dxfEntitySourceOwnersAvailable = true;
+    m_unidentifiedHatchBoundaries.clear();
     m_renderSettings.clear();
     m_sunStudies.clear();
     m_motionPaths.clear();
@@ -3584,7 +3659,23 @@ public:
     record.classMaintenanceVersion = object.m_classMaintenanceVersion;
     record.classUnknown1 = object.m_classUnknown1;
     record.classUnknown2 = object.m_classUnknown2;
+    if ((record.recordName == "PLOTSETTINGS" || record.className == "AcDbPlotSettings") &&
+        record.parentHandle == 0u && record.rawBytes.size() <= 4096u) {
+      const auto inserted = m_plotRawSources.emplace(record.handle, record);
+      if (!inserted.second)
+        inserted.first->second.handle = DRW::NoHandle;
+    }
     m_rawObjects.push_back(std::move(record));
+  }
+
+  const RawObjectRecord *plotRawSource(std::uint32_t handle) const {
+    const auto found = m_plotRawSources.find(handle);
+    return found == m_plotRawSources.end() ? nullptr : &found->second;
+  }
+
+  const DRW_PlotSettings *plotTypedSource(std::uint32_t handle) const {
+    const auto found = m_plotTypedSources.find(handle);
+    return found == m_plotTypedSources.end() ? nullptr : &found->second;
   }
 
   void addDwgFramePublication(const DRW_DwgFramePublication &publication) {
@@ -3741,6 +3832,11 @@ public:
   }
 
   void addPlotSettings(const DRW_PlotSettings &data) {
+    if (data.parentHandle == 0u && data.extData.empty() && data.appData.empty()) {
+      const auto inserted = m_plotTypedSources.emplace(data.handle, data);
+      if (!inserted.second)
+        inserted.first->second.handle = DRW::NoHandle;
+    }
     m_plotSettings.push_back(data);
     noteFamilyExposure("PLOTSETTINGS", data.handle,
                        static_cast<std::uint32_t>(data.parentHandle),
@@ -3757,8 +3853,447 @@ public:
   // Slice A2: lossless DXF passthrough store (group-text records captured by
   // the DXF reader's processRawObject/processRawEntity). Kept on the graphic so
   // a read filter and a later write filter share them across a DXF round-trip.
+  // Source associations are kept separately from reconstructed hatch loops:
+  // the latter can be reordered or edited and cannot yet replay these links.
+  // An imported owner is a decoded candidate, not proof of an unambiguous
+  // physical record. Duplicate identities and capture overflow fail closed.
+  void addDxfEntitySourceOwner(std::uint32_t handle, std::uint32_t owner) {
+    if (!m_dxfEntitySourceOwnersAvailable || handle == 0 || handle == DRW::NoHandle)
+      return;
+    try {
+      const auto found = m_dxfEntitySourceOwners.find(handle);
+      if (found != m_dxfEntitySourceOwners.end()) {
+        found->second = 0;
+      } else if (m_dxfEntitySourceOwners.size() == 65536u) {
+        m_dxfEntitySourceOwners.clear();
+        m_dxfEntitySourceOwnersAvailable = false;
+      } else {
+        m_dxfEntitySourceOwners.emplace(handle, owner == DRW::NoHandle ? 0u : owner);
+      }
+    } catch (...) {
+      m_dxfEntitySourceOwners.clear();
+      m_dxfEntitySourceOwnersAvailable = false;
+    }
+  }
+
+  bool dxfEntitySourceOwner(std::uint32_t handle, std::uint32_t &owner) const {
+    const auto found = m_dxfEntitySourceOwners.find(handle);
+    if (!m_dxfEntitySourceOwnersAvailable || found == m_dxfEntitySourceOwners.end() ||
+        found->second == 0 || found->second == DRW::NoHandle) return false;
+    owner = found->second;
+    return true;
+  }
+
+  void addSourceHatchBoundaries(std::uint32_t hatch,
+                                const std::vector<std::uint32_t> &boundaries) {
+    if (hatch == 0 || hatch == DRW::NoHandle) {
+      m_unidentifiedHatchBoundaries.insert(boundaries.begin(), boundaries.end());
+      return;
+    }
+    auto &stored = m_sourceHatchBoundaries[hatch];
+    for (const auto boundary : boundaries) {
+      if (boundary != 0 && boundary != DRW::NoHandle)
+        stored.insert(boundary);
+    }
+  }
+
+  const std::set<std::uint32_t> &unidentifiedHatchBoundaries() const {
+    return m_unidentifiedHatchBoundaries;
+  }
+
+  bool hasSourceHatchAssociation(std::uint32_t hatch) const {
+    return m_sourceHatchBoundaries.count(hatch) != 0;
+  }
+
+  bool isSourceHatchBoundary(std::uint32_t hatch,
+                             std::uint32_t boundary) const {
+    const auto it = m_sourceHatchBoundaries.find(hatch);
+    return it != m_sourceHatchBoundaries.end() &&
+           it->second.count(boundary) != 0;
+  }
+
   void addRawDxfObject(const DRW_RawDxfObject &object) {
     m_rawDxfObjects.push_back(object);
+  }
+
+  // The codec publishes the typed MATERIAL immediately before its raw
+  // carrier. Capture only that bounded raw-only source, and fail closed on
+  // duplicate identities or allocation failure. This does not admit replay.
+  void addDxfRawMaterialSource(const DRW_RawDxfObject &source) {
+    if (source.name != "MATERIAL" || m_materials.empty())
+      return;
+    if (source.handle == 0 || source.handle == DRW::NoHandle) {
+      markDxfRawMaterialSourceUnavailable(source.handle);
+      return;
+    }
+    auto &current = m_materials.back();
+    if (!current.requiresRawDxfReplay || current.handle != source.handle)
+      return;
+    // This first source profile is limited to three total materials. The
+    // bound also keeps repeated capture attempts from scanning an unbounded
+    // list; larger graphs remain outside the replay profile.
+    if (m_materials.size() > 3u || source.m_version == DRW::UNKNOWNV ||
+        source.groups.size() > 64u || source.rawValues.size() > 64u ||
+        (source.hasRawValues && source.rawValues.size() != source.groups.size())) {
+      current.rawDxfSourceConflict = true;
+      return;
+    }
+    std::size_t captured = 0;
+    for (auto &material : m_materials) {
+      if (material.rawDxfSource)
+        ++captured;
+      if (&material != &current && material.handle == source.handle) {
+        material.rawDxfSource.reset();
+        material.rawDxfSourceConflict = true;
+        current.rawDxfSourceConflict = true;
+      }
+    }
+    if (current.rawDxfSource || current.rawDxfSourceConflict || captured >= 3u) {
+      current.rawDxfSource.reset();
+      current.rawDxfSourceConflict = true;
+      return;
+    }
+    try {
+      current.rawDxfSource = std::make_shared<const DRW_RawDxfObject>(source);
+    } catch (...) {
+      current.rawDxfSourceConflict = true;
+    }
+  }
+
+  void markDxfRawMaterialSourceUnavailable(std::uint32_t handle) noexcept {
+    if (m_materials.empty())
+      return;
+    auto &current = m_materials.back();
+    if (current.requiresRawDxfReplay && current.handle == handle) {
+      current.rawDxfSource.reset();
+      current.rawDxfSourceConflict = true;
+    }
+  }
+
+  void addDxfRootDictionarySource(const DRW_RawDxfObject &source) {
+    if (m_dxfRootDictionarySource)
+      m_dxfDictionarySourceConflict = true;
+    else {
+      try {
+        m_dxfRootDictionarySource = source;
+      } catch (...) {
+        m_dxfDictionarySourceConflict = true;
+      }
+    }
+  }
+
+  void addDxfFixedGroupDictionarySource(const DRW_RawDxfObject &source) {
+    if (m_dxfFixedGroupDictionarySource)
+      m_dxfDictionarySourceConflict = true;
+    else {
+      try {
+        m_dxfFixedGroupDictionarySource = source;
+      } catch (...) {
+        m_dxfDictionarySourceConflict = true;
+      }
+    }
+  }
+
+  const DRW_RawDxfObject *dxfRootDictionarySource() const {
+    return m_dxfDictionarySourceConflict || !m_dxfRootDictionarySource
+               ? nullptr : &*m_dxfRootDictionarySource;
+  }
+
+  const DRW_RawDxfObject *dxfFixedGroupDictionarySource() const {
+    return m_dxfDictionarySourceConflict || !m_dxfFixedGroupDictionarySource
+               ? nullptr : &*m_dxfFixedGroupDictionarySource;
+  }
+
+  void addDxfMaterialDictionarySource(const DRW_RawDxfObject &source) {
+    if (m_dxfMaterialDictionarySource || m_dxfMaterialDictionarySourceConflict) {
+      m_dxfMaterialDictionarySource.reset();
+      m_dxfMaterialDictionarySourceConflict = true;
+      return;
+    }
+    try {
+      m_dxfMaterialDictionarySource = source;
+    } catch (...) {
+      m_dxfMaterialDictionarySourceConflict = true;
+    }
+  }
+
+  const DRW_RawDxfObject *dxfMaterialDictionarySource() const {
+    return m_dxfMaterialDictionarySourceConflict || !m_dxfMaterialDictionarySource
+               ? nullptr : &*m_dxfMaterialDictionarySource;
+  }
+
+  void markDxfMaterialLayerSourceUnavailable() {
+    m_dxfMaterialLayerSources.clear();
+    m_dxfMaterialLayerSourceConflict = true;
+  }
+
+  void addDxfMaterialLayerSource(const DRW_RawDxfObject &source) {
+    if (m_dxfMaterialLayerSourceConflict || source.handle == 0 ||
+        source.handle == DRW::NoHandle || m_dxfMaterialLayerSources.size() >= 32u) {
+      markDxfMaterialLayerSourceUnavailable();
+      return;
+    }
+    try {
+      if (!m_dxfMaterialLayerSources.emplace(source.handle, source).second)
+        markDxfMaterialLayerSourceUnavailable();
+    } catch (...) {
+      markDxfMaterialLayerSourceUnavailable();
+    }
+  }
+
+  const DRW_RawDxfObject *dxfMaterialLayerSource(std::uint32_t handle) const {
+    if (m_dxfMaterialLayerSourceConflict)
+      return nullptr;
+    const auto found = m_dxfMaterialLayerSources.find(handle);
+    return found == m_dxfMaterialLayerSources.end() ? nullptr : &found->second;
+  }
+
+  void beginDxfMaterialEntitySources(bool physical) {
+    m_dxfMaterialEntitySources.emplace();
+    m_dxfMaterialEntitySourcesConflict = false;
+    m_dxfMaterialEntitySourcesComplete = false;
+    m_dxfMaterialPhysicalRequested = physical;
+    m_dxfMaterialAutomaticReplayCandidate = physical;
+    m_dxfMaterialPhysicalEntities = m_dxfMaterialPhysicalBlocks = m_dxfMaterialExpectedBlocks = 0;
+    m_dxfMaterialInventoryEntities = m_dxfMaterialInventoryBlocks = 0;
+    m_dxfMaterialInventoryVerified = false;
+    m_dxfMaterialPhysicalReferences.clear();
+    m_dxfMaterialPhysicalRecords.clear();
+    m_dxfMaterialPhysicalSimple.clear();
+    m_dxfMaterialDeliveredSimple.clear();
+  }
+
+  void expectDxfMaterialPhysicalBlock() { ++m_dxfMaterialExpectedBlocks; }
+  bool dxfMaterialPhysicalRequested() const { return m_dxfMaterialPhysicalRequested; }
+  void rejectDxfMaterialAutomaticReplay() { m_dxfMaterialAutomaticReplayCandidate = false; }
+  bool dxfMaterialAutomaticReplayEligible() const {
+    return m_dxfMaterialAutomaticReplayCandidate && m_dxfMaterialEntitySourcesComplete &&
+           !m_dxfMaterialEntitySourcesConflict && m_dxfMaterialPhysicalEntities == 1u &&
+           !m_dxfMaterialPhysicalSimple.empty() &&
+           m_dxfMaterialPhysicalSimple.size() == m_dxfMaterialPhysicalRecords.size();
+  }
+  void addDxfMaterialPhysicalScope(bool block) {
+    if (block) ++m_dxfMaterialPhysicalBlocks;
+    else ++m_dxfMaterialPhysicalEntities;
+  }
+  void addDxfMaterialPhysicalRecord(std::size_t begin, std::size_t end) {
+    if (!begin || end <= begin || m_dxfMaterialPhysicalRecords.size() >= 65536u) {
+      markDxfMaterialEntitySourcesUnavailable(); return;
+    }
+    try { m_dxfMaterialPhysicalRecords.emplace_back(begin, end); }
+    catch (...) { markDxfMaterialEntitySourcesUnavailable(); }
+  }
+  void verifyDxfMaterialPhysicalInventory(std::size_t entities, std::size_t blocks,
+      std::vector<std::pair<std::size_t, std::size_t>> records) {
+    if (m_dxfMaterialInventoryVerified || entities > 1u ||
+        records.size() != m_dxfMaterialPhysicalRecords.size()) {
+      markDxfMaterialEntitySourcesUnavailable(); return;
+    }
+    std::sort(records.begin(), records.end());
+    std::sort(m_dxfMaterialPhysicalRecords.begin(), m_dxfMaterialPhysicalRecords.end());
+    if (records != m_dxfMaterialPhysicalRecords ||
+        std::adjacent_find(records.begin(), records.end()) != records.end()) {
+      markDxfMaterialEntitySourcesUnavailable(); return;
+    }
+    m_dxfMaterialInventoryEntities = entities;
+    m_dxfMaterialInventoryBlocks = blocks;
+    m_dxfMaterialInventoryVerified = true;
+  }
+  void addDxfMaterialPhysicalReference(std::uint32_t source, std::uint32_t target) {
+    if (!source || source == DRW::NoHandle || !target || target == DRW::NoHandle ||
+        m_dxfMaterialPhysicalReferences.size() >= 4096u) {
+      markDxfMaterialEntitySourcesUnavailable(); return;
+    }
+    try { m_dxfMaterialPhysicalReferences.emplace_back(source, target); }
+    catch (...) { markDxfMaterialEntitySourcesUnavailable(); }
+  }
+
+  void addDxfMaterialSimpleDelivery(std::uint32_t source, bool block,
+                                    DxfMaterialSimpleKind kind, bool physical) {
+    if (!m_dxfMaterialPhysicalRequested) return;
+    auto &entities = physical ? m_dxfMaterialPhysicalSimple : m_dxfMaterialDeliveredSimple;
+    if (!source || source == DRW::NoHandle || entities.size() >= 4096u) {
+      markDxfMaterialEntitySourcesUnavailable(); return;
+    }
+    try { entities.emplace_back(source, block, kind); }
+    catch (...) { markDxfMaterialEntitySourcesUnavailable(); }
+  }
+
+  void markDxfMaterialEntitySourcesUnavailable() {
+    m_dxfMaterialEntitySourcesConflict = true;
+  }
+
+  void addDxfMaterialEntitySource(DxfMaterialEntityReference source) {
+    if (!m_dxfMaterialEntitySources || m_dxfMaterialEntitySourcesConflict ||
+        !source.source || source.source == DRW::NoHandle || !source.target || !source.lineage ||
+        source.target == DRW::NoHandle || source.blockName.size() > 1024u ||
+        m_dxfMaterialEntitySources->size() >= 4096u) {
+      markDxfMaterialEntitySourcesUnavailable();
+      return;
+    }
+    try { m_dxfMaterialEntitySources->push_back(std::move(source)); }
+    catch (...) { markDxfMaterialEntitySourcesUnavailable(); }
+  }
+
+  void finishDxfMaterialEntitySources() {
+    if (!m_dxfMaterialEntitySources || m_dxfMaterialEntitySourcesConflict) return;
+    auto &sources = *m_dxfMaterialEntitySources;
+    std::sort(sources.begin(), sources.end(), [](const auto &a, const auto &b) { return a.source < b.source; });
+    std::sort(m_dxfMaterialPhysicalReferences.begin(), m_dxfMaterialPhysicalReferences.end());
+    std::sort(m_dxfMaterialPhysicalSimple.begin(), m_dxfMaterialPhysicalSimple.end());
+    std::sort(m_dxfMaterialDeliveredSimple.begin(), m_dxfMaterialDeliveredSimple.end());
+    if (!m_dxfMaterialPhysicalRequested || !m_dxfMaterialInventoryVerified ||
+        m_dxfMaterialPhysicalEntities != m_dxfMaterialInventoryEntities ||
+        m_dxfMaterialPhysicalBlocks != m_dxfMaterialInventoryBlocks ||
+        m_dxfMaterialPhysicalBlocks != m_dxfMaterialExpectedBlocks ||
+        m_dxfMaterialPhysicalSimple != m_dxfMaterialDeliveredSimple ||
+        std::adjacent_find(m_dxfMaterialPhysicalSimple.begin(), m_dxfMaterialPhysicalSimple.end(),
+            [](const auto &a, const auto &b) { return std::get<0>(a) == std::get<0>(b); }) != m_dxfMaterialPhysicalSimple.end() ||
+        m_dxfMaterialPhysicalReferences.size() != sources.size()) {
+      markDxfMaterialEntitySourcesUnavailable(); return;
+    }
+    for (std::size_t i = 0; i < sources.size(); ++i)
+      if ((i && sources[i - 1].source == sources[i].source) ||
+          m_dxfMaterialPhysicalReferences[i] != std::make_pair(sources[i].source, sources[i].target)) {
+        markDxfMaterialEntitySourcesUnavailable(); return;
+      }
+    m_dxfMaterialEntitySourcesComplete = true;
+  }
+
+  const std::vector<DxfMaterialEntityReference> *dxfMaterialEntitySources() const {
+    return m_dxfMaterialEntitySourcesComplete && !m_dxfMaterialEntitySourcesConflict && m_dxfMaterialEntitySources
+        ? &*m_dxfMaterialEntitySources : nullptr;
+  }
+
+  void addDxfMaterialHeaderSource(DRW::Version version,
+                                  std::optional<std::uint32_t> handle) {
+    if (m_dxfMaterialHeaderSourceCaptured || version == DRW::UNKNOWNV) {
+      m_dxfMaterialHeaderSourceConflict = true;
+      return;
+    }
+    m_dxfMaterialHeaderSourceCaptured = true;
+    m_dxfMaterialHeaderSourceVersion = version;
+    m_dxfMaterialHeaderSource = handle;
+  }
+
+#ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
+  void addDxfMaterialHeaderPhysicalSource(const DRW_DxfHeaderMaterialSource &source) {
+    if (m_dxfMaterialHeaderPhysicalSource ||
+        source.status != DRW_DxfHeaderMaterialSource::Status::Complete ||
+        source.version == DRW::UNKNOWNV) {
+      m_dxfMaterialHeaderSourceConflict = true;
+      return;
+    }
+    m_dxfMaterialHeaderPhysicalSource = source;
+  }
+
+  const DRW_DxfHeaderMaterialSource *dxfMaterialHeaderPhysicalSource() const {
+    return !m_dxfMaterialHeaderSourceConflict && m_dxfMaterialHeaderPhysicalSource
+        ? &*m_dxfMaterialHeaderPhysicalSource : nullptr;
+  }
+#endif
+
+  void markDxfMaterialHeaderSourceUnavailable() {
+    m_dxfMaterialHeaderSourceConflict = true;
+  }
+
+  bool dxfMaterialHeaderSource(DRW::Version version, bool &present,
+                               std::uint32_t &handle) const {
+    if (!m_dxfMaterialHeaderSourceCaptured || m_dxfMaterialHeaderSourceConflict ||
+        m_dxfMaterialHeaderSourceVersion != version)
+      return false;
+    present = m_dxfMaterialHeaderSource.has_value();
+    handle = m_dxfMaterialHeaderSource.value_or(0);
+    return true;
+  }
+
+  void addDxfRasterSource(std::map<std::uint32_t, DRW_RawDxfObject> &sources,
+                          const DRW_RawDxfObject &source, const char *kind) {
+    if (m_dxfRasterSourceConflict)
+      return;
+    const auto maxGroups = source.name == "IMAGEDEF" ? MaxDxfImageDefSourceGroups :
+                           source.name == "IMAGE" ? MaxDxfImageSourceGroups : 64u;
+    if (source.name != kind || source.handle == 0 || source.handle == DRW::NoHandle ||
+        source.m_version == DRW::UNKNOWNV || sources.size() >= MaxDxfRasterSourcesPerKind ||
+        source.groups.size() > maxGroups || source.rawValues.size() > maxGroups ||
+        (source.hasRawValues && source.rawValues.size() != source.groups.size())) {
+      m_dxfRasterSourceConflict = true;
+      return;
+    }
+    std::size_t charge = 0;
+#ifdef LIBDXFRW_HAS_DXF_RASTER_SOURCE_HANDLER
+    // Bound both maps together, including copied vector elements and payloads.
+    // This is logical retained storage, not allocator-capacity or RSS accounting.
+    const std::size_t fixed = sizeof(std::pair<const std::uint32_t, DRW_RawDxfObject>) +
+        4u * sizeof(void *) + source.groups.size() * sizeof(DRW_Variant) +
+        source.rawValues.size() * sizeof(std::string);
+    if (m_dxfRasterSourceBytes > MaxDxfRasterSourceBytes ||
+        fixed > MaxDxfRasterSourceBytes - m_dxfRasterSourceBytes) {
+      m_dxfRasterSourceConflict = true;
+      return;
+    }
+    const std::size_t allowance = std::min<std::size_t>(64u * 1024u,
+        MaxDxfRasterSourceBytes - m_dxfRasterSourceBytes - fixed);
+    std::size_t remaining = allowance;
+    if (source.name.size() >= remaining) {
+      m_dxfRasterSourceConflict = true;
+      return;
+    }
+    remaining -= source.name.size() + 1u;
+    for (const auto &group : source.groups) {
+      std::size_t bytes = 0;
+      if (!group.estimateRetainedPayloadBytes(remaining, bytes)) {
+        m_dxfRasterSourceConflict = true;
+        return;
+      }
+      remaining -= bytes;
+    }
+    for (const auto &value : source.rawValues) {
+      if (value.size() >= remaining) {
+        m_dxfRasterSourceConflict = true;
+        return;
+      }
+      remaining -= value.size() + 1u;
+    }
+    charge = fixed + allowance - remaining;
+#endif
+    try {
+      if (!sources.emplace(source.handle, source).second)
+        m_dxfRasterSourceConflict = true;
+      else
+        m_dxfRasterSourceBytes += charge;
+    } catch (...) {
+      m_dxfRasterSourceConflict = true;
+    }
+  }
+
+  const DRW_RawDxfObject *dxfRasterSource(
+      const std::map<std::uint32_t, DRW_RawDxfObject> &sources,
+      std::uint32_t handle) const {
+    if (m_dxfDictionarySourceConflict || m_dxfRasterSourceConflict || sources.empty())
+      return nullptr;
+    if (handle == 0)
+      return sources.size() == 1u ? &sources.begin()->second : nullptr;
+    const auto found = sources.find(handle);
+    return found == sources.end() ? nullptr : &found->second;
+  }
+
+  void markDxfRasterSourceUnavailable() { m_dxfRasterSourceConflict = true; }
+
+  void addDxfImageDefSource(const DRW_RawDxfObject &source) {
+    addDxfRasterSource(m_dxfImageDefSources, source, "IMAGEDEF");
+  }
+
+  const DRW_RawDxfObject *dxfImageDefSource(std::uint32_t handle = 0) const {
+    return dxfRasterSource(m_dxfImageDefSources, handle);
+  }
+
+  void addDxfImageSource(const DRW_RawDxfObject &source) {
+    addDxfRasterSource(m_dxfImageSources, source, "IMAGE");
+  }
+
+  const DRW_RawDxfObject *dxfImageSource(std::uint32_t handle = 0) const {
+    return dxfRasterSource(m_dxfImageSources, handle);
   }
 
   void addRawDxfEntity(const DRW_RawDxfObject &entity) {
@@ -3794,9 +4329,13 @@ public:
     }
   }
 
-  void addLayerTableEntry(const DRW_Layer &data) {
-    if (!data.name.empty())
+  void addLayerTableEntry(const DRW_Layer &data,
+                          const std::shared_ptr<const void> &identity = {}) {
+    if (!data.name.empty()) {
       m_layerTableEntries[data.name] = data;
+      if (identity)
+        m_layerTableIdentities[identity] = data.name;
+    }
   }
 
   void addDimStyleTableEntry(const DRW_Dimstyle &data) {
@@ -4260,8 +4799,20 @@ public:
     m_backgrounds.push_back(std::move(record));
   }
 
+  template <typename Material>
+  static auto materialRequiresRawDxfReplay(const Material &material, int)
+      -> decltype(material.requiresRawDxfMaterialReplay(), bool()) {
+    return material.requiresRawDxfMaterialReplay();
+  }
+
+  template <typename Material>
+  static bool materialRequiresRawDxfReplay(const Material &, long) {
+    return false; // Bundled codecs without the optional raw-only marker.
+  }
+
   void addMaterial(const DRW_Material &material) {
     MaterialRecord record;
+    record.requiresRawDxfReplay = materialRequiresRawDxfReplay(material, 0);
     record.handle = material.handle;
     record.parentHandle = material.parentHandle;
     record.name = material.m_name;
@@ -5495,6 +6046,17 @@ public:
     m_placeholders.push_back(record);
   }
 
+  template <typename Entry>
+  static auto dictionaryDxfHandleCode(const Entry &entry, int)
+      -> decltype(entry.m_dxfHandleCode, std::uint16_t{}) {
+    return static_cast<std::uint16_t>(entry.m_dxfHandleCode);
+  }
+
+  template <typename Entry>
+  static std::uint16_t dictionaryDxfHandleCode(const Entry &, long) {
+    return 0;
+  }
+
   void addDictionary(const DRW_Dictionary &dictionary) {
     DictionaryRecord record;
     record.handle = dictionary.handle;
@@ -5516,6 +6078,7 @@ public:
       DictionaryEntryRecord er;
       er.name = entry.m_name;
       er.handle = entry.m_handle;
+      er.dxfHandleCode = dictionaryDxfHandleCode(entry, 0);
       record.entries.push_back(std::move(er));
     }
     m_dictionaries.push_back(std::move(record));
@@ -7077,6 +7640,11 @@ public:
   const DRW_Layer *findLayerTableEntryByName(const std::string &name) const {
     const auto it = m_layerTableEntries.find(name);
     return it == m_layerTableEntries.end() ? nullptr : &it->second;
+  }
+  const DRW_Layer *findLayerTableEntryByIdentity(
+      const std::shared_ptr<const void> &identity) const {
+    const auto it = m_layerTableIdentities.find(identity);
+    return it == m_layerTableIdentities.end() ? nullptr : findLayerTableEntryByName(it->second);
   }
   const DRW_Dimstyle *
   findDimStyleTableEntryByName(const std::string &name) const {
@@ -10594,6 +11162,14 @@ public:
       return "AcDbShHistoryNode";
     case AssociativePrefixKind::AcShActionBody:
       return "AcShActionBody";
+    case AssociativePrefixKind::AcDbAssocValueDependency:
+      return "AcDbAssocValueDependency";
+    case AssociativePrefixKind::AcDbAssocDependencyBody:
+      return "AcDbAssocDependencyBody";
+    case AssociativePrefixKind::AcDbAssoc2dConstraintGroup:
+      return "AcDbAssoc2dConstraintGroup";
+    case AssociativePrefixKind::AcDbAssocVariable:
+      return "AcDbAssocVariable";
     }
     return "unknown";
   }
@@ -12383,6 +12959,16 @@ private:
       return AssociativePrefixKind::AcDbShHistoryNode;
     case DRW_AssociativePrefixStatus::Kind::AcShActionBody:
       return AssociativePrefixKind::AcShActionBody;
+#ifdef LIBDXFRW_HAS_EXTENDED_ASSOCIATIVE_PREFIX_KINDS
+    case DRW_AssociativePrefixStatus::Kind::AcDbAssocValueDependency:
+      return AssociativePrefixKind::AcDbAssocValueDependency;
+    case DRW_AssociativePrefixStatus::Kind::AcDbAssocDependencyBody:
+      return AssociativePrefixKind::AcDbAssocDependencyBody;
+    case DRW_AssociativePrefixStatus::Kind::AcDbAssoc2dConstraintGroup:
+      return AssociativePrefixKind::AcDbAssoc2dConstraintGroup;
+    case DRW_AssociativePrefixStatus::Kind::AcDbAssocVariable:
+      return AssociativePrefixKind::AcDbAssocVariable;
+#endif
     }
     return AssociativePrefixKind::AcDbAssocAction;
   }
@@ -12611,6 +13197,18 @@ private:
       break;
     case AssociativePrefixKind::AcShActionBody:
       ++counts.shActionBody;
+      break;
+    case AssociativePrefixKind::AcDbAssocValueDependency:
+      ++counts.assocValueDependency;
+      break;
+    case AssociativePrefixKind::AcDbAssocDependencyBody:
+      ++counts.assocDependencyBody;
+      break;
+    case AssociativePrefixKind::AcDbAssoc2dConstraintGroup:
+      ++counts.assoc2dConstraintGroup;
+      break;
+    case AssociativePrefixKind::AcDbAssocVariable:
+      ++counts.assocVariable;
       break;
     }
     switch (prefix.status) {
@@ -13318,6 +13916,8 @@ private:
 
   DRW::Version m_sourceDwgVersion = DRW::UNKNOWNV;
   std::vector<RawObjectRecord> m_rawObjects;
+  std::map<std::uint32_t, RawObjectRecord> m_plotRawSources;
+  std::map<std::uint32_t, DRW_PlotSettings> m_plotTypedSources;
   std::vector<DRW_DwgFramePublication> m_dwgFramePublications;
   std::vector<DRW_DwgDictionaryMembership> m_dwgDictionaryMemberships;
   std::vector<DRW_DwgDictionaryWithDefaultMembership>
@@ -13341,10 +13941,42 @@ private:
   std::map<std::string, DRW_LType> m_lineTypeTableEntries;
   std::map<std::string, DRW_Textstyle> m_textStyleTableEntries;
   std::map<std::string, DRW_Layer> m_layerTableEntries;
+  std::map<std::shared_ptr<const void>, std::string,
+           std::owner_less<std::shared_ptr<const void>>> m_layerTableIdentities;
   std::map<std::uint32_t, std::string> m_spaceBlockRecords;
   std::map<std::string, DRW_Dimstyle> m_dimStyleTableEntries;
   std::map<std::string, DRW_AppId> m_appIdTableEntries;
   std::vector<DRW_RawDxfObject> m_rawDxfObjects;
+  std::optional<DRW_RawDxfObject> m_dxfRootDictionarySource;
+  std::optional<DRW_RawDxfObject> m_dxfFixedGroupDictionarySource;
+  std::optional<DRW_RawDxfObject> m_dxfMaterialDictionarySource;
+  bool m_dxfMaterialDictionarySourceConflict = false;
+  std::map<std::uint32_t, DRW_RawDxfObject> m_dxfMaterialLayerSources;
+  bool m_dxfMaterialLayerSourceConflict = false;
+  std::optional<std::uint32_t> m_dxfMaterialHeaderSource;
+  std::optional<std::vector<DxfMaterialEntityReference>> m_dxfMaterialEntitySources;
+  bool m_dxfMaterialEntitySourcesConflict = false;
+  bool m_dxfMaterialEntitySourcesComplete = false;
+  bool m_dxfMaterialPhysicalRequested = false;
+  bool m_dxfMaterialAutomaticReplayCandidate = false;
+  std::size_t m_dxfMaterialPhysicalEntities = 0, m_dxfMaterialPhysicalBlocks = 0, m_dxfMaterialExpectedBlocks = 0;
+  std::vector<std::pair<std::uint32_t, std::uint32_t>> m_dxfMaterialPhysicalReferences;
+  using DxfMaterialSimpleDelivery = std::tuple<std::uint32_t, bool, DxfMaterialSimpleKind>;
+  std::vector<DxfMaterialSimpleDelivery> m_dxfMaterialPhysicalSimple, m_dxfMaterialDeliveredSimple;
+  std::size_t m_dxfMaterialInventoryEntities = 0, m_dxfMaterialInventoryBlocks = 0;
+  bool m_dxfMaterialInventoryVerified = false;
+  std::vector<std::pair<std::size_t, std::size_t>> m_dxfMaterialPhysicalRecords;
+  DRW::Version m_dxfMaterialHeaderSourceVersion = DRW::UNKNOWNV;
+  bool m_dxfMaterialHeaderSourceCaptured = false;
+  bool m_dxfMaterialHeaderSourceConflict = false;
+#ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
+  std::optional<DRW_DxfHeaderMaterialSource> m_dxfMaterialHeaderPhysicalSource;
+#endif
+  std::map<std::uint32_t, DRW_RawDxfObject> m_dxfImageDefSources;
+  std::map<std::uint32_t, DRW_RawDxfObject> m_dxfImageSources;
+  std::size_t m_dxfRasterSourceBytes = 0;
+  bool m_dxfRasterSourceConflict = false;
+  bool m_dxfDictionarySourceConflict = false;
   std::vector<DRW_RawDxfObject> m_rawDxfEntities;
   std::vector<DRW_RawDxfSection> m_rawDxfSections;
   std::vector<ViewRecord> m_views;
@@ -13368,6 +14000,10 @@ private:
   std::vector<SunRecord> m_suns;
   std::vector<BackgroundRecord> m_backgrounds;
   std::vector<MaterialRecord> m_materials;
+  std::map<std::uint32_t, std::set<std::uint32_t>> m_sourceHatchBoundaries;
+  std::map<std::uint32_t, std::uint32_t> m_dxfEntitySourceOwners;
+  bool m_dxfEntitySourceOwnersAvailable = true;
+  std::set<std::uint32_t> m_unidentifiedHatchBoundaries;
   std::vector<RenderSettingsRecord> m_renderSettings;
   std::vector<SunStudyRecord> m_sunStudies;
   std::vector<MotionPathRecord> m_motionPaths;

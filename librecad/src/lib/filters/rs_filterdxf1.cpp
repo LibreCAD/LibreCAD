@@ -580,6 +580,13 @@ bool RS_FilterDXF1::readFromBuffer() {
                         }
                     } while(dxfCode.size() && code!=0);
                     if (currentLayer) {
+                        // QCad 1 layer records have no lineweight. ByLayer
+                        // and ByBlock are entity inheritance modes, not
+                        // concrete layer lineweights; use the default.
+                        if (pen.getWidth() == RS2::WidthByLayer ||
+                            pen.getWidth() == RS2::WidthByBlock) {
+                            pen.setWidth(RS2::WidthDefault);
+                        }
                         currentLayer->setPen(pen);
                     }
                     //graphic->setStyle("CONTINUOUS");

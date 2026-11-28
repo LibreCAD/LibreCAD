@@ -31,6 +31,7 @@
 
 class RS_Entity;
 class RS_Layer;
+class LC_LineTypeList;
 
 class QG_WidgetPen : public QWidget, public Ui::QG_WidgetPen{
     Q_OBJECT
@@ -56,7 +57,8 @@ protected slots:
     void onLineTypeChanged(RS2::LineType);
 protected:
     bool m_initialized = false;
-    RS_Pen m_sourcePen;
+    void setPenWithLineTypes(const RS_Pen& pen, bool showByLayer, bool showUnchanged,
+                             const QString& title, const LC_LineTypeList* lineTypes);
     void notifyPenChanged();
     void focusInEvent(QFocusEvent *event) override;
     void focusOutEvent(QFocusEvent *event) override;

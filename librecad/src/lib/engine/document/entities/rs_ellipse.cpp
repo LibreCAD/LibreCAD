@@ -79,6 +79,40 @@ bool hasUsableEllipseData(const RS_EllipseData& data) {
         && data.majorP.magnitude() > RS_TOLERANCE;
 }
 
+// The public length helper historically treats close angles as a full turn.
+// Actual ellipse entities retain distinct endpoints and need their true sweep.
+double ellipseLength(double a, double ratio, double angle1, double angle2, bool exactSweep) {
+    const double k = std::sqrt(1. - ratio * ratio);
+    if (!std::isfinite(a) || !std::isfinite(angle1) || !std::isfinite(angle2) || !std::isfinite(k))
+        return 0.;
+    angle1 = RS_Math::correctAngle(angle1);
+    angle2 = RS_Math::correctAngle(angle2);
+    if (exactSweep ? angle1 == angle2 : std::abs(angle2 - angle1) < RS_TOLERANCE_ANGLE)
+        return 4. * a * boost::math::ellint_2<double>(k);
+    if (angle2 < angle1) angle2 += 2. * M_PI;
+    // Split each angle consistently so crossing a half period has no jump.
+    const double halfPeriod = 2. * boost::math::ellint_2<double>(k);
+    const auto lengthTo = [halfPeriod, k](double angle) {
+        double periods = std::floor(angle / M_PI);
+        double rest = angle - periods * M_PI;
+        if (rest < 0.) { periods -= 1.; rest += M_PI; }
+        else if (rest >= M_PI) { periods += 1.; rest -= M_PI; }
+        return periods * halfPeriod + RS_Math::ellipticIntegral_2(k, rest);
+    };
+    return a * (lengthTo(angle2) - lengthTo(angle1));
+}
+
+bool ellipseAngleBetween(double angle, double start, double end, bool reversed) {
+    const double signedSweep = reversed ? start - end : end - start;
+    const double sweep = RS_Math::correctAngle(signedSweep);
+    if (sweep == 0.0) return true;
+    // Preserve the usual boundary tolerance except where it would turn a
+    // short arc, or a small gap in a nearly full arc, into a full ellipse.
+    if (std::abs(std::remainder(signedSweep, 2.0 * M_PI)) >= RS_TOLERANCE_ANGLE)
+        return RS_Math::isAngleBetween(angle, start, end, reversed);
+    return RS_Math::correctAngle(angle - (reversed ? end : start)) <= sweep;
+}
+
     /**
      * @brief solveArcLength find the elliptic angle at which the arc length from the angle \p x1 is \p length
      *
@@ -308,7 +342,9 @@ void RS_Ellipse::calculateBorders() {
 #ifndef EMU_C99
     using std::isnormal;
 #endif
-    if (std::abs(m_data.angle1) < RS_TOLERANCE_ANGLE && (std::abs(m_data.angle2) < RS_TOLERANCE_ANGLE)) {
+    // Equal near-zero endpoints represent a full turn; distinct endpoints,
+    // however close, describe an arc and must not be collapsed.
+    if (m_data.angle1 == m_data.angle2 && std::abs(m_data.angle1) < RS_TOLERANCE_ANGLE) {
         m_data.angle1 = 0;
         m_data.angle2 = 0;
     }
@@ -351,8 +387,7 @@ void RS_Ellipse::mergeBoundingBox(LC_Rect& boundingBox, const RS_Vector& directi
     // parametric angle lies on the arc (a1=a2=0 is full, not empty).
     for (double a : {angle, angle + M_PI}) {
         if (!isEllipticArc()
-                || RS_Math::isAngleBetween(a, getAngle1(), getAngle2(),
-                                           isReversed()))
+                || ellipseAngleBetween(a, getAngle1(), getAngle2(), isReversed()))
             boundingBox = boundingBox.merge(getEllipsePoint(a));
     }
 }
@@ -474,7 +509,7 @@ void RS_Ellipse::updateLength() {
         std::swap(e.m_data.angle1, e.m_data.angle2);
         e.setReversed(false);
     }
-    m_cachedLength = e.getEllipseLength(e.m_data.angle1, e.m_data.angle2);
+    m_cachedLength = ellipseLength(e.getMajorRadius(), e.getRatio(), e.m_data.angle1, e.m_data.angle2, true);
 }
 
 /**
@@ -485,43 +520,7 @@ void RS_Ellipse::updateLength() {
 * \author Dongxu Li
 **/
 double RS_Ellipse::getEllipseLength(double angle1, double angle2) const {
-    const double a(getMajorRadius());
-    double k(getRatio());
-    k = std::sqrt(1 - (k * k)); // elliptic modulus, or eccentricity
-    if (!std::isfinite(a) || !std::isfinite(angle1) || !std::isfinite(angle2) || !std::isfinite(k)) {
-        return 0.; // no length for what is not an ellipse (k is not a number for a ratio above 1)
-    }
-    //    std::cout<<"1, angle1="<<x1/M_PI<<" angle2="<<x2/M_PI<<std::endl;
-    //    if(isReversed())  std::swap(x1,x2);
-    angle1 = RS_Math::correctAngle(angle1);
-    angle2 = RS_Math::correctAngle(angle2);
-    //    std::cout<<"2, angle1="<<x1/M_PI<<" angle2="<<x2/M_PI<<std::endl;
-    if (std::abs(angle2 - angle1) < RS_TOLERANCE_ANGLE) {
-        // no sweep is a whole turn: four quarters
-        return 4. * a * boost::math::ellint_2<double>(k);
-    }
-    if (angle2 < angle1) {
-        angle2 += 2. * M_PI;
-    }
-    // The length (in units of a) up to \p angle from a fixed angle, which cancels in the difference: the
-    // whole half periods, and what is left in the last one. Both come from one split of the angle, so the
-    // length has no jump at a multiple of pi, where a count made with a tolerance and a remainder made
-    // without one disagree.
-    const double halfPeriod = 2. * boost::math::ellint_2<double>(k);
-    const auto lengthTo = [halfPeriod, k](const double angle) {
-        double periods = std::floor(angle / M_PI);
-        double rest = angle - (periods * M_PI);
-        if (rest < 0.) {
-            periods -= 1.;
-            rest += M_PI;
-        }
-        else if (rest >= M_PI) {
-            periods += 1.;
-            rest -= M_PI;
-        }
-        return (periods * halfPeriod) + RS_Math::ellipticIntegral_2(k, rest);
-    };
-    return a * (lengthTo(angle2) - lengthTo(angle1));
+    return ellipseLength(getMajorRadius(), getRatio(), angle1, angle2, false);
 }
 
 /**
@@ -733,9 +732,9 @@ RS_Vector RS_Ellipse::doGetNearestPointOnEntity(const RS_Vector& coord, const bo
     // major axis near a vertex, the nearest point of the whole ellipse is on the lower half, but the upper
     // half has a point nearer than the vertex.
     // The angles of the arc run counterclockwise from low to high without a jump. An arc whose angles do
-    // not differ is the whole ellipse, as for RS_Math::isAngleBetween().
+    // not differ is the whole ellipse. Distinct close angles are still an arc.
     const bool arcOnly = onEntity && isEllipticArc()
-        && RS_Math::getAngleDifferenceU(getAngle2(), getAngle1()) >= RS_TOLERANCE_ANGLE;
+        && getAngleLength() < 2.0 * M_PI;
     double low = -std::numeric_limits<double>::infinity();
     double high = std::numeric_limits<double>::infinity();
     if (arcOnly) {
@@ -832,7 +831,7 @@ bool RS_Ellipse::doIsPointOnEntity(const RS_Vector& coord, const double toleranc
     if (std::abs(vp.squared() - 1.) > t) {
         return false;
     }
-    return RS_Math::isAngleBetween(vp.angle(), getAngle1(), getAngle2(), isReversed());
+    return ellipseAngleBetween(vp.angle(), getAngle1(), getAngle2(), isReversed());
 }
 
 RS_Vector RS_Ellipse::doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** centerEntity) const {
@@ -1666,8 +1665,9 @@ double RS_Ellipse::getAngleLength() const {
         std::swap(a, b);
     }
     double ret = RS_Math::correctAngle(b - a);
-    // full ellipse:
-    if (std::abs(std::remainder(ret, 2. * M_PI)) < RS_TOLERANCE_ANGLE) {
+    // A zero normalized sweep denotes a full turn. A small nonzero sweep or
+    // gap is still an elliptic arc and must not be expanded to a full turn.
+    if (ret == 0.0) {
         ret = 2 * M_PI;
     }
 

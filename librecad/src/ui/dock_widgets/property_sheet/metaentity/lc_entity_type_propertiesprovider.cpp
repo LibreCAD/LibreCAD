@@ -227,17 +227,19 @@ void LC_EntityTypePropertiesProvider::fillGenericAttributes(LC_PropertyContainer
     addCommon({"linetype", tr("Line Type"), tr("Type of entity pen line")},
               [this](const LC_Property::Names& names, RS_Entity* entity, LC_PropertyContainer* cont,
                      QList<LC_PropertyAtomic*>* props) -> void {
-                  auto* property = new LC_PropertyLineType(cont, false);
+                  auto* property = new LC_PropertyNamedLineType(cont, false);
                   property->setNames(names);
-                  createDelegatedStorage([](const RS_Entity* e) -> RS2::LineType {
-                                             return e->getPen(false).getLineType();
-                                         }, [](const RS2::LineType& linetype, const RS_Entity* e) -> void {
+                  const auto* document = m_actionContext->getDocument();
+                  const auto* graphic = document ? document->getGraphic() : nullptr;
+                  property->setLineTypeList(graphic ? &graphic->getLineTypeList() : nullptr);
+                  createDelegatedStorage([](const RS_Entity* e) -> LC_LineTypeIdentity {
+                                             return LC_LineTypeIdentity::fromPen(e->getPen(false));
+                                         }, [](const LC_LineTypeIdentity& value, const RS_Entity* e) -> void {
                                              RS_Pen pen = e->getPen(false);
-                                             pen.setLineType(linetype);
+                                             value.applyTo(pen);
                                              e->setPen(pen);
-                                         }, [](const RS2::LineType& l, const RS_Entity* e) -> bool {
-                                             const bool equals = l == e->getPen(false).getLineType();
-                                             return equals;
+                                         }, [](const LC_LineTypeIdentity& value, const RS_Entity* e) -> bool {
+                                             return value == LC_LineTypeIdentity::fromPen(e->getPen(false));
                                          }, entity, property);
                   props->push_back(property);
               }, list, containerGeneric);

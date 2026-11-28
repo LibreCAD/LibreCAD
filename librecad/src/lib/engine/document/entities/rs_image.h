@@ -29,6 +29,9 @@
 #include "lc_rectregion.h"
 #include "rs_atomicentity.h"
 
+#include <utility>
+#include <vector>
+
 class QImage;
 
 /**
@@ -61,6 +64,17 @@ struct RS_ImageData {
     int contrast = 0;
     /** Fade (0..100, default: 0). */
     int fade = 0;
+};
+
+// IMAGE clipping vertices use pixel coordinates relative to the image frame.
+struct RS_ImageClipData {
+    static constexpr std::size_t MaxVertices = 256u;
+    bool present = false;
+    int displayProperties = 0;
+    int clipping = 0;
+    int boundaryType = 0;
+    bool inverted = false;
+    std::vector<RS_Vector> vertices;
 };
 
 /**
@@ -101,6 +115,9 @@ public:
 
     /** Update image data ONLY for plugins. */
     void updateData(const RS_Vector& size, const RS_Vector& Uv, const RS_Vector& Vv);
+
+    const RS_ImageClipData& clipData() const { return m_clip; }
+    void setClipData(RS_ImageClipData clip) { m_clip = std::move(clip); }
 
     /** @return File name of the image. */
     QString getFile() const {
@@ -211,6 +228,7 @@ protected:
     RS_Vector doGetNearestMiddle(const RS_Vector& coord, double* dist, int middlePoints) const override;
     RS_Vector doGetNearestDist(double distance, const RS_Vector& coord, double* dist) const override;
     RS_ImageData m_data;
+    RS_ImageClipData m_clip;
     LC_RectRegion m_rectRegion;
     std::shared_ptr<QImage> m_img;
 };

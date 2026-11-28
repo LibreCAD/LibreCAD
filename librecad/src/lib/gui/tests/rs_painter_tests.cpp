@@ -24,6 +24,7 @@
 
 #include <cmath>
 #include <filesystem>
+#include <memory>
 
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
@@ -31,6 +32,7 @@
 
 #include <QApplication>
 #include <QBuffer>
+#include <QTemporaryDir>
 #include <QImage>
 #include <QPdfWriter>
 #include <QPixmap>
@@ -46,6 +48,7 @@
 #include "rs_polyline.h"
 #include "rs_linetypepattern.h"
 #include "rs_painter.h"
+#include "rs_image.h"
 #include "rs_pen.h"
 #include "rs_settings.h"
 
@@ -675,4 +678,94 @@ TEST_CASE("an arc whose end lies on the border of the view paints no stray line"
     // a stray line adds a hundred pixels or more
     CHECK(countPixels(paintAround(counterClockwise, focus, zoom), qRgb(0, 0, 0)) < expected + 20);
     CHECK(countPixels(paintAround(reversed, focus, zoom), qRgb(0, 0, 0)) < expected + 20);
+}
+
+TEST_CASE("image clipping respects pixel boundaries and the image frame", "[gui][painter][image]") {
+    (void)application();
+    QTemporaryDir scratch;
+    REQUIRE(scratch.isValid());
+    const QString file = scratch.path() + "/source.png";
+    QImage raster(16, 12, QImage::Format_RGB32);
+    raster.fill(Qt::red);
+    REQUIRE(raster.save(file));
+    const auto basis = GENERATE(0, 1, 2, 3, 4, 5, 6);
+    const bool rectangle = GENERATE(false, true);
+    const int mode = GENERATE(0, 1, 2, 3);
+    const bool copied = GENERATE(false, true);
+    CAPTURE(basis, rectangle, mode, copied);
+    const RS_Vector u = basis == 1 ? RS_Vector(0, 1) : basis == 6 ? RS_Vector(-1, 0.3)
+        : basis == 5 ? RS_Vector(1, 0.3) : (basis == 2 || basis == 4) ? RS_Vector(-1, 0) : RS_Vector(1, 0);
+    const RS_Vector v = basis == 1 ? RS_Vector(-1, 0) : basis >= 5 ? RS_Vector(0.2, 1.4)
+        : basis >= 3 ? RS_Vector(0.5, 1) : RS_Vector(0, 1);
+    RS_Image image(nullptr, RS_ImageData(0, RS_Vector(0, 0), u, v, RS_Vector(16, 12), file, 50, 50, 0));
+    RS_ImageClipData clip;
+    clip.present = true; clip.displayProperties = mode == 3 ? 3 : 7;
+    clip.clipping = mode == 2 ? 0 : 1; clip.boundaryType = rectangle ? 1 : 2; clip.inverted = mode == 1;
+    clip.vertices = rectangle ? std::vector<RS_Vector>{{3.5, 2.5}, {11.5, 8.5}}
+                              : std::vector<RS_Vector>{{3.5, 2.5}, {11.5, 2.5}, {11.5, 8.5}, {3.5, 8.5}};
+    image.setClipData(clip);
+    image.setSourceHandle(0x42u);
+    std::unique_ptr<RS_Entity> copy;
+    RS_Entity *drawn = &image;
+    if (copied) { copy.reset(image.clone()); copy->clearDwgProvenance(RS_Entity::Identity); drawn = copy.get(); }
+    QImage canvas(240, 240, QImage::Format_RGB32);
+    canvas.fill(Qt::white);
+    LC_GraphicViewport viewport;
+    viewport.setSize(canvas.width(), canvas.height());
+    viewport.setOffsetAndFactor(120, 120, 5.0);
+    RS_Painter painter(&canvas);
+    painter.setViewPort(&viewport);
+    const RS_Vector inside = painter.toGui(u * 8.0 + v * 6.0);
+    const RS_Vector outside = painter.toGui(u * 1.0 + v * 1.0);
+    drawn->draw(&painter);
+    REQUIRE(painter.end());
+    const QPoint in(qRound(inside.x), qRound(inside.y));
+    const QPoint out(qRound(outside.x), qRound(outside.y));
+    REQUIRE(canvas.rect().contains(in)); REQUIRE(canvas.rect().contains(out));
+    CHECK(canvas.pixelColor(in) == (mode == 1 ? QColor(Qt::white) : QColor(Qt::red)));
+    CHECK(canvas.pixelColor(out) == (mode == 0 ? QColor(Qt::white) : QColor(Qt::red)));
+    CHECK((drawn->getDistanceToPoint(u * 8.0 + v * 6.0) == 0.0) == (mode != 1));
+    CHECK((drawn->getDistanceToPoint(u * 1.0 + v * 1.0) == 0.0) == (mode != 0));
+}
+
+
+TEST_CASE("image pixels follow the full pixel basis", "[gui][painter][image]") {
+    (void)application();
+    QTemporaryDir scratch;
+    REQUIRE(scratch.isValid());
+    const QString file = scratch.path() + "/orientation.png";
+    QImage raster(16, 12, QImage::Format_RGB32);
+    for (int y = 0; y < raster.height(); ++y)
+        for (int x = 0; x < raster.width(); ++x)
+            raster.setPixelColor(x, y, y < 6 ? (x < 8 ? Qt::red : Qt::green)
+                                                : (x < 8 ? Qt::blue : Qt::yellow));
+    REQUIRE(raster.save(file));
+    const auto basis = GENERATE(0, 1, 2, 3);
+    const bool rotatedUcs = GENERATE(false, true);
+    CAPTURE(basis, rotatedUcs);
+    const RS_Vector u = basis == 0 ? RS_Vector(1, 0) : basis == 1 ? RS_Vector(0, 1)
+        : basis == 2 ? RS_Vector(1, 0.3) : RS_Vector(-1, 0.3);
+    const RS_Vector v = basis == 0 ? RS_Vector(0, 1) : basis == 1 ? RS_Vector(-1, 0)
+        : RS_Vector(0.2, 1.4);
+    RS_Image drawing(nullptr, RS_ImageData(0, RS_Vector(0, 0), u, v, RS_Vector(16, 12), file, 50, 50, 0));
+    QImage canvas(300, 300, QImage::Format_RGB32);
+    canvas.fill(Qt::white);
+    struct TestViewport : LC_GraphicViewport {
+        void rotateUcs() { update(RS_Vector(2, -3), 0.4); useUCS(true); }
+    } viewport;
+    viewport.setSize(canvas.width(), canvas.height());
+    viewport.setOffsetAndFactor(150, 150, 6.0);
+    if (rotatedUcs) viewport.rotateUcs();
+    RS_Painter painter(&canvas);
+    painter.setViewPort(&viewport);
+    const auto sample = [&](double x, double y) {
+        const auto gui = painter.toGui(u * x + v * y);
+        return QPoint(qRound(gui.x), qRound(gui.y));
+    };
+    const auto bottomLeft = sample(4, 3), topRight = sample(12, 9);
+    drawing.draw(&painter);
+    REQUIRE(painter.end());
+    REQUIRE(canvas.rect().contains(bottomLeft)); REQUIRE(canvas.rect().contains(topRight));
+    CHECK(canvas.pixelColor(bottomLeft) == QColor(Qt::blue));
+    CHECK(canvas.pixelColor(topRight) == QColor(Qt::green));
 }
