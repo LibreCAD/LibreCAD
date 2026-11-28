@@ -41,8 +41,9 @@ class LC_DwgAdvancedMetadata {
 public:
   enum class ReplayState { ReplayAllowed, ReplayInvalidated, ReplayReplaced };
 #ifdef LIBDXFRW_HAS_DXF_RASTER_SOURCE_HANDLER
-  static constexpr std::size_t MaxDxfRasterSourcesPerKind = 384u;
-  static constexpr std::size_t MaxDxfImageDefSourceGroups = 512u;
+  static constexpr std::size_t MaxDxfRasterSourcesPerKind = 512u;
+  // Allow one reactor per retained image plus the previous fixed-field headroom.
+  static constexpr std::size_t MaxDxfImageDefSourceGroups = MaxDxfRasterSourcesPerKind + 128u;
   // 30 fixed IMAGE groups plus two coordinates for each of 256 clip vertices.
   static constexpr std::size_t MaxDxfImageSourceGroups = 542u;
   static constexpr std::size_t MaxDxfRasterSourceBytes = 4u * 1024u * 1024u;
