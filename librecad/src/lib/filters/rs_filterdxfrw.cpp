@@ -6168,6 +6168,9 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
     // Most drawings have no MATERIAL object. Only retain the additional
     // physical inventories for a bounded file that could contain one.
     m_dxfAutomaticMaterialCapture = false;
+    m_dxfAutomaticHatchCapture = false;
+    m_dxfHatchSourceScopeSeen = false;
+    m_dxfHatchSourceHandle = m_dxfHatchSourceBoundary = m_dxfHatchSourceOwner = 0;
     m_dxfAutomaticMaterialBytes.clear();
     const auto clearMaterialSourceBytes = qScopeGuard([this] { m_dxfAutomaticMaterialBytes.clear(); });
 #ifdef LIBDXFRW_HAS_DXF_BLOCK_RECORD_SOURCE_SELECTOR
@@ -6179,8 +6182,13 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
       QFile candidate(file);
       if (candidate.open(QIODevice::ReadOnly)) {
         const QByteArray bytes = candidate.read(256 * 1024 + 1);
-        m_dxfAutomaticMaterialCapture = bytes.size() <= 256 * 1024 &&
-                                         bytes.toUpper().contains("MATERIAL");
+        const auto upper = bytes.toUpper();
+        m_dxfAutomaticMaterialCapture = bytes.size() <= 256 * 1024 && upper.contains("MATERIAL");
+        // This optional observer shares the reader's retained-node budget.
+        // Keep its initial source profile small and ASCII-only.
+        m_dxfAutomaticHatchCapture = bytes.size() <= 16 * 1024 &&
+            !upper.startsWith("AUTOCAD BINARY DXF") && upper.contains("HATCH") &&
+            upper.contains("LWPOLYLINE");
         if (m_dxfAutomaticMaterialCapture) m_dxfAutomaticMaterialBytes = bytes;
       }
     }
@@ -6188,7 +6196,8 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
     m_dxfR = new dxfRW(QFile::encodeName(file));
 #if defined(LIBRECAD_SYSTEM_LIBDXFRW) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
 #ifdef LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS
-    m_graphic->dwgAdvancedMetadata().beginDxfMaterialEntitySources(wantsDxfEntitiesSource());
+    m_graphic->dwgAdvancedMetadata().beginDxfMaterialEntitySources(
+        wantsDxfEntitiesSource() && (wantsDxfSparseMaterialRawReplay() || m_dxfAutomaticMaterialCapture));
 #else
     m_graphic->dwgAdvancedMetadata().beginDxfMaterialEntitySources(false);
 #endif
@@ -6230,6 +6239,18 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
     }
     RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading file: OK");
     if (success) {
+#ifdef LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS
+      if (m_dxfHatchSourceHandle && m_dxfHatchSourceBoundary && m_dxfHatchSourceOwner) {
+        RS_Hatch *selected = nullptr;
+        for (RS_Entity *entity : *m_graphic) {
+          if (!entity || entity->sourceHandle() != m_dxfHatchSourceHandle) continue;
+          if (selected || entity->rtti() != RS2::EntityHatch) { selected = nullptr; break; }
+          selected = static_cast<RS_Hatch *>(entity);
+        }
+        if (selected) selected->setPhysicalSourceRoles(
+            {m_dxfHatchSourceHandle, m_dxfHatchSourceBoundary, m_dxfHatchSourceOwner});
+      }
+#endif
 #ifdef LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR
       const auto &materials = m_graphic->dwgAdvancedMetadata().materials();
       const auto rawOnly = std::count_if(materials.begin(), materials.end(),
@@ -13153,6 +13174,137 @@ bool capturePhysicalMaterialReferences(LC_DwgAdvancedMetadata &metadata,
   }
   return true;
 }
+
+// Check only source handle roles for one ASCII model-space candidate. The
+// later graph plan must still prove the source space, geometry and output.
+bool capturePhysicalHatchRoles(RS_Graphic &graphic, const DRW_DxfEntitiesSource &source,
+                               std::uint32_t &hatchHandle, std::uint32_t &boundaryHandle,
+                               std::uint32_t &ownerHandle) {
+  if (source.status != DRW_DxfEntitiesSource::Status::Complete || source.binary ||
+      source.version < DRW::AC1015 || source.version > DRW::AC1032 || !source.scopeId ||
+      source.records.size() != 2u || source.ignoredComments)
+    return false;
+  if (source.records.front().marker.ordinal != source.beginMarker.ordinal ||
+      source.records.front().marker.beginOffset != source.beginMarker.beginOffset ||
+      source.records.front().endOrdinal != source.records.back().marker.ordinal ||
+      source.records.front().endOffset != source.records.back().marker.beginOffset ||
+      source.records.back().endOrdinal != source.endMarker.ordinal ||
+      source.records.back().endOffset != source.endMarker.beginOffset)
+    return false;
+  const RS_Hatch *hatch = nullptr;
+  const RS_Polyline *boundary = nullptr;
+  for (const RS_Entity *entity : graphic) {
+    if (!entity || entity->isDeleted()) continue;
+    if (entity->rtti() == RS2::EntityHatch && !hatch)
+      hatch = static_cast<const RS_Hatch *>(entity);
+    else if (entity->rtti() == RS2::EntityPolyline && !boundary)
+      boundary = static_cast<const RS_Polyline *>(entity);
+    else return false;
+  }
+  if (!hatch || !boundary || !hatch->sourceAssociative() ||
+      hatch->sourceLoopBoundaries().size() != 1u ||
+      hatch->sourceLoopBoundaries().front().size() != 1u)
+    return false;
+  const auto h = hatch->sourceHandle(), b = boundary->sourceHandle();
+  if (!h || !b || h == DRW::NoHandle || b == DRW::NoHandle || h == b ||
+      hatch->sourceLoopBoundaries().front().front() != b ||
+      !hatch->reactorHandles().empty() || boundary->reactorHandles() != std::vector<quint32>{h})
+    return false;
+  std::uint32_t hOwner = 0, bOwner = 0;
+  const auto &metadata = graphic.dwgAdvancedMetadata();
+  if (!metadata.dxfEntitySourceOwner(h, hOwner) || !metadata.dxfEntitySourceOwner(b, bOwner) ||
+      !hOwner || hOwner != bOwner || hOwner == h || hOwner == b)
+    return false;
+  const DRW_DxfPhysicalEntitySource *hRecord = nullptr, *bRecord = nullptr;
+  std::size_t groupCount = 0;
+  for (const auto &record : source.records) {
+    if (record.name == "HATCH" && !hRecord) hRecord = &record;
+    else if (record.name == "LWPOLYLINE" && !bRecord) bRecord = &record;
+    else return false;
+    if (record.groups.size() != record.rawValues.size() || record.groups.size() != record.spans.size() ||
+        record.marker.ignoredComment || record.marker.beginOffset >= record.marker.endOffset ||
+        record.marker.ordinal >= record.endOrdinal || record.marker.endOffset > record.endOffset ||
+        record.endOffset > source.endMarker.beginOffset) return false;
+    if (groupCount > source.groups || record.groups.size() > source.groups - groupCount) return false;
+    groupCount += record.groups.size();
+    std::size_t lastOrdinal = record.marker.ordinal, lastEnd = record.marker.endOffset;
+    for (const auto &span : record.spans) {
+      if (span.ignoredComment || span.ordinal != lastOrdinal + 1u || span.ordinal >= record.endOrdinal ||
+          span.beginOffset < lastEnd || span.beginOffset >= span.endOffset || span.endOffset > record.endOffset)
+        return false;
+      lastOrdinal = span.ordinal; lastEnd = span.endOffset;
+    }
+    if (lastOrdinal + 1u != record.endOrdinal) return false;
+  }
+  if (!hRecord || !bRecord || groupCount != source.groups) return false;
+  const auto frame = [&](const DRW_DxfPhysicalEntitySource &record, const char *subclass,
+                         std::uint32_t self, const std::vector<std::uint32_t> &reactors,
+                         std::size_t &body) {
+    body = record.groups.size();
+    for (std::size_t i = 0; i < record.groups.size(); ++i) {
+      const auto &group = record.groups[i];
+      if (group.code() == 100 && group.type() == DRW_Variant::STRING && group.content.s &&
+          *group.content.s == subclass) {
+        if (body != record.groups.size()) return false;
+        body = i + 1u;
+      }
+    }
+    if (body == record.groups.size()) return false;
+    DRW_RawDxfObject prefix;
+    prefix.m_version = source.version;
+    prefix.hasRawValues = true;
+    prefix.groups.assign(record.groups.begin(), record.groups.begin() + body);
+    prefix.rawValues.assign(record.rawValues.begin(), record.rawValues.begin() + body);
+    if (std::count_if(prefix.groups.begin(), prefix.groups.end(),
+                      [](const DRW_Variant &group) { return group.code() == 330; }) !=
+        static_cast<std::ptrdiff_t>(reactors.size() + 1u)) return false;
+    unsigned common = 0, layer = 0, kind = 0;
+    const bool valid = visitDxfCarrierFrame(prefix, source.version, self, hOwner, reactors,
+      [&](const DRW_Variant &group, std::size_t index) {
+        if (group.type() != DRW_Variant::STRING || !group.content.s ||
+            prefix.rawValues[index] != *group.content.s) return false;
+        if (group.code() == 8) return ++layer == 1u && !group.content.s->empty();
+        if (group.code() != 100) return false;
+        if (*group.content.s == "AcDbEntity") return ++common == 1u && kind == 0u;
+        return *group.content.s == subclass && common == 1u && ++kind == 1u;
+      });
+    return valid && common == 1u && layer == 1u && kind == 1u;
+  };
+  std::size_t hBody = 0, bBody = 0;
+  if (!frame(*hRecord, "AcDbHatch", h, {}, hBody) ||
+      !frame(*bRecord, "AcDbPolyline", b, {h}, bBody)) return false;
+  const auto integer = [](const DRW_DxfPhysicalEntitySource &record, std::size_t i, int value) {
+    const auto &group = record.groups[i];
+    if (group.type() != DRW_Variant::INTEGER || group.i_val() != value) return false;
+    char *end = nullptr; errno = 0;
+    const auto &raw = record.rawValues[i];
+    const long parsed = std::strtol(raw.c_str(), &end, 10);
+    return !raw.empty() && errno != ERANGE && end == raw.c_str() + raw.size() && parsed == value;
+  };
+  unsigned assoc = 0, loops = 0, path = 0, count = 0, target = 0;
+  for (std::size_t i = hBody; i < hRecord->groups.size(); ++i) {
+    const auto code = hRecord->groups[i].code();
+    if (code == 71) { if (++assoc != 1u || !integer(*hRecord, i, 1)) return false; }
+    else if (code == 91) { if (assoc != 1u || ++loops != 1u || !integer(*hRecord, i, 1)) return false; }
+    else if (code == 92) { if (loops != 1u || ++path != 1u || !integer(*hRecord, i, 3)) return false; }
+    else if (code == 97) { if (path != 1u || ++count != 1u || !integer(*hRecord, i, 1)) return false; }
+    else if (code == 330) {
+      std::uint32_t typed = 0, raw = 0;
+      if (++target != 1u || i == hBody || hRecord->groups[i-1u].code() != 97 ||
+          !parseDxfCarrierHandle(hRecord->groups[i], typed) ||
+          !parseDxfCarrierHandle(hRecord->rawValues[i], raw) || typed != b || raw != b) return false;
+    } else if ((code >= 320 && code <= 369) || code == 102 || code == 100 ||
+               code == 390 || code == 480 || code == 481 || code >= 1000) return false;
+  }
+  for (std::size_t i = bBody; i < bRecord->groups.size(); ++i) {
+    const auto code = bRecord->groups[i].code();
+    if ((code >= 320 && code <= 369) || code >= 1000 || code == 102 || code == 100 ||
+        code == 390 || code == 480 || code == 481) return false;
+  }
+  if (assoc != 1u || loops != 1u || path != 1u || count != 1u || target != 1u) return false;
+  hatchHandle = h; boundaryHandle = b; ownerHandle = hOwner;
+  return true;
+}
 }
 #ifdef LIBDXFRW_HAS_DXF_BLOCK_RECORD_SOURCE_SELECTOR
 bool RS_FilterDXFRW::wantsDxfBlockRecordSource() const {
@@ -13223,13 +13375,28 @@ void RS_FilterDXFRW::addDxfBlockEndSource(const DRW_Block &block, const DRW_RawD
 #endif
 bool RS_FilterDXFRW::wantsDxfEntitiesSource() const {
   return m_graphic && m_dxfR &&
-         (wantsDxfSparseMaterialRawReplay() || m_dxfAutomaticMaterialCapture) &&
+         (wantsDxfSparseMaterialRawReplay() || m_dxfAutomaticMaterialCapture || m_dxfAutomaticHatchCapture) &&
          canCaptureSmallDxfFile(m_file);
 }
-bool RS_FilterDXFRW::wantsDxfBlockChildrenSource() const { return wantsDxfEntitiesSource(); }
+bool RS_FilterDXFRW::wantsDxfBlockChildrenSource() const {
+  return wantsDxfEntitiesSource() && (wantsDxfSparseMaterialRawReplay() || m_dxfAutomaticMaterialCapture);
+}
 void RS_FilterDXFRW::addDxfEntitiesSource(const DRW_DxfEntitiesSource &source) {
   if (!m_graphic) return;
   auto &metadata = m_graphic->dwgAdvancedMetadata();
+  if (m_dxfAutomaticHatchCapture) {
+    m_dxfHatchSourceHandle = m_dxfHatchSourceBoundary = m_dxfHatchSourceOwner = 0;
+    if (!m_dxfHatchSourceScopeSeen) {
+      try {
+        capturePhysicalHatchRoles(*m_graphic, source, m_dxfHatchSourceHandle,
+                                  m_dxfHatchSourceBoundary, m_dxfHatchSourceOwner);
+      } catch (...) {
+        m_dxfHatchSourceHandle = m_dxfHatchSourceBoundary = m_dxfHatchSourceOwner = 0;
+      }
+    }
+    m_dxfHatchSourceScopeSeen = true;
+  }
+  if (!wantsDxfSparseMaterialRawReplay() && !m_dxfAutomaticMaterialCapture) return;
   metadata.addDxfMaterialPhysicalScope(false);
   try {
     if (!hasSimpleMaterialEntities(*m_graphic, source)) {

@@ -138,6 +138,9 @@ public:
     void setSourceLoopBoundaries(std::vector<std::vector<quint32>> boundaries) {
         m_sourceLoopBoundaries = std::move(boundaries);
     }
+    struct PhysicalSourceRoles { quint32 hatch = 0, boundary = 0, owner = 0; };
+    const PhysicalSourceRoles& physicalSourceRoles() const { return m_physicalSourceRoles; }
+    void setPhysicalSourceRoles(PhysicalSourceRoles roles) { m_physicalSourceRoles = roles; }
     const std::vector<quint32>& unidentifiedSourceBoundaries() const { return m_unidentifiedSourceBoundaries; }
     void setUnidentifiedSourceBoundaries(std::vector<quint32> boundaries) {
         m_unidentifiedSourceBoundaries = std::move(boundaries);
@@ -286,6 +289,7 @@ protected:
     RS_HatchData m_data;
     bool m_sourceAssociative = false;
     std::vector<std::vector<quint32>> m_sourceLoopBoundaries;
+    PhysicalSourceRoles m_physicalSourceRoles;
     std::vector<quint32> m_unidentifiedSourceBoundaries;
     /**
      * Distance from `coord` (in WCS) to the hatch region. For a pattern hatch

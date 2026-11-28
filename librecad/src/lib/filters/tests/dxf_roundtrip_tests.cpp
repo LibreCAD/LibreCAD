@@ -9516,6 +9516,108 @@ TEST_CASE("DXF export keeps a GROUP's handle for its members' reactors",
   std::filesystem::remove(out);
 }
 
+#if defined(LIBRECAD_SYSTEM_CODEC_TESTS) && defined(LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS)
+TEST_CASE("DXF physical hatch source roles reject conflicting records",
+          "[dxf][roundtrip][filter][system-codec][hatch-source-roles]") {
+  ensureSettings();
+  const auto src = tmpFile("physical-hatch-source-roles.dxf");
+  const std::string input =
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1024\n0\nENDSEC\n"
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nLWPOLYLINE\n5\nB0\n102\n{ACAD_REACTORS\n330\nB1\n102\n}\n330\nA0\n"
+      "100\nAcDbEntity\n8\n0\n100\nAcDbPolyline\n90\n4\n70\n1\n"
+      "10\n0\n20\n0\n10\n10\n20\n0\n10\n10\n20\n10\n10\n0\n20\n10\n"
+      "0\nHATCH\n5\nB1\n330\nA0\n100\nAcDbEntity\n8\n0\n100\nAcDbHatch\n"
+      "10\n0\n20\n0\n30\n0\n210\n0\n220\n0\n230\n1\n2\nSOLID\n70\n1\n71\n1\n"
+      "91\n1\n92\n3\n72\n0\n73\n1\n93\n4\n"
+      "10\n0\n20\n0\n10\n10\n20\n0\n10\n10\n20\n10\n10\n0\n20\n10\n"
+      "97\n1\n330\nB0\n75\n0\n76\n1\n98\n0\n"
+      "0\nENDSEC\n0\nEOF\n";
+  class SourceProbe : public RS_FilterDXFRW {
+  public:
+    int fault = 0;
+    void addDxfEntitiesSource(const DRW_DxfEntitiesSource &source) override {
+      auto altered = source;
+      if (fault == 1 && !altered.records.empty()) {
+        for (std::size_t i = 0; i < altered.records.front().groups.size(); ++i)
+          if (altered.records.front().groups[i].code() == 330) {
+            altered.records.front().rawValues[i] = "FFFF";
+            break;
+          }
+      }
+      if (fault == 2 && !altered.records.empty() && !altered.records.front().spans.empty())
+        altered.records.front().spans.front().beginOffset = altered.records.front().marker.beginOffset;
+      if (fault == 4) altered.scopeId = 0;
+      if (fault == 5 && !altered.records.empty() && !altered.records.front().spans.empty())
+        ++altered.records.front().spans.front().ordinal;
+      RS_FilterDXFRW::addDxfEntitiesSource(altered);
+      if (fault == 3) RS_FilterDXFRW::addDxfEntitiesSource(altered);
+    }
+  };
+  const auto readRoles = [&](const std::string &text, int fault) {
+    writeText(src, text);
+    RS_Graphic graphic;
+    SourceProbe filter;
+    filter.fault = fault;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src), RS2::FormatDXFRW));
+    for (const RS_Entity *entity : graphic)
+      if (entity && entity->rtti() == RS2::EntityHatch)
+        return static_cast<const RS_Hatch *>(entity)->physicalSourceRoles();
+    FAIL("HATCH was not imported");
+    return RS_Hatch::PhysicalSourceRoles{};
+  };
+  const auto roles = readRoles(input, 0);
+  CHECK(roles.hatch == 0xB1u);
+  CHECK(roles.boundary == 0xB0u);
+  CHECK(roles.owner == 0xA0u);
+  CHECK(readRoles(input, 1).hatch == 0u);
+  CHECK(readRoles(input, 2).hatch == 0u);
+  CHECK(readRoles(input, 3).hatch == 0u);
+  CHECK(readRoles(input, 4).hatch == 0u);
+  CHECK(readRoles(input, 5).hatch == 0u);
+  auto duplicateOwner = input;
+  const auto position = duplicateOwner.find("330\nA0\n100\nAcDbEntity");
+  REQUIRE(position != std::string::npos);
+  duplicateOwner.insert(position, "330\nA0\n");
+  CHECK(readRoles(duplicateOwner, 0).hatch == 0u);
+  auto extraReactor = input;
+  const auto reactorPosition = extraReactor.find("330\nB1\n102\n}\n");
+  REQUIRE(reactorPosition != std::string::npos);
+  extraReactor.insert(reactorPosition, "330\n0\n");
+  CHECK(readRoles(extraReactor, 0).hatch == 0u);
+  writeText(src, input);
+  SourceProbe retry;
+  retry.fault = 1;
+  RS_Graphic rejected;
+  REQUIRE(retry.fileImport(rejected, QString::fromStdString(src), RS2::FormatDXFRW));
+  for (const RS_Entity *entity : rejected)
+    if (entity && entity->rtti() == RS2::EntityHatch)
+      CHECK(static_cast<const RS_Hatch *>(entity)->physicalSourceRoles().hatch == 0u);
+  retry.fault = 0;
+  RS_Graphic corrected;
+  REQUIRE(retry.fileImport(corrected, QString::fromStdString(src), RS2::FormatDXFRW));
+  for (const RS_Entity *entity : corrected)
+    if (entity && entity->rtti() == RS2::EntityHatch)
+      CHECK(static_cast<const RS_Hatch *>(entity)->physicalSourceRoles().hatch == 0xB1u);
+  const auto endSection = input.rfind("0\nENDSEC\n0\nEOF\n");
+  REQUIRE(endSection != std::string::npos);
+  writeText(src, input.substr(0, endSection));
+  RS_Graphic partial;
+  SourceProbe partialFilter;
+  CHECK_FALSE(partialFilter.fileImport(partial, QString::fromStdString(src), RS2::FormatDXFRW));
+  for (const RS_Entity *entity : partial)
+    if (entity && entity->rtti() == RS2::EntityHatch)
+      CHECK(static_cast<const RS_Hatch *>(entity)->physicalSourceRoles().hatch == 0u);
+  writeText(src, input);
+  RS_Graphic afterFailure;
+  REQUIRE(partialFilter.fileImport(afterFailure, QString::fromStdString(src), RS2::FormatDXFRW));
+  for (const RS_Entity *entity : afterFailure)
+    if (entity && entity->rtti() == RS2::EntityHatch)
+      CHECK(static_cast<const RS_Hatch *>(entity)->physicalSourceRoles().hatch == 0xB1u);
+  std::filesystem::remove(src);
+}
+#endif
+
 TEST_CASE("DXF import retains hatch source boundary identities per loop",
           "[dxf][roundtrip][filter][handles][hatch-assoc]") {
   ensureSettings();
