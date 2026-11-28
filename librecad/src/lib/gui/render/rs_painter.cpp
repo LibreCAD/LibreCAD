@@ -1533,58 +1533,22 @@ void RS_Painter::drawSplineWCS(const RS_Spline& spline) {
 }
 
 void RS_Painter::drawImgWCS(const QImage& img, const RS_Vector& wcsInsertionPoint, const RS_Vector& uVector, const RS_Vector& vVector, const QPainterPath *clip) {
-    //    if (viewport->hasUCS()) {
-    const double wcsAngle = uVector.angle();
-    const double ucsAngle = toUCSAngle(wcsAngle);
-
-    auto ucsUVector = uVector;
-    auto ucsVVector = vVector;
-
-    const auto angleVector = RS_Vector(ucsAngle - wcsAngle);
-
-    ucsUVector.rotate(angleVector);
-    ucsVVector.rotate(angleVector);
-    //    }
-
-    const double magnitudeU = uVector.magnitude(); // fixme - sand - render - cache?
-    const double magnitudeV = vVector.magnitude(); // fixme - sand - render - cache?
-    const RS_Vector scale{toGuiDX(magnitudeU), toGuiDY(magnitudeV)};
-    const RS_Vector uiInsert = toGui(wcsInsertionPoint);
-    drawImgUI(img, uiInsert, ucsUVector, ucsVVector, scale, clip);
-}
-
-void RS_Painter::drawImgUI(const QImage& img, const RS_Vector& uiInsert, const RS_Vector& uVector, const RS_Vector& vVector,
-                           const RS_Vector& factor, const QPainterPath *clip) {
     PainterGuard painterGuard(*this);
-
-    //    LC_ERR << "IMG FACTOR " << factor;
-    // Render smooth only at close zooms
-    // fixme - sand - check later - actually, these two hints are equivalent!
-    if (factor.x < 1 || factor.y < 1) {
-        RS_Painter::setRenderHint(SmoothPixmapTransform, true);
+    RS_Vector u = uVector;
+    RS_Vector v = vVector;
+    if (hasUCS()) {
+        u.rotate(getUcsRotation());
+        v.rotate(getUcsRotation());
     }
-    else {
-        RS_Painter::setRenderHint(SmoothPixmapTransform);
-    }
-
-    RS_Vector un = uVector.normalized();
-    RS_Vector vn = vVector.normalized();
-
-    // Image mirroring is switching the handedness of u-v vectors pair which can be detected by
-    // looking at the sign of the z component of their cross product. If z is negative image is mirrored.
-    std::unique_ptr<QTransform> wm;
-    if (std::signbit(RS_Vector::crossP(uVector, vVector).z)) {
-        // mirrored
-        wm = std::make_unique<QTransform>(un.x, -vn.x, -un.y, vn.y, uiInsert.x, uiInsert.y);
-    }
-    else {
-        wm = std::make_unique<QTransform>(un.x, vn.x, un.y, vn.y, uiInsert.x, uiInsert.y);
-    }
-
-    wm->scale(factor.x, factor.y);
-    setWorldTransform(*wm);
+    // QImage's Y axis points down, while the image's V vector points up.
+    // Keep both full basis vectors so non-orthogonal and mirrored images use
+    // exactly the same WCS-to-viewport mapping as their clip and hit tests.
+    const double ux = toGuiDX(u.x), uy = -toGuiDY(u.y);
+    const double vx = toGuiDX(v.x), vy = -toGuiDY(v.y);
+    const RS_Vector origin = toGui(wcsInsertionPoint);
+    setRenderHint(SmoothPixmapTransform);
+    setWorldTransform(QTransform(ux, uy, -vx, -vy, origin.x, origin.y));
     if (clip) setClipPath(*clip, Qt::IntersectClip);
-
     drawImage(0, -img.height(), img);
 }
 

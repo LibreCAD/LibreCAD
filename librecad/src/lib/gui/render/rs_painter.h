@@ -520,7 +520,6 @@ protected:
                  double uiStartAngleDegrees, double angularLength, QPainterPath &path) const;
     void drawLineUI(double x1, double y1, double x2, double y2);
     void drawLineUI(const QPointF& startPoint, const QPointF& endPoint);
-    void drawImgUI(const QImage& img, const RS_Vector& uiInsert, const RS_Vector& uVector, const RS_Vector& vVector, const RS_Vector& factor, const QPainterPath *clip);
 
     void drawRectUI(const RS_Vector& p1, const RS_Vector& p2);
 
