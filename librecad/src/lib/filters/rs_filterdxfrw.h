@@ -3406,6 +3406,7 @@ private:
 #ifdef LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS
   bool m_dxfAutomaticMaterialCapture{false};
   bool m_dxfAutomaticHatchCapture{false};
+  QByteArray m_dxfAutomaticHatchBytes;
   bool m_dxfHatchSourceScopeSeen{false};
   std::uint32_t m_dxfHatchSourceHandle{0}, m_dxfHatchSourceBoundary{0}, m_dxfHatchSourceOwner{0};
   QByteArray m_dxfAutomaticMaterialBytes;

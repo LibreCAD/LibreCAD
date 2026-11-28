@@ -6169,10 +6169,12 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
     // physical inventories for a bounded file that could contain one.
     m_dxfAutomaticMaterialCapture = false;
     m_dxfAutomaticHatchCapture = false;
+    m_dxfAutomaticHatchBytes.clear();
     m_dxfHatchSourceScopeSeen = false;
     m_dxfHatchSourceHandle = m_dxfHatchSourceBoundary = m_dxfHatchSourceOwner = 0;
     m_dxfAutomaticMaterialBytes.clear();
     const auto clearMaterialSourceBytes = qScopeGuard([this] { m_dxfAutomaticMaterialBytes.clear(); });
+    const auto clearHatchSourceBytes = qScopeGuard([this] { m_dxfAutomaticHatchBytes.clear(); });
 #ifdef LIBDXFRW_HAS_DXF_BLOCK_RECORD_SOURCE_SELECTOR
     m_automaticMaterialSpaceRows.clear();
     m_automaticMaterialSpaces.clear();
@@ -6187,9 +6189,10 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
         // This optional observer shares the reader's retained-node budget.
         // Keep its initial source profile small and ASCII-only.
         m_dxfAutomaticHatchCapture = bytes.size() <= 16 * 1024 &&
-            !upper.startsWith("AUTOCAD BINARY DXF") && upper.contains("HATCH") &&
+            !bytes.contains('\0') && !upper.startsWith("AUTOCAD BINARY DXF") && upper.contains("HATCH") &&
             upper.contains("LWPOLYLINE");
         if (m_dxfAutomaticMaterialCapture) m_dxfAutomaticMaterialBytes = bytes;
+        if (m_dxfAutomaticHatchCapture) m_dxfAutomaticHatchBytes = bytes;
       }
     }
 #endif
@@ -6240,6 +6243,12 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
     RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading file: OK");
     if (success) {
 #ifdef LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS
+      if (m_dxfHatchSourceHandle && m_dxfHatchSourceBoundary && m_dxfHatchSourceOwner) {
+        QFile observed(file);
+        if (!observed.open(QIODevice::ReadOnly) ||
+            observed.read(16 * 1024 + 1) != m_dxfAutomaticHatchBytes)
+          m_dxfHatchSourceHandle = m_dxfHatchSourceBoundary = m_dxfHatchSourceOwner = 0;
+      }
       if (m_dxfHatchSourceHandle && m_dxfHatchSourceBoundary && m_dxfHatchSourceOwner) {
         RS_Hatch *selected = nullptr;
         for (RS_Entity *entity : *m_graphic) {
@@ -13178,12 +13187,30 @@ bool capturePhysicalMaterialReferences(LC_DwgAdvancedMetadata &metadata,
 // Check only source handle roles for one ASCII model-space candidate. The
 // later graph plan must still prove the source space, geometry and output.
 bool capturePhysicalHatchRoles(RS_Graphic &graphic, const DRW_DxfEntitiesSource &source,
+                               const QByteArray &input,
                                std::uint32_t &hatchHandle, std::uint32_t &boundaryHandle,
                                std::uint32_t &ownerHandle) {
   if (source.status != DRW_DxfEntitiesSource::Status::Complete || source.binary ||
       source.version < DRW::AC1015 || source.version > DRW::AC1032 || !source.scopeId ||
-      source.records.size() != 2u || source.ignoredComments)
+      source.records.size() != 2u || source.ignoredComments || input.isEmpty() || input.size() > 16 * 1024)
     return false;
+  const auto matchesBytes = [&](const DRW_DxfPhysicalRecordSpan &span, int expectedCode,
+                                const std::string &expectedValue) {
+    if (span.beginOffset >= span.endOffset || span.endOffset > static_cast<std::size_t>(input.size()))
+      return false;
+    const auto chunk = input.mid(static_cast<int>(span.beginOffset),
+                                 static_cast<int>(span.endOffset - span.beginOffset));
+    const auto first = chunk.indexOf('\n');
+    const auto second = first < 0 ? -1 : chunk.indexOf('\n', first + 1);
+    if (first < 0 || second != chunk.size() - 1) return false;
+    auto code = chunk.left(first).trimmed();
+    auto value = chunk.mid(first + 1, second - first - 1);
+    if (value.endsWith('\r')) value.chop(1);
+    bool validCode = false;
+    const int parsedCode = code.toInt(&validCode, 10);
+    return validCode && parsedCode == expectedCode && value == QByteArray::fromStdString(expectedValue);
+  };
+  if (!matchesBytes(source.endMarker, 0, "ENDSEC")) return false;
   if (source.records.front().marker.ordinal != source.beginMarker.ordinal ||
       source.records.front().marker.beginOffset != source.beginMarker.beginOffset ||
       source.records.front().endOrdinal != source.records.back().marker.ordinal ||
@@ -13221,20 +13248,23 @@ bool capturePhysicalHatchRoles(RS_Graphic &graphic, const DRW_DxfEntitiesSource 
     if (record.name == "HATCH" && !hRecord) hRecord = &record;
     else if (record.name == "LWPOLYLINE" && !bRecord) bRecord = &record;
     else return false;
-    if (record.groups.size() != record.rawValues.size() || record.groups.size() != record.spans.size() ||
+    if (!matchesBytes(record.marker, 0, record.name) ||
+        record.groups.size() != record.rawValues.size() || record.groups.size() != record.spans.size() ||
         record.marker.ignoredComment || record.marker.beginOffset >= record.marker.endOffset ||
         record.marker.ordinal >= record.endOrdinal || record.marker.endOffset > record.endOffset ||
         record.endOffset > source.endMarker.beginOffset) return false;
     if (groupCount > source.groups || record.groups.size() > source.groups - groupCount) return false;
     groupCount += record.groups.size();
     std::size_t lastOrdinal = record.marker.ordinal, lastEnd = record.marker.endOffset;
-    for (const auto &span : record.spans) {
+    for (std::size_t i = 0; i < record.spans.size(); ++i) {
+      const auto &span = record.spans[i];
       if (span.ignoredComment || span.ordinal != lastOrdinal + 1u || span.ordinal >= record.endOrdinal ||
-          span.beginOffset < lastEnd || span.beginOffset >= span.endOffset || span.endOffset > record.endOffset)
+          span.beginOffset != lastEnd || span.beginOffset >= span.endOffset || span.endOffset > record.endOffset ||
+          !matchesBytes(span, record.groups[i].code(), record.rawValues[i]))
         return false;
       lastOrdinal = span.ordinal; lastEnd = span.endOffset;
     }
-    if (lastOrdinal + 1u != record.endOrdinal) return false;
+    if (lastOrdinal + 1u != record.endOrdinal || lastEnd != record.endOffset) return false;
   }
   if (!hRecord || !bRecord || groupCount != source.groups) return false;
   const auto frame = [&](const DRW_DxfPhysicalEntitySource &record, const char *subclass,
@@ -13388,7 +13418,7 @@ void RS_FilterDXFRW::addDxfEntitiesSource(const DRW_DxfEntitiesSource &source) {
     m_dxfHatchSourceHandle = m_dxfHatchSourceBoundary = m_dxfHatchSourceOwner = 0;
     if (!m_dxfHatchSourceScopeSeen) {
       try {
-        capturePhysicalHatchRoles(*m_graphic, source, m_dxfHatchSourceHandle,
+        capturePhysicalHatchRoles(*m_graphic, source, m_dxfAutomaticHatchBytes, m_dxfHatchSourceHandle,
                                   m_dxfHatchSourceBoundary, m_dxfHatchSourceOwner);
       } catch (...) {
         m_dxfHatchSourceHandle = m_dxfHatchSourceBoundary = m_dxfHatchSourceOwner = 0;

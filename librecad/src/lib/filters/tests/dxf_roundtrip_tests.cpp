@@ -9536,6 +9536,7 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
   class SourceProbe : public RS_FilterDXFRW {
   public:
     int fault = 0;
+    std::string mutationPath;
     void addDxfEntitiesSource(const DRW_DxfEntitiesSource &source) override {
       auto altered = source;
       if (fault == 1 && !altered.records.empty()) {
@@ -9550,6 +9551,18 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
       if (fault == 4) altered.scopeId = 0;
       if (fault == 5 && !altered.records.empty() && !altered.records.front().spans.empty())
         ++altered.records.front().spans.front().ordinal;
+      if (fault == 6) {
+        std::ofstream changed(mutationPath, std::ios::binary | std::ios::app);
+        changed.put('\n');
+      }
+      if (fault == 7 && !altered.records.empty()) {
+        for (std::size_t i = 0; i < altered.records.front().groups.size(); ++i)
+          if (altered.records.front().groups[i].code() == 8) {
+            altered.records.front().groups[i] = DRW_Variant(8, std::string("X"));
+            altered.records.front().rawValues[i] = "X";
+            break;
+          }
+      }
       RS_FilterDXFRW::addDxfEntitiesSource(altered);
       if (fault == 3) RS_FilterDXFRW::addDxfEntitiesSource(altered);
     }
@@ -9559,6 +9572,7 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
     RS_Graphic graphic;
     SourceProbe filter;
     filter.fault = fault;
+    filter.mutationPath = src;
     REQUIRE(filter.fileImport(graphic, QString::fromStdString(src), RS2::FormatDXFRW));
     for (const RS_Entity *entity : graphic)
       if (entity && entity->rtti() == RS2::EntityHatch)
@@ -9575,6 +9589,8 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
   CHECK(readRoles(input, 3).hatch == 0u);
   CHECK(readRoles(input, 4).hatch == 0u);
   CHECK(readRoles(input, 5).hatch == 0u);
+  CHECK(readRoles(input, 6).hatch == 0u);
+  CHECK(readRoles(input, 7).hatch == 0u);
   auto duplicateOwner = input;
   const auto position = duplicateOwner.find("330\nA0\n100\nAcDbEntity");
   REQUIRE(position != std::string::npos);
