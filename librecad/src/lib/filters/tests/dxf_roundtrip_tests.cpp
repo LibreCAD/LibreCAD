@@ -4869,12 +4869,14 @@ TEST_CASE("System codec preserves modern multi-image clip modes",
   const auto format = GENERATE(RS2::FormatDXFRW2010, RS2::FormatDXFRW2013,
                                RS2::FormatDXFRW2018);
   const bool polygon = GENERATE(false, true);
-  CAPTURE(format, polygon);
+  const unsigned imageCount = GENERATE(1u, 3u);
+  if (imageCount == 1u && !polygon) return;
+  CAPTURE(format, polygon, imageCount);
   const auto source = tmpFile("modern_images_source.dxf");
   const auto output = tmpFile("modern_images_output.dxf");
   RS_Graphic original;
   original.initForNewDocument();
-  for (unsigned i = 0; i < 3; ++i)
+  for (unsigned i = 0; i < imageCount; ++i)
     original.addEntity(new RS_Image(&original, RS_ImageData(0, RS_Vector(29.0 * i, 2),
         RS_Vector(1, 0), RS_Vector(0, 1), RS_Vector(16, 12),
         i < 2 ? QStringLiteral("shared.png") : QStringLiteral("other.png"), 50, 50, 0)));
@@ -4910,9 +4912,9 @@ TEST_CASE("System codec preserves modern multi-image clip modes",
   RS_Graphic reopened;
   REQUIRE(filter.fileImport(reopened, QString::fromStdString(source), format));
   const auto &metadata = reopened.dwgAdvancedMetadata();
-  REQUIRE(metadata.rasterImages().size() == 3u);
-  REQUIRE(metadata.imageDefinitions().size() == 2u);
-  REQUIRE(metadata.imageDefinitionReactors().size() == 3u);
+  REQUIRE(metadata.rasterImages().size() == imageCount);
+  REQUIRE(metadata.imageDefinitions().size() == (imageCount == 1u ? 1u : 2u));
+  REQUIRE(metadata.imageDefinitionReactors().size() == imageCount);
   CHECK(metadata.rasterImages().front().displayProps == 7);
   CHECK(metadata.rasterImages().front().clip == 1);
   CHECK(metadata.rasterImages().front().clipMode);
@@ -4975,11 +4977,11 @@ TEST_CASE("System codec preserves modern multi-image clip modes",
     CHECK(recordGroupValues(output, "IMAGE", code) == recordGroupValues(source, "IMAGE", code));
   RS_Graphic readback;
   REQUIRE(filter.fileImport(readback, QString::fromStdString(output), format));
-  REQUIRE(readback.dwgAdvancedMetadata().rasterImages().size() == 3u);
+  REQUIRE(readback.dwgAdvancedMetadata().rasterImages().size() == imageCount);
   CHECK(readback.dwgAdvancedMetadata().rasterImages().front().clipMode);
   if (const char *copy = std::getenv("LIBRECAD_KEEP_MODERN_IMAGE")) {
     const auto prefix = std::string(copy) + "." + std::to_string(static_cast<int>(format)) +
-                        (polygon ? ".polygon" : ".rectangle");
+                        (polygon ? ".polygon" : ".rectangle") + "." + std::to_string(imageCount);
     std::filesystem::copy_file(source, prefix + ".source.dxf", std::filesystem::copy_options::overwrite_existing);
     std::filesystem::copy_file(output, prefix + ".output.dxf", std::filesystem::copy_options::overwrite_existing);
   }
@@ -4990,7 +4992,7 @@ TEST_CASE("System codec preserves modern multi-image clip modes",
 TEST_CASE("System codec preserves larger polygon image boundaries", "[system-codec][dxf][image][transaction]") {
   ensureSettings();
   const auto source = tmpFile("large_polygon_image_source.dxf"), output = tmpFile("large_polygon_image_output.dxf");
-  const unsigned imageCount = GENERATE(2u, 384u);
+  const unsigned imageCount = GENERATE(1u, 2u, 384u);
   CAPTURE(imageCount);
   RS_Graphic original; original.initForNewDocument();
   for (unsigned i = 0; i < imageCount; ++i)
@@ -5046,6 +5048,20 @@ TEST_CASE("System codec preserves larger polygon image boundaries", "[system-cod
     auto &rasters = const_cast<std::vector<LC_DwgAdvancedMetadata::RasterImageRecord>&>(metadata.rasterImages());
     REQUIRE(rasters.size() == imageCount); REQUIRE(rasters.front().clipPath.size() == count);
     auto *raw = const_cast<DRW_RawDxfObject *>(metadata.dxfImageSource(rasters.front().handle)); REQUIRE(raw);
+    if (imageCount == 1u) {
+      auto &reactors = const_cast<std::vector<LC_DwgAdvancedMetadata::ImageDefinitionReactorRecord>&>(metadata.imageDefinitionReactors());
+      auto reactor = std::find_if(reactors.begin(), reactors.end(), [&](const auto &value) {
+        return value.handle == rasters.front().reactorHandle;
+      });
+      REQUIRE(reactor != reactors.end());
+      const auto originalOwner = reactor->parentHandle;
+      reactor->parentHandle = 0;
+      CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+      { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+      reactor->parentHandle = originalOwner;
+      CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2018));
+      { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    }
     auto point = std::find_if(raw->groups.rbegin(), raw->groups.rend(), [](const auto &group) { return group.code() == 14; });
     REQUIRE(point != raw->groups.rend());
     const auto index = static_cast<std::size_t>(std::prev(point.base()) - raw->groups.begin());
@@ -5084,12 +5100,13 @@ TEST_CASE("System codec preserves legacy polygonal image boundaries",
   ensureSettings();
   const auto format = GENERATE(RS2::FormatDXFRW2000, RS2::FormatDXFRW2004,
                                RS2::FormatDXFRW);
-  CAPTURE(format);
+  const unsigned imageCount = GENERATE(1u, 2u);
+  CAPTURE(format, imageCount);
   const auto source = tmpFile("legacy_polygon_images_source.dxf");
   const auto output = tmpFile("legacy_polygon_images_output.dxf");
   RS_Graphic original;
   original.initForNewDocument();
-  for (unsigned i = 0; i < 2; ++i)
+  for (unsigned i = 0; i < imageCount; ++i)
     original.addEntity(new RS_Image(&original, RS_ImageData(0, RS_Vector(29.0 * i, 2),
         RS_Vector(1, 0), RS_Vector(0, 1), RS_Vector(16, 12),
         QStringLiteral("legacy-polygon.png"), 50, 50, 0)));
@@ -5126,7 +5143,7 @@ TEST_CASE("System codec preserves legacy polygonal image boundaries",
   RS_Graphic reopened;
   REQUIRE(filter.fileImport(reopened, QString::fromStdString(source), format));
   const auto &metadata = reopened.dwgAdvancedMetadata();
-  REQUIRE(metadata.rasterImages().size() == 2u);
+  REQUIRE(metadata.rasterImages().size() == imageCount);
   REQUIRE(metadata.rasterImages().front().clipPath.size() == 3u);
   CHECK(metadata.rasterImages().front().clipBoundaryType == 2);
   CHECK(metadata.rasterImages().front().clip == 1);
@@ -5168,10 +5185,10 @@ TEST_CASE("System codec preserves legacy polygonal image boundaries",
     CHECK(recordGroupValues(output, "IMAGE", group) == recordGroupValues(source, "IMAGE", group));
   RS_Graphic readback;
   REQUIRE(filter.fileImport(readback, QString::fromStdString(output), format));
-  REQUIRE(readback.dwgAdvancedMetadata().rasterImages().size() == 2u);
+  REQUIRE(readback.dwgAdvancedMetadata().rasterImages().size() == imageCount);
   CHECK(readback.dwgAdvancedMetadata().rasterImages().front().clipPath.size() == 3u);
   if (const char *copy = std::getenv("LIBRECAD_KEEP_LEGACY_POLYGON")) {
-    const auto prefix = std::string(copy) + "." + std::to_string(static_cast<int>(format));
+    const auto prefix = std::string(copy) + "." + std::to_string(static_cast<int>(format)) + "." + std::to_string(imageCount);
     std::filesystem::copy_file(source, prefix + ".source.dxf", std::filesystem::copy_options::overwrite_existing);
     std::filesystem::copy_file(output, prefix + ".output.dxf", std::filesystem::copy_options::overwrite_existing);
   }
@@ -5498,6 +5515,8 @@ TEST_CASE("System codec verifies shared IMAGE graphs across model and block spac
 TEST_CASE("System codec verifies an IMAGE inside a named block",
           "[system-codec][dxf][image][transaction]") {
   ensureSettings();
+  const bool polygon = GENERATE(false, true);
+  CAPTURE(polygon);
   const auto input = tmpFile("block_image_source.dxf");
   const auto generated = tmpFile("block_image_generated.dxf");
   const auto output = tmpFile("block_image_verified.dxf");
@@ -5516,6 +5535,23 @@ TEST_CASE("System codec verifies an IMAGE inside a named block",
   RS_FilterDXFRW filter;
   REQUIRE(filter.fileImport(initial, QString::fromStdString(input), RS2::FormatDXFRW));
   REQUIRE(filter.fileExport(initial, QString::fromStdString(generated), RS2::FormatDXFRW));
+  if (polygon) {
+    std::ifstream stream(generated, std::ios::binary);
+    std::string code, value, rewritten;
+    bool image = false, inserted = false;
+    while (std::getline(stream, code) && std::getline(stream, value)) {
+      const int group = std::stoi(code);
+      if (group == 0) image = value == "IMAGE";
+      if (image && group == 71) value = "2";
+      if (image && group == 91) value = "3";
+      if (image && (group == 14 || group == 24)) {
+        if (!inserted) { rewritten += "14\n1\n24\n1\n14\n10\n24\n1\n14\n4\n24\n9\n"; inserted = true; }
+        continue;
+      }
+      rewritten += code + "\n" + value + "\n";
+    }
+    REQUIRE(inserted); writeText(generated, rewritten);
+  }
   RS_Graphic reopened;
   REQUIRE(filter.fileImport(reopened, QString::fromStdString(generated), RS2::FormatDXFRW));
   REQUIRE(filter.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
@@ -5529,6 +5565,17 @@ TEST_CASE("System codec verifies an IMAGE inside a named block",
   };
   REQUIRE_FALSE(value(block, "5").empty());
   CHECK(value(image, "330") == value(block, "5"));
+  if (polygon) {
+    for (const char *group : {"71", "91", "14", "24"})
+      CHECK(recordGroupValues(output, "IMAGE", group) == recordGroupValues(generated, "IMAGE", group));
+    RS_Graphic reread; REQUIRE(filter.fileImport(reread, QString::fromStdString(output), RS2::FormatDXFRW));
+    REQUIRE(reread.dwgAdvancedMetadata().rasterImages().size() == 1u);
+    CHECK(reread.dwgAdvancedMetadata().rasterImages().front().clipPath.size() == 3u);
+    if (const char *prefix = std::getenv("LIBRECAD_KEEP_SINGLE_BLOCK_POLYGON")) {
+      std::filesystem::copy_file(generated, std::string(prefix) + "-source.dxf", std::filesystem::copy_options::overwrite_existing);
+      std::filesystem::copy_file(output, std::string(prefix) + "-output.dxf", std::filesystem::copy_options::overwrite_existing);
+    }
+  }
   std::filesystem::remove(input);
   std::filesystem::remove(generated);
   std::filesystem::remove(output);

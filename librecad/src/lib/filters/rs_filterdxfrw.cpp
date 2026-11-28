@@ -4013,13 +4013,13 @@ bool dxfSourceHandleMatches(const DRW_RawDxfObject &raw, std::size_t index,
 
 bool dxfImageCarrierMatches(
     const DRW_RawDxfObject &raw, DRW::Version version,
-    const LC_DwgAdvancedMetadata::RasterImageRecord &image, bool multipleImages) {
+    const LC_DwgAdvancedMetadata::RasterImageRecord &image, bool auditedGraph) {
   bool validBoundary = image.clipBoundaryType == 1 && image.clipPath.size() == 2u;
 #ifdef LIBDXFRW_HAS_DXF_STAGED_IMAGE_POLYGON_INSPECTOR
-  validBoundary = validBoundary || (multipleImages && version >= DRW::AC1015 && image.clipBoundaryType == 2 &&
+  validBoundary = validBoundary || (auditedGraph && version >= DRW::AC1015 && image.clipBoundaryType == 2 &&
       image.clipPath.size() >= 3u && image.clipPath.size() <= LIBDXFRW_DXF_STAGED_IMAGE_MAX_CLIP_VERTICES);
 #else
-  (void)multipleImages;
+  (void)auditedGraph;
 #endif
   if (!validBoundary) return false;
   std::vector<int> codes{5, 330, 100, 8, 6, 62, 370, 100, 90,
@@ -4123,6 +4123,7 @@ struct DxfImageGraphPlan {
   std::vector<DRW_RawDxfObject> rawPlot;
   std::uint32_t imageDictionary = 0;
   std::uint32_t materialDictionary = 0;
+  bool extendedAudit = false;
 };
 
 bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
@@ -4196,22 +4197,24 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
   // Per-record source and staged-output checks below apply to the whole graph.
   // Match the existing per-kind capture bound and bound quadratic lookups.
   constexpr std::size_t maxAuditedImages = Metadata::MaxDxfRasterSourcesPerKind;
-  const bool multipleImages = imageCount >= 2u && imageCount <= maxAuditedImages;
+  const bool auditedGraph = imageCount <= maxAuditedImages &&
+      (imageCount >= 2u || (imageCount == 1u && metadata.rasterImages().front().clipBoundaryType == 2));
+  plan.extendedAudit = auditedGraph;
 #if !defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_ENTITY_SCALAR_INSPECTOR) || \
     !defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_CANONICAL_COMMON_INSPECTOR) || \
     !defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_DEFINITION_SCALAR_INSPECTOR) || \
     !defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR) || \
     !defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_OBJECT_INSPECTOR) || \
     !defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR)
-  if (multipleImages) return false;
+  if (auditedGraph) return false;
 #endif
   if (!plain(root) || !plain(groups) || !plain(images) ||
       images->parentHandle != root->handle || groups->parentHandle != root->handle ||
       !groups->entries.empty() || imageDictionary == groupDictionary ||
       (images->entries.empty() || images->entries.size() > imageCount) ||
       metadata.imageDefinitions().size() != images->entries.size() ||
-      (imageCount != 1u && !multipleImages) || metadata.imageDefinitionReactors().size() != imageCount ||
-      (multipleImages && ((version != DRW::AC1015 && version != DRW::AC1018 &&
+      (imageCount != 1u && !auditedGraph) || metadata.imageDefinitionReactors().size() != imageCount ||
+      (auditedGraph && ((version != DRW::AC1015 && version != DRW::AC1018 &&
                            version != DRW::AC1021 && version != DRW::AC1024 &&
                            version != DRW::AC1027 && version != DRW::AC1032) ||
                           (version < DRW::AC1021 && materialDictionary) ||
@@ -4315,7 +4318,7 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
           !liveImages.insert(handle).second || !liveReactors.insert(raster->reactorHandle).second ||
           !identities.insert(handle).second || !identities.insert(raster->reactorHandle).second)
         return false;
-      if (multipleImages) {
+      if (auditedGraph) {
         const RS_Pen pen = image->getPen(false);
         const auto *layer = image->getLayer();
         if ((layer && layer->getName() != "0") || !pen.isColorByLayer() ||
@@ -4359,7 +4362,7 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
         } else if (z[0] != 0.0 || z[1] != 0.0 || z[2] != 0.0) return false;
       }
       const auto *imageSource = metadata.dxfImageSource(handle);
-      if (imageSource == nullptr || !dxfImageCarrierMatches(*imageSource, version, *raster, multipleImages))
+      if (imageSource == nullptr || !dxfImageCarrierMatches(*imageSource, version, *raster, auditedGraph))
         return false;
       auto definition = definitions.find(raster->definitionHandle);
       if (definition == definitions.end())
@@ -4411,7 +4414,7 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
       if (static_cast<std::size_t>(pathBytes.size()) != std::strlen(pathBytes.constData()))
         return false;
       const std::string path(pathBytes.constData(), static_cast<std::size_t>(pathBytes.size()));
-      if (multipleImages && (path.empty() || path.size() > 4096u ||
+      if (auditedGraph && (path.empty() || path.size() > 4096u ||
           !std::all_of(path.begin(), path.end(), [](unsigned char c) {
             return c >= 32u && c < 127u && c != '\\' && c != '^';
           }))) return false;
@@ -4422,7 +4425,7 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
       plan.references.push_back({handle, raster->definitionHandle, raster->reactorHandle,
                                  block ? block->getName().toUtf8().toStdString() : std::string{},
                                  path, block != nullptr, {}});
-      if (multipleImages) {
+      if (auditedGraph) {
         auto &scalar = plan.references.back().scalar;
         scalar.m_classVersion = raster->classVersion;
         scalar.basePoint = {image->getInsertionPoint().x, image->getInsertionPoint().y, raster->basePoint.z};
@@ -4478,7 +4481,7 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
         !identities.insert(plotPlaceholder).second)
       return false;
   }
-  if (multipleImages) {
+  if (auditedGraph) {
     const DRW_RawDxfObject *plot = nullptr, *placeholder = nullptr;
     for (const auto &raw : metadata.rawDxfObjects()) {
       if (raw.handle == plotDictionary) {
@@ -16431,7 +16434,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_DEFINITION_SCALAR_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR)
       std::shared_ptr<const DRW_Dictionary> rootProof, groupProof, imageProof;
-      if (imageGraph.references.size() > 1u) {
+      if (imageGraph.extendedAudit) {
         try {
           rootProof = std::make_shared<const DRW_Dictionary>(*imageGraph.root);
           groupProof = std::make_shared<const DRW_Dictionary>(*imageGraph.groups);
@@ -16458,6 +16461,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
           std::vector<DxfImageGraphPlan::ImageReference> references;
           std::vector<DRW_RawDxfObject> rawPlot;
           bool blocksSeen = false, entitiesSeen = false;
+          bool extendedAudit = false;
 #if defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_ENTITY_SCALAR_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_DEFINITION_SCALAR_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR)
@@ -16472,13 +16476,14 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
         };
         auto audit = std::make_shared<ImageAudit>();
         audit->dictionary = imageGraph.imageDictionary;
+        audit->extendedAudit = imageGraph.extendedAudit;
         audit->references = imageGraph.references;
         audit->rawPlot = imageGraph.rawPlot;
 #if defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_ENTITY_SCALAR_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_DEFINITION_SCALAR_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR)
         audit->root = rootProof; audit->groups = groupProof; audit->images = imageProof;
-        if (audit->references.size() > 1u) {
+        if (audit->extendedAudit) {
           const auto &metadata = g.dwgAdvancedMetadata();
           for (const auto &reference : audit->references) {
             const auto *source = metadata.dxfImageSource(reference.image);
@@ -16504,6 +16509,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
           DxfImageGraphPlan current;
           if (!prepareDxfImageGraph(g, exportVersion, current) ||
               current.imageDictionary != audit->dictionary ||
+              current.extendedAudit != audit->extendedAudit ||
               current.references.size() != audit->references.size() ||
               current.rawPlot.size() != audit->rawPlot.size())
             return false;
@@ -16512,7 +16518,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
 #if defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_ENTITY_SCALAR_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_DEFINITION_SCALAR_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR)
-          if (audit->references.size() > 1u) {
+          if (audit->extendedAudit) {
             const auto &metadata = g.dwgAdvancedMetadata();
             if (audit->sourceDefinitions.empty() || audit->sourceImages.size() != audit->references.size() ||
                 audit->sourceReactors.size() != audit->references.size()) return false;
@@ -16553,7 +16559,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
             if (a.image != b.image || a.definition != b.definition ||
                 a.reactor != b.reactor || a.block != b.block || a.path != b.path || a.inBlock != b.inBlock)
               return false;
-            if (audit->references.size() > 1u) {
+            if (audit->extendedAudit) {
               const auto &x = a.scalar; const auto &y = b.scalar;
               if (x.clipPath.size() != y.clipPath.size()) return false;
               const std::array<double, 11> ax{{x.basePoint.x,x.basePoint.y,x.basePoint.z,
@@ -16603,10 +16609,10 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                     m_dxfW->dxfWriteImageDefinitionHandle(key),
                     m_dxfW->dxfWriteImageReactorHandle(key, reference.reactor)});
 #ifdef LIBDXFRW_HAS_DXF_STAGED_IMAGE_ENTITY_SCALAR_INSPECTOR
-                if (audit->references.size() > 1u) expected.back().scalarFields = &reference.scalar;
+                if (audit->extendedAudit) expected.back().scalarFields = &reference.scalar;
 #endif
 #ifdef LIBDXFRW_HAS_DXF_STAGED_IMAGE_CANONICAL_COMMON_INSPECTOR
-                if (audit->references.size() > 1u) expected.back().canonicalCommon = true;
+                if (audit->extendedAudit) expected.back().canonicalCommon = true;
 #endif
               }
               if (!m_dxfW->inspectDxfImageOutputReferences(view, expected)) return false;
@@ -16640,7 +16646,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                 const auto inserted = indices.emplace(definition, definitions.size());
                 if (inserted.second) definitions.push_back({definition, dictionary, {}});
 #ifdef LIBDXFRW_HAS_DXF_STAGED_IMAGE_DEFINITION_SCALAR_INSPECTOR
-                if (audit->references.size() > 1u) {
+                if (audit->extendedAudit) {
                   const auto *source = m_dxfW->dxfWriteImageSource(key);
                   if (!source) return false;
                   definitions[inserted.first->second].scalarFields = &source->definition;
@@ -16654,7 +16660,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_DEFINITION_SCALAR_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR)
-              if (audit->references.size() > 1u) {
+              if (audit->extendedAudit) {
                 if (!audit->root || !audit->groups || !audit->images ||
                     definitions.size() != audit->images->m_entries.size())
                   return false;
