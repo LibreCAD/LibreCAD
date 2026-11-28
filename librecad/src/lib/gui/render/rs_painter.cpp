@@ -1489,8 +1489,6 @@ void RS_Painter::drawEntityPolyline(const RS_Polyline* polyline) {
             }
             // well, actually this is just for fonts.. better to have separate entity for this. fixme - change latter
             case RS2::EntityEllipse: {
-                // fixme - coordinates translation
-
                 // !! FIXME - sand - why not the same path of the polyline is used??
                 const auto* arc = static_cast<RS_Ellipse*>(entity);
                 const RS_EllipseData& data = arc->getData();
@@ -1498,12 +1496,15 @@ void RS_Painter::drawEntityPolyline(const RS_Polyline* polyline) {
 
                 const double uiMajorRadius = toGuiDX(data.majorP.magnitude()); // fixme - sand - render - cache?
                 const double uiMinorRadius = data.ratio * uiMajorRadius;
+                // as RS_Ellipse::draw(): the axis in the UCS, and the arc from
+                // its first angle, which is its end for a reversed arc
+                const double uiAngleDegrees = toUCSAngleDegrees(data.angleDegrees);
                 if (data.isArc) {
-                    drawEllipseArcUI(uiCenter, {uiMajorRadius, uiMinorRadius}, toWorldAngleDegrees(data.angleDegrees), /*view.toWorldAngleDegrees(*/data.startAngleDegrees/*)*/,
+                    drawEllipseArcUI(uiCenter, {uiMajorRadius, uiMinorRadius}, uiAngleDegrees, RS_Math::rad2deg(data.angle1),
                                     data.angularLength, data.reversed);
                 }
                 else {
-                    drawEllipseUI(uiCenter, {uiMajorRadius, uiMinorRadius}, toWorldAngleDegrees(data.angleDegrees));
+                    drawEllipseUI(uiCenter, {uiMajorRadius, uiMinorRadius}, uiAngleDegrees);
                 }
                 startNewSubpath = true;
                 break;
