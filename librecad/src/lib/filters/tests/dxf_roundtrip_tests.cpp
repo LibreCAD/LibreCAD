@@ -9686,6 +9686,25 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
     CHECK(externallyReferenced.modelSpace);
     CHECK_FALSE(externallyReferenced.sourceHandleIsolation);
   }
+  for (const int code : {310, 1000}) {
+    auto opaqueSource = structured;
+    const auto headerEnd = opaqueSource.find("0\nENDSEC\n");
+    REQUIRE(headerEnd != std::string::npos);
+    opaqueSource.insert(headerEnd, "9\n$TEST_OPAQUE\n" + std::to_string(code) + "\nABCD\n");
+    const auto opaqueRoles = readRoles(opaqueSource, 0);
+    CHECK(opaqueRoles.modelSpace);
+    CHECK_FALSE(opaqueRoles.sourceHandleIsolation);
+  }
+  auto unknownClass = structured;
+  const auto headerEndForClass = unknownClass.find("0\nENDSEC\n");
+  REQUIRE(headerEndForClass != std::string::npos);
+  const auto afterHeader = headerEndForClass + std::string("0\nENDSEC\n").size();
+  unknownClass.insert(afterHeader,
+      "0\nSECTION\n2\nCLASSES\n0\nCLASS\n1\nACME_UNKNOWN\n2\nAcmeUnknown\n"
+      "3\nAcme\n90\n0\n91\n0\n280\n0\n281\n0\n0\nENDSEC\n");
+  const auto unknownRoles = readRoles(unknownClass, 0);
+  CHECK(unknownRoles.modelSpace);
+  CHECK_FALSE(unknownRoles.sourceHandleIsolation);
   auto wrongSpace = structured;
   const auto modelName = wrongSpace.find("2\n*Model_Space\n70\n0\n280\n1");
   REQUIRE(modelName != std::string::npos);

@@ -13477,8 +13477,23 @@ bool verifyHatchModelSpaceSource(const QByteArray &input, std::uint32_t owner, s
   bool isolated = true;
   std::uint32_t tableHandle = 0, blockHandle = 0;
   const auto scanHandles = [&](const Record &record, const QByteArray &recordSection) {
+    // Do not treat a handle-group scan as evidence in the presence of opaque
+    // application payloads or an object class outside this small profile.
+    static const std::set<QByteArray> knownRecords{
+        "SECTION", "TABLE", "ENDTAB", "BLOCK_RECORD", "BLOCK", "ENDBLK", "CLASS",
+        "APPID", "DIMSTYLE", "LAYER", "LTYPE", "STYLE", "VPORT", "HATCH", "LWPOLYLINE",
+        "DICTIONARY", "ACDBDICTIONARYWDFLT", "ACDBPLACEHOLDER"};
+    if (!knownRecords.count(record.name)) isolated = false;
+    if (record.name == "CLASS") {
+      QByteArray className;
+      if (!one(record, 1, className) ||
+          (className != "ACDBDICTIONARYWDFLT" && className != "ACDBPLACEHOLDER")) isolated = false;
+    }
     for (const auto &group : record.groups) {
       const int code = group.first;
+      if ((code >= 310 && code <= 319) || (code >= 1000 && code <= 1071) ||
+          (code == 102 && !(recordSection == "ENTITIES" && record.name == "LWPOLYLINE")))
+        isolated = false;
       if (code != 5 && code != 105 && code != 1005 && (code < 320 || code > 369) &&
           code != 390 && code != 480 && code != 481) continue;
       std::uint32_t value = 0;
@@ -13496,6 +13511,8 @@ bool verifyHatchModelSpaceSource(const QByteArray &input, std::uint32_t owner, s
       if (!section.isEmpty() || sawEof || record.groups.empty() || record.groups.front().first != 2)
         return false;
       section = record.groups.front().second;
+      if (section != "HEADER" && section != "CLASSES" && section != "TABLES" && section != "BLOCKS" &&
+          section != "ENTITIES" && section != "OBJECTS") isolated = false;
       scanHandles(record, section);
       if (section == "HEADER") {
         if (++header != 1u) return false;
