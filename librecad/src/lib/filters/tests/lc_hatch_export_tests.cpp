@@ -212,6 +212,22 @@ TEST_CASE("Live hatch loop matches only a closed straight polyline",
     CHECK_FALSE(LC_HatchAssociation::matchesClosedStraightBoundary(*hatch, *normal));
 }
 
+TEST_CASE("Checked hatch contour rejects crossings and overlapping edges", "[hatch-assoc-geometry]") {
+    using Edge = LC_HatchAssociation::Edge;
+    const std::vector<Edge> square{{{0,0,10,0}}, {{10,0,10,10}}, {{10,10,0,10}}, {{0,10,0,0}}};
+    const std::vector<Edge> crossed{{{0,0,10,10}}, {{10,10,0,10}}, {{0,10,10,0}}, {{10,0,0,0}}};
+    const std::vector<Edge> overlap{{{0,0,10,0}}, {{10,0,5,0}}, {{5,0,5,10}}, {{5,10,0,0}}};
+    auto fractional = square;
+    fractional[0][0] = 0.5;
+    auto large = square;
+    large[0][0] = 1000001;
+    CHECK(LC_HatchAssociation::isSimpleIntegerContour(square));
+    CHECK_FALSE(LC_HatchAssociation::isSimpleIntegerContour(crossed));
+    CHECK_FALSE(LC_HatchAssociation::isSimpleIntegerContour(overlap));
+    CHECK_FALSE(LC_HatchAssociation::isSimpleIntegerContour(fractional));
+    CHECK_FALSE(LC_HatchAssociation::isSimpleIntegerContour(large));
+}
+
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("Realized definition lines match ezdxf's ISO patterns",
           "[lc-hatchfix][hatch-export]") {

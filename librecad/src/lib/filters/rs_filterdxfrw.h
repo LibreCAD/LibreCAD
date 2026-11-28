@@ -3401,7 +3401,10 @@ private:
   bool m_oldMText = false;
   // Non-owning active-export observers; local RAII owners clear before delete.
   dxfRW *m_dxfW{nullptr};
-  std::function<bool()> m_dxfMaterialFinalCheck;
+  std::function<bool()> m_dxfFinalCheck;
+  // Non-owning pair admitted for the duration of one checked DXF write.
+  const RS_Hatch *m_dxfAssociationHatch{nullptr};
+  const RS_Polyline *m_dxfAssociationBoundary{nullptr};
   dxfRW *m_dxfR{nullptr};
 #ifdef LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS
   bool m_dxfAutomaticMaterialCapture{false};

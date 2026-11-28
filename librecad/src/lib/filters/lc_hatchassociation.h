@@ -18,6 +18,9 @@ namespace LC_HatchAssociation {
 using Edge = std::array<double, 4>;
 bool matchesClosedStraightBoundary(const RS_Hatch& hatch, const RS_Polyline& boundary,
                                    std::vector<Edge>* geometry = nullptr);
+// Reject self-intersections and overlaps using exact bounded integer
+// predicates. The caller must separately establish that edges form one cycle.
+bool isSimpleIntegerContour(const std::vector<Edge>& edges);
 }
 
 #endif

@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <array>
 #include <cmath>
+#include <cstdint>
 #include <set>
 #include <utility>
 #include <vector>
@@ -73,4 +74,51 @@ bool LC_HatchAssociation::matchesClosedStraightBoundary(const RS_Hatch& hatch,
     if (sourceEdges != hatchEdges || hatchEdges != boundaryEdges) return false;
     if (geometry) *geometry = std::move(hatchEdges);
     return true;
+}
+
+// Exact integer predicates avoid rounding a near-intersection into a false
+// simple-polygon witness. Other coordinates keep the deassociation path.
+bool LC_HatchAssociation::isSimpleIntegerContour(const std::vector<Edge> &edges) {
+  using Point = std::pair<std::int64_t, std::int64_t>;
+  using Segment = std::pair<Point, Point>;
+  if (edges.size() < 3u || edges.size() > 4096u) return false;
+  std::vector<Segment> segments;
+  for (const auto &edge : edges) {
+    for (const double value : edge)
+      if (!std::isfinite(value) || std::abs(value) > 1000000.0 || std::trunc(value) != value) return false;
+    segments.push_back({{static_cast<std::int64_t>(edge[0]), static_cast<std::int64_t>(edge[1])},
+                        {static_cast<std::int64_t>(edge[2]), static_cast<std::int64_t>(edge[3])}});
+  }
+  const auto cross = [](Point a, Point b, Point c) {
+    return (b.first - a.first) * (c.second - a.second) - (b.second - a.second) * (c.first - a.first);
+  };
+  const auto on = [](Point a, Point b, Point p) {
+    return p.first >= std::min(a.first, b.first) && p.first <= std::max(a.first, b.first) &&
+           p.second >= std::min(a.second, b.second) && p.second <= std::max(a.second, b.second);
+  };
+  const auto opposite = [](std::int64_t a, std::int64_t b) { return (a < 0 && b > 0) || (a > 0 && b < 0); };
+  for (std::size_t i = 0; i < segments.size(); ++i) {
+    const auto [a, b] = segments[i];
+    if (a == b) return false;
+    for (std::size_t j = i + 1u; j < segments.size(); ++j) {
+      const auto [c, d] = segments[j];
+      if (std::max(a.first, b.first) < std::min(c.first, d.first) ||
+          std::max(c.first, d.first) < std::min(a.first, b.first) ||
+          std::max(a.second, b.second) < std::min(c.second, d.second) ||
+          std::max(c.second, d.second) < std::min(a.second, b.second)) continue;
+      if (a == c || a == d || b == c || b == d) {
+        const Point shared = a == c || a == d ? a : b;
+        const Point left = shared == a ? b : a, right = shared == c ? d : c;
+        if (cross(shared, left, right) == 0 &&
+            (left.first - shared.first) * (right.first - shared.first) +
+            (left.second - shared.second) * (right.second - shared.second) > 0) return false;
+        continue;
+      }
+      const auto ac = cross(a, b, c), ad = cross(a, b, d), ca = cross(c, d, a), cb = cross(c, d, b);
+      if ((ac == 0 && on(a, b, c)) || (ad == 0 && on(a, b, d)) ||
+          (ca == 0 && on(c, d, a)) || (cb == 0 && on(c, d, b)) ||
+          (opposite(ac, ad) && opposite(ca, cb))) return false;
+    }
+  }
+  return true;
 }

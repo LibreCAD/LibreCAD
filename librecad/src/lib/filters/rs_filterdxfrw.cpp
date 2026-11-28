@@ -134,9 +134,17 @@
 #include "lc_graphicviewport.h"
 #include "lc_ucs.h"
 #include "lc_view.h"
+
 #include "libdwgr.h"
 #include "rs_debug.h"
 #endif // DWGSUPPORT
+
+#if defined(LIBRECAD_SYSTEM_LIBDXFRW) && defined(LIBDXFRW_HAS_DXF_STAGED_HATCH_ISOLATION_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_FOREIGN_HANDLE_ISOLATION_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
+#define LIBRECAD_HAS_CHECKED_DXF_HATCH_REPLAY 1
+#endif
 
 // Catch distribution builds against a libdxfrw before 0.6.4, where DRW_Hatch
 // stored DXF group 52 raw instead of radians. Without this guard every legacy
@@ -146,6 +154,9 @@
 #endif
 
 namespace {
+#ifdef LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS
+constexpr int kDxfHatchSourceByteLimit = 64 * 1024;
+#endif
 #if defined(LIBRECAD_SYSTEM_LIBDXFRW) && defined(LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS)
 bool verifyHatchModelSpaceSource(const QByteArray &input, std::uint32_t owner, std::uint32_t hatch,
                                  std::uint32_t boundary, DRW::Version version, bool &handleIsolation);
@@ -6194,7 +6205,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
         m_dxfAutomaticMaterialCapture = bytes.size() <= 256 * 1024 && upper.contains("MATERIAL");
         // This optional observer shares the reader's retained-node budget.
         // Keep its initial source profile small and ASCII-only.
-        m_dxfAutomaticHatchCapture = bytes.size() <= 16 * 1024 &&
+        m_dxfAutomaticHatchCapture = bytes.size() <= kDxfHatchSourceByteLimit &&
             !bytes.contains('\0') && !upper.startsWith("AUTOCAD BINARY DXF") && upper.contains("HATCH") &&
             upper.contains("LWPOLYLINE");
         if (m_dxfAutomaticMaterialCapture) m_dxfAutomaticMaterialBytes = bytes;
@@ -6252,7 +6263,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
       if (m_dxfHatchSourceHandle && m_dxfHatchSourceBoundary && m_dxfHatchSourceOwner) {
         QFile observed(file);
         if (!observed.open(QIODevice::ReadOnly) ||
-            observed.read(16 * 1024 + 1) != m_dxfAutomaticHatchBytes)
+            observed.read(kDxfHatchSourceByteLimit + 1) != m_dxfAutomaticHatchBytes)
           m_dxfHatchSourceHandle = m_dxfHatchSourceBoundary = m_dxfHatchSourceOwner = 0;
       }
       if (m_dxfHatchSourceHandle && m_dxfHatchSourceBoundary && m_dxfHatchSourceOwner) {
@@ -13213,7 +13224,7 @@ bool capturePhysicalHatchRoles(RS_Graphic &graphic, const DRW_DxfEntitiesSource 
   sourceGeometry.clear();
   if (source.status != DRW_DxfEntitiesSource::Status::Complete || source.binary ||
       source.version < DRW::AC1015 || source.version > DRW::AC1032 || !source.scopeId ||
-      source.records.size() != 2u || source.ignoredComments || input.isEmpty() || input.size() > 16 * 1024)
+      source.records.size() != 2u || source.ignoredComments || input.isEmpty() || input.size() > kDxfHatchSourceByteLimit)
     return false;
   const auto matchesBytes = [&](const DRW_DxfPhysicalRecordSpan &span, int expectedCode,
                                 const std::string &expectedValue) {
@@ -13325,7 +13336,7 @@ bool capturePhysicalHatchRoles(RS_Graphic &graphic, const DRW_DxfEntitiesSource 
         if (group.type() != DRW_Variant::STRING || !group.content.s ||
             prefix.rawValues[index] != *group.content.s) return false;
         if (group.code() == 8) return ++layer == 1u && !group.content.s->empty();
-        if (group.code() == 6) return ++lineType == 1u && *group.content.s == "BYLAYER";
+        if (group.code() == 6) return ++lineType == 1u && normalizeDwgTableName(*group.content.s) == "BYLAYER";
         if (group.code() != 100) return false;
         if (*group.content.s == "AcDbEntity") return ++common == 1u && kind == 0u;
         return *group.content.s == subclass && common == 1u && ++kind == 1u;
@@ -13336,11 +13347,16 @@ bool capturePhysicalHatchRoles(RS_Graphic &graphic, const DRW_DxfEntitiesSource 
   if (!frame(*hRecord, "AcDbHatch", h, {}, hBody) ||
       !frame(*bRecord, "AcDbPolyline", b, {h}, bBody)) return false;
   unsigned assoc = 0, loops = 0, path = 0, count = 0, target = 0;
+  int pathType = 0;
   for (std::size_t i = hBody; i < hRecord->groups.size(); ++i) {
     const auto code = hRecord->groups[i].code();
     if (code == 71) { if (++assoc != 1u || !integer(*hRecord, i, 1)) return false; }
     else if (code == 91) { if (assoc != 1u || ++loops != 1u || !integer(*hRecord, i, 1)) return false; }
-    else if (code == 92) { if (loops != 1u || ++path != 1u || !integer(*hRecord, i, 3)) return false; }
+    else if (code == 92) {
+      if (loops != 1u || ++path != 1u || hRecord->groups[i].type() != DRW_Variant::INTEGER) return false;
+      pathType = hRecord->groups[i].i_val();
+      if ((pathType != 1 && pathType != 3 && pathType != 17) || !integer(*hRecord, i, pathType)) return false;
+    }
     else if (code == 97) { if (path != 1u || ++count != 1u || !integer(*hRecord, i, 1)) return false; }
     else if (code == 330) {
       std::uint32_t typed = 0, raw = 0;
@@ -13397,6 +13413,23 @@ bool capturePhysicalHatchRoles(RS_Graphic &graphic, const DRW_DxfEntitiesSource 
       }
       std::sort(edges.begin(), edges.end()); return true;
     };
+    const auto lineCycle = [&](const Record &record, std::size_t &i, std::size_t n, std::vector<Edge> &edges) {
+      if (n < 3u || n > 4096u) return false;
+      Point first, previous;
+      std::set<Point> unique;
+      for (std::size_t j = 0; j < n; ++j) {
+        Point a, b;
+        if (!number(record, i, 72, 1) || !real(record, i, 10, a.first) || !real(record, i, 20, a.second) ||
+            !real(record, i, 11, b.first) || !real(record, i, 21, b.second) || a == b ||
+            (j && a != previous) || !unique.insert(a).second) return false;
+        if (!j) first = a;
+        previous = b;
+        if (b < a) std::swap(a, b);
+        edges.push_back({{a.first, a.second, b.first, b.second}});
+      }
+      if (previous != first) return false;
+      std::sort(edges.begin(), edges.end()); return true;
+    };
     std::size_t hi = hBody, bi = bBody;
     if (!zero(*hRecord, hi, 10, 0) || !zero(*hRecord, hi, 20, 0) || !zero(*hRecord, hi, 30, 0) ||
         !zero(*hRecord, hi, 210, 0) || !zero(*hRecord, hi, 220, 0) || !zero(*hRecord, hi, 230, 1) ||
@@ -13405,13 +13438,14 @@ bool capturePhysicalHatchRoles(RS_Graphic &graphic, const DRW_DxfEntitiesSource 
         hRecord->rawValues[hi] != "SOLID") return false;
     ++hi;
     if (!number(*hRecord, hi, 70, 1) || !number(*hRecord, hi, 71, 1) ||
-        !number(*hRecord, hi, 91, 1) || !number(*hRecord, hi, 92, 3) ||
-        !number(*hRecord, hi, 72, 0) || !number(*hRecord, hi, 73, 1) ||
-        !code(*hRecord, hi, 93) || hRecord->groups[hi].type() != DRW_Variant::INTEGER) return false;
+        !number(*hRecord, hi, 91, 1) || !number(*hRecord, hi, 92, pathType)) return false;
+    if (pathType == 3 && (!number(*hRecord, hi, 72, 0) || !number(*hRecord, hi, 73, 1))) return false;
+    if (!code(*hRecord, hi, 93) || hRecord->groups[hi].type() != DRW_Variant::INTEGER) return false;
     const int n = hRecord->groups[hi].i_val();
     if (n < 3 || n > 4096 || !number(*hRecord, hi, 93, n)) return false;
     std::vector<Edge> hatchEdges, boundaryEdges, liveEdges;
-    if (!cycle(*hRecord, hi, static_cast<std::size_t>(n), hatchEdges) ||
+    if (!(pathType == 3 ? cycle(*hRecord, hi, static_cast<std::size_t>(n), hatchEdges)
+                        : lineCycle(*hRecord, hi, static_cast<std::size_t>(n), hatchEdges)) ||
         !number(*hRecord, hi, 97, 1) || !code(*hRecord, hi, 330)) return false;
     ++hi; // The role and original bytes of this handle were checked above.
     if (!number(*hRecord, hi, 75, 0) || !number(*hRecord, hi, 76, 1)) return false;
@@ -13437,7 +13471,7 @@ bool verifyHatchModelSpaceSource(const QByteArray &input, std::uint32_t owner, s
                                  std::uint32_t boundary, DRW::Version version, bool &handleIsolation) {
   handleIsolation = false;
   if (version != DRW::AC1024 || !owner || owner == DRW::NoHandle || input.isEmpty() ||
-      !hatch || !boundary || hatch == boundary || input.size() > 16 * 1024 || input.contains('\0')) return false;
+      !hatch || !boundary || hatch == boundary || input.size() > kDxfHatchSourceByteLimit || input.contains('\0')) return false;
   auto lines = input.split('\n');
   if (!lines.empty() && lines.back().isEmpty()) lines.removeLast();
   if (lines.size() % 2 != 0) return false;
@@ -13486,43 +13520,78 @@ bool verifyHatchModelSpaceSource(const QByteArray &input, std::uint32_t owner, s
         {"BLOCK", {1,2,3,5,8,10,20,30,70,100,330}},
         {"ENDBLK", {5,8,100,330}}, {"CLASS", {1,2,3,90,91,280,281}},
         {"APPID", {2,5,70,100,330}},
-        {"DIMSTYLE", {2,40,41,42,43,44,45,46,47,48,49,69,70,71,72,73,74,75,76,77,78,79,
+        {"DIMSTYLE", {2,3,4,40,41,42,43,44,45,46,47,48,49,69,70,71,72,73,74,75,76,77,78,79,
                       90,100,105,140,141,142,143,144,145,146,147,148,170,171,172,173,174,
                       175,176,177,178,179,271,272,273,274,275,276,277,278,279,280,281,282,
-                      283,284,285,286,288,289,295,330,340,371,372}},
+                      283,284,285,286,288,289,290,295,330,340,371,372}},
         {"LAYER", {2,5,6,62,70,100,290,330,370,390}},
-        {"LTYPE", {2,3,5,40,70,72,73,100,330}},
+        {"LTYPE", {2,3,5,40,49,70,72,73,74,100,330}},
         {"STYLE", {2,3,4,5,40,41,42,50,70,71,100,330}},
         {"VPORT", {2,5,10,11,12,13,14,15,16,17,20,21,22,23,24,25,26,27,36,37,40,41,42,
                    43,44,50,51,60,61,63,65,70,71,72,73,74,75,76,77,78,79,100,110,111,112,
                    120,121,122,130,131,132,141,142,146,281,282,292,330}},
-        {"HATCH", {2,5,6,8,10,20,30,62,70,71,72,73,75,76,78,91,92,93,97,98,100,210,220,230,330,370}},
+        {"HATCH", {2,5,6,8,10,11,20,21,30,62,70,71,72,73,75,76,78,91,92,93,97,98,100,210,220,230,330,370}},
         {"LWPOLYLINE", {5,6,8,10,20,43,62,70,90,100,102,330,370}},
         {"DICTIONARY", {3,5,100,280,281,330,350}},
         {"ACDBDICTIONARYWDFLT", {3,5,100,280,281,330,340,350}},
-        {"ACDBPLACEHOLDER", {5,100,330}}};
+        {"ACDBPLACEHOLDER", {5,100,330}},
+        {"PLOTSETTINGS", {1,2,4,5,6,7,40,41,42,43,44,45,46,47,48,49,70,72,73,74,75,76,77,78,
+                          100,140,141,142,143,147,148,149,330}}};
     const auto known = knownFields.find(record.name);
     if (known == knownFields.end() ||
         (record.name == "SECTION" && recordSection != "HEADER" && record.groups.size() != 1u))
       isolated = false;
+#ifdef LIBDXFRW_HAS_DXF_CANONICAL_HEADER_VARIABLE_QUERY
+    QByteArray headerVariable;
+    std::set<QByteArray> headerVariables;
+    unsigned snapFields = 0;
+#endif
     if (record.name == "CLASS") {
       QByteArray className;
       if (!one(record, 1, className) ||
           (className != "ACDBDICTIONARYWDFLT" && className != "ACDBPLACEHOLDER")) isolated = false;
     }
-    for (const auto &group : record.groups) {
+    bool dimTrailer = false;
+    if (record.name == "DIMSTYLE" && record.groups.size() >= 3u) {
+      const auto size = record.groups.size();
+      bool validNumber = false;
+      const int value = record.groups[size - 1u].second.trimmed().toInt(&validNumber);
+      dimTrailer = record.groups[size - 3u] == Group{1001, "ACAD_DSTYLE_DIMTALN"} &&
+          record.groups[size - 2u].first == 1070 && record.groups[size - 2u].second.trimmed() == "392" &&
+          record.groups[size - 1u].first == 1070 && validNumber && value >= -32768 && value <= 32767;
+    }
+    unsigned plotSubclass = 0;
+    for (std::size_t groupIndex = 0; groupIndex < record.groups.size(); ++groupIndex) {
+      const auto &group = record.groups[groupIndex];
       const int code = group.first;
-      if (known == knownFields.end() || !known->second.count(code)) isolated = false;
+      const bool modeledDimTrailer = dimTrailer && groupIndex >= record.groups.size() - 3u;
+      if ((known == knownFields.end() || !known->second.count(code)) && !modeledDimTrailer) isolated = false;
+      if (record.name == "PLOTSETTINGS" && code == 100 &&
+          (++plotSubclass != 1u || group.second != "AcDbPlotSettings")) isolated = false;
+      if (record.name == "LTYPE" && code == 74) {
+        bool valid = false;
+        const int value = group.second.trimmed().toInt(&valid);
+        if (!valid || value != 0) isolated = false;
+      }
       if (recordSection == "HEADER" && code == 9 &&
           (group.second == "$CUSTOMPROPERTY" || group.second == "$CUSTOMPROPERTYTAG")) isolated = false;
 #ifdef LIBDXFRW_HAS_DXF_CANONICAL_HEADER_VARIABLE_QUERY
-      if (recordSection == "HEADER" && code == 9 &&
-          (!group.second.startsWith('$') ||
-           !DRW_Header::isDxfCanonicalVariableName(group.second.toStdString()))) isolated = false;
+      if (recordSection == "HEADER" && code == 9) {
+        if (headerVariable == "$SNAPISOPAIR" && snapFields != 1u) isolated = false;
+        headerVariable = group.second;
+        snapFields = 0;
+        if (!headerVariables.insert(headerVariable).second || !headerVariable.startsWith('$') ||
+            (headerVariable != "$SNAPISOPAIR" &&
+             !DRW_Header::isDxfCanonicalVariableName(headerVariable.toStdString()))) isolated = false;
+      } else if (recordSection == "HEADER" && headerVariable == "$SNAPISOPAIR") {
+        bool valid = false;
+        const int value = group.second.trimmed().toInt(&valid);
+        if (++snapFields != 1u || code != 70 || !valid || value < 0 || value > 2) isolated = false;
+      }
 #else
       if (recordSection == "HEADER" && code == 9) isolated = false;
 #endif
-      if ((code >= 310 && code <= 319) || (code >= 1000 && code <= 1071) ||
+      if ((code >= 310 && code <= 319) || ((code >= 1000 && code <= 1071) && !modeledDimTrailer) ||
           (code == 102 && !(recordSection == "ENTITIES" && record.name == "LWPOLYLINE")))
         isolated = false;
       if (code != 5 && code != 105 && code != 1005 && (code < 320 || code > 369) &&
@@ -13535,6 +13604,11 @@ bool verifyHatchModelSpaceSource(const QByteArray &input, std::uint32_t owner, s
            (record.name == "LWPOLYLINE" && ((code == 5 && value == boundary) || (code == 330 && value == hatch))));
       if (!expected) isolated = false;
     }
+    if (record.name == "PLOTSETTINGS" && plotSubclass != 1u) isolated = false;
+#ifdef LIBDXFRW_HAS_DXF_CANONICAL_HEADER_VARIABLE_QUERY
+    if (recordSection == "HEADER" && headerVariable == "$SNAPISOPAIR" && snapFields != 1u)
+      isolated = false;
+#endif
   };
   for (std::size_t index = 0; index < records.size(); ++index) {
     const auto &record = records[index];
@@ -15012,6 +15086,85 @@ static void reportUnidentifiedHatchReactor() {
       "Cannot save: an imported hatch boundary has an unresolved or ambiguous object reference. Repair the drawing and retry."));
 }
 
+#ifdef LIBRECAD_HAS_CHECKED_DXF_HATCH_REPLAY
+namespace {
+struct CheckedHatchReplay {
+  const RS_Hatch *hatch = nullptr;
+  const RS_Polyline *boundary = nullptr;
+  std::uint32_t sourceHatch = 0, sourceBoundary = 0, sourceOwner = 0;
+  std::vector<LC_HatchAssociation::Edge> geometry;
+  std::uint32_t emittedHatch = 0, emittedBoundary = 0;
+  bool header = false, tables = false, blocks = false, entities = false, objects = false;
+};
+
+bool checkedHatchReplayStable(RS_Graphic &graphic, const CheckedHatchReplay &audit) {
+  const auto &metadata = graphic.dwgAdvancedMetadata();
+  if (!audit.hatch || !audit.boundary || !metadata.rawDxfSections().empty() ||
+      !metadata.rawDxfEntities().empty() || !metadata.materials().empty() ||
+      !metadata.groups().empty() || !metadata.xrecords().empty() ||
+      !metadata.rasterImages().empty()) return false;
+  unsigned hatches = 0, boundaries = 0;
+  for (const RS_Entity *entity : graphic) {
+    if (!entity || entity->isDeleted()) continue;
+    if (entity == audit.hatch && entity->rtti() == RS2::EntityHatch) ++hatches;
+    else if (entity == audit.boundary && entity->rtti() == RS2::EntityPolyline) ++boundaries;
+    else return false;
+  }
+  if (hatches != 1u || boundaries != 1u) return false;
+  for (unsigned i = 0; i < graphic.countBlocks(); ++i) {
+    const auto *block = graphic.blockAt(i);
+    if (!block || block->isDeleted()) continue;
+    for (const RS_Entity *child : lc::LC_ContainerTraverser{*block, RS2::ResolveNone}.entities())
+      if (child && !child->isDeleted()) return false;
+  }
+  for (const auto &cls : metadata.dxfClasses()) {
+    const bool dictionary = cls.recName == "ACDBDICTIONARYWDFLT" && cls.className == "AcDbDictionaryWithDefault";
+    const bool placeholder = cls.recName == "ACDBPLACEHOLDER" && cls.className == "AcDbPlaceHolder";
+    if ((!dictionary && !placeholder) || cls.appName != "ObjectDBX Classes" || cls.proxyFlag ||
+        cls.wasaProxyFlag || cls.entityFlag || cls.instanceCount != 1) return false;
+  }
+  const auto &roles = audit.hatch->physicalSourceRoles();
+  const auto &spaces = metadata.spaceBlockRecords();
+  const auto space = spaces.find(audit.sourceOwner);
+  std::uint32_t hOwner = 0, bOwner = 0;
+  if (audit.hatch->sourceHandle() != audit.sourceHatch || audit.boundary->sourceHandle() != audit.sourceBoundary ||
+      !audit.hatch->sourceAssociative() || roles.hatch != audit.sourceHatch || roles.boundary != audit.sourceBoundary ||
+      roles.owner != audit.sourceOwner || !roles.modelSpace || !roles.sourceHandleIsolation || roles.sourceGeometry != audit.geometry ||
+      audit.hatch->sourceLoopBoundaries() != std::vector<std::vector<quint32>>{{audit.sourceBoundary}} ||
+      !audit.hatch->reactorHandles().empty() || audit.boundary->reactorHandles() != std::vector<quint32>{audit.sourceHatch} ||
+      audit.hatch->xDictHandle() || audit.boundary->xDictHandle() ||
+      audit.hatch->hasDrwExtData() || audit.boundary->hasDrwExtData() ||
+      space == spaces.end() || normalizeDwgTableName(space->second) != "*MODEL_SPACE" ||
+      !metadata.dxfEntitySourceOwner(audit.sourceHatch, hOwner) ||
+      !metadata.dxfEntitySourceOwner(audit.sourceBoundary, bOwner) || hOwner != audit.sourceOwner || bOwner != audit.sourceOwner)
+    return false;
+  std::vector<LC_HatchAssociation::Edge> live;
+  return LC_HatchAssociation::matchesClosedStraightBoundary(*audit.hatch, *audit.boundary, &live) && live == audit.geometry;
+}
+
+std::shared_ptr<CheckedHatchReplay> planCheckedHatchReplay(RS_Graphic &graphic) {
+  auto audit = std::make_shared<CheckedHatchReplay>();
+  for (const RS_Entity *entity : graphic) {
+    if (!entity || entity->isDeleted()) continue;
+    if (entity->rtti() == RS2::EntityHatch && !audit->hatch) audit->hatch = static_cast<const RS_Hatch *>(entity);
+    else if (entity->rtti() == RS2::EntityPolyline && !audit->boundary)
+      audit->boundary = static_cast<const RS_Polyline *>(entity);
+    else return {};
+  }
+  if (!audit->hatch || !audit->boundary) return {};
+  const auto &roles = audit->hatch->physicalSourceRoles();
+  audit->sourceHatch = roles.hatch; audit->sourceBoundary = roles.boundary; audit->sourceOwner = roles.owner;
+  audit->geometry = roles.sourceGeometry;
+  if (!audit->sourceHatch || !audit->sourceBoundary || !audit->sourceOwner ||
+      audit->sourceHatch == DRW::NoHandle || audit->sourceBoundary == DRW::NoHandle || audit->sourceOwner == DRW::NoHandle ||
+      audit->sourceHatch == audit->sourceBoundary || audit->sourceOwner == audit->sourceHatch ||
+      audit->sourceOwner == audit->sourceBoundary || !LC_HatchAssociation::isSimpleIntegerContour(audit->geometry) ||
+      !checkedHatchReplayStable(graphic, *audit)) return {};
+  return audit;
+}
+}
+#endif
+
 bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                                 const RS2::FormatType type) {
   // Also protect callers using the filter directly rather than RS_FileIO.
@@ -15052,17 +15205,23 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   m_writeFailed = false;
   m_dxfLeftOutRawRecords = 0;
   m_writeLeftOut.clear();
-  m_dxfMaterialFinalCheck = {};
-  const auto clearMaterialFinalCheck = qScopeGuard([this] { m_dxfMaterialFinalCheck = {}; });
+  m_dxfFinalCheck = {};
+  const auto clearDxfFinalCheck = qScopeGuard([this] { m_dxfFinalCheck = {}; });
+  m_dxfAssociationHatch = nullptr;
+  m_dxfAssociationBoundary = nullptr;
+  const auto clearHatchAssociation = qScopeGuard([this] {
+    m_dxfAssociationHatch = nullptr;
+    m_dxfAssociationBoundary = nullptr;
+  });
 #if defined(LIBRECAD_SYSTEM_LIBDXFRW) && defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR)
-  dxfRW::DxfObjectsWriteInspector materialObjectsInspector;
-  dxfRW::DxfTablesWriteInspector materialTablesInspector;
+  dxfRW::DxfObjectsWriteInspector dxfObjectsInspector;
+  dxfRW::DxfTablesWriteInspector dxfTablesInspector;
 #ifdef LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR
-  dxfRW::DxfHeaderWriteInspector materialHeaderInspector;
+  dxfRW::DxfHeaderWriteInspector dxfHeaderInspector;
 #endif
 #ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
-  dxfRW::DxfEntitySectionsWriteInspector materialEntityInspector;
+  dxfRW::DxfEntitySectionsWriteInspector dxfEntityInspector;
 #endif
 #endif
   m_legacyLayerLineweightsLeftOut = 0;
@@ -16808,7 +16967,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
           };
 #ifdef LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR
           if (audit->inspectHeader)
-              materialHeaderInspector = [this, audit, stable](const auto &view) {
+              dxfHeaderInspector = [this, audit, stable](const auto &view) {
                 if (audit->headerSeen || !stable()) return false;
                 audit->headerSeen = m_dxfW->inspectDxfHeaderMaterialReference(
                     view, audit->headerPresent, audit->headerTarget);
@@ -16819,7 +16978,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
 #ifndef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
           audit->tablesSeen = audit->layers.empty();
 #endif
-          if (!audit->tablesSeen) materialTablesInspector = [this, audit, stable](const auto &view) {
+          if (!audit->tablesSeen) dxfTablesInspector = [this, audit, stable](const auto &view) {
                 if (audit->tablesSeen || !stable()) return false;
                 audit->tablesSeen = m_dxfW->inspectDxfLayerMaterialReferences(view, audit->layers);
 #if defined(LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ROOT_ENTRY_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_DEFAULT_PLOT_PLACEHOLDER_HANDLE) && defined(LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR)
@@ -16833,7 +16992,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                 return audit->tablesSeen;
               };
 #ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
-          materialEntityInspector = [this, audit, stable](const auto &view, std::string_view section) {
+          dxfEntityInspector = [this, audit, stable](const auto &view, std::string_view section) {
             const bool blocks = section == "BLOCKS";
             if ((!blocks && section != "ENTITIES") ||
                 (blocks ? audit->blocksSeen : (!audit->blocksSeen || audit->entitiesSeen)) || !stable()) return false;
@@ -16852,7 +17011,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
             return true;
           };
 #endif
-          materialObjectsInspector = [this, audit, stable](const auto &view) {
+          dxfObjectsInspector = [this, audit, stable](const auto &view) {
                 if (!audit->tablesSeen || audit->objectsSeen || !stable()) return false;
                 std::vector<const DRW_RawDxfObject *> expected;
                 expected.reserve(audit->objects.size() + 2u);
@@ -16900,7 +17059,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
 #endif
                 return audit->objectsSeen;
               };
-          m_dxfMaterialFinalCheck = [audit, stable] {
+          m_dxfFinalCheck = [audit, stable] {
             return audit->tablesSeen && audit->objectsSeen &&
 #ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
                 audit->blocksSeen && audit->entitiesSeen &&
@@ -17082,7 +17241,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
 #if defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
       // The IMAGE profile may admit this root only when the separate MATERIAL
       // graph audit is also installed and will be composed below.
-      if (imageGraph.materialDictionary && !materialObjectsInspector) return false;
+      if (imageGraph.materialDictionary && !dxfObjectsInspector) return false;
 #endif
 #if defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_ENTITY_SCALAR_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_DEFINITION_SCALAR_INSPECTOR) && \
@@ -17236,7 +17395,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
         };
 #if defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
         auto imageEntityInspector = [this, audit, stable,
-                                     previous = std::exchange(materialEntityInspector, {})]
+                                     previous = std::exchange(dxfEntityInspector, {})]
 #else
         auto imageEntityInspector = [this, audit, stable]
 #endif
@@ -17276,14 +17435,14 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
               return true;
             };
 #if defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
-        materialEntityInspector = std::move(imageEntityInspector);
+        dxfEntityInspector = std::move(imageEntityInspector);
 #else
         if (!m_dxfW->setDxfEntitySectionsWriteInspector(std::move(imageEntityInspector))) return false;
 #endif
 #ifdef LIBDXFRW_HAS_DXF_STAGED_IMAGE_OBJECT_INSPECTOR
         if (!m_dxfW->setDxfObjectsWriteInspector([this, audit, stable
 #if defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR)
-                                                  , previous = std::exchange(materialObjectsInspector, {})
+                                                  , previous = std::exchange(dxfObjectsInspector, {})
 #endif
                                                   ](const auto &view) {
 #if defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR)
@@ -17356,8 +17515,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
               return true;
             })) return false;
 #endif
-        const auto previousFinal = m_dxfMaterialFinalCheck;
-        m_dxfMaterialFinalCheck = [audit, stable, previousFinal] {
+        const auto previousFinal = m_dxfFinalCheck;
+        m_dxfFinalCheck = [audit, stable, previousFinal] {
           return audit->blocksSeen && audit->entitiesSeen &&
 #ifdef LIBDXFRW_HAS_DXF_STAGED_IMAGE_OBJECT_INSPECTOR
               audit->objectsSeen &&
@@ -17373,16 +17532,93 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
 #endif
   }
 
+#ifdef LIBRECAD_HAS_CHECKED_DXF_HATCH_REPLAY
+  try {
+    if (exportVersion == DRW::AC1024) {
+      const auto audit = planCheckedHatchReplay(g);
+      const auto safeEarlyHandle = [this](std::uint32_t source) {
+        const auto output = dxfReference(source);
+        // Low structural identities and explicitly reserved carriers need the
+        // ordinary mapping path; do not turn an otherwise valid save into an
+        // early-preallocation failure merely to preserve this association.
+        return source > 0x21u && output > 0x21u && output != DRW::NoHandle && !m_dxfW->isReservedHandle(output);
+      };
+      if (audit && safeEarlyHandle(audit->sourceHatch) && safeEarlyHandle(audit->sourceBoundary) &&
+          dxfReference(audit->sourceHatch) != dxfReference(audit->sourceBoundary)) {
+        m_dxfAssociationHatch = audit->hatch;
+        m_dxfAssociationBoundary = audit->boundary;
+        const auto stable = [&g, audit] { return checkedHatchReplayStable(g, *audit); };
+        const auto mapped = [this, audit] {
+          if (!m_dxfW || m_writeFailed) return false;
+          const auto *context = m_dxfW->getWritingContext();
+          if (!context || context->ambiguousSourceHandles.count(audit->sourceHatch) ||
+              context->ambiguousSourceHandles.count(audit->sourceBoundary)) return false;
+          const auto h = context->sourceHandleToMintedMap.find(audit->sourceHatch);
+          const auto b = context->sourceHandleToMintedMap.find(audit->sourceBoundary);
+          if (h == context->sourceHandleToMintedMap.end() || b == context->sourceHandleToMintedMap.end() ||
+              !h->second || !b->second || h->second == b->second) return false;
+          if (!audit->emittedHatch && !audit->emittedBoundary) {
+            audit->emittedHatch = h->second; audit->emittedBoundary = b->second;
+          }
+          return audit->emittedHatch == h->second && audit->emittedBoundary == b->second;
+        };
+        const auto targets = [audit] { return std::vector<std::uint32_t>{audit->emittedHatch, audit->emittedBoundary}; };
+        const auto links = [audit] { return std::vector<dxfRW::DxfHatchOutputLinks>{{
+            audit->emittedHatch, audit->emittedBoundary, DRW::DxfModelSpaceBlockRecordHandle}}; };
+        const auto previousHeader = std::exchange(dxfHeaderInspector, {});
+        dxfHeaderInspector = [this, audit, stable, mapped, targets, previousHeader](const auto &view) {
+          if ((previousHeader && !previousHeader(view)) || audit->header || !stable() || !mapped() ||
+              !m_dxfW->inspectDxfOutputHandleIsolation(view, dxfRW::DxfIsolationSection::Header, targets())) return false;
+          audit->header = true; return true;
+        };
+        const auto previousTables = std::exchange(dxfTablesInspector, {});
+        dxfTablesInspector = [this, audit, stable, mapped, targets, previousTables](const auto &view) {
+          if ((previousTables && !previousTables(view)) || !audit->header || audit->tables || !stable() || !mapped() ||
+              !m_dxfW->inspectDxfOutputHandleIsolation(view, dxfRW::DxfIsolationSection::Tables, targets())) return false;
+          audit->tables = true; return true;
+        };
+        const auto previousEntities = std::exchange(dxfEntityInspector, {});
+        dxfEntityInspector = [this, audit, stable, mapped, links, previousEntities](const auto &view, std::string_view section) {
+          if ((previousEntities && !previousEntities(view, section)) || !audit->tables || !stable() || !mapped()) return false;
+          if (section == "BLOCKS") {
+            if (audit->blocks || !m_dxfW->inspectDxfHatchOutputIsolation(view, links(), false)) return false;
+            audit->blocks = true; return true;
+          }
+          if (section != "ENTITIES" || !audit->blocks || audit->entities) return false;
+          const auto *context = m_dxfW->getWritingContext();
+          if (!context || !context->writtenSourceEntityHandles.count(audit->sourceHatch) ||
+              !context->writtenSourceEntityHandles.count(audit->sourceBoundary) ||
+              !m_dxfW->inspectDxfHatchOutputIsolation(view, links(), true)) return false;
+          audit->entities = true; return true;
+        };
+        const auto previousObjects = std::exchange(dxfObjectsInspector, {});
+        dxfObjectsInspector = [this, audit, stable, mapped, targets, previousObjects](const auto &view) {
+          if ((previousObjects && !previousObjects(view)) || !audit->entities || audit->objects || !stable() || !mapped() ||
+              !m_dxfW->inspectDxfOutputHandleIsolation(view, dxfRW::DxfIsolationSection::Objects, targets())) return false;
+          audit->objects = true; return true;
+        };
+        const auto previousFinal = m_dxfFinalCheck;
+        m_dxfFinalCheck = [audit, stable, mapped, previousFinal] {
+          return audit->header && audit->tables && audit->blocks && audit->entities && audit->objects &&
+              stable() && mapped() && (!previousFinal || previousFinal());
+        };
+      }
+    }
+  } catch (...) {
+    return false;
+  }
+#endif
+
 #if defined(LIBRECAD_SYSTEM_LIBDXFRW) && defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR)
 #ifdef LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR
-  if (materialHeaderInspector && !m_dxfW->setDxfHeaderWriteInspector(materialHeaderInspector)) return false;
+  if (dxfHeaderInspector && !m_dxfW->setDxfHeaderWriteInspector(dxfHeaderInspector)) return false;
 #endif
-  if (materialTablesInspector && !m_dxfW->setDxfTablesWriteInspector(materialTablesInspector)) return false;
+  if (dxfTablesInspector && !m_dxfW->setDxfTablesWriteInspector(dxfTablesInspector)) return false;
 #ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
-  if (materialEntityInspector && !m_dxfW->setDxfEntitySectionsWriteInspector(materialEntityInspector)) return false;
+  if (dxfEntityInspector && !m_dxfW->setDxfEntitySectionsWriteInspector(dxfEntityInspector)) return false;
 #endif
-  if (materialObjectsInspector && !m_dxfW->setDxfObjectsWriteInspector(materialObjectsInspector)) return false;
+  if (dxfObjectsInspector && !m_dxfW->setDxfObjectsWriteInspector(dxfObjectsInspector)) return false;
 #endif
 
   //    bool success = m_dxfW->write(this, exportVersion, false); //ascii
@@ -22968,6 +23204,14 @@ void RS_FilterDXFRW::rollbackDwgEntityWrite(const RS_Entity *entity) {
 #endif
 
 void RS_FilterDXFRW::writeHeader(DRW_Header &data) {
+#ifdef LIBRECAD_HAS_CHECKED_DXF_HATCH_REPLAY
+  if (m_dxfW && m_dxfAssociationHatch && m_dxfAssociationBoundary &&
+      (!m_dxfW->preallocateEntityHandle(m_dxfAssociationHatch->sourceHandle()) ||
+       !m_dxfW->preallocateEntityHandle(m_dxfAssociationBoundary->sourceHandle()))) {
+    m_writeFailed = true;
+    return;
+  }
+#endif
   RS_Vector v;
   /*TODO $ISOMETRICGRID == $SNAPSTYLE and "GRID on/off" not handled because is
    part of active vport to save is required read/write VPORT table */
@@ -32777,7 +33021,7 @@ bool RS_FilterDXFRW::finalizeDxfWrite() {
       reportUnidentifiedHatchReactor();
       return false;
     }
-    return !m_dxfMaterialFinalCheck || m_dxfMaterialFinalCheck();
+    return !m_dxfFinalCheck || m_dxfFinalCheck();
   } catch (...) {
     return false;
   }
@@ -37803,9 +38047,17 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch *h) {
     ha.appendLoop(lData);
   }
   ha.loopsnum = static_cast<int>(ha.looplist.size());
-  // The reconstructed loops do not retain source-object associations.
-  // Emit them consistently as non-associative and report the lost link.
+  // Outside a checked source/output profile, reconstructed loops do not
+  // retain source-object associations.
   ha.associative = 0;
+  bool replayedAssociation = false;
+#ifdef LIBRECAD_HAS_CHECKED_DXF_HATCH_REPLAY
+  if (m_dxfW && h == m_dxfAssociationHatch && m_dxfAssociationBoundary && ha.looplist.size() == 1u) {
+    ha.associative = 1;
+    ha.looplist.front()->m_boundaryHandles = {m_dxfAssociationBoundary->sourceHandle()};
+    replayedAssociation = true;
+  }
+#endif
   bool written = false;
   if (m_dwgW) {
     written = m_dwgW->writeHatch(&ha);
@@ -37814,7 +38066,7 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch *h) {
   } else {
     written = noteDxfWrite(m_dxfW->writeHatch(&ha));
   }
-  if (written && sourceAssociative)
+  if (written && sourceAssociative && !replayedAssociation)
     ++m_hatchAssociativityLeftOut;
 }
 
@@ -38880,9 +39132,13 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity *ent,
   for (quint32 source : entity->reactorHandles()) {
     // A reconstructed hatch is emitted without boundary associations. Remove
     // its matching reverse reactor as well, while retaining unrelated ones.
-    if (m_graphic != nullptr &&
-        m_graphic->dwgAdvancedMetadata().isSourceHatchBoundary(
-            source, entity->sourceHandle())) {
+    bool replayedHatchBoundary = false;
+#ifdef LIBRECAD_HAS_CHECKED_DXF_HATCH_REPLAY
+    replayedHatchBoundary = m_dxfW && entity == m_dxfAssociationBoundary && m_dxfAssociationHatch &&
+        source == m_dxfAssociationHatch->sourceHandle();
+#endif
+    if (!replayedHatchBoundary && m_graphic != nullptr &&
+        m_graphic->dwgAdvancedMetadata().isSourceHatchBoundary(source, entity->sourceHandle())) {
       ++reactorOrdinal;
       continue;
     }

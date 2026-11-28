@@ -9601,6 +9601,15 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
             for (auto &group : record.groups)
               if (group.code() == 73) { group = DRW_Variant(73, 0); break; }
       }
+      if (fault == 10) {
+        for (auto &record : altered.records)
+          if (record.name == "HATCH")
+            for (auto &group : record.groups)
+              if (group.code() == 11 && group.type() == DRW_Variant::DOUBLE) {
+                group = DRW_Variant(11, group.d_val() + 1.0);
+                break;
+              }
+      }
       RS_FilterDXFRW::addDxfEntitiesSource(altered);
       if (fault == 3) RS_FilterDXFRW::addDxfEntitiesSource(altered);
     }
@@ -9676,8 +9685,66 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
   structured.insert(entitiesPosition, spaceSections);
   const auto structuredRoles = readRoles(structured, 0);
   CHECK(structuredRoles.modelSpace);
+  auto linePath = structured;
+  const std::string polyPath = "92\n3\n72\n0\n73\n1\n93\n4\n"
+      "10\n0\n20\n0\n10\n10\n20\n0\n10\n10\n20\n10\n10\n0\n20\n10\n";
+  const std::string linePathBody = "92\n1\n93\n4\n"
+      "72\n1\n10\n0\n20\n0\n11\n10\n21\n0\n"
+      "72\n1\n10\n10\n20\n0\n11\n10\n21\n10\n"
+      "72\n1\n10\n10\n20\n10\n11\n0\n21\n10\n"
+      "72\n1\n10\n0\n20\n10\n11\n0\n21\n0\n";
+  const auto polyPathPosition = linePath.find(polyPath);
+  REQUIRE(polyPathPosition != std::string::npos);
+  linePath.replace(polyPathPosition, polyPath.size(), linePathBody);
+  CHECK(readRoles(linePath, 0).sourceGeometry == expectedGeometry);
+  CHECK(readRoles(linePath, 10).sourceGeometry.empty());
+  const auto sizedSource = [&](std::size_t bytes) {
+    REQUIRE(bytes >= structured.size() + 5u);
+    return std::string("999\n") + std::string(bytes - structured.size() - 5u, 'A') + "\n" + structured;
+  };
+  CHECK(readRoles(sizedSource(64u * 1024u), 0).hatch == 0xB1u);
+  CHECK(readRoles(sizedSource(64u * 1024u + 1u), 0).hatch == 0u);
 #ifdef LIBDXFRW_HAS_DXF_CANONICAL_HEADER_VARIABLE_QUERY
   CHECK(structuredRoles.sourceHandleIsolation);
+  for (const int snap : {2, 3}) {
+    auto legacySnap = structured;
+    const auto headerEnd = legacySnap.find("0\nENDSEC\n");
+    REQUIRE(headerEnd != std::string::npos);
+    legacySnap.insert(headerEnd, "9\n$SNAPISOPAIR\n70\n" + std::to_string(snap) + "\n");
+    const auto snapRoles = readRoles(legacySnap, 0);
+    CHECK(snapRoles.modelSpace);
+    CHECK(snapRoles.sourceHandleIsolation == (snap == 2));
+  }
+  for (const int element : {0, 2}) {
+    auto patterned = structured;
+    const auto endTable = patterned.find("0\nENDTAB\n0\nENDSEC\n");
+    REQUIRE(endTable != std::string::npos);
+    const auto insert = endTable + std::string("0\nENDTAB\n").size();
+    patterned.insert(insert, "0\nTABLE\n2\nLTYPE\n5\nD4\n70\n1\n"
+                     "0\nLTYPE\n5\nD5\n330\nD4\n100\nAcDbSymbolTableRecord\n"
+                     "100\nAcDbLinetypeTableRecord\n2\nDASH\n70\n0\n3\nDash\n"
+                     "72\n65\n73\n1\n40\n1\n49\n1\n74\n" + std::to_string(element) +
+                     "\n0\nENDTAB\n");
+    const auto patternRoles = readRoles(patterned, 0);
+    CHECK(patternRoles.modelSpace);
+    CHECK(patternRoles.sourceHandleIsolation == (element == 0));
+  }
+  for (const bool extraHandle : {false, true}) {
+    auto styled = structured;
+    const auto endTable = styled.find("0\nENDTAB\n0\nENDSEC\n");
+    REQUIRE(endTable != std::string::npos);
+    const auto insert = endTable + std::string("0\nENDTAB\n").size();
+    std::string dimTable = "0\nTABLE\n2\nDIMSTYLE\n5\nD6\n70\n1\n"
+        "0\nDIMSTYLE\n105\nD7\n330\nD6\n100\nAcDbSymbolTableRecord\n"
+        "100\nAcDbDimStyleTableRecord\n2\nSTANDARD\n70\n0\n"
+        "1001\nACAD_DSTYLE_DIMTALN\n1070\n392\n1070\n0\n";
+    if (extraHandle) dimTable += "1005\nB0\n";
+    dimTable += "0\nENDTAB\n";
+    styled.insert(insert, dimTable);
+    const auto styleRoles = readRoles(styled, 0);
+    CHECK(styleRoles.modelSpace);
+    CHECK(styleRoles.sourceHandleIsolation == !extraHandle);
+  }
 #else
   CHECK_FALSE(structuredRoles.sourceHandleIsolation);
 #endif
@@ -9762,6 +9829,177 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
   auto wrongVersion = structured;
   wrongVersion.replace(wrongVersion.find("AC1024"), 6u, "AC1015");
   CHECK_FALSE(readRoles(wrongVersion, 0).modelSpace);
+#if defined(LIBDXFRW_HAS_DXF_STAGED_HATCH_ISOLATION_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_FOREIGN_HANDLE_ISOLATION_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
+  {
+    class ReplayProbe : public SourceProbe {
+    public:
+      std::function<void()> beforeFinalize;
+      bool finalizeDxfWrite() override {
+        if (beforeFinalize) beforeFinalize();
+        return RS_FilterDXFRW::finalizeDxfWrite();
+      }
+    } replay;
+    writeText(src, structured);
+    RS_Graphic graphic;
+    REQUIRE(replay.fileImport(graphic, QString::fromStdString(src), RS2::FormatDXFRW));
+    RS_Hatch *hatch = nullptr;
+    RS_Polyline *boundary = nullptr;
+    for (RS_Entity *entity : graphic) {
+      if (entity && entity->rtti() == RS2::EntityHatch) hatch = static_cast<RS_Hatch *>(entity);
+      if (entity && entity->rtti() == RS2::EntityPolyline) boundary = static_cast<RS_Polyline *>(entity);
+    }
+    REQUIRE(hatch);
+    REQUIRE(boundary);
+    const auto output = tmpFile("checked-hatch-replay.dxf");
+    const std::string sentinel = "preserve checked hatch destination\n";
+    writeText(output, sentinel);
+    bool moved = false;
+    replay.beforeFinalize = [&] { moved = true; hatch->move(RS_Vector(1, 0)); boundary->move(RS_Vector(1, 0)); };
+    CHECK_FALSE(replay.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    CHECK(moved);
+    std::ifstream retained(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+    retained.close();
+    if (moved) { hatch->move(RS_Vector(-1, 0)); boundary->move(RS_Vector(-1, 0)); }
+    const auto boundaryHandle = boundary->sourceHandle();
+    bool changedIdentity = false;
+    writeText(output, sentinel);
+    replay.beforeFinalize = [&] { changedIdentity = true; boundary->setSourceHandle(hatch->sourceHandle()); };
+    CHECK_FALSE(replay.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    CHECK(changedIdentity);
+    std::ifstream retainedIdentity(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retainedIdentity), {}) == sentinel);
+    retainedIdentity.close();
+    boundary->setSourceHandle(boundaryHandle);
+    replay.beforeFinalize = {};
+    REQUIRE(replay.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    RS_Graphic reopened;
+    SourceProbe reread;
+    REQUIRE(reread.fileImport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    const RS_Hatch *readHatch = nullptr;
+    const RS_Polyline *readBoundary = nullptr;
+    for (const RS_Entity *entity : reopened) {
+      if (entity && entity->rtti() == RS2::EntityHatch) readHatch = static_cast<const RS_Hatch *>(entity);
+      if (entity && entity->rtti() == RS2::EntityPolyline) readBoundary = static_cast<const RS_Polyline *>(entity);
+    }
+    REQUIRE(readHatch);
+    REQUIRE(readBoundary);
+    CHECK(readHatch->sourceAssociative());
+    CHECK(readHatch->sourceLoopBoundaries() == std::vector<std::vector<quint32>>{{readBoundary->sourceHandle()}});
+    CHECK(readBoundary->reactorHandles() == std::vector<quint32>{readHatch->sourceHandle()});
+    CHECK(LC_HatchAssociation::matchesClosedStraightBoundary(*readHatch, *readBoundary));
+    CHECK(readHatch->physicalSourceRoles().modelSpace);
+    CHECK(readHatch->physicalSourceRoles().sourceHandleIsolation);
+    CHECK(readHatch->physicalSourceRoles().sourceGeometry.size() == 4u);
+    const auto secondOutput = tmpFile("checked-hatch-repeat.dxf");
+    REQUIRE(reread.fileExport(reopened, QString::fromStdString(secondOutput), RS2::FormatDXFRW2010));
+    RS_Graphic repeated;
+    REQUIRE(reread.fileImport(repeated, QString::fromStdString(secondOutput), RS2::FormatDXFRW));
+    const RS_Hatch *repeatHatch = nullptr;
+    const RS_Polyline *repeatBoundary = nullptr;
+    for (const RS_Entity *entity : repeated) {
+      if (entity && entity->rtti() == RS2::EntityHatch) repeatHatch = static_cast<const RS_Hatch *>(entity);
+      if (entity && entity->rtti() == RS2::EntityPolyline) repeatBoundary = static_cast<const RS_Polyline *>(entity);
+    }
+    REQUIRE(repeatHatch);
+    REQUIRE(repeatBoundary);
+    CHECK(repeatHatch->sourceAssociative());
+    CHECK(repeatHatch->sourceLoopBoundaries() == std::vector<std::vector<quint32>>{{repeatBoundary->sourceHandle()}});
+    CHECK(repeatBoundary->reactorHandles() == std::vector<quint32>{repeatHatch->sourceHandle()});
+    CHECK(LC_HatchAssociation::matchesClosedStraightBoundary(*repeatHatch, *repeatBoundary));
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_CHECKED_HATCH_REPEAT"))
+      std::filesystem::copy_file(secondOutput, copy, std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::remove(secondOutput);
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_CHECKED_HATCH_REPLAY"))
+      std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+    REQUIRE(replay.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    RS_Graphic crossVersion;
+    REQUIRE(reread.fileImport(crossVersion, QString::fromStdString(output), RS2::FormatDXFRW));
+    bool sawDeassociated = false;
+    for (const RS_Entity *entity : crossVersion)
+      if (entity && entity->rtti() == RS2::EntityHatch) {
+        CHECK_FALSE(static_cast<const RS_Hatch *>(entity)->sourceAssociative());
+        sawDeassociated = true;
+      }
+    CHECK(sawDeassociated);
+    std::filesystem::remove(output);
+  }
+  {
+    // A newly added, otherwise valid GROUP is outside the isolated replay
+    // profile. Preserve the existing deassociation behavior instead of
+    // failing the whole save when the output inspector sees that GROUP.
+    writeText(src, structured);
+    RS_Graphic graphic;
+    SourceProbe filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src), RS2::FormatDXFRW));
+    DRW_Group group;
+    group.handle = 0xD0;
+    group.m_description = "unrelated";
+    graphic.dwgAdvancedMetadata().addGroup(group);
+    const auto output = tmpFile("checked-hatch-extra-group.dxf");
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    RS_Graphic reopened;
+    REQUIRE(filter.fileImport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    bool sawHatch = false;
+    for (const RS_Entity *entity : reopened)
+      if (entity && entity->rtti() == RS2::EntityHatch) {
+        CHECK_FALSE(static_cast<const RS_Hatch *>(entity)->sourceAssociative());
+        sawHatch = true;
+      }
+    CHECK(sawHatch);
+    std::filesystem::remove(output);
+  }
+  const auto checkFallback = [&](const std::string &source, bool fixedCollision) {
+    writeText(src, source);
+    RS_Graphic original;
+    SourceProbe filter;
+    REQUIRE(filter.fileImport(original, QString::fromStdString(src), RS2::FormatDXFRW));
+    const auto output = tmpFile("checked-hatch-fallback.dxf");
+    if (fixedCollision) {
+      const std::string sentinel = "preserve fixed-handle destination\n";
+      writeText(output, sentinel);
+      CHECK_FALSE(filter.fileExport(original, QString::fromStdString(output), RS2::FormatDXFRW2010));
+      std::ifstream retained(output, std::ios::binary);
+      CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+      retained.close();
+      writeText(src, structured);
+      RS_Graphic corrected;
+      REQUIRE(filter.fileImport(corrected, QString::fromStdString(src), RS2::FormatDXFRW));
+      REQUIRE(filter.fileExport(corrected, QString::fromStdString(output), RS2::FormatDXFRW2010));
+      std::filesystem::remove(output);
+      return;
+    }
+    REQUIRE(filter.fileExport(original, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    RS_Graphic result;
+    REQUIRE(filter.fileImport(result, QString::fromStdString(output), RS2::FormatDXFRW));
+    bool found = false;
+    for (const RS_Entity *entity : result)
+      if (entity && entity->rtti() == RS2::EntityHatch) {
+        CHECK_FALSE(static_cast<const RS_Hatch *>(entity)->sourceAssociative());
+        found = true;
+      }
+    CHECK(found);
+    std::filesystem::remove(output);
+  };
+  auto fixedHandle = structured;
+  for (std::size_t pos = 0; (pos = fixedHandle.find("B0", pos)) != std::string::npos; pos += 2u)
+    fixedHandle.replace(pos, 2u, "14");
+  checkFallback(fixedHandle, true);
+  auto fractional = structured;
+  const std::string integralVertices = "10\n0\n20\n0\n10\n10\n20\n0\n10\n10\n20\n10\n10\n0\n20\n10\n";
+  const std::string fractionalVertices = "10\n0\n20\n0\n10\n10.5\n20\n0\n10\n10.5\n20\n10\n10\n0\n20\n10\n";
+  unsigned replacements = 0;
+  for (std::size_t pos = 0; (pos = fractional.find(integralVertices, pos)) != std::string::npos;
+       pos += fractionalVertices.size()) {
+    fractional.replace(pos, integralVertices.size(), fractionalVertices);
+    ++replacements;
+  }
+  REQUIRE(replacements == 2u);
+  checkFallback(fractional, false);
+#endif
   writeText(src, input);
   SourceProbe retry;
   retry.fault = 1;
@@ -9815,6 +10053,24 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
         selectedBoundary = static_cast<RS_Polyline *>(entity);
     REQUIRE(selectedHatch);
     REQUIRE(selectedBoundary);
+#if defined(LIBDXFRW_HAS_DXF_STAGED_HATCH_ISOLATION_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_FOREIGN_HANDLE_ISOLATION_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
+    const auto fullOutput = tmpFile("checked-hatch-full-source.dxf");
+    REQUIRE(fullFilter.fileExport(full, QString::fromStdString(fullOutput), RS2::FormatDXFRW2010));
+    RS_Graphic fullReopened;
+    SourceProbe fullReader;
+    REQUIRE(fullReader.fileImport(fullReopened, QString::fromStdString(fullOutput), RS2::FormatDXFRW));
+    bool fullAssociated = false;
+    for (const RS_Entity *entity : fullReopened)
+      if (entity && entity->rtti() == RS2::EntityHatch)
+        fullAssociated = static_cast<const RS_Hatch *>(entity)->sourceAssociative();
+    CHECK(fullAssociated);
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_CHECKED_HATCH_FULL"))
+      std::filesystem::copy_file(fullOutput, copy, std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::remove(fullOutput);
+#endif
     const auto original = selectedHatch->physicalSourceRoles().sourceGeometry;
     std::vector<LC_HatchAssociation::Edge> live;
     REQUIRE(LC_HatchAssociation::matchesClosedStraightBoundary(*selectedHatch, *selectedBoundary, &live));
