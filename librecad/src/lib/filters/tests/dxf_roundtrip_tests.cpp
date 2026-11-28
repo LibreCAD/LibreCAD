@@ -4987,6 +4987,98 @@ TEST_CASE("System codec preserves modern multi-image clip modes",
   std::filesystem::remove(output);
 }
 
+TEST_CASE("System codec preserves larger polygon image boundaries", "[system-codec][dxf][image][transaction]") {
+  ensureSettings();
+  const auto source = tmpFile("large_polygon_image_source.dxf"), output = tmpFile("large_polygon_image_output.dxf");
+  const unsigned imageCount = GENERATE(2u, 384u);
+  CAPTURE(imageCount);
+  RS_Graphic original; original.initForNewDocument();
+  for (unsigned i = 0; i < imageCount; ++i)
+    original.addEntity(new RS_Image(&original, RS_ImageData(0, RS_Vector(29.0 * i, 2),
+        RS_Vector(1, 0), RS_Vector(0, 1), RS_Vector(16, 12), QStringLiteral("polygon.png"), 50, 50, 0)));
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileExport(original, QString::fromStdString(source), RS2::FormatDXFRW2010));
+  std::ifstream originalSource(source, std::ios::binary);
+  const std::string baseline(std::istreambuf_iterator<char>(originalSource), {});
+  const auto makeSource = [&](unsigned count) {
+    std::istringstream input(baseline);
+    std::string code, value, rewritten;
+    bool image = false, inserted = false;
+    unsigned imageOrdinal = 0;
+    while (std::getline(input, code) && std::getline(input, value)) {
+      const int group = std::stoi(code);
+      if (group == 0) { image = value == "IMAGE" && imageOrdinal++ == 0u; }
+      if (image && group == 70) value = "7";
+      if (image && group == 280) value = "1";
+      if (image && group == 71) value = "2";
+      if (image && group == 91) value = std::to_string(count);
+      if (image && (group == 14 || group == 24)) {
+        if (!inserted) {
+          for (unsigned i = 0; i < count; ++i) {
+            const double angle = 2.0 * M_PI * i / count;
+            rewritten += "14\n" + std::to_string(8.0 + 4.0 * std::cos(angle)) +
+                         "\n24\n" + std::to_string(6.0 + 4.0 * std::sin(angle)) + "\n";
+          }
+          inserted = true;
+        }
+        continue;
+      }
+      rewritten += code + "\n" + value + "\n";
+    }
+    REQUIRE(inserted); return rewritten;
+  };
+  const std::string sentinel = "preserve large polygon destination\n";
+  for (const unsigned count : {18u, 256u, 257u}) {
+    CAPTURE(count);
+    writeText(source, makeSource(count)); writeText(output, sentinel);
+    RS_Graphic graphic;
+    const bool imported = filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW2010);
+    if (count > 256u) {
+      if (imported) CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+      { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+      writeText(source, makeSource(256)); RS_Graphic corrected;
+      REQUIRE(filter.fileImport(corrected, QString::fromStdString(source), RS2::FormatDXFRW2010));
+      REQUIRE(filter.fileExport(corrected, QString::fromStdString(output), RS2::FormatDXFRW2010));
+      continue;
+    }
+    REQUIRE(imported);
+    auto &metadata = graphic.dwgAdvancedMetadata();
+    auto &rasters = const_cast<std::vector<LC_DwgAdvancedMetadata::RasterImageRecord>&>(metadata.rasterImages());
+    REQUIRE(rasters.size() == imageCount); REQUIRE(rasters.front().clipPath.size() == count);
+    auto *raw = const_cast<DRW_RawDxfObject *>(metadata.dxfImageSource(rasters.front().handle)); REQUIRE(raw);
+    auto point = std::find_if(raw->groups.rbegin(), raw->groups.rend(), [](const auto &group) { return group.code() == 14; });
+    REQUIRE(point != raw->groups.rend());
+    const auto index = static_cast<std::size_t>(std::prev(point.base()) - raw->groups.begin());
+    const auto oldX = rasters.front().clipPath.back().x;
+    const auto oldRaw = raw->hasRawValues ? raw->rawValues.at(index) : std::string{};
+    struct LatePolygonFilter : RS_FilterDXFRW {
+      std::function<void()> beforeFinalize;
+      bool finalizeDxfWrite() override { if (beforeFinalize) beforeFinalize(); return RS_FilterDXFRW::finalizeDxfWrite(); }
+    } late;
+    late.beforeFinalize = [&] {
+      rasters.front().clipPath.back().x = oldX + 1.0; point->addDouble(14, oldX + 1.0);
+      if (raw->hasRawValues) raw->rawValues[index] = std::to_string(oldX + 1.0);
+    };
+    CHECK_FALSE(late.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    rasters.front().clipPath.back().x = oldX; point->addDouble(14, oldX);
+    if (raw->hasRawValues) raw->rawValues[index] = oldRaw;
+    late.beforeFinalize = {};
+    REQUIRE(late.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    RS_Graphic reread; REQUIRE(filter.fileImport(reread, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    const auto &replayed = reread.dwgAdvancedMetadata().rasterImages();
+    REQUIRE(replayed.size() == imageCount); REQUIRE(replayed.front().clipPath.size() == count);
+    for (unsigned i = 0; i < count; ++i) {
+      CHECK(replayed.front().clipPath[i].x == rasters.front().clipPath[i].x);
+      CHECK(replayed.front().clipPath[i].y == rasters.front().clipPath[i].y);
+    }
+    if (const char *prefix = std::getenv("LIBRECAD_KEEP_LARGE_IMAGE_POLYGON")) {
+      std::filesystem::copy_file(source, std::string(prefix) + std::to_string(imageCount) + "-" + std::to_string(count) + "-source.dxf", std::filesystem::copy_options::overwrite_existing);
+      std::filesystem::copy_file(output, std::string(prefix) + std::to_string(imageCount) + "-" + std::to_string(count) + "-output.dxf", std::filesystem::copy_options::overwrite_existing);
+    }
+  }
+}
+
 TEST_CASE("System codec preserves legacy polygonal image boundaries",
           "[system-codec][dxf][image][transaction]") {
   ensureSettings();
@@ -5152,7 +5244,10 @@ TEST_CASE("Raster source capture applies a shared logical budget", "[system-code
   source.handle = 1001u; source.groups.emplace_back(90, 0); source.rawValues.emplace_back("0");
   metadata.addDxfImageDefSource(source); CHECK_FALSE(metadata.dxfImageDefSource(1000u));
   metadata.clear(); source.name = "IMAGE"; source.handle = 100u;
-  source.groups.resize(65u); source.rawValues.resize(65u);
+  source.groups.assign(LC_DwgAdvancedMetadata::MaxDxfImageSourceGroups, DRW_Variant(90, 0));
+  source.rawValues.assign(LC_DwgAdvancedMetadata::MaxDxfImageSourceGroups, "0");
+  metadata.addDxfImageSource(source); REQUIRE(metadata.dxfImageSource(100u));
+  source.handle = 101u; source.groups.emplace_back(90, 0); source.rawValues.emplace_back("0");
   metadata.addDxfImageSource(source); CHECK_FALSE(metadata.dxfImageSource(100u));
 }
 

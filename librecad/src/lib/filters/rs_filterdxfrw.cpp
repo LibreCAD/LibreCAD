@@ -13411,6 +13411,11 @@ void RS_FilterDXFRW::addDxfDictionarySource(
 #endif
 
 #ifdef LIBDXFRW_HAS_DXF_RASTER_SOURCE_HANDLER
+#ifdef LIBDXFRW_HAS_DXF_STAGED_IMAGE_POLYGON_INSPECTOR
+static_assert(LC_DwgAdvancedMetadata::MaxDxfImageSourceGroups ==
+              30u + 2u * LIBDXFRW_DXF_STAGED_IMAGE_MAX_CLIP_VERTICES,
+              "IMAGE source bound must match the staged polygon limit");
+#endif
 bool RS_FilterDXFRW::wantsDxfImageSource() const {
   return m_graphic != nullptr && canCaptureSmallDxfFile(m_file);
 }
@@ -13421,7 +13426,7 @@ void RS_FilterDXFRW::addDxfImageSource(
     return;
   auto &metadata = m_graphic->dwgAdvancedMetadata();
   if (image.handle != source.handle || image.parentHandle != source.parentHandle ||
-      !canRetainSmallDxfSource(source))
+      !canRetainSmallDxfSource(source, LC_DwgAdvancedMetadata::MaxDxfImageSourceGroups))
     metadata.markDxfRasterSourceUnavailable();
   else
     metadata.addDxfImageSource(source);

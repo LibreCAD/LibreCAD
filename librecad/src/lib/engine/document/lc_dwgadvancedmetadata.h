@@ -43,10 +43,13 @@ public:
 #ifdef LIBDXFRW_HAS_DXF_RASTER_SOURCE_HANDLER
   static constexpr std::size_t MaxDxfRasterSourcesPerKind = 384u;
   static constexpr std::size_t MaxDxfImageDefSourceGroups = 512u;
+  // 30 fixed IMAGE groups plus two coordinates for each of 256 clip vertices.
+  static constexpr std::size_t MaxDxfImageSourceGroups = 542u;
   static constexpr std::size_t MaxDxfRasterSourceBytes = 4u * 1024u * 1024u;
 #else
   static constexpr std::size_t MaxDxfRasterSourcesPerKind = 32u;
   static constexpr std::size_t MaxDxfImageDefSourceGroups = 64u;
+  static constexpr std::size_t MaxDxfImageSourceGroups = 64u;
 #endif
 
   struct DxfMaterialEntityReference {
@@ -4167,10 +4170,11 @@ public:
                           const DRW_RawDxfObject &source, const char *kind) {
     if (m_dxfRasterSourceConflict)
       return;
+    const auto maxGroups = source.name == "IMAGEDEF" ? MaxDxfImageDefSourceGroups :
+                           source.name == "IMAGE" ? MaxDxfImageSourceGroups : 64u;
     if (source.name != kind || source.handle == 0 || source.handle == DRW::NoHandle ||
         source.m_version == DRW::UNKNOWNV || sources.size() >= MaxDxfRasterSourcesPerKind ||
-        source.groups.size() > (source.name == "IMAGEDEF" ? MaxDxfImageDefSourceGroups : 64u) ||
-        source.rawValues.size() > (source.name == "IMAGEDEF" ? MaxDxfImageDefSourceGroups : 64u) ||
+        source.groups.size() > maxGroups || source.rawValues.size() > maxGroups ||
         (source.hasRawValues && source.rawValues.size() != source.groups.size())) {
       m_dxfRasterSourceConflict = true;
       return;
